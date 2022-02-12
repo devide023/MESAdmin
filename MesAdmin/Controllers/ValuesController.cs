@@ -22,7 +22,7 @@ namespace MesAdmin.Controllers
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { _Con.DbConnStr, "value2" };
+            return new List<string>();
         }
 
         // GET api/values/5

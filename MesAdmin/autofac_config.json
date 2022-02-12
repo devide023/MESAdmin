@@ -1,19 +1,7 @@
 {
-  "components": [
+  "modules": [
     {
-      "type": "ZDMesServices.Common.DbOperateService, ZDMesServices",
-      "services": [
-        {
-          "type": "ZDMesInterfaces.DB.IDbConn,ZDMesInterfaces"
-        },
-        {
-          "type": "ZDMesInterfaces.Common.IDbOperate,ZDMesInterfaces"
-        }
-      ],
-      "injectProperties": true,
-      "properties": {
-        "DbConnStr": "TJConn"
-      }
+      "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules"
     }
   ]
 }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDMesInterfaces", "ZDMesInt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDMesServices", "ZDMesServices\ZDMesServices.csproj", "{FCE74463-3C3E-4473-A9EB-1EF726468BF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDMesModules", "ZDMesModules\ZDMesModules.csproj", "{F9825A35-B9E0-4DE7-81BD-00E6C5F454A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FCE74463-3C3E-4473-A9EB-1EF726468BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE74463-3C3E-4473-A9EB-1EF726468BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE74463-3C3E-4473-A9EB-1EF726468BF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9825A35-B9E0-4DE7-81BD-00E6C5F454A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9825A35-B9E0-4DE7-81BD-00E6C5F454A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9825A35-B9E0-4DE7-81BD-00E6C5F454A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9825A35-B9E0-4DE7-81BD-00E6C5F454A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
