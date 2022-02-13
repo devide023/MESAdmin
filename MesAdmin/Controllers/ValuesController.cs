@@ -8,6 +8,9 @@ using ZDMesServices.Common;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.DB;
 using ZDMesModels.TJ;
+using Autofac.Integration.WebApi;
+using Autofac;
+
 namespace MesAdmin.Controllers
 {
     public class ValuesController : ApiController
@@ -18,11 +21,16 @@ namespace MesAdmin.Controllers
         {
             _service = service;
             _Con = conn;
+
+            
+            
         }
         // GET api/values
         public IEnumerable<string> Get()
         {
-            
+            var scope = this.Request.GetDependencyScope();
+             var s = scope.GetRequestLifetimeScope().Resolve<DbOperateService>();
+            s.DbConnStr = "a";
             return new List<string>();
         }
 

@@ -44,7 +44,9 @@ namespace MesAdmin
             builder.RegisterWebApiModelBinderProvider();
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            var resolver = new AutofacWebApiDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = resolver;
+            config.DependencyResolver = resolver;
         }
     }
 }
