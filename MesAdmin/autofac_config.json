@@ -1,7 +1,16 @@
 {
   "modules": [
     {
-      "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules"
+      "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules",
+      "properties": {
+        "DbConnStr": "TJConn"
+      }
+    },
+    {
+      "type": "ZDMesModules.MF.BaseinfoModule, ZDMesModules",
+      "properties": {
+        "DbConnStr": "MFConn"
+      }
     }
   ]
 }

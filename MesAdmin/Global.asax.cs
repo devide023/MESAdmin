@@ -22,16 +22,19 @@ namespace MesAdmin
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);            
-            // Add the configuration to the ConfigurationBuilder.
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
+            var builder = new ContainerBuilder();
+            var AssModel = Assembly.Load("ZDMesModels");
+            builder.RegisterAssemblyTypes(AssModel);
+            var AssInterfaces = Assembly.Load("ZDMesInterfaces");
+            builder.RegisterAssemblyTypes(AssInterfaces);
+            var AssServices = Assembly.Load("ZDMesServices");
+            builder.RegisterAssemblyTypes(AssServices);
             var autofac_config = new ConfigurationBuilder();
             autofac_config.AddJsonFile("autofac_config.json");
-            // Register the ConfigurationModule with Autofac.
-            var module = new ConfigurationModule(autofac_config.Build());
-            var builder = new ContainerBuilder();
-            var Ass = Assembly.Load("ZDMesModels");
-            builder.RegisterAssemblyTypes(Ass);
-            builder.RegisterModule(module);
+            var modules = new ConfigurationModule(autofac_config.Build());
+            builder.RegisterModule(modules);
             //
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
