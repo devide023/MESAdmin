@@ -10,9 +10,7 @@ namespace MesAdmin.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
-            return View();
+            return Content("服务已启动");
         }
     }
 }

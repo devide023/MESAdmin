@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\IDbOperate.cs" />
-    <Compile Include="DB\IDbConn.cs" />
+    <Compile Include="Common\IMenu.cs" />
+    <Compile Include="Common\IRole.cs" />
+    <Compile Include="Common\IUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

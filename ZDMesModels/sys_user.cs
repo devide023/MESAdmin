@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZDMesModels.TJ
+namespace ZDMesModels
 {
     public class sys_user
     {
         public string username { get; set; }
-        public string usercode { get; set; }
+        public string password { get; set; }
     }
 }

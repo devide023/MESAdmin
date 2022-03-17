@@ -1,17 +1,5 @@
 {
   "components": [
-    {
-      "type": "ZDMesServices.Common.DbOperateService, ZDMesServices",
-      "services": [
-        {
-          "type": "ZDMesInterfaces.Common.IDbOperate,ZDMesInterfaces"
-        },
-        {
-          "type": "ZDMesInterfaces.DB.IDbConn,ZDMesInterfaces"
-        }
-      ],
-      "autoActivate": true,
-      "injectProperties": true
-    }
+    
   ]
 }
