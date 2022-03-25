@@ -33,6 +33,6 @@ namespace ZDMesInterfaces.Common
         /// <param name="roleid"></param>
         /// <param name="users"></param>
         /// <returns></returns>
-        bool Save_Role_Users(int roleid, List<mes_user_entity> users);
+        bool Save_Role_Users(int roleid, List<int> userids);
     }
 }

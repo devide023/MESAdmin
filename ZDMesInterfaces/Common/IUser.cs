@@ -38,7 +38,7 @@ namespace ZDMesInterfaces.Common
         /// <param name="userid"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        bool Save_User_Roles(int userid, List<mes_role_entity> roles);
+        bool Save_User_Roles(int userid, List<int> roleids);
         /// <summary>
         /// 根据用户名、密码。获取用户Token
         /// </summary>
@@ -57,5 +57,6 @@ namespace ZDMesInterfaces.Common
         /// <param name="token"></param>
         /// <returns></returns>
         sys_userinfo_result GetUserInfo(string token);
+        
     }
 }

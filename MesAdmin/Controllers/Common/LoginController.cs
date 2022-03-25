@@ -7,13 +7,13 @@ using System.Web.Http;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
 
-namespace MesAdmin.Controllers.TJ
+namespace MesAdmin.Controllers.Common
 {
     /// <summary>
     /// 登录
     /// </summary>
     /// 
-    [RoutePrefix("api/tj")]
+    [RoutePrefix("api")]
     public class LoginController : ApiController
     {
         private IUser _userservice;

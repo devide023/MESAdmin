@@ -7,34 +7,45 @@ using System.Net.Http;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
-using ZDMesServices;
-using ZDMesServices.TJ;
-using Autofac;
-using Autofac.Integration.WebApi;
 
-namespace MesAdmin.Controllers.TJ
+namespace MesAdmin.Controllers.Common
 {
-    [RoutePrefix("api/tj/role")]
-    public class RoleController : ApiController
+    [RoutePrefix("api/user")]
+    public class UserController : ApiController
     {
-        private IDbOperate<mes_role_entity> _roleservice;
-        public RoleController(IDbOperate<mes_role_entity> roleservice)
+        private IDbOperate<mes_user_entity> _userservice;
+        private IUser _user;
+        public UserController(IDbOperate<mes_user_entity> userservice,IUser user)
         {
-            _roleservice = roleservice;
+            _userservice = userservice;
+            _user = user;
         }
-        [HttpPost,Route("add")]
-        public IHttpActionResult Add(mes_role_entity entity)
+        [HttpPost, Route("add")]
+        public IHttpActionResult Add(List<mes_user_entity> entitys)
         {
             try
             {
-               var ret = _roleservice.Add(entity);
+                IEnumerable<mes_user_entity> noklist = new List<mes_user_entity>();
+                var ret = _userservice.Add(entitys,out noklist);
                 if (ret > 0)
                 {
-                    return Json(new sys_result()
+                    if (noklist.Count() == 0)
                     {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new
+                        {
+                            code = 2,
+                            msg = "数据保存失败",
+                            noklist = noklist
+                        });
+                    }
                 }
                 else
                 {
@@ -52,11 +63,11 @@ namespace MesAdmin.Controllers.TJ
             }
         }
         [HttpPost, Route("del")]
-        public IHttpActionResult Del(mes_role_entity entity)
+        public IHttpActionResult Del(List<mes_user_entity> entitys)
         {
             try
             {
-                var ret = _roleservice.Del(entity);
+                var ret = _userservice.Del(entitys);
                 if (ret)
                 {
                     return Json(new sys_result()
@@ -81,11 +92,11 @@ namespace MesAdmin.Controllers.TJ
             }
         }
         [HttpPost, Route("edit")]
-        public IHttpActionResult Edit(mes_role_entity entity)
+        public IHttpActionResult Edit(List<mes_user_entity> entitys)
         {
             try
             {
-                var ret = _roleservice.Modify(entity);
+                var ret = _userservice.Modify(entitys);
                 if (ret)
                 {
                     return Json(new sys_result()
@@ -110,14 +121,14 @@ namespace MesAdmin.Controllers.TJ
             }
         }
         [HttpPost, SearchFilter, Route("list")]
-        public IHttpActionResult GetRoles(sys_page parm)
+        public IHttpActionResult List(sys_page parm)
         {
             try
             {
                 //var scope = GlobalConfiguration.Configuration.DependencyResolver.GetRequestLifetimeScope();
                 //scope.Resolve<IDbOperate<mes_role_entity>>();
                 int resultcount = 0;
-                var list = _roleservice.GetList(parm, out resultcount);
+                var list = _userservice.GetList(parm, out resultcount);
                 return Json(new sys_search_result()
                 {
                     code = 1,

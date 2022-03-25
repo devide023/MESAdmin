@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Common\IDbOperate.cs" />
     <Compile Include="Common\IMenu.cs" />
+    <Compile Include="Common\IPageConfig.cs" />
     <Compile Include="Common\IRole.cs" />
     <Compile Include="Common\IUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

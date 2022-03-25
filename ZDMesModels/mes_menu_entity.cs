@@ -19,7 +19,7 @@ namespace ZDMesModels
         /// <summary>
         ///状态
         ///</summary>
-        public int status { get; set; }
+        public int status { get; set; } = 1;
         /// <summary>
         ///菜单编码
         ///</summary>
@@ -47,7 +47,7 @@ namespace ZDMesModels
         /// <summary>
         ///排序
         ///</summary>
-        public int seq { get; set; }
+        public int seq { get; set; } = 10;
         /// <summary>
         ///配置路径
         ///</summary>
@@ -55,7 +55,15 @@ namespace ZDMesModels
         /// <summary>
         ///组件名称
         ///</summary>
-        public string componentname { get; set; }
+        public string componentname { get; set; } = string.Empty;
+        /// <summary>
+        /// 函数名称
+        /// </summary>
+        public string fnname { get; set; } = string.Empty;
+        /// <summary>
+        /// 按钮类型
+        /// </summary>
+        public string btntype { get; set; }
         /// <summary>
         ///录入人
         ///</summary>
@@ -63,19 +71,21 @@ namespace ZDMesModels
         /// <summary>
         ///录入时间
         ///</summary>
-        public DateTime addtime { get; set; }
+        public DateTime addtime { get; set; } = DateTime.Now;
         /// <summary>
         /// 针对角色，赋予菜单下的子权限
         /// </summary>
-        public sys_menu_permis menu_permission { get; set; }
+        public sys_menu_permis menupermission { get; set; }
         /// <summary>
         /// 子菜单
         /// </summary>
         public List<mes_menu_entity> children { get; set; } = new List<mes_menu_entity>();
         /// <summary>
-        /// 页面配置对象
+        /// 是否有子菜单
         /// </summary>
-        public string viewconf { get; set; } = "{}";
+        public bool hasChildren { get; set; } = false;
+        public bool isdb { get; set; } = true;
+        public bool isedit { get; set; } = false;
 
     }
 
@@ -83,10 +93,12 @@ namespace ZDMesModels
     {
         public mes_menu_entity_mapper()
         {
-            Map(t => t.id).Key(KeyType.Assigned);
-            Map(t => t.menu_permission).Ignore();
+            Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.menupermission).Ignore();
             Map(t => t.children).Ignore();
-            Map(t => t.viewconf).Ignore();
+            Map(t => t.hasChildren).Ignore();
+            Map(t => t.isdb).Ignore();
+            Map(t => t.isedit).Ignore();
             AutoMap();
         }
     }

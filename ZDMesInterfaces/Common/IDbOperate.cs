@@ -29,6 +29,13 @@ namespace ZDMesInterfaces.Common
         /// <returns></returns>
         int Add(IEnumerable<T> entitys);
         /// <summary>
+        /// 批量新增记录
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <param name="noklist"></param>
+        /// <returns></returns>
+        int Add(IEnumerable<T> entitys,out IEnumerable<T> noklist);
+        /// <summary>
         /// 删除记录
         /// </summary>
         /// <param name="entity"></param>

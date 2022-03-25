@@ -3,13 +3,19 @@
     {
       "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules",
       "properties": {
-        "DbConnStr": "TJConn"
+        "Constr": "testmes"
       }
     },
     {
       "type": "ZDMesModules.MF.BaseinfoModule, ZDMesModules",
       "properties": {
-        "DbConnStr": "MFConn"
+        "Constr": "testmes"
+      }
+    },
+    {
+      "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
+      "properties": {
+        "Constr": "testmes"
       }
     }
   ]

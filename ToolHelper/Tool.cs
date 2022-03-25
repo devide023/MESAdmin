@@ -278,7 +278,7 @@ namespace ZDToolHelper
                 {
                     UTF8Encoding utf8 = new UTF8Encoding();
                     var strsource = $"({sr.ReadToEnd()})";
-                    strsource = strsource.Replace("\r", "").Replace("\n", "").Replace(" ","");
+                    strsource = strsource.Replace("\r", "").Replace("\n", "").Replace("\t","").Replace("  ","");
                     Byte[] encodedBytes = utf8.GetBytes(strsource);
                     String decodedString = utf8.GetString(encodedBytes);
                     return decodedString;

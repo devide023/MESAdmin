@@ -50,9 +50,7 @@ namespace ZDMesModels
     {
         public mes_user_entity_mapper()
         {
-            Map(t => t.id).Key(KeyType.Assigned);
-            Map(t => t.pwd).Ignore();
-            Map(t => t.token).Ignore();
+            Map(t => t.id).Key(KeyType.TriggerIdentity);
             AutoMap();
         }
     }

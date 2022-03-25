@@ -7,25 +7,27 @@ using System.Net.Http;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
+using ZDMesServices;
+using ZDMesServices.Common;
+using Autofac;
+using Autofac.Integration.WebApi;
 
-namespace MesAdmin.Controllers.TJ
+namespace MesAdmin.Controllers.Common
 {
-    [RoutePrefix("api/tj/user")]
-    public class UserController : ApiController
+    [RoutePrefix("api/role")]
+    public class RoleController : ApiController
     {
-        private IDbOperate<mes_user_entity> _userservice;
-        private IUser _user;
-        public UserController(IDbOperate<mes_user_entity> userservice,IUser user)
+        private IDbOperate<mes_role_entity> _roleservice;
+        public RoleController(IDbOperate<mes_role_entity> roleservice)
         {
-            _userservice = userservice;
-            _user = user;
+            _roleservice = roleservice;
         }
-        [HttpPost, Route("add")]
-        public IHttpActionResult Add(mes_user_entity entity)
+        [HttpPost,Route("add")]
+        public IHttpActionResult Add(mes_role_entity entity)
         {
             try
             {
-                var ret = _userservice.Add(entity);
+               var ret = _roleservice.Add(entity);
                 if (ret > 0)
                 {
                     return Json(new sys_result()
@@ -50,11 +52,11 @@ namespace MesAdmin.Controllers.TJ
             }
         }
         [HttpPost, Route("del")]
-        public IHttpActionResult Del(mes_user_entity entity)
+        public IHttpActionResult Del(mes_role_entity entity)
         {
             try
             {
-                var ret = _userservice.Del(entity);
+                var ret = _roleservice.Del(entity);
                 if (ret)
                 {
                     return Json(new sys_result()
@@ -79,11 +81,11 @@ namespace MesAdmin.Controllers.TJ
             }
         }
         [HttpPost, Route("edit")]
-        public IHttpActionResult Edit(mes_user_entity entity)
+        public IHttpActionResult Edit(mes_role_entity entity)
         {
             try
             {
-                var ret = _userservice.Modify(entity);
+                var ret = _roleservice.Modify(entity);
                 if (ret)
                 {
                     return Json(new sys_result()
@@ -115,7 +117,7 @@ namespace MesAdmin.Controllers.TJ
                 //var scope = GlobalConfiguration.Configuration.DependencyResolver.GetRequestLifetimeScope();
                 //scope.Resolve<IDbOperate<mes_role_entity>>();
                 int resultcount = 0;
-                var list = _userservice.GetList(parm, out resultcount);
+                var list = _roleservice.GetList(parm, out resultcount);
                 return Json(new sys_search_result()
                 {
                     code = 1,

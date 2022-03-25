@@ -10,5 +10,7 @@ namespace ZDMesModels
     {
         public int code { get; set; }
         public string msg { get; set; }
+        public List<dynamic> list { get; set; } = new List<dynamic>();
+        public List<dynamic> noklist { get; set; } = new List<dynamic>();
     }
 }

@@ -102,17 +102,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDao.cs" />
+    <Compile Include="Common\PageConfigService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OracleBaseFixture.cs" />
-    <Compile Include="TJ\MesMenuService.cs" />
-    <Compile Include="TJ\MesRoleService.cs" />
-    <Compile Include="TJ\MesUserService.cs" />
-    <Compile Include="TJ\TJDAO.cs" />
+    <Compile Include="Common\MesMenuService.cs" />
+    <Compile Include="Common\MesRoleService.cs" />
+    <Compile Include="Common\MesUserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="LBJ\" />
     <Folder Include="MF\" />
+    <Folder Include="TJ\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

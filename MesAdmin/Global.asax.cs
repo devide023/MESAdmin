@@ -31,8 +31,6 @@ namespace MesAdmin
             builder.RegisterAssemblyTypes(AssModel);
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
             builder.RegisterAssemblyTypes(AssInterfaces);
-            var AssServices = Assembly.Load("ZDMesServices");
-            builder.RegisterAssemblyTypes(AssServices).AsImplementedInterfaces();
             var autofac_config = new ConfigurationBuilder();
             autofac_config.AddJsonFile("autofac_config.json");
             var modules = new ConfigurationModule(autofac_config.Build());

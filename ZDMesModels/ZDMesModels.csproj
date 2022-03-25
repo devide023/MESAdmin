@@ -64,6 +64,7 @@
     <Compile Include="mes_role_entity.cs" />
     <Compile Include="mes_user_role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sys_field_info.cs" />
     <Compile Include="sys_login_result.cs" />
     <Compile Include="mes_menu_entity.cs" />
     <Compile Include="sys_menu_permis.cs" />

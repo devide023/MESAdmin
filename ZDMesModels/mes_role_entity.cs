@@ -39,7 +39,7 @@ namespace ZDMesModels
     {
         public mes_role_entity_mapper()
         {
-            Map(t => t.id).Key(KeyType.Assigned);
+            Map(t => t.id).Key(KeyType.TriggerIdentity);
             AutoMap();
         }
     }
