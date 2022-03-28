@@ -336,5 +336,19 @@ namespace ZDMesServices.Common
                 throw;
             }
         }
+
+        public IEnumerable<mes_user_entity> GetUserByKey(string key)
+        {
+            try
+            {
+                var exp = Predicates.Field<mes_user_entity>(t => t.name, Operator.Like, key);
+                return Db.GetList<mes_user_entity>(exp);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

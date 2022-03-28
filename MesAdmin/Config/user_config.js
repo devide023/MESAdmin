@@ -33,6 +33,9 @@
                 width: 100,
                 activevalue: 1,
                 inactivevalue: 0,
+                istag: true,
+                tagtypes: [{ label: 'success', value: 1 }, { label: 'danger', value: 0 }],
+                options: [{ label: '启用', value: 1 }, { label: '禁用', value: 0 }]
             },
             {
                 coltype: 'string',
@@ -51,9 +54,10 @@
             },
             {
                 coltype: 'string',
-                prop: 'adduser',
+                prop: 'addusername',
                 label: '录入人',
                 headeralign: 'center',
+                width:80,
                 align: 'left',
             },
             {
@@ -61,7 +65,9 @@
                 prop: 'addtime',
                 label: '录入时间',
                 headeralign: 'center',
+                width:150,
                 align: 'left',
+                overflowtooltip: true,
             }
         ],
             form: {

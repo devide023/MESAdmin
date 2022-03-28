@@ -57,6 +57,12 @@ namespace ZDMesInterfaces.Common
         /// <param name="token"></param>
         /// <returns></returns>
         sys_userinfo_result GetUserInfo(string token);
+        /// <summary>
+        /// 根据关键字过滤用户信息
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<mes_user_entity> GetUserByKey(string key);
         
     }
 }

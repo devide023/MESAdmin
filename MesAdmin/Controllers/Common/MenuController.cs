@@ -15,13 +15,13 @@ namespace MesAdmin.Controllers.Common
     {
         private IDbOperate<mes_menu_entity> _menuservice;
         private IMenu _menu;
-        public MenuController(IDbOperate<mes_menu_entity> menuservice,IMenu menu)
+        public MenuController(IDbOperate<mes_menu_entity> menuservice, IMenu menu)
         {
             _menuservice = menuservice;
             _menu = menu;
         }
         [HttpPost, SearchFilter, Route("list")]
-        public IHttpActionResult  List(sys_page parm)
+        public IHttpActionResult List(sys_page parm)
         {
             try
             {
@@ -41,12 +41,22 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
-        [HttpPost,Route("add")]
+        [HttpPost, Route("add")]
         public IHttpActionResult Add(List<mes_menu_entity> entitys)
         {
             try
             {
-               int ret = _menuservice.Add(entitys);
+                if (entitys.Count > 0)
+                {
+                    var entity = entitys.First();
+                    var bm = entity.code;
+                    int maxid = _menu.Get_MenuMaxCode(entity.pid);
+                    for (int i = 0; i < entitys.Count; i++)
+                    {
+                        entitys[i].code = bm + (maxid + i + 1).ToString().PadLeft(2, '0');
+                    }
+                }
+                int ret = _menuservice.Add(entitys);
                 if (ret > 0)
                 {
                     return Json(new sys_result()
@@ -70,13 +80,13 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
-        [HttpPost,Route("del")]
+        [HttpPost, Route("del")]
         public IHttpActionResult Del(List<mes_menu_entity> entitys)
         {
             try
             {
                 var ret = _menuservice.Del(entitys);
-                if (ret )
+                if (ret)
                 {
                     return Json(new sys_result()
                     {
@@ -128,6 +138,28 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
-        
+
+        [HttpGet,Route("tree")]
+        public IHttpActionResult Tree()
+        {
+            try
+            {
+                var list = _menu.Get_MenuTree();
+                var collist = _menu.Get_ColsTree();
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    list = list,
+                    fields = collist
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

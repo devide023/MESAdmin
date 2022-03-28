@@ -11,6 +11,7 @@ using Dapper;
 using DapperExtensions;
 using DapperExtensions.Predicate;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 namespace ZDMesServices.Common
 {
     public class PageConfigService : OracleBaseFixture, IPageConfig
@@ -82,18 +83,10 @@ namespace ZDMesServices.Common
                     var conf = q.First();
                     var configfullpath = configroot + conf;
                     var jsstr = Tool.ReadFile(configfullpath);
-                    var pos = jsstr.IndexOf("fields");
-                    if (pos != -1)
-                    {
-                        int pos1 = jsstr.IndexOf("[", pos);
-                        int pos2 = jsstr.IndexOf("]", pos);
-                        string fields = jsstr.Substring(pos1, (pos2 - pos1) + 1);
-                        return JsonConvert.DeserializeObject<List<sys_field_info>>(fields);
-                    }
-                    else
-                    {
-                        return new List<sys_field_info>();
-                    }
+                    Regex reg = new Regex(@"(?<fields>fields:[\w\W]*])");
+                    var fieldsinfo = reg.Match(jsstr).Groups["fields"].Value;
+                    fieldsinfo = fieldsinfo.Replace("fields:", "").Replace(" ","");
+                    return JsonConvert.DeserializeObject<List<sys_field_info>>(fieldsinfo);
                 }
                 else
                 {

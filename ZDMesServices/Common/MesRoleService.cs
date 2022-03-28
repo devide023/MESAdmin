@@ -18,6 +18,160 @@ namespace ZDMesServices.Common
 
         }
 
+        public override bool Del(IEnumerable<mes_role_entity> entitys)
+        {
+            try
+            {
+                using (var trans = DB.Connection.BeginTransaction())
+                {
+                    foreach (var item in entitys)
+                    {
+                        DB.Delete<mes_role_entity>(Predicates.Field<mes_role_entity>(t => t.id, Operator.Eq, item.id),trans);
+                        DB.Delete<mes_role_menu>(Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, item.id), trans);
+                        DB.Delete<mes_user_role>(Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, item.id), trans);
+                    }
+                    trans.Commit();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Edit_Role_Menus(sys_role_form form)
+        {
+            try
+            {
+                using (var trans = Db.Connection.BeginTransaction())
+                {
+
+                    if (form.mes_role_entity.id > 0)
+                    {
+                        Db.Update<mes_role_entity>(form.mes_role_entity, trans);
+                        var q = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, form.mes_role_entity.id);
+                        var q1 = Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, form.mes_role_entity.id);
+                        Db.Delete<mes_role_menu>(q, trans);
+                        Db.Delete<mes_user_role>(q1, trans);
+                        foreach (var menu in form.permission)
+                        {
+                            mes_role_menu role_menu = new mes_role_menu();
+                            role_menu.menuid = menu.id;
+                            role_menu.roleid = form.mes_role_entity.id;
+                            if (menu.menutype == "02")
+                            {
+                                var ids = form.permission.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                var funs = new List<string>();
+                                if (ids.Count > 0)
+                                {
+                                    funs = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, ids)).Select(t => t.name).ToList();
+                                }
+                                var editids = form.editfields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                var editfields = new List<string>();
+                                if (editids.Count > 0)
+                                {
+                                    editfields = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, editids)).Select(t => t.name).ToList();
+                                }
+                                var hideids = form.hidefields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                var hidefields = new List<string>();
+                                if (hideids.Count > 0)
+                                {
+                                    hidefields = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, hideids)).Select(t => t.name).ToList();
+                                }
+                                var permis = JsonConvert.SerializeObject(new sys_menu_permis()
+                                {
+                                    editfields = editfields,
+                                    hidefields = hidefields,
+                                    funs = funs
+                                });
+                                role_menu.permis = permis;
+                            }
+                            else
+                            {
+                                role_menu.permis = JsonConvert.SerializeObject(new sys_menu_permis());
+                            }
+                            Db.Insert<mes_role_menu>(role_menu, trans);
+                        }
+                    }
+                    trans.Commit();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<mes_menu_entity> Get_Role_Edit_Fields(int roleid)
+        {
+            try
+            {
+                var p = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, roleid);
+                var list = DB.GetList<mes_role_menu>(p);
+
+                List<mes_menu_entity> editlist = new List<mes_menu_entity>();
+                foreach (var item in list)
+                {
+                   var menupermis = JsonConvert.DeserializeObject<sys_menu_permis>(item.permis);
+                    if (menupermis.editfields.Count > 0)
+                    {
+                        PredicateGroup pg = new PredicateGroup()
+                        {
+                            Operator = GroupOperator.And,
+                            Predicates = new List<IPredicate>()
+                        };
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, item.menuid));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, "04"));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.name, Operator.Eq, menupermis.editfields));
+                        editlist.AddRange(DB.GetList<mes_menu_entity>(pg));
+                    }
+                }
+                return editlist;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<mes_menu_entity> Get_Role_Hide_Fields(int roleid)
+        {
+            try
+            {
+                var p = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, roleid);
+                var list = DB.GetList<mes_role_menu>(p);
+
+                List<mes_menu_entity> hidelist = new List<mes_menu_entity>();
+                foreach (var item in list)
+                {
+                    var menupermis = JsonConvert.DeserializeObject<sys_menu_permis>(item.permis);
+                    if (menupermis.hidefields.Count > 0)
+                    {
+                        PredicateGroup pg = new PredicateGroup()
+                        {
+                            Operator = GroupOperator.And,
+                            Predicates = new List<IPredicate>()
+                        };
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, item.menuid));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, "04"));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.name, Operator.Eq, menupermis.hidefields));
+                        hidelist.AddRange(DB.GetList<mes_menu_entity>(pg));
+                    }
+                }
+                return hidelist;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<mes_menu_entity> Get_Role_Menus(int roleid)
         {
             try
@@ -66,23 +220,59 @@ namespace ZDMesServices.Common
             }
         }
 
-        public bool Save_Role_Menus(int roleid, List<mes_menu_entity> menus)
+        public bool Save_Role_Menus(sys_role_form form)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append(" declare \n");
-                sql.Append(" begin \n");
-                sql.Append(" delete from mes_role_menu where roleid in :roleid; \n");
-                sql.Append(" insert into mes_role_menu(roleid,menuid,permis) values (:roleid,:menuid,:permis); \n");
-                sql.Append(" commit; \n");
-                sql.Append(" end;\n");
-                List<dynamic> list = new List<dynamic>();
-                foreach (var item in menus)
+                using (var trans = Db.Connection.BeginTransaction())
                 {
-                    list.Add(new { roleid = roleid, menuid = item.id, permis = JsonConvert.SerializeObject(item.menupermission) });
+                    var roleid = Db.Insert<mes_role_entity>(form.mes_role_entity, trans);
+                    var q = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, (int)roleid);
+                    var q1 = Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, (int)roleid);
+                    Db.Delete<mes_role_menu>(q, trans);
+                    Db.Delete<mes_user_role>(q1, trans);
+                    foreach (var menu in form.permission)
+                    {
+                        mes_role_menu role_menu = new mes_role_menu();
+                        role_menu.menuid = menu.id;
+                        role_menu.roleid = roleid;
+                        if (menu.menutype == "02")
+                        {
+                            var ids = form.permission.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                            var funs = new List<string>();
+                            if (ids.Count > 0)
+                            {
+                                funs = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, ids)).Select(t => t.name).ToList();
+                            }
+                            var editids = form.editfields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                            var editfields = new List<string>();
+                            if (editids.Count > 0)
+                            {
+                                editfields = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, editids)).Select(t => t.name).ToList();
+                            }
+                            var hideids = form.hidefields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                            var hidefields = new List<string>();
+                            if (hideids.Count > 0)
+                            {
+                                hidefields = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, hideids)).Select(t => t.name).ToList();
+                            }
+                            var permis = JsonConvert.SerializeObject(new sys_menu_permis()
+                            {
+                                editfields = editfields,
+                                hidefields = hidefields,
+                                funs = funs
+                            });
+                            role_menu.permis = permis;
+                        }
+                        else
+                        {
+                            role_menu.permis = JsonConvert.SerializeObject(new sys_menu_permis());
+                        }
+                        Db.Insert<mes_role_menu>(role_menu, trans);
+                    }
+                    trans.Commit();
+                    return true;
                 }
-                return DB.Connection.Execute(sql.ToString(), list) > 0;
             }
             catch (Exception)
             {
@@ -91,23 +281,27 @@ namespace ZDMesServices.Common
             }
         }
 
-        public bool Save_Role_Users(int roleid, List<int> userids)
+        public bool Save_Role_Users(sys_role_user_form form)
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append(" declare \n");
-                sql.Append(" begin \n");
-                sql.Append(" delete from mes_user_role where roleid in :roleid; \n");
-                sql.Append(" insert into mes_user_role(userid,roleid) values (:userid,:roleid); \n");
-                sql.Append(" commit; \n");
-                sql.Append(" end;\n");
-                List<dynamic> list = new List<dynamic>();
-                foreach (var item in userids)
+                using (var trans = Db.Connection.BeginTransaction())
                 {
-                    list.Add(new { roleid = roleid, userid = item });
+                    List<mes_user_role> data = new List<mes_user_role>();
+                    foreach (var item in form.userid)
+                    {
+                        data.Add(new mes_user_role()
+                        {
+                            roleid = form.roleid,
+                            userid = item
+                        });
+                    }
+                    var exp1 = Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, form.roleid);
+                    Db.Delete<mes_user_role>(exp1, trans);
+                    Db.Insert<mes_user_role>(data, trans);
+                    trans.Commit();
+                    return true;
                 }
-                return DB.Connection.Execute(sql.ToString(), list) > 0;
             }
             catch (Exception)
             {

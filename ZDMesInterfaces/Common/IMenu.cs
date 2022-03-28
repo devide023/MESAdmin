@@ -20,5 +20,21 @@ namespace ZDMesInterfaces.Common
         /// <param name="menuid"></param>
         /// <returns></returns>
         IEnumerable<mes_user_entity> Get_Menu_Users(int menuid);
+        /// <summary>
+        /// 获取菜单编码
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        int Get_MenuMaxCode(int pid);
+        /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<mes_menu_entity> Get_MenuTree();
+        /// <summary>
+        /// 获取页面字段树
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<mes_menu_entity> Get_ColsTree();
     }
 }

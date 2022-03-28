@@ -71,6 +71,8 @@
     <Compile Include="sys_page.cs" />
     <Compile Include="sys_result.cs" />
     <Compile Include="mes_role_menu.cs" />
+    <Compile Include="sys_role_form.cs" />
+    <Compile Include="sys_role_user_form.cs" />
     <Compile Include="sys_search.cs" />
     <Compile Include="sys_search_result.cs" />
     <Compile Include="sys_sort.cs" />

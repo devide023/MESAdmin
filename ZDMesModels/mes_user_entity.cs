@@ -40,6 +40,7 @@ namespace ZDMesModels
         ///录入人
         ///</summary>
         public int adduser { get; set; }
+        public string addusername { get; set; }
         /// <summary>
         ///录入时间
         ///</summary>

@@ -15,6 +15,18 @@ namespace ZDMesInterfaces.Common
         /// <returns></returns>
         IEnumerable<mes_menu_entity> Get_Role_Menus(int roleid);
         /// <summary>
+        /// 获取角色可编辑字段
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <returns></returns>
+        IEnumerable<mes_menu_entity> Get_Role_Edit_Fields(int roleid);
+        /// <summary>
+        /// 获取角色隐藏字段
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <returns></returns>
+        IEnumerable<mes_menu_entity> Get_Role_Hide_Fields(int roleid);
+        /// <summary>
         /// 获取角色用户列表
         /// </summary>
         /// <param name="roleid"></param>
@@ -26,13 +38,19 @@ namespace ZDMesInterfaces.Common
         /// <param name="roleid"></param>
         /// <param name="menus"></param>
         /// <returns></returns>
-        bool Save_Role_Menus(int roleid, List<mes_menu_entity> menus);
+        bool Save_Role_Menus(sys_role_form form);
+        /// <summary>
+        /// 修改角色菜单
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        bool Edit_Role_Menus(sys_role_form form);
         /// <summary>
         /// 保存角色用户
         /// </summary>
         /// <param name="roleid"></param>
         /// <param name="users"></param>
         /// <returns></returns>
-        bool Save_Role_Users(int roleid, List<int> userids);
+        bool Save_Role_Users(sys_role_user_form from);
     }
 }

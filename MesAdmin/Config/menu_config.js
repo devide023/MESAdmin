@@ -1,5 +1,5 @@
 ﻿{
-    isgradequery: true,
+    isgradequery: false,
         isfresh: true,
         fields: [{
             coltype: 'string',
@@ -86,6 +86,14 @@
             },
             {
                 coltype: 'string',
+                prop: 'btntxt',
+                label: '按钮文本',
+                headeralign: 'center',
+                align: 'center',
+                width: 100,
+            },
+            {
+                coltype: 'string',
                 prop: 'fnname',
                 label: '函数名称',
                 headeralign: 'center',
@@ -105,7 +113,8 @@
             prop: 'adduser',
             label: '录入人',
             headeralign: 'center',
-            align: 'left',
+            align: 'center',
+            width:80,
         },
         {
             coltype: 'datetime',
@@ -166,5 +175,5 @@
                 {
 
                 }
-    }
+    },
 }

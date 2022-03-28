@@ -7,6 +7,7 @@ using ZDMesInterfaces.Common;
 using ZDMesModels;
 using DapperExtensions;
 using DapperExtensions.Predicate;
+using Dapper;
 namespace ZDMesServices.Common
 {
     public class MesMenuService : BaseDao<mes_menu_entity>,IMenu
@@ -24,22 +25,23 @@ namespace ZDMesServices.Common
             resultcount = list.Where(t => t.pid == 0).Count();
             foreach (var item in list.Where(t=>t.pid == 0).OrderBy(t=>t.id).ThenBy(t=>t.seq))
             {
-                item.children = GetSubList(list, item.id).ToList();
+                item.children = GetSubList(item.id).ToList();
                 //item.hasChildren = list.Where(t => t.pid == item.id).Count() > 0;
                 rootlist.Add(item);
             }
             return rootlist;
         }
 
-        private IEnumerable<mes_menu_entity> GetSubList(IEnumerable<mes_menu_entity> list,int pid)
+        private IEnumerable<mes_menu_entity> GetSubList(int pid)
         {
             try
             {
                 var subs = new List<mes_menu_entity>();
-                var sublist = list.Where(t => t.pid == pid).OrderBy(t => t.pid).ThenBy(t=>t.seq);
+                var q = Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid);
+                var sublist = Db.GetList<mes_menu_entity>(q).OrderBy(t => t.pid).ThenBy(t=>t.seq);
                 foreach (var item in sublist)
                 {
-                    item.children = GetSubList(list, item.id).ToList();
+                    item.children = GetSubList(item.id).ToList();
                     //item.hasChildren = list.Where(t => t.pid == item.id).Count() > 0;
                     subs.Add(item);
                 }
@@ -94,6 +96,114 @@ namespace ZDMesServices.Common
                     return new List<mes_user_entity>();
                 }
                 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public int Get_MenuMaxCode(int pid)
+        {
+            try
+            {
+                var sub = DB.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
+                return sub.Count();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<mes_menu_entity> Get_MenuTree()
+        {
+            try
+            {
+               var root = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0)).OrderBy(t=>t.id).ThenBy(t=>t.seq);
+                foreach (var item in root)
+                {
+                    item.children = Get_SubMenu(item.id).ToList();
+                }
+                return root;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private IEnumerable<mes_menu_entity> Get_SubMenu(int pid)
+        {
+            try
+            {
+                PredicateGroup pg = new PredicateGroup()
+                {
+                    Operator = GroupOperator.And,
+                    Predicates = new List<IPredicate>()
+                };
+                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
+                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() {"01","02","03"}));
+                var sub = DB.GetList<mes_menu_entity>(pg).OrderBy(t=>t.seq);
+                foreach (var item in sub)
+                {
+                    if (item.menutype == "03")
+                    {
+                        item.name = item.btntxt;
+                    }
+                    item.children= Get_SubMenu(item.id).ToList();
+                }
+                return sub;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<mes_menu_entity> Get_ColsTree()
+        {
+            try
+            {
+                var root = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0)).OrderBy(t => t.id).ThenBy(t => t.seq);
+                foreach (var item in root)
+                {
+                    item.children = Get_SubTree(item.id).ToList();
+                }
+                return root;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private IEnumerable<mes_menu_entity> Get_SubTree(int pid)
+        {
+            try
+            {
+                PredicateGroup pg = new PredicateGroup()
+                {
+                    Operator = GroupOperator.And,
+                    Predicates = new List<IPredicate>()
+                };
+                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
+                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() { "01", "02", "04" }));
+                var sub = DB.GetList<mes_menu_entity>(pg).OrderBy(t => t.seq);
+                foreach (var item in sub)
+                {
+                    if (item.menutype == "04")
+                    {
+                        item.name = item.btntxt;
+                    }
+                    item.children = Get_SubTree(item.id).ToList();
+                }
+                return sub;
             }
             catch (Exception)
             {

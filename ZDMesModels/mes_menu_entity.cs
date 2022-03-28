@@ -65,9 +65,14 @@ namespace ZDMesModels
         /// </summary>
         public string btntype { get; set; }
         /// <summary>
+        /// 按钮文本
+        /// </summary>
+        public string btntxt { get; set; }
+        /// <summary>
         ///录入人
         ///</summary>
         public int adduser { get; set; }
+        public string addusername { get; set; }
         /// <summary>
         ///录入时间
         ///</summary>
