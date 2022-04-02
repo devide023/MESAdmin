@@ -104,6 +104,16 @@
   <ItemGroup>
     <Compile Include="BaseDao.cs" />
     <Compile Include="Common\PageConfigService.cs" />
+    <Compile Include="LBJ\BaseInfo\BaseInfoService.cs" />
+    <Compile Include="LBJ\DZWD\DZGYService.cs" />
+    <Compile Include="LBJ\DZWD\JTFPService.cs" />
+    <Compile Include="LBJ\DZWD\JTGLService.cs" />
+    <Compile Include="LBJ\GWMgr\GwZdService.cs" />
+    <Compile Include="LBJ\RyMgr\RYJCService.cs" />
+    <Compile Include="LBJ\RyMgr\RYJNService.cs" />
+    <Compile Include="LBJ\RyMgr\RYJXService.cs" />
+    <Compile Include="LBJ\RyMgr\RyxxService.cs" />
+    <Compile Include="LBJ\SBMgr\SbxxService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OracleBaseFixture.cs" />
     <Compile Include="Common\MesMenuService.cs" />
@@ -111,7 +121,6 @@
     <Compile Include="Common\MesUserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="LBJ\" />
     <Folder Include="MF\" />
     <Folder Include="TJ\" />
   </ItemGroup>

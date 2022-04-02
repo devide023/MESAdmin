@@ -30,6 +30,18 @@ namespace ZDMesInterfaces.Common
         /// <param name="menuid"></param>
         /// <returns></returns>
         List<sys_field_info> GetPageFields(int menuid);
+        /// <summary>
+        /// 获取页面功能按钮
+        /// </summary>
+        /// <param name="route"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        List<sys_pagefn_info> GetPageFnList(string route, string token);
+        /// <summary>
+        /// 获取路由路径与组件对应关系
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<sys_route_component> GetRouteComponent();
     }
 
 

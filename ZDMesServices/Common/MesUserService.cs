@@ -62,6 +62,7 @@ namespace ZDMesServices.Common
                     pg.Predicates = new List<IPredicate>();
                     pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, menuids.Select(t=>t.menuid)));
                     pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.status, Operator.Eq, 1));
+                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string> {"01","02"}));
                     var list = DB.GetList<mes_menu_entity>(pg).OrderBy(t=>t.seq);
                     var rootlist = list.Where(t => t.pid == 0);
                     foreach (var item in rootlist)
@@ -228,10 +229,10 @@ namespace ZDMesServices.Common
 
                 var pwd = ZDToolHelper.Tool.Str2MD5(user.password);
                 StringBuilder sql = new StringBuilder();
-                var isexsit = Db.Connection.ExecuteScalar<int>("select count(id) from sys_user where code= :code and pwd= :pwd", new { code = user.username, pwd = pwd });
+                var isexsit = Db.Connection.ExecuteScalar<int>("select count(id) from mes_user_entity where code= :code and pwd= :pwd", new { code = user.username, pwd = pwd });
                 if (isexsit > 0)
                 {
-                    var token = Db.Connection.ExecuteScalar<string>("select token from sys_user where code= :code and pwd= :pwd ", new { code = user.username, pwd = pwd });
+                    var token = Db.Connection.ExecuteScalar<string>("select token from mes_user_entity where code= :code and pwd= :pwd ", new { code = user.username, pwd = pwd });
                     return new sys_login_result()
                     {
                         code = 1,

@@ -2,7 +2,7 @@
 using MesAdmin.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web.Mvc;
-
+using Aspose.Cells;
 namespace MesAdmin.Tests.Controllers
 {
     [TestClass]
@@ -11,15 +11,9 @@ namespace MesAdmin.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            // 排列
-            HomeController controller = new HomeController();
-
-            // 操作
-            ViewResult result = controller.Index() as ViewResult;
-
-            // 断言
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Home Page", result.ViewBag.Title);
+            Workbook wk = new Workbook(@"D:\DeskTop\gwzd.xlsx");
+            Cells cells = wk.Worksheets[0].Cells;
+            System.Data.DataTable dataTable1 = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn);
         }
     }
 }

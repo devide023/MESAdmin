@@ -1,6 +1,7 @@
 ﻿{
     isgradequery: false,
         isfresh: true,
+        isoperate: true,
         fields: [{
             coltype: 'string',
             prop: 'code',

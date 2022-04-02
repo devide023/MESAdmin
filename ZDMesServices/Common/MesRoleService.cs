@@ -52,9 +52,7 @@ namespace ZDMesServices.Common
                     {
                         Db.Update<mes_role_entity>(form.mes_role_entity, trans);
                         var q = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, form.mes_role_entity.id);
-                        var q1 = Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, form.mes_role_entity.id);
                         Db.Delete<mes_role_menu>(q, trans);
-                        Db.Delete<mes_user_role>(q1, trans);
                         foreach (var menu in form.permission)
                         {
                             mes_role_menu role_menu = new mes_role_menu();
@@ -228,9 +226,7 @@ namespace ZDMesServices.Common
                 {
                     var roleid = Db.Insert<mes_role_entity>(form.mes_role_entity, trans);
                     var q = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, (int)roleid);
-                    var q1 = Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, (int)roleid);
                     Db.Delete<mes_role_menu>(q, trans);
-                    Db.Delete<mes_user_role>(q1, trans);
                     foreach (var menu in form.permission)
                     {
                         mes_role_menu role_menu = new mes_role_menu();

@@ -15,7 +15,7 @@
     {
       "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
       "properties": {
-        "Constr": "testmes"
+        "Constr": "lbjmes"
       }
     }
   ]

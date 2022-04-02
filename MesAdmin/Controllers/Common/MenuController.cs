@@ -49,11 +49,14 @@ namespace MesAdmin.Controllers.Common
                 if (entitys.Count > 0)
                 {
                     var entity = entitys.First();
-                    var bm = entity.code;
-                    int maxid = _menu.Get_MenuMaxCode(entity.pid);
-                    for (int i = 0; i < entitys.Count; i++)
+                    if (entity.menutype == "03" || entity.menutype == "04")
                     {
-                        entitys[i].code = bm + (maxid + i + 1).ToString().PadLeft(2, '0');
+                        var bm = entity.code;
+                        int maxid = _menu.Get_MenuMaxCode(entity.pid);
+                        for (int i = 0; i < entitys.Count; i++)
+                        {
+                            entitys[i].code = bm + (maxid + i + 1).ToString().PadLeft(2, '0');
+                        }
                     }
                 }
                 int ret = _menuservice.Add(entitys);

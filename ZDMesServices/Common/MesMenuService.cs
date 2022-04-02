@@ -19,10 +19,9 @@ namespace ZDMesServices.Common
 
         public override IEnumerable<mes_menu_entity> GetList(sys_page parm, out int resultcount)
         {
-            int totalcnt = 0;
             var rootlist = new List<mes_menu_entity>();
-            var list = base.GetList(parm, out totalcnt);
-            resultcount = list.Where(t => t.pid == 0).Count();
+            var list = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0));
+            resultcount = list.Count();
             foreach (var item in list.Where(t=>t.pid == 0).OrderBy(t=>t.id).ThenBy(t=>t.seq))
             {
                 item.children = GetSubList(item.id).ToList();

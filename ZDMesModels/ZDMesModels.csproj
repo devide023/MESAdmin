@@ -61,6 +61,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LBJ\base_gwzd.cs" />
+    <Compile Include="LBJ\base_sbxx.cs" />
+    <Compile Include="LBJ\base_gcxx.cs" />
+    <Compile Include="LBJ\base_scxxx.cs" />
+    <Compile Include="LBJ\sys_ryjx.cs" />
+    <Compile Include="LBJ\zxjc_t_jstcfp.cs" />
+    <Compile Include="LBJ\zxjc_t_jstc.cs" />
+    <Compile Include="LBJ\zxjc_t_dzgy.cs" />
+    <Compile Include="LBJ\zxjc_jcgl.cs" />
+    <Compile Include="LBJ\zxjc_ryxx_jn.cs" />
+    <Compile Include="LBJ\zxjc_ryxx.cs" />
     <Compile Include="mes_role_entity.cs" />
     <Compile Include="mes_user_role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,10 +80,12 @@
     <Compile Include="mes_menu_entity.cs" />
     <Compile Include="sys_menu_permis.cs" />
     <Compile Include="sys_page.cs" />
+    <Compile Include="sys_pagefn_info.cs" />
     <Compile Include="sys_result.cs" />
     <Compile Include="mes_role_menu.cs" />
     <Compile Include="sys_role_form.cs" />
     <Compile Include="sys_role_user_form.cs" />
+    <Compile Include="sys_route_component.cs" />
     <Compile Include="sys_search.cs" />
     <Compile Include="sys_search_result.cs" />
     <Compile Include="sys_sort.cs" />
@@ -80,7 +93,6 @@
     <Compile Include="mes_user_entity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="LBJ\" />
     <Folder Include="MF\" />
     <Folder Include="TJ\sys\" />
   </ItemGroup>

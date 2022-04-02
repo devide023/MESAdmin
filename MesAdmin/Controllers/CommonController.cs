@@ -29,12 +29,15 @@ namespace MesAdmin.Controllers
                 string config = _pageconfig.GetPageConf(path);
                 var token = ZDToolHelper.TokenHelper.GetToken;
                 var pagepermis = _pageconfig.GetPagePermis(path, token);
+                //页面按钮
+                var pagebtns = _pageconfig.GetPageFnList(path, token);
                 return Json(new
                 {
                     code = 1,
                     msg = "ok",
                     pageconfig = config,
-                    pagepermis = pagepermis
+                    pagepermis = pagepermis,
+                    pagebtns = pagebtns
                 });
             }
             catch (Exception)
@@ -55,6 +58,19 @@ namespace MesAdmin.Controllers
                     msg = "ok",
                     fields = fields_infos
                 });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet,Route("routecomponent")]
+        public IHttpActionResult GetRountComponent()
+        {
+            try
+            {
+                return Json(new { code = 1, msg = "ok", list = _pageconfig.GetRouteComponent() });
             }
             catch (Exception)
             {

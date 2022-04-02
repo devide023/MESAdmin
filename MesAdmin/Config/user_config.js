@@ -7,10 +7,10 @@
         },
         add_handle: function ()
         {
-            var row = this.deepClone(this.pageconfig.form);
+            var row = this.$deepClone(this.pageconfig.form);
             row.status = 1;
             row.adduser = this.$store.getters.name;
-            row.addtime = this.parseTime(new Date());
+            row.addtime = this.$parseTime(new Date());
             this.list.unshift(row);
         },
         delhandle: function ()
