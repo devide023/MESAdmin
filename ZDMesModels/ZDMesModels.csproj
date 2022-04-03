@@ -66,6 +66,10 @@
     <Compile Include="LBJ\base_gcxx.cs" />
     <Compile Include="LBJ\base_scxxx.cs" />
     <Compile Include="LBJ\sys_ryjx.cs" />
+    <Compile Include="LBJ\zxjc_gylx.cs" />
+    <Compile Include="LBJ\zxjc_djxx.cs" />
+    <Compile Include="LBJ\zxjc_djgw.cs" />
+    <Compile Include="LBJ\zxjc_t_tstc.cs" />
     <Compile Include="LBJ\zxjc_t_jstcfp.cs" />
     <Compile Include="LBJ\zxjc_t_jstc.cs" />
     <Compile Include="LBJ\zxjc_t_dzgy.cs" />

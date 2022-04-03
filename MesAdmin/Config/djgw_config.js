@@ -1,6 +1,8 @@
-﻿{
+{
   isgradequery: true,
+  isbatoperate: true,
   isoperate: false,
+  isfresh: true,
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
@@ -8,9 +10,12 @@
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
-    select_usercode_handle: function () {
-      console.log(this.$basepage);
-    }
+  },
+  batoperate: {
+    import_by_add: function (vm, res) {},
+    import_by_replace: function (vm, res) {},
+    import_by_zh: function (vm, res) {},
+    export_excel: function (vm) {}
   },
   fields: [{
       coltype: 'list',
@@ -29,8 +34,8 @@
       prop: 'scx',
       label: '生产线',
       headeralign: 'center',
-      align: 'center',
-      width: 80,
+      align: 'left',
+      width: 180,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
@@ -39,87 +44,46 @@
       options: []
     }, {
       coltype: 'string',
-      prop: 'jnbh',
-      label: '技能编号',
+      prop: 'djno',
+      label: '点检编号',
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
       width: 80,
-    }, {
-      coltype: 'string',
-      prop: 'usercode',
-      label: '账号',
-      headeralign: 'center',
-      align: 'center',
-      suggest: function (key, cb) {
-        this.$request('get', '/lbj/baseinfo/usercode', {
-          key: key
-        }).then(function (res) {
-          if (res.code === 1) {
-            cb(res.list);
-          } else {
-            this.$message.error(res.msg);
-          }
-        });
-      },
-      select_handlename: 'select_usercode_handle'
-    }, {
-      coltype: 'string',
-      prop: 'jnxx',
-      label: '技能',
-      headeralign: 'center',
-      align: 'center',
+      overflowtooltip: true,
     }, {
       coltype: 'list',
       prop: 'gwh',
       label: '岗位号',
       headeralign: 'center',
       align: 'center',
+      width: 150,
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/gwzd'
       },
       options: []
     }, {
-      coltype: 'list',
-      prop: 'jnfl',
-      label: '技能分类',
+      coltype: 'string',
+      prop: 'statusno',
+      dbprop: 'status_no',
+      label: '产品',
       headeralign: 'center',
       align: 'center',
-      options: [{
-          label: '装配',
-          value: '装配'
-        }, {
-          label: '测试',
-          value: '测试'
-        }, {
-          label: '校验',
-          value: '校验'
-        }, {
-          label: '安全',
-          value: '安全'
-        }, {
-          label: '其他',
-          value: '其他'
-        }
-      ]
+      width: 150,
     }, {
-      coltype: 'date',
-      prop: 'jnsj',
-      label: '技能时间',
+      coltype: 'string',
+      prop: 'djxx',
+      label: '点检内容',
       headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'rate',
-      prop: 'jnsld',
-      label: '熟练度',
-      headeralign: 'center',
-      align: 'center',
+      align: 'left',
+      overflowtooltip: true,
     }, {
       coltype: 'bool',
-      prop: 'sfhg',
-      label: '是否合格',
+      prop: 'scbz',
+      label: '删除标志',
       headeralign: 'center',
       align: 'center',
+      width: 80,
       activevalue: 'Y',
       inactivevalue: 'N',
     }, {
@@ -127,50 +91,49 @@
       prop: 'lrr',
       label: '录入人',
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
+      width: 80,
     }, {
       coltype: 'datetime',
       prop: 'lrsj',
       label: '录入时间',
       headeralign: 'center',
       align: 'center',
+      width: 130,
       overflowtooltip: true,
-    }
+    },
   ],
   form: {
     gcdm: '9902',
     scx: '',
-    usercode: '',
-    jnbh: '',
-    jnxx: '',
     gwh: '',
-    sfhg: 'Y',
+    statusno: '',
+    djno: '',
+    djxx: '',
+    scbz: 'N',
     lrr: '',
     lrsj: '',
-    jnfl: '',
-    jnsj: '',
-    jnsld: 0,
     isdb: false,
     isedit: true,
   },
   addapi: {
-    url: '/lbj/ryjn/add',
+    url: '/lbj/djgw/add',
     method: 'post',
     callback: function (vm, res) {}
   },
   delapi: {
-    url: '/lbj/ryjn/del',
+    url: '/lbj/djgw/del',
     method: 'post',
     callback: function (vm, res) {}
   },
   editapi: {
-    url: '/lbj/ryjn/edit',
+    url: '/lbj/djgw/edit',
     method: 'post',
     callback: function (vm, res) {}
   },
   queryapi: {
-    url: '/lbj/ryjn/list',
+    url: '/lbj/djgw/list',
     method: 'post',
     callback: function (vm, res) {}
-  },
+  }
 }

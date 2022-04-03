@@ -84,6 +84,8 @@ namespace ZDMesModels.LBJ
         public zxjc_t_jstc_mapper()
         {
             Map(t => t.jtid).Key(KeyType.Assigned);
+            Map(t => t.fpflg).Column("fp_flg");
+            Map(t => t.fpsj).Column("fp_sj");
             AutoMap();
         }
     }

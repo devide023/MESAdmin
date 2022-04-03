@@ -311,12 +311,14 @@
     <Compile Include="Controllers\Common\RoleController.cs" />
     <Compile Include="Controllers\Common\UserController.cs" />
     <Compile Include="Controllers\LBJ\BaseInfo\BaseInfoController.cs" />
-    <Compile Include="Controllers\LBJ\DZWD\DZGYController.cs" />
+    <Compile Include="Controllers\LBJ\DJGL\DJGWController.cs" />
+    <Compile Include="Controllers\LBJ\DJGL\DJXXController.cs" />
+    <Compile Include="Controllers\LBJ\GYGL\DZGYController.cs" />
     <Compile Include="Controllers\LBJ\DZWD\JTFPController.cs" />
     <Compile Include="Controllers\LBJ\DZWD\JTGLController.cs" />
+    <Compile Include="Controllers\LBJ\DZWD\TSTCController.cs" />
     <Compile Include="Controllers\LBJ\GWZD\GWZDController.cs" />
-    <Compile Include="Controllers\LBJ\RYGL\ISheet.cs" />
-    <Compile Include="Controllers\LBJ\RYGL\IWorkbook.cs" />
+    <Compile Include="Controllers\LBJ\GYGL\GYLXController.cs" />
     <Compile Include="Controllers\LBJ\RYGL\RYJCController.cs" />
     <Compile Include="Controllers\LBJ\RYGL\RYJNController.cs" />
     <Compile Include="Controllers\LBJ\RYGL\RYJXController.cs" />
@@ -332,8 +334,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Config\djgw_config.js" />
+    <Content Include="Config\djxx_config.js" />
     <Content Include="Config\dzgy_config.js" />
     <Content Include="Config\gwxx_config.js" />
+    <Content Include="Config\gylx_config.js" />
     <Content Include="Config\jcxx_config.js" />
     <Content Include="Config\jtfp_config.js" />
     <Content Include="Config\jtgl_config.js" />

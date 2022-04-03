@@ -1,31 +1,31 @@
-﻿using MesAdmin.Filters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ZDMesInterfaces.Common;
-using ZDMesModels;
 using ZDMesModels.LBJ;
+using ZDMesInterfaces.Common;
+using MesAdmin.Filters;
+using ZDMesModels;
+
 namespace MesAdmin.Controllers.LBJ.DZWD
 {
-    [RoutePrefix("api/lbj/dzgy")]
-    public class DZGYController : ApiController
+    [RoutePrefix("api/lbj/tstc")]
+    public class TSTCController : ApiController
     {
-        private IDbOperate<zxjc_t_dzgy> _dzgyservice;
-        public DZGYController(IDbOperate<zxjc_t_dzgy> dzgyservice)
+        private IDbOperate<zxjc_t_tstc> _tstcservice;
+        public TSTCController(IDbOperate<zxjc_t_tstc> tstcservice)
         {
-            _dzgyservice = dzgyservice;
+            _tstcservice = tstcservice;
         }
-
         [HttpPost, SearchFilter, Route("list")]
         public IHttpActionResult GetList(sys_page parm)
         {
             try
             {
                 int resultcount = 0;
-                var list = _dzgyservice.GetList(parm, out resultcount);
+                var list = _tstcservice.GetList(parm, out resultcount);
                 return Json(new sys_search_result()
                 {
                     code = 1,
@@ -41,12 +41,11 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             }
         }
         [HttpPost, Route("add")]
-        public IHttpActionResult AddRyxx(List<zxjc_t_dzgy> entitys)
+        public IHttpActionResult AddRyxx(List<zxjc_t_tstc> entitys)
         {
             try
             {
-                entitys.ForEach(i => i.gyid = Guid.NewGuid().ToString());
-                int ret = _dzgyservice.Add(entitys);
+                int ret = _tstcservice.Add(entitys);
                 if (ret > 0)
                 {
                     return Json(new sys_result()
@@ -72,11 +71,11 @@ namespace MesAdmin.Controllers.LBJ.DZWD
         }
 
         [HttpPost, Route("edit")]
-        public IHttpActionResult EditRyxx(List<zxjc_t_dzgy> entitys)
+        public IHttpActionResult EditRyxx(List<zxjc_t_tstc> entitys)
         {
             try
             {
-                var ret = _dzgyservice.Modify(entitys);
+                var ret = _tstcservice.Modify(entitys);
                 if (ret)
                 {
                     return Json(new sys_result()
@@ -101,11 +100,11 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             }
         }
         [HttpPost, Route("del")]
-        public IHttpActionResult DelRyxx(List<zxjc_t_dzgy> entitys)
+        public IHttpActionResult DelRyxx(List<zxjc_t_tstc> entitys)
         {
             try
             {
-                var ret = _dzgyservice.Del(entitys);
+                var ret = _tstcservice.Del(entitys);
                 if (ret)
                 {
                     return Json(new sys_result()

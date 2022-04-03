@@ -22,7 +22,7 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
         {
             try
             {
-                var list = _baseinfo.GetGCXX().Select(t => new { label = t.gcdm, value = t.gcmc });
+                var list = _baseinfo.GetGCXX().Select(t => new { label = t.gcmc, value = t.gcdm });
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)

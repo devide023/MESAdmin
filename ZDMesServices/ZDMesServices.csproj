@@ -105,10 +105,14 @@
     <Compile Include="BaseDao.cs" />
     <Compile Include="Common\PageConfigService.cs" />
     <Compile Include="LBJ\BaseInfo\BaseInfoService.cs" />
-    <Compile Include="LBJ\DZWD\DZGYService.cs" />
+    <Compile Include="LBJ\DJXX\DJGWService.cs" />
+    <Compile Include="LBJ\DJXX\DJXXService.cs" />
+    <Compile Include="LBJ\GYGL\DZGYService.cs" />
     <Compile Include="LBJ\DZWD\JTFPService.cs" />
     <Compile Include="LBJ\DZWD\JTGLService.cs" />
+    <Compile Include="LBJ\DZWD\TSTCService.cs" />
     <Compile Include="LBJ\GWMgr\GwZdService.cs" />
+    <Compile Include="LBJ\GYGL\GYLXService.cs" />
     <Compile Include="LBJ\RyMgr\RYJCService.cs" />
     <Compile Include="LBJ\RyMgr\RYJNService.cs" />
     <Compile Include="LBJ\RyMgr\RYJXService.cs" />
