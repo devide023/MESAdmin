@@ -42,6 +42,12 @@ namespace ZDMesInterfaces.Common
         /// </summary>
         /// <returns></returns>
         IEnumerable<sys_route_component> GetRouteComponent();
+        /// <summary>
+        /// 保存页面配置信息
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        bool Save_Page_Config(sys_page_config config);
     }
 
 

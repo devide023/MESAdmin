@@ -8,8 +8,9 @@ using ZDToolHelper;
 using ZDMesModels;
 using System.Web;
 using Dapper;
+using System.IO;
 using DapperExtensions;
-using DapperExtensions.Predicate;
+using System.Reflection;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 namespace ZDMesServices.Common
@@ -137,6 +138,111 @@ namespace ZDMesServices.Common
                 sql.Append(" order  by pid, id");
                 list.AddRange(DB.Connection.Query<sys_route_component>(sql.ToString()));
                 return list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Save_Page_Config(sys_page_config config)
+        {
+            try
+            {
+                StringBuilder contents = new StringBuilder();
+                var js_filename = config.menu.configpath;
+                if (!string.IsNullOrEmpty(js_filename))
+                {
+                    var configroot = HttpContext.Current.Server.MapPath("~/Config/");
+                    string configpath = configroot + js_filename;
+                    FileInfo fi = new FileInfo(configpath);
+                    contents.Append("{");
+                    foreach (PropertyInfo p in config.baseconfig.GetType().GetProperties())
+                    {
+                        contents.Append($"{p.Name}:{p.GetValue(config.baseconfig).ToString().ToLower()},");
+                    }
+                    contents.Append("pagefuns:{");
+                    foreach (var item in config.pagefn)
+                    {
+                        contents.Append($"{item.fnname}:{item.fnbody},");
+                    }
+                    contents.Append("},");
+                    contents.Append("fields:[");
+                    foreach (var item in config.fields)
+                    {
+                        contents.Append("{");
+                        foreach (PropertyInfo p in item.GetType().GetProperties())
+                        {
+                            var val = p.GetValue(item).ToString().ToLower();
+                            if (!string.IsNullOrWhiteSpace(val))
+                            {
+                                if (p.Name == "url" || p.Name == "method")
+                                {
+                                    continue;
+                                }
+                                else if(p.Name == "overflowtooltip" && val == "false")
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    contents.Append($"{p.Name}:'{val}',");
+                                }
+                            }
+                        }
+                        if(item.coltype == "string" && !string.IsNullOrWhiteSpace(item.callback))
+                        {
+                            contents.Append($"suggest:{item.callback},");
+                            contents.Append($"select_handlename:'{item.function_name}',");
+                        }
+                        else if (item.coltype == "list" && !string.IsNullOrWhiteSpace(item.url)) {
+                            contents.Append("inioptionapi:{");
+                            contents.Append($"method:'{item.method}',");
+                            contents.Append($"url:'{item.url}',");
+                            contents.Append("},");
+                            contents.Append($"options:[],");
+                        }
+                        else if (item.coltype == "list" && string.IsNullOrWhiteSpace(item.url))
+                        {
+                            contents.Append($"options:[],");
+                        }
+                        else if(item.coltype == "bool")
+                        {
+                            contents.Append($"activevalue:'Y',");
+                            contents.Append($"inactivevalue:'N',");
+                        }
+                        contents.Append("},");
+                    }
+                    contents.Append("],");
+                    contents.Append("form:{");
+                    foreach (var item in config.pageform)
+                    {
+                        contents.Append($"{item.fieldname}:'{(item.fieldvalue == null ? "" : item.fieldvalue)}',");
+                    }
+                    contents.Append("isdb:false,");
+                    contents.Append("isedit:true");
+                    contents.Append("},");
+                    foreach (var item in config.pageapis)
+                    {
+                        contents.Append(item.name + ":" +"{");
+                        contents.Append($"url:'{item.url}',");
+                        contents.Append($"method:'{item.method}',");
+                        contents.Append($"callback:{item.callback},");
+                        contents.Append("},");
+                    }
+                    contents.Append("}");
+                    if (!fi.Exists)
+                    {
+                        File.WriteAllText(configpath, contents.ToString());
+                    }
+                    else
+                    {
+                        fi.CopyTo(configroot + js_filename+".bak");
+                        File.WriteAllText(configpath, contents.ToString());
+                    }
+                }
+                return true;
             }
             catch (Exception)
             {

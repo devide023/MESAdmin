@@ -8,6 +8,7 @@ using ZDMesInterfaces.Common;
 using Autofac.Integration.WebApi;
 using Autofac;
 using ZDMesServices.Common;
+using ZDMesModels;
 
 namespace MesAdmin.Controllers
 {
@@ -71,6 +72,20 @@ namespace MesAdmin.Controllers
             try
             {
                 return Json(new { code = 1, msg = "ok", list = _pageconfig.GetRouteComponent() });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost,Route("saveconfig")]
+        public IHttpActionResult Save_Page_Config(sys_page_config entity)
+        {
+            try
+            {
+                var ret = _pageconfig.Save_Page_Config(entity);
+                return Json(new { code = 1, msg = "配置保存成功"});
             }
             catch (Exception)
             {
