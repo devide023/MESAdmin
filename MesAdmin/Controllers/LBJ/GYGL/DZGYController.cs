@@ -1,9 +1,13 @@
-﻿using MesAdmin.Filters;
+﻿using Aspose.Cells;
+using MesAdmin.Filters;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
@@ -126,6 +130,65 @@ namespace MesAdmin.Controllers.LBJ.GYGL
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        [HttpGet, Route("readxls")]
+        public IHttpActionResult ReadTempFile(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            try
+            {
+                List<zxjc_t_dzgy> list = new List<zxjc_t_dzgy>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    Workbook wk = new Workbook(filepath);
+                    Cells cells = wk.Worksheets[0].Cells;
+                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    foreach (DataRow item in dataTable.Rows)
+                    {
+                        list.Add(new zxjc_t_dzgy()
+                        {
+                            gyid = Guid.NewGuid().ToString(),
+                            gcdm = item[0].ToString(),
+                            scx = item[1].ToString(),
+                            gybh = item[2].ToString(),
+                            statusno = item[3].ToString(),
+                            gymc = item[4].ToString(),
+                            gyms = item[5].ToString(),
+                            wjfl = item[6].ToString(),
+                        });
+                    }
+                    var ret = _dzgyservice.Add(list);
+                    if (ret > 0)
+                    {
+                        FileInfo finfo = new FileInfo(filepath);
+                        finfo.Delete();
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据导入成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                FileInfo finfo = new FileInfo(filepath);
+                finfo.Delete();
                 throw;
             }
         }

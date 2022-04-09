@@ -172,12 +172,12 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         [HttpGet,Route("readxls")]
         public IHttpActionResult ReadTempFile(string fileid)
         {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
             try
             {
                 List<zxjc_ryxx> list = new List<zxjc_ryxx>();
                 if (!string.IsNullOrEmpty(fileid))
                 {
-                    string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
                     DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn+1);
@@ -214,7 +214,6 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             }
             catch (Exception)
             {
-                string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
                 FileInfo finfo = new FileInfo(filepath);
                 finfo.Delete();
                 throw;

@@ -187,6 +187,20 @@ namespace ZDMesServices.Common
                 throw;
             }
         }
+
+        public mes_user_entity GetUserByToken(string token)
+        {
+            try
+            {
+                var q = DB.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
+                return q.FirstOrDefault();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public sys_userinfo_result GetUserInfo(string token)
         {
             try

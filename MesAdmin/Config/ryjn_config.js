@@ -12,6 +12,34 @@
       console.log(this.$basepage);
     }
   },
+  isbatoperate: true,
+  batoperate: {
+    import_by_add: function (vm, res) {
+      if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          vm.$request('get', '/lbj/ryjn/readxls', {
+            fileid: fid
+          }).then(function (result) {
+            vm.$loading().close();
+            for (var i = 0; i < result.list.length; i++) {
+              var item = result.list[i];
+			  vm.$set(item,'lrr',vm.$store.getters.name);
+			  vm.$set(item,'lrsj',vm.$parseTime(new Date()));
+              vm.$set(item, 'isdb', false);
+              vm.$set(item, 'isedit', true);
+              vm.list.unshift(item);
+            }
+          });
+        } catch (error) {
+          vm.$message.error(error);
+        }
+      } else {
+        vm.$loading().close();
+      }
+    },
+
+  },
   fields: [{
       coltype: 'list',
       prop: 'gcdm',

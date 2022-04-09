@@ -26,7 +26,7 @@ namespace ZDMesModels
         /// <summary>
         /// 排序条件
         /// </summary>
-        public List<sys_sort> sort_condition { get; set; } = new List<sys_sort>();
+        public List<sys_sort> px_condition { get; set; } = new List<sys_sort>();
         public int pageindex { get; set; } = 1;
         /// <summary>
         /// 每页记录数

@@ -9,6 +9,11 @@ using ZDMesInterfaces.Common;
 using MesAdmin.Filters;
 using ZDMesModels;
 using ZDMesInterfaces.LBJ.RyMgr;
+using System.IO;
+using System.Web;
+using Aspose.Cells;
+using System.Data;
+using ZDToolHelper;
 
 namespace MesAdmin.Controllers.LBJ.RYGL
 {
@@ -57,7 +62,7 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 else
                 {
                     i++;
-                    return CheckJnNo(_ryjn.MaxJnNo()+ i);
+                    return CheckJnNo(_ryjn.MaxJnNo() + i);
                 }
             }
             catch (Exception)
@@ -158,6 +163,53 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls")]
+        public IHttpActionResult ReadTempFile(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            try
+            {
+                List<zxjc_ryxx_jn> list = new List<zxjc_ryxx_jn>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    Workbook wk = new Workbook(filepath);
+                    Cells cells = wk.Worksheets[0].Cells;
+                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    int maxno = _ryjn.MaxJnNo();
+                    int no = 1;
+                    foreach (DataRow item in dataTable.Rows)
+                    {
+                        list.Add(new zxjc_ryxx_jn()
+                        {
+                            jnbh = CheckJnNo(maxno + no),
+                            gcdm = item[0].ToString(),
+                            scx = item[1].ToString(),
+                            usercode = item[2].ToString(),
+                            gwh = item[3].ToString(),
+                            jnfl = item[4].ToString(),
+                            jnsj = Convert.ToDateTime(item[5].ToString()),
+                            jnsld = Convert.ToInt32(item[6].ToString()),
+                            jnxx = item[7].ToString(),
+                            sfhg = "Y",
+                        });
+                        no++;
+                    }
+                    FileInfo finfo = new FileInfo(filepath);
+                    finfo.Delete();
+                    return Json(new { code = 1, msg = "ok", list = list });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                FileInfo finfo = new FileInfo(filepath);
+                finfo.Delete();
                 throw;
             }
         }

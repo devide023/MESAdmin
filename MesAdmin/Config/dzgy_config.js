@@ -47,7 +47,28 @@
     }
   },
   batoperate: {
-    import_by_add: function (vm, res) {},
+    import_by_add: function (vm, res) {
+      if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          vm.$request('get', '/lbj/dzgy/readxls', {
+            fileid: fid
+          }).then(function (result) {
+            vm.$loading().close();
+            if (result.code === 1) {
+              vm.$message.success(result.msg);
+              vm.getlist(vm.queryform);
+            } else if (result.code === 0) {
+              vm.$message.error(result.msg);
+            }
+          });
+        } catch (error) {
+          vm.$message.error(error);
+        }
+      } else {
+        vm.$loading().close();
+      }
+    },
     import_by_replace: function (vm, res) {},
     import_by_zh: function (vm, res) {},
     export_excel: function (vm) {}
@@ -79,19 +100,26 @@
       options: []
     }, {
       coltype: 'string',
+      prop: 'gybh',
+      label: '工艺编号',
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+    }, {
+      coltype: 'string',
       prop: 'statusno',
       label: '产品',
       headeralign: 'center',
       align: 'center',
-	  width:150,
+      width: 150,
     }, {
       coltype: 'string',
       prop: 'gymc',
       label: '工艺名称',
       headeralign: 'center',
       align: 'left',
-	  width:150,
-	  overflowtooltip: true,
+      width: 150,
+      overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'gyms',
@@ -105,14 +133,14 @@
       label: '文件大小',
       headeralign: 'center',
       align: 'left',
-	  width:80,
+      width: 80,
     }, {
       coltype: 'list',
       prop: 'wjfl',
       label: '文件分类',
       headeralign: 'center',
       align: 'left',
-	  width:80,
+      width: 80,
       options: [{
           label: '图纸',
           value: '图纸'
@@ -127,7 +155,7 @@
       label: '上传日期',
       headeralign: 'center',
       align: 'center',
-	  width:140
+      width: 140
     },
   ],
   form: {

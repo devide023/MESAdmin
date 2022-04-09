@@ -15,7 +15,6 @@
           if (finditem) {
             finditem.jwdx = file.size;
             finditem.jcmc = file.name;
-            finditem.jcbh = '';
             finditem.wjlj = file.name;
             finditem.scry = this.$store.getters.name;
             finditem.scsj = this.$parseTime(new Date());
@@ -46,10 +45,31 @@
   },
   isbatoperate: true,
   batoperate: {
-    import_by_add: function (vm, res) {},
-    import_by_replace: function (vm, res) {},
-    import_by_zh: function (vm, res) {},
-    export_excel: function (vm) {}
+    import_by_add: function (_this, res) {
+      if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          _this.$request('get', '/lbj/jtgl/readxls', {
+            fileid: fid
+          }).then(function (result) {
+            _this.$loading().close();
+            if (result.code === 1) {
+              _this.$message.success(result.msg);
+              _this.getlist(_this.queryform);
+            } else if (result.code === 0) {
+              _this.$message.error(result.msg);
+            }
+          });
+        } catch (error) {
+          _this.$message.error(error);
+        }
+      } else {
+        _this.$loading().close();
+      }
+    },
+    import_by_replace: function (_this, res) {},
+    import_by_zh: function (_this, res) {},
+    export_excel: function (_this) {}
   },
   fields: [{
       coltype: 'list',
@@ -94,28 +114,28 @@
       label: '技通名称',
       headeralign: 'center',
       align: 'center',
-	  overflowtooltip: true,
+      overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'jcms',
       label: '技通描述',
       headeralign: 'center',
       align: 'center',
-	  overflowtooltip: true,
+      overflowtooltip: true,
     }, {
       coltype: 'date',
       prop: 'yxqx1',
       label: '有效日期开始',
       headeralign: 'center',
       align: 'center',
-	  width:150
+      width: 150
     }, {
       coltype: 'date',
       prop: 'yxqx2',
       label: '有效日期结束',
       headeralign: 'center',
       align: 'center',
-	  width:150
+      width: 150
     }, {
       coltype: 'string',
       prop: 'jwdx',
@@ -134,7 +154,7 @@
       label: '上传时间',
       headeralign: 'center',
       align: 'center',
-	  overflowtooltip: true,
+      overflowtooltip: true,
     }, {
       coltype: 'bool',
       prop: 'fpflg',
@@ -142,7 +162,7 @@
       label: '分配标识',
       headeralign: 'center',
       align: 'center',
-	  width:80,
+      width: 80,
       activevalue: 'Y',
       inactivevalue: 'N',
     }, {
@@ -158,7 +178,7 @@
       label: '分配日期',
       headeralign: 'center',
       align: 'center',
-	  overflowtooltip: true,
+      overflowtooltip: true,
     }
   ],
   form: {

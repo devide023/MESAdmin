@@ -52,12 +52,15 @@
     <Compile Include="LBJ\DZWD\IJsTc.cs" />
     <Compile Include="LBJ\DZWD\IJtFp.cs" />
     <Compile Include="LBJ\IBaseInfo.cs" />
+    <Compile Include="LBJ\JTGL\IJTFP.cs" />
     <Compile Include="LBJ\RyMgr\IRyJn.cs" />
     <Compile Include="LBJ\RyMgr\IRyJx.cs" />
     <Compile Include="LBJ\RyMgr\IRyXx.cs" />
+    <Compile Include="LBJ\SBWB\ISbWbZq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="LBJ\JHGL\" />
     <Folder Include="TJ\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -62,11 +62,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="base_page_config.cs" />
+    <Compile Include="LBJ\base_sbwb_ls.cs" />
+    <Compile Include="LBJ\base_sbwb.cs" />
+    <Compile Include="LBJ\base_rjxx.cs" />
+    <Compile Include="LBJ\base_dbxx.cs" />
     <Compile Include="LBJ\base_gwzd.cs" />
     <Compile Include="LBJ\base_sbxx.cs" />
     <Compile Include="LBJ\base_gcxx.cs" />
     <Compile Include="LBJ\base_scxxx.cs" />
+    <Compile Include="LBJ\pp_zpjh.cs" />
+    <Compile Include="LBJ\sys_jtfp_form.cs" />
     <Compile Include="LBJ\sys_ryjx.cs" />
+    <Compile Include="LBJ\sys_wbzq_form.cs" />
     <Compile Include="LBJ\zxjc_gylx.cs" />
     <Compile Include="LBJ\zxjc_djxx.cs" />
     <Compile Include="LBJ\zxjc_djgw.cs" />
@@ -84,6 +91,7 @@
     <Compile Include="sys_login_result.cs" />
     <Compile Include="mes_menu_entity.cs" />
     <Compile Include="sys_menu_permis.cs" />
+    <Compile Include="sys_operate_item.cs" />
     <Compile Include="sys_page.cs" />
     <Compile Include="sys_pagefn_info.cs" />
     <Compile Include="sys_page_api.cs" />

@@ -91,11 +91,11 @@ namespace MesAdmin.Filters
                     }
                     index++;
                 }
-                if (condition.sort_condition != null)
+                if (condition.px_condition != null)
                 {
-                    foreach (var item in condition.sort_condition)
+                    foreach (var item in condition.px_condition)
                     {
-                        orderexp = orderexp + $"{item.fieldname} {item.sorttype} ,";
+                        orderexp = orderexp + $"{item.fieldname} {item.pxfs} ,";
                     }
                 }
                 if (!string.IsNullOrEmpty(orderexp))

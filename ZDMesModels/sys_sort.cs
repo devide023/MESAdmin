@@ -8,7 +8,13 @@ namespace ZDMesModels
 {
     public class sys_sort
     {
+        /// <summary>
+        /// 字段名
+        /// </summary>
         public string fieldname { get; set; }
-        public string sorttype { get; set; }
+        /// <summary>
+        /// 排序方式
+        /// </summary>
+        public string pxfs { get; set; }
     }
 }

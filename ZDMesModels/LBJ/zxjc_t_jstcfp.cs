@@ -18,17 +18,37 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string jtid { get; set; }
         /// <summary>
+        /// 技通名称
+        /// </summary>
+        public string jtmc { get; set; }
+        /// <summary>
+        /// 文件路径
+        /// </summary>
+        public string wjlj { get; set; }
+        /// <summary>
         /// 工厂 
         ///</summary>
-         public string gcdm { get; set; }
+        public string gcdm { get; set; }
+        /// <summary>
+        /// 工厂名称
+        /// </summary>
+        public string gcmc { get; set; }
         /// <summary>
         /// 生产线（质量班长维护） 
         ///</summary>
-         public string scx { get; set; }
+        public string scx { get; set; }
+        /// <summary>
+        /// 生产线名称
+        /// </summary>
+        public string scxmc { get; set; }
         /// <summary>
         /// 岗位号（质量组长维护） 
         ///</summary>
-         public string gwh { get; set; }
+        public string gwh { get; set; }
+        /// <summary>
+        /// 岗位名称
+        /// </summary>
+        public string gwmc { get; set; }
         /// <summary>
         /// 机型??? （质量班长维护） 
         ///</summary>
@@ -64,6 +84,13 @@ namespace ZDMesModels.LBJ
         public zxjc_t_jstcfp_mapper()
         {
             Map(t => t.id).Key(KeyType.Assigned);
+            Map(t => t.jtmc).Ignore();
+            Map(t => t.wjlj).Ignore();
+            Map(t => t.gcmc).Ignore();
+            Map(t => t.scxmc).Ignore();
+            Map(t => t.gwmc).Ignore();
+            Map(t => t.statusno).Column("status_no");            
+            Map(t => t.jxno).Column("jx_no");
             AutoMap();
         }
     }

@@ -4,7 +4,9 @@
   isoperate: false,
   isfresh: true,
   isselect: true,
-  pagefuns: {},
+  pagefuns: {
+	  
+  },
   fields: [{
       coltype: 'list',
       label: '工厂',
@@ -104,22 +106,22 @@
     isedit: true
   },
   addapi: {
-    url: '/lbj/wbjh/add',
+    url: '/lbj/wbzq/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '/lbj/wbjh/edit',
+    url: '/lbj/wbzq/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '/lbj/wbjh/del',
+    url: '/lbj/wbzq/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/lbj/wbjh/query',
+    url: '/lbj/wbzq/list',
     method: 'post',
     callback: function (vm, res) {},
   },

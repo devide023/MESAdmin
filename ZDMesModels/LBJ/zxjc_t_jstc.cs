@@ -77,6 +77,10 @@ namespace ZDMesModels.LBJ
         /// 生产线 
         ///</summary>
          public string scx { get; set; }
+        /// <summary>
+        /// 分类
+        /// </summary>
+        public int type { get; set; }
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>
@@ -86,6 +90,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.jtid).Key(KeyType.Assigned);
             Map(t => t.fpflg).Column("fp_flg");
             Map(t => t.fpsj).Column("fp_sj");
+            Map(t => t.type).Ignore();
             AutoMap();
         }
     }

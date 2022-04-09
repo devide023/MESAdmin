@@ -105,6 +105,8 @@
     <Compile Include="BaseDao.cs" />
     <Compile Include="Common\PageConfigService.cs" />
     <Compile Include="LBJ\BaseInfo\BaseInfoService.cs" />
+    <Compile Include="LBJ\DAOJU\DaoBinService.cs" />
+    <Compile Include="LBJ\DAOJU\RenJuService.cs" />
     <Compile Include="LBJ\DJXX\DJGWService.cs" />
     <Compile Include="LBJ\DJXX\DJXXService.cs" />
     <Compile Include="LBJ\GYGL\DZGYService.cs" />
@@ -113,11 +115,14 @@
     <Compile Include="LBJ\DZWD\TSTCService.cs" />
     <Compile Include="LBJ\GWMgr\GwZdService.cs" />
     <Compile Include="LBJ\GYGL\GYLXService.cs" />
+    <Compile Include="LBJ\JHGL\ZpJhService.cs" />
     <Compile Include="LBJ\RyMgr\RYJCService.cs" />
     <Compile Include="LBJ\RyMgr\RYJNService.cs" />
     <Compile Include="LBJ\RyMgr\RYJXService.cs" />
     <Compile Include="LBJ\RyMgr\RyxxService.cs" />
     <Compile Include="LBJ\SBMgr\SbxxService.cs" />
+    <Compile Include="LBJ\SBWB\WbXxService.cs" />
+    <Compile Include="LBJ\SBWB\WbZqService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OracleBaseFixture.cs" />
     <Compile Include="Common\MesMenuService.cs" />

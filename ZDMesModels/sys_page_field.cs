@@ -19,15 +19,15 @@ namespace ZDMesModels
         /// <summary>
         /// 接口url
         /// </summary>
-        public string url { get; set; }
-        public string method { get; set; }
+        public string url { get; set; } = string.Empty;
+        public string method { get; set; } = string.Empty;
         /// <summary>
         /// 函数体
         /// </summary>
-        public string callback { get; set; }
+        public string callback { get; set; } = string.Empty;
         /// <summary>
         /// 执行的函数名称
         /// </summary>
-        public string function_name { get; set; }
+        public string function_name { get; set; } = string.Empty;
     }
 }

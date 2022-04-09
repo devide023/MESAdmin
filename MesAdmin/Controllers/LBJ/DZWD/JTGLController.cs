@@ -1,9 +1,13 @@
-﻿using MesAdmin.Filters;
+﻿using Aspose.Cells;
+using MesAdmin.Filters;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ;
@@ -42,7 +46,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             }
         }
         [HttpPost, Route("add")]
-        public IHttpActionResult AddRyxx(List<zxjc_t_jstc> entitys)
+        public IHttpActionResult Add(List<zxjc_t_jstc> entitys)
         {
             try
             {
@@ -73,7 +77,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
         }
 
         [HttpPost, Route("edit")]
-        public IHttpActionResult EditRyxx(List<zxjc_t_jstc> entitys)
+        public IHttpActionResult Edit(List<zxjc_t_jstc> entitys)
         {
             try
             {
@@ -102,7 +106,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             }
         }
         [HttpPost, Route("del")]
-        public IHttpActionResult DelRyxx(List<zxjc_t_jstc> entitys)
+        public IHttpActionResult Del(List<zxjc_t_jstc> entitys)
         {
             try
             {
@@ -127,6 +131,65 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls")]
+        public IHttpActionResult ReadTempFile(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            try
+            {
+                List<zxjc_t_jstc> list = new List<zxjc_t_jstc>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    Workbook wk = new Workbook(filepath);
+                    Cells cells = wk.Worksheets[0].Cells;
+                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    foreach (DataRow item in dataTable.Rows)
+                    {
+                        list.Add(new zxjc_t_jstc()
+                        {
+                            jtid = Guid.NewGuid().ToString(),
+                            gcdm = item[0].ToString(),
+                            scx = item[1].ToString(),
+                            jcbh = item[2].ToString(),
+                            wjfl = item[3].ToString(),
+                            jcmc = item[4].ToString(),
+                            jcms = item[5].ToString(),
+                            yxqx1 = Convert.ToDateTime(item[6].ToString()),
+                            yxqx2 = Convert.ToDateTime(item[7].ToString()),
+                        });
+                    }
+                    var ret = _jtglservice.Add(list);
+                    if (ret > 0)
+                    {
+                        FileInfo finfo = new FileInfo(filepath);
+                        finfo.Delete();
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据导入成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                FileInfo finfo = new FileInfo(filepath);
+                finfo.Delete();
                 throw;
             }
         }

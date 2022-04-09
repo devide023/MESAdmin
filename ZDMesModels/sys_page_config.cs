@@ -32,5 +32,9 @@ namespace ZDMesModels
         /// 页面表单配置
         /// </summary>
         public List<sys_page_form> pageform { get; set; }
+        /// <summary>
+        /// 操作列功能项目
+        /// </summary>
+        public List<sys_operate_item> operate_fnlist { get; set; }
     }
 }

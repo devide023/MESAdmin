@@ -41,7 +41,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             }
         }
         [HttpPost, Route("add")]
-        public IHttpActionResult AddRyxx(List<zxjc_t_tstc> entitys)
+        public IHttpActionResult Add(List<zxjc_t_tstc> entitys)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
         }
 
         [HttpPost, Route("edit")]
-        public IHttpActionResult EditRyxx(List<zxjc_t_tstc> entitys)
+        public IHttpActionResult Edit(List<zxjc_t_tstc> entitys)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             }
         }
         [HttpPost, Route("del")]
-        public IHttpActionResult DelRyxx(List<zxjc_t_tstc> entitys)
+        public IHttpActionResult Del(List<zxjc_t_tstc> entitys)
         {
             try
             {

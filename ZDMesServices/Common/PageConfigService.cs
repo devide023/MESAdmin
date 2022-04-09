@@ -162,6 +162,33 @@ namespace ZDMesServices.Common
                     {
                         contents.Append($"{p.Name}:{p.GetValue(config.baseconfig).ToString().ToLower()},");
                     }
+                    if (config.baseconfig.isbatoperate)
+                    {
+                        contents.Append("operate_fnlist:[");
+                        foreach (var item in config.operate_fnlist)
+                        {
+                            contents.Append("{");
+                            foreach (PropertyInfo p in item.GetType().GetProperties())
+                            {
+                                var val = p.GetValue(item).ToString();
+                                if (string.IsNullOrWhiteSpace(val))
+                                {
+                                    continue;
+                                }
+                                if (p.Name == "callback")
+                                {
+                                    
+                                    contents.Append($"{p.Name}:{val},");
+                                }
+                                else
+                                {
+                                    contents.Append($"{p.Name}:'{val}',");
+                                }
+                            }
+                            contents.Append("},");
+                        }
+                        contents.Append("],");
+                    }
                     contents.Append("pagefuns:{");
                     foreach (var item in config.pagefn)
                     {
