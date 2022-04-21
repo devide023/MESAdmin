@@ -1,9 +1,13 @@
-﻿using MesAdmin.Filters;
+﻿using Aspose.Cells;
+using MesAdmin.Filters;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
@@ -125,6 +129,60 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls")]
+        public IHttpActionResult ReadTempFile(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            FileInfo finfo = new FileInfo(filepath);
+            try
+            {
+                List<base_rjxx> list = new List<base_rjxx>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    Workbook wk = new Workbook(filepath);
+                    Cells cells = wk.Worksheets[0].Cells;
+                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    string token = ZDToolHelper.TokenHelper.GetToken;
+                    foreach (DataRow item in dataTable.Rows)
+                    {
+                        list.Add(new base_rjxx()
+                        {
+                            gcdm = item[0].ToString(),
+                            rjlx = item[1].ToString(),
+                            rjmc = item[2].ToString(),
+                            rjbzsm=item[3].ToString()
+                        });
+                    }
+                    var ret = _rjxxservice.Add(list);
+                    finfo.Delete();
+                    if (ret > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据导入成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                finfo.Delete();
                 throw;
             }
         }

@@ -34,6 +34,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\MesAdmin.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -120,6 +122,9 @@
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.21.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.21.5.0\lib\net462\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -240,6 +245,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -273,6 +281,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -303,6 +312,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\Common\DownLoadController.cs" />
     <Compile Include="Controllers\Common\MenuController.cs" />
     <Compile Include="Controllers\Common\UpLoadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -311,7 +321,11 @@
     <Compile Include="Controllers\Common\RoleController.cs" />
     <Compile Include="Controllers\Common\UserController.cs" />
     <Compile Include="Controllers\LBJ\BaseInfo\BaseInfoController.cs" />
+    <Compile Include="Controllers\LBJ\BHDGL\BHDJLController.cs" />
+    <Compile Include="Controllers\LBJ\BHDGL\BHDXXController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DaoBinController.cs" />
+    <Compile Include="Controllers\LBJ\DAOJU\DbRjGxController.cs" />
+    <Compile Include="Controllers\LBJ\DAOJU\DbRjLyController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\RenJuController.cs" />
     <Compile Include="Controllers\LBJ\DJGL\DJGWController.cs" />
     <Compile Include="Controllers\LBJ\DJGL\DJXXController.cs" />
@@ -329,6 +343,9 @@
     <Compile Include="Controllers\LBJ\SBWB\WbXxController.cs" />
     <Compile Include="Controllers\LBJ\SBWB\WbZqController.cs" />
     <Compile Include="Controllers\LBJ\SbXx\SbXxController.cs" />
+    <Compile Include="Controllers\LBJ\SJCJ\SJCJController.cs" />
+    <Compile Include="Controllers\LBJ\SMJJK\SMJJKController.cs" />
+    <Compile Include="Controllers\LBJ\YCGL\YCGLController.cs" />
     <Compile Include="Filters\ApiExceptionAttribute.cs" />
     <Compile Include="Filters\CheckLoginAttribute.cs" />
     <Compile Include="Filters\SearchFilter.cs" />
@@ -355,9 +372,11 @@
     <Content Include="Config\ryjx_config.js" />
     <Content Include="Config\ryxx_config.js" />
     <Content Include="Config\sbxx_config.js" />
+    <Content Include="Config\scjh_config.js" />
     <Content Include="Config\user_config.js" />
     <Content Include="Config\wbxx_config.js" />
     <Content Include="Config\wbzq_config.js" />
+    <Content Include="Config\ycgl_config.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

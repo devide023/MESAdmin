@@ -25,7 +25,7 @@ namespace MesAdmin
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             var builder = new ContainerBuilder();
-            var AssTools = Assembly.Load("ToolHelper");
+            var AssTools = Assembly.Load("ZDToolHelper");
             builder.RegisterAssemblyTypes(AssTools);
             var AssModel = Assembly.Load("ZDMesModels");
             builder.RegisterAssemblyTypes(AssModel);

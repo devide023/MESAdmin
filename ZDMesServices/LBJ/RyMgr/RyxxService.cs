@@ -8,6 +8,9 @@ using ZDMesInterfaces.LBJ.RyMgr;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 using Dapper;
+using System.Data;
+using Oracle.ManagedDataAccess.Client;
+
 namespace ZDMesServices.LBJ.RyMgr
 {
     public class RyxxService : BaseDao<zxjc_ryxx>, IRyXx
@@ -20,10 +23,13 @@ namespace ZDMesServices.LBJ.RyMgr
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select count(user_code) from ZXJC_RYXX where user_code = :usercode");
-                var ret = Db.Connection.ExecuteScalar<int>(sql.ToString(), new { usercode = usercode });
-                return ret > 0;
+                using (IDbConnection db = new OracleConnection(ConString))
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select count(user_code) from ZXJC_RYXX where user_code = :usercode");
+                    var ret = db.ExecuteScalar<int>(sql.ToString(), new { usercode = usercode });
+                    return ret > 0;
+                }
             }
             catch (Exception)
             {
@@ -36,9 +42,12 @@ namespace ZDMesServices.LBJ.RyMgr
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select count(user_code) from ZXJC_RYXX");
-                return Db.Connection.ExecuteScalar<int>(sql.ToString());
+                using (IDbConnection db = new OracleConnection(ConString))
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select count(user_code) from ZXJC_RYXX");
+                    return db.ExecuteScalar<int>(sql.ToString());
+                }
             }
             catch (Exception)
             {

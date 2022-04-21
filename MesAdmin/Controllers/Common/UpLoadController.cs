@@ -7,12 +7,146 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using Autofac;
+using Autofac.Integration.WebApi;
+using ZDMesInterfaces.LBJ;
+using ZDMesModels;
+using ZDToolHelper;
 
 namespace MesAdmin.Controllers.Common
 {
     [RoutePrefix("api/upload")]
     public class UpLoadController : ApiController
     {
+        private enum UploadWjLx
+        {
+            pdf=1,
+            image=2,
+            excel=3,
+        }
+        private IBaseInfo _baseinfo;
+        public UpLoadController(IBaseInfo baseinfo)
+        {
+            _baseinfo = baseinfo;
+        }
+        private List<dynamic> File2Ftp(string wjlx, UploadWjLx lx, out Dictionary<string, object> kv)
+        {
+            try
+            {
+                var qftpconfig = _baseinfo.FtpConfig().Where(t=>t.filetype == wjlx);
+                var extdata = HttpContext.Current.Request.Form;
+                kv = new Dictionary<string, object>();
+                if (extdata != null)
+                {
+                    if (extdata != null)
+                    {
+                        foreach (var item in extdata.AllKeys)
+                        {
+                            kv.Add(item, extdata.Get(item));
+                        }
+                    }
+                }
+                if (qftpconfig.Count() > 0)
+                {
+                  base_ftpfilepath ftpconfig =  qftpconfig.First();
+                    string spath = string.Empty;
+                    switch (lx)
+                    {
+                        case UploadWjLx.pdf:
+                            spath = "~/Upload/PDF/";
+                            break;
+                        case UploadWjLx.image:
+                            spath = "~/Upload/Image/";
+                            break;
+                        case UploadWjLx.excel:
+                            spath = "~/Upload/Excel/";
+                            break;
+                        default:
+                            spath = "~/Upload/";
+                            break;
+                    }
+                    string serverpath = HttpContext.Current.Server.MapPath(spath);
+                    HttpFileCollection files = HttpContext.Current.Request.Files;
+                    List<dynamic> list = new List<dynamic>();
+                    FtpHelper ftphelper = new FtpHelper();
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFile file = HttpContext.Current.Request.Files[i];
+                        string client_filename = file.FileName;
+                        int fileszie = file.ContentLength;
+                        int pos = client_filename.LastIndexOf(".");
+                        string filetype = client_filename.Substring(pos, client_filename.Length - pos);
+                        string guid = Guid.NewGuid().ToString() + filetype;
+                        file.SaveAs(serverpath + guid);
+                        ftphelper.UploadFile(file.InputStream, ftpconfig.ftpurl + ":" + ftpconfig.ftpport + ftpconfig.filepath, guid, ftpconfig.ftpuser, ftpconfig.ftppassword);
+                        list.Add(new { fileid = guid, filename = client_filename, filesize = fileszie });
+                    }
+                    return list;
+                }
+                else
+                {
+                    return new List<dynamic>();
+                }                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
+        /// 电子工艺PDF
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route("dzgy_pdf")]
+        public IHttpActionResult Uplad_DzGy_Pdf()
+        {
+            try
+            {
+                Dictionary<string, object> kv = new Dictionary<string, object>();
+                var list = File2Ftp("电子工艺", UploadWjLx.pdf,out kv);
+                if (list.Count() > 0)
+                {
+                    return Json(new { code = 1, msg = "上传成功", files = list, extdata = kv });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "上传失败", files = list, extdata = kv });
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
+        /// 技术通知PDF
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route("jstc_pdf")]
+        public IHttpActionResult Uplad_Jstc_Pdf()
+        {
+            try
+            {
+                Dictionary<string, object> kv = new Dictionary<string, object>();
+                var list = File2Ftp("技术通知", UploadWjLx.pdf, out kv);
+                if (list.Count() > 0)
+                {
+                    return Json(new { code = 1, msg = "上传成功", files = list, extdata = kv });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "上传失败", files = list, extdata = kv });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpPost, Route("pdf")]
         public IHttpActionResult UploadPdf()
         {
@@ -57,37 +191,28 @@ namespace MesAdmin.Controllers.Common
         {
             try
             {
-                var extdata = HttpContext.Current.Request.Form;
+                List<dynamic> result_list = new List<dynamic>();
                 Dictionary<string, object> kv = new Dictionary<string, object>();
-                string rowindex = string.Empty;
-                object rowkey;
-                if (extdata != null)
+                var list = File2Ftp("头像", UploadWjLx.image, out kv);
+                if (list.Count() > 0)
                 {
-                    foreach (var item in extdata.AllKeys)
+                    foreach (var item in list)
                     {
-                        kv.Add(item, extdata.Get(item));
+                        string imgurl = HttpContext.Current.Request.Url.ToString().Replace(HttpContext.Current.Request.Path, "") + "/upload/image/" + item.fileid;
+                        result_list.Add(new
+                        {
+                            fileid = item.fileid,
+                            imgurl = imgurl,
+                            filename = item.filename,
+                            filesize = item.filesize
+                        });
                     }
-                    if (kv.TryGetValue("rowkey", out rowkey))
-                    {
-                        rowindex = rowkey.ToString();
-                    }
+                    return Json(new { code = 1, msg = "上传成功", files = result_list, extdata = kv });
                 }
-                string serverpath = HttpContext.Current.Server.MapPath("~/Upload/Image/");
-                HttpFileCollection files = HttpContext.Current.Request.Files;
-                List<dynamic> list = new List<dynamic>();
-                for (int i = 0; i < files.Count; i++)
+                else
                 {
-                    HttpPostedFile file = HttpContext.Current.Request.Files[i];
-                    string client_filename = file.FileName;
-                    int pos = client_filename.LastIndexOf(".");
-                    string filetype = client_filename.Substring(pos, client_filename.Length - pos);
-                    string guid = Guid.NewGuid().ToString() + filetype;
-                    file.SaveAs(serverpath + guid);
-                    int fileszie = file.ContentLength;
-                    string imgurl = HttpContext.Current.Request.Url.ToString().Replace(HttpContext.Current.Request.Path, "") + "/upload/image/" + guid;
-                    list.Add(new { imgurl = imgurl, serverfilename = guid, rowindex = rowindex });
+                    return Json(new { code = 0, msg = "上传失败", files = result_list, extdata = kv });
                 }
-                return Json(new { code = 1, msg = "上传成功", files = list });
             }
             catch (Exception)
             {
@@ -123,27 +248,6 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
-        [HttpGet, AllowAnonymous, Route("downloadpdf")]
-        public HttpResponseMessage DownLoadPdf(string filename)
-        {
-            try
-            {
-                var strPath = HttpContext.Current.Server.MapPath("~/Upload/PDF/" + filename);
-                var stream = new FileStream(strPath, FileMode.Open);
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Content = new StreamContent(stream);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                {
-                    FileName = filename
-                };
-                return response;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+        
     }
 }

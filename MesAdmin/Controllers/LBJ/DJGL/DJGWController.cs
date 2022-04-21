@@ -8,15 +8,25 @@ using ZDMesModels.LBJ;
 using ZDMesInterfaces.Common;
 using MesAdmin.Filters;
 using ZDMesModels;
+using System.Web;
+using Aspose.Cells;
+using System.IO;
+using System.Data;
+using ZDMesInterfaces.LBJ.DJGW;
 namespace MesAdmin.Controllers.LBJ.DJGL
 {
     [RoutePrefix("api/lbj/djgw")]
     public class DJGWController : ApiController
     {
         private IDbOperate<zxjc_djgw> _djgwservice;
-        public DJGWController(IDbOperate<zxjc_djgw> djgwservice)
+        private IUser _user;
+        private IDjGw _djgw;
+        private int i = 1;
+        public DJGWController(IDbOperate<zxjc_djgw> djgwservice, IUser user, IDjGw djgw)
         {
             _djgwservice = djgwservice;
+            _user = user;
+            _djgw = djgw;
         }
         [HttpPost, SearchFilter, Route("list")]
         public IHttpActionResult GetList(sys_page parm)
@@ -119,6 +129,91 @@ namespace MesAdmin.Controllers.LBJ.DJGL
                         code = 0,
                         msg = "数据删除失败"
                     });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls")]
+        public IHttpActionResult ReadTempFile(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            FileInfo finfo = new FileInfo(filepath);
+            int index = 1;
+            try
+            {
+                List<zxjc_djgw> list = new List<zxjc_djgw>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    Workbook wk = new Workbook(filepath);
+                    Cells cells = wk.Worksheets[0].Cells;
+                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    string token = ZDToolHelper.TokenHelper.GetToken;
+                    int maxno = _djgw.MaxDjNo();
+                    foreach (DataRow item in dataTable.Rows)
+                    {
+                        list.Add(new zxjc_djgw()
+                        {
+                            gcdm = item[0].ToString(),
+                            scx  = item[1].ToString(),
+                            gwh = item[2].ToString(),
+                            statusno = item[3].ToString(),
+                            djxx = item[4].ToString(),
+                            scbz="N",
+                            djno = CheckDjNo(maxno + index),
+                            lrr = _user.GetUserByToken(token).name,
+                            lrsj = DateTime.Now
+                        });
+                        index++;
+                    }
+                    var ret = _djgwservice.Add(list);
+                    finfo.Delete();
+                    if (ret > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据导入成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                finfo.Delete();
+                throw;
+            }
+        }
+
+        private string CheckDjNo(int no)
+        {
+            try
+            {
+                string djno = "DJ" + no.ToString().PadLeft(4, '0');
+                if (!_djgw.IsExistDjNo(djno))
+                {
+                    return djno;
+                }
+                else
+                {
+                    var res = CheckDjNo(no + i);
+                    i++;
+                    return res;
                 }
             }
             catch (Exception)

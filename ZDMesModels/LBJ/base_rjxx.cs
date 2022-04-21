@@ -9,10 +9,11 @@ namespace ZDMesModels.LBJ
     ///</summary>
     public class base_rjxx
     {
+        public int id { get; set; }
         /// <summary>
         /// 工厂 
         ///</summary>
-         public string gcdm { get; set; }
+        public string gcdm { get; set; }
         /// <summary>
         /// 刃具类型 
         ///</summary>
@@ -31,7 +32,7 @@ namespace ZDMesModels.LBJ
     {
         public base_rjxx_mapper()
         {
-            Map(t => t.rjlx).Key(KeyType.Assigned);
+            Map(t => t.id).Key(KeyType.TriggerIdentity);
             AutoMap();
         }
     }

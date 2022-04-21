@@ -7,6 +7,7 @@
       coltype: 'list',
       prop: 'gcdm',
       label: '工厂',
+	  width:80,
       headeralign: 'center',
       align: 'center',
       inioptionapi: {
@@ -18,6 +19,7 @@
       coltype: 'list',
       prop: 'scx',
       label: '生产线',
+	  width:150,
       headeralign: 'center',
       align: 'center',
       inioptionapi: {
@@ -30,12 +32,14 @@
       prop: 'statusno',
       dbprop: 'status_no',
       label: '状态编码',
+	  width:150,
       headeralign: 'center',
       align: 'center',
     }, {
       coltype: 'list',
       prop: 'gwh',
       label: '岗位号',
+	  width:100,
       headeralign: 'center',
       align: 'center',
       inioptionapi: {
@@ -48,6 +52,7 @@
       prop: 'zpsx',
       label: '装配顺序',
       headeralign: 'center',
+	  width:80,
       align: 'center',
     }, {
       coltype: 'bool',
@@ -57,6 +62,7 @@
       align: 'center',
       activevalue: 'Y',
       inactivevalue: 'N',
+	  width:100,
     }, {
       coltype: 'bool',
       prop: 'fsbz',
@@ -73,6 +79,7 @@
       align: 'center',
       activevalue: 'Y',
       inactivevalue: 'N',
+	  width:100,
     }, {
       coltype: 'bool',
       prop: 'sfzp',
@@ -87,12 +94,14 @@
       label: '复检编号',
       headeralign: 'center',
       align: 'center',
+	  width:100,
     }, {
       coltype: 'string',
       prop: 'bz',
       label: '备注',
       headeralign: 'center',
       align: 'center',
+	  width:100,
     }, {
       coltype: 'string',
       prop: 'lrr',

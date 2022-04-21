@@ -25,6 +25,13 @@ namespace ZDMesServices
                 return Db;
             }
         }
+        public string ConString
+        {
+            get
+            {
+                return connstr;
+            }
+        }
         public OracleBaseFixture(string connstr)
         {
             this.connstr = ConfigurationManager.ConnectionStrings[connstr]?.ToString();

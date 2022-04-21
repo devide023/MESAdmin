@@ -1,6 +1,6 @@
 {
   isgradequery: true,
-  isbatoperate: false,
+  isbatoperate: true,
   isoperate: false,
   isfresh: true,
   isselect: true,
@@ -12,12 +12,40 @@
       this.list.unshift(row);
     }
   },
+  batoperate: {
+    import_by_add: function (_this, res) {
+      if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          _this.$request('get', '/lbj/dbxx/readxls', {
+            fileid: fid
+          }).then(function (result) {
+            _this.$loading().close();
+            if (result.code === 1) {
+              _this.$message.success(result.msg);
+              _this.getlist(_this.queryform);
+            } else if (result.code === 0) {
+              _this.$message.error(result.msg);
+            }
+          });
+        } catch (error) {
+          _this.$message.error(error);
+        }
+      } else {
+        _this.$loading().close();
+      }
+    },
+    import_by_replace: function (vm, res) {},
+    import_by_zh: function (vm, res) {},
+    export_excel: function (vm) {}
+  },
   fields: [{
       coltype: 'list',
       label: '工厂',
       prop: 'gcdm',
       headeralign: 'center',
       align: 'center',
+      width: 80,
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/gcxx',
@@ -25,21 +53,21 @@
       options: [],
     }, {
       coltype: 'string',
+      label: '刀柄号',
+      prop: 'dbh',
+      headeralign: 'center',
+      align: 'center',
+      width: 150,
+    }, {
+      coltype: 'string',
       label: '刀柄名称',
       prop: 'dbmc',
       headeralign: 'center',
       align: 'center',
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '刀柄类型',
       prop: 'dblx',
-      headeralign: 'center',
-      align: 'center',
-      options: [],
-    }, {
-      coltype: 'string',
-      label: '刀柄号',
-      prop: 'dbh',
       headeralign: 'center',
       align: 'center',
     }, {
@@ -48,25 +76,39 @@
       prop: 'cgsj',
       headeralign: 'center',
       align: 'center',
+      width: 100,
     }, {
       coltype: 'list',
       label: '刀柄状态',
       prop: 'dbzt',
       headeralign: 'center',
       align: 'center',
-      options: [],
+      width: 100,
+      options: [{
+          label: '空闲',
+          value: '空闲'
+        }, {
+          label: '使用中',
+          value: '使用中'
+        }, {
+          label: '报废',
+          value: '报废'
+        }
+      ],
     }, {
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',
       headeralign: 'center',
       align: 'center',
+      width: 80,
     }, {
-      coltype: 'string',
+      coltype: 'datetime',
       label: '录入时间',
       prop: 'lrsj',
       headeralign: 'center',
       align: 'center',
+      width: 130,
     }, ],
   form: {
     gcdm: '9902',

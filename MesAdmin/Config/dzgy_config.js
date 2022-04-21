@@ -4,7 +4,7 @@
   operate_fnlist: [{
       label: '上传Pdf',
       btntype: 'upload',
-      action: 'http://localhost:52655/api/upload/pdf',
+      action: 'http://localhost:52655/api/upload/dzgy_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
           this.$message.success(response.msg);
@@ -16,7 +16,7 @@
             finditem.jwdx = file.size;
             finditem.gymc = file.name;
             finditem.gybh = '';
-            finditem.wjlj = file.name;
+            finditem.wjlj = response.files[0].fileid;
             finditem.scry = this.$store.getters.name;
             finditem.scsj = this.$parseTime(new Date());
           }
@@ -40,10 +40,18 @@
       this.list.unshift(row);
     },
     download_dzgypdf: function (row) {
-      console.log(row);
-      if (row.wjlj) {
-        window.open("http://localhost:52655/upload/downloadpdf?filename=" + row.wjlj);
-      }
+      var _this = this;
+      this.$request('get', "download/ftp2web", {
+        wjlx: '电子工艺',
+        wjlj: row.wjlj
+      }).then(function (res) {
+        if (res.code === 1) {
+          window.open("http://localhost:52655/api/download/downloadpdf?wjlj=" + row.wjlj);
+        } else if (res.code === 0) {
+          _this.$message.error(res.msg);
+        }
+      });
+      if (row.wjlj) {}
     }
   },
   batoperate: {

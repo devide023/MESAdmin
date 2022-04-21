@@ -13,6 +13,9 @@ using DapperExtensions;
 using System.Reflection;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Data;
+using Oracle.ManagedDataAccess.Client;
+
 namespace ZDMesServices.Common
 {
     public class PageConfigService : OracleBaseFixture, IPageConfig
@@ -26,21 +29,23 @@ namespace ZDMesServices.Common
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append(" select t1.permis ");
-                sql.Append(" FROM   mes_role_menu t1, mes_menu_entity t2, (select ta.roleid ");
-                sql.Append("          from mes_user_role ta, mes_user_entity tb ");
-                sql.Append("          where  ta.userid = tb.id ");
-                sql.Append("          and    tb.token = :token ) t3 ");
-                sql.Append(" where  t1.menuid = t2.id ");
-                sql.Append(" and t2.routepath = :path ");
-                sql.Append(" and t1.roleid = t3.roleid ");
-                var json = Db.Connection.ExecuteScalar<string>(sql.ToString(), new { path = route,token = token });
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<sys_menu_permis>(json);
+                using (IDbConnection db = new OracleConnection(ConString))
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append(" select t1.permis ");
+                    sql.Append(" FROM   mes_role_menu t1, mes_menu_entity t2, (select ta.roleid ");
+                    sql.Append("          from mes_user_role ta, mes_user_entity tb ");
+                    sql.Append("          where  ta.userid = tb.id ");
+                    sql.Append("          and    tb.token = :token ) t3 ");
+                    sql.Append(" where  t1.menuid = t2.id ");
+                    sql.Append(" and t2.routepath = :path ");
+                    sql.Append(" and t1.roleid = t3.roleid ");
+                    var json = db.ExecuteScalar<string>(sql.ToString(), new { path = route, token = token });
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<sys_menu_permis>(json);
+                }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

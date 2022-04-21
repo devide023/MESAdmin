@@ -1,6 +1,6 @@
 {
   isgradequery: true,
-  isbatoperate: false,
+  isbatoperate: true,
   isoperate: false,
   isfresh: true,
   isselect: true,
@@ -9,6 +9,33 @@
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     }
+  },
+  batoperate: {
+    import_by_add: function (_this, res) {
+      if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          _this.$request('get', '/lbj/rjxx/readxls', {
+            fileid: fid
+          }).then(function (result) {
+            _this.$loading().close();
+            if (result.code === 1) {
+              _this.$message.success(result.msg);
+              _this.getlist(_this.queryform);
+            } else if (result.code === 0) {
+              _this.$message.error(result.msg);
+            }
+          });
+        } catch (error) {
+          _this.$message.error(error);
+        }
+      } else {
+        _this.$loading().close();
+      }
+    },
+    import_by_replace: function (vm, res) {},
+    import_by_zh: function (vm, res) {},
+    export_excel: function (vm) {}
   },
   fields: [{
       coltype: 'list',

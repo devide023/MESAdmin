@@ -31,5 +31,35 @@ namespace ZDMesInterfaces.LBJ
         /// <param name="key"></param>
         /// <returns></returns>
         IEnumerable<zxjc_ryxx> GetUserCode(string key);
+        /// <summary>
+        /// 获取刃具信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_rjxx> GetRjInfo();
+        /// <summary>
+        /// 获取刀柄基础信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_dbxx> GetDbInfo();
+        /// <summary>
+        /// 获取空闲刀柄列表
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_dbxx> Get_FreeDb();
+        /// <summary>
+        /// 获取数控车床设备列表
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_cnc> Get_CNC_List();
+        /// <summary>
+        /// 获取设备未绑定CNC列表
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_cnc> Get_FreeCNC_List();
+        /// <summary>
+        /// ftp配置信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_ftpfilepath> FtpConfig();
     }
 }

@@ -73,5 +73,79 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        /// <summary>
+        /// 刀柄基础信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet,Route("dbxx")]
+        public IHttpActionResult GetDbInfo()
+        {
+            try
+            {
+                var list = _baseinfo.GetDbInfo().Select(t => new { label = t.dblx+"["+t.dbmc+"]", value = t.dbh });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("free_db_list")]
+        public IHttpActionResult Free_DB_List()
+        {
+            try
+            {
+                var list = _baseinfo.Get_FreeDb().OrderBy(t => t.dbh).Select(t => new { label = t.dblx + "(" + t.dbmc + ")", value = t.dbh });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet,Route("rjlx")]
+        public IHttpActionResult GetRjLxList()
+        {
+            try
+            {
+                var list = _baseinfo.GetRjInfo().Select(t => new { label = t.rjmc, value = t.rjlx });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet,Route("cnc_list")]
+        public IHttpActionResult Get_CNC_List()
+        {
+            try
+            {
+                var list = _baseinfo.Get_CNC_List().Select(t => new { label = t.sbmc, value = t.sbbh }).OrderBy(t=>t.value);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("free_cnc_list")]
+        public IHttpActionResult Get_FreeCNC_List()
+        {
+            try
+            {
+                var list = _baseinfo.Get_FreeCNC_List().Select(t => new { label = t.sbmc, value = t.sbbh }).OrderBy(t => t.value);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

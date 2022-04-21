@@ -1,7 +1,9 @@
 ﻿using Dapper;
 using DapperExtensions.Mapper;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,57 +97,59 @@ namespace ZDMesServices
         {
             try
             {
-                resultcount = 0;
-                var colnames = string.Empty;
-                IClassMapper mapper = Db.GetMap<T>();
-                var tablename = mapper.TableName;
-                var cols = mapper.Properties;
-                foreach (var item in cols)
+                using (IDbConnection db = new OracleConnection(ConString))
                 {
-                    if (!item.Ignored)
+                    resultcount = 0;
+                    var colnames = string.Empty;
+                    IClassMapper mapper = Db.GetMap<T>();
+                    var tablename = mapper.TableName;
+                    var cols = mapper.Properties;
+                    foreach (var item in cols)
                     {
-                        if (item.ColumnName == item.Name)
+                        if (!item.Ignored)
                         {
-                            colnames += item.ColumnName + ",";
-                        }
-                        else
-                        {
-                            colnames += item.ColumnName + $" as {item.Name},";
+                            if (item.ColumnName == item.Name)
+                            {
+                                colnames += item.ColumnName + ",";
+                            }
+                            else
+                            {
+                                colnames += item.ColumnName + $" as {item.Name},";
+                            }
                         }
                     }
-                }
-                if (!string.IsNullOrEmpty(colnames))
-                {
-                    colnames = colnames.Remove(colnames.Length - 1);
-                }
-                else
-                {
-                    colnames = "*";
-                }
-                StringBuilder sql = new StringBuilder();
-                sql.Append($"select {colnames} from {tablename} where 1=1 ");
-                StringBuilder sql_cnt = new StringBuilder();
-                sql_cnt.Append($"select count(*) from {tablename} where 1=1 ");
-                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
-                {
-                    sql.Append(" and " + parm.sqlexp);
-                    sql_cnt.Append(" and " + parm.sqlexp);
-                }
-                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
-                {
-                    sql.Append(parm.orderbyexp);
-                }
-                else
-                {
-                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    if (!string.IsNullOrEmpty(colnames))
                     {
-                        sql.Append($" order by {parm.default_order_colname} desc ");
+                        colnames = colnames.Remove(colnames.Length - 1);
                     }
+                    else
+                    {
+                        colnames = "*";
+                    }
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append($"select {colnames} from {tablename} where 1=1 ");
+                    StringBuilder sql_cnt = new StringBuilder();
+                    sql_cnt.Append($"select count(*) from {tablename} where 1=1 ");
+                    if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                    {
+                        sql.Append(" and " + parm.sqlexp);
+                        sql_cnt.Append(" and " + parm.sqlexp);
+                    }
+                    if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                    {
+                        sql.Append(parm.orderbyexp);
+                    }
+                    else
+                    {
+                        if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                        {
+                            sql.Append($" order by {parm.default_order_colname} desc ");
+                        }
+                    }
+                    var q = db.Query<T>(OraPager(sql.ToString()), parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
                 }
-                var q = Db.Connection.Query<T>(OraPager(sql.ToString()), parm.sqlparam);
-                resultcount = Db.Connection.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
-                return q;
-
             }
             catch (Exception)
             {

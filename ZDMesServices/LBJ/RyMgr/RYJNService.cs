@@ -7,6 +7,9 @@ using ZDMesInterfaces.Common;
 using ZDMesModels.LBJ;
 using ZDMesInterfaces.LBJ.RyMgr;
 using Dapper;
+using System.Data;
+using Oracle.ManagedDataAccess.Client;
+
 namespace ZDMesServices.LBJ.RyMgr
 {
     public class RYJNService:BaseDao<zxjc_ryxx_jn>,IRyJn
@@ -20,9 +23,12 @@ namespace ZDMesServices.LBJ.RyMgr
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select count(jnbh) from ZXJC_RYXX_JN");
-                return Db.Connection.ExecuteScalar<int>(sql.ToString());
+                using (IDbConnection db = new OracleConnection(ConString))
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select count(jnbh) from ZXJC_RYXX_JN");
+                    return db.ExecuteScalar<int>(sql.ToString());
+                }
             }
             catch (Exception)
             {
@@ -35,10 +41,13 @@ namespace ZDMesServices.LBJ.RyMgr
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select count(jnbh) from ZXJC_RYXX_JN where jnbh = :jnno");
-                var ret = Db.Connection.ExecuteScalar<int>(sql.ToString(), new { jnno = jnno });
-                return ret > 0;
+                using (IDbConnection db = new OracleConnection(ConString))
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select count(jnbh) from ZXJC_RYXX_JN where jnbh = :jnno");
+                    var ret = db.ExecuteScalar<int>(sql.ToString(), new { jnno = jnno });
+                    return ret > 0;
+                }
             }
             catch (Exception)
             {

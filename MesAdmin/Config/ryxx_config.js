@@ -175,10 +175,10 @@
       upload_success: function (res, file) {
         if (res.code === 1) {
           if (res.files.length > 0) {
-            var rowkey = res.files[0].rowindex;
+            var rowkey = res.extdata.rowkey;
             var findrow = this.$basepage.list.find((t) => t.rowkey === rowkey);
             if (findrow) {
-              findrow.xpmc = res.files[0].serverfilename;
+              findrow.xpmc = res.files[0].fileid;
             }
           }
         } else if (res.code === 0) {

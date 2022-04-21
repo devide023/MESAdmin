@@ -8,6 +8,9 @@ using ZDMesModels.LBJ;
 using Dapper;
 using DapperExtensions;
 using DapperExtensions.Predicate;
+using System.Data;
+using Oracle.ManagedDataAccess.Client;
+
 namespace ZDMesServices.LBJ.SBWB
 {
     public class WbZqService:BaseDao<base_sbwb_ls>, ISbWbZq
@@ -77,31 +80,34 @@ namespace ZDMesServices.LBJ.SBWB
         {
             try
             {
-                List<base_sbwb_ls> result = new List<base_sbwb_ls>();
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select autoid, gcdm, scx, gwh, wbsh, wbxx, wbjhsj, wbzt, wbwcsj, wbwcr, lrr, lrsj ");
-                sql.Append(" from BASE_SBWB_LS t ");
-                sql.Append(" where trunc(wbjhsj) = (select max(trunc(wbjhsj)) from BASE_SBWB_LS)");
-                result = Db.Connection.Query<base_sbwb_ls>(sql.ToString()).ToList();
-                var list = Db.GetList<base_sbwb>();
-                foreach (var item in list)
+                using (IDbConnection db = new OracleConnection(ConString))
                 {
-                    var q = result.Where(t => t.gcdm == item.gcdm && t.scx == item.scx && t.gwh == item.gwh && t.wbxx == item.wbxx);
-                    if(q.Count() == 0)
+                    List<base_sbwb_ls> result = new List<base_sbwb_ls>();
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select autoid, gcdm, scx, gwh, wbsh, wbxx, wbjhsj, wbzt, wbwcsj, wbwcr, lrr, lrsj ");
+                    sql.Append(" from BASE_SBWB_LS t ");
+                    sql.Append(" where trunc(wbjhsj) = (select max(trunc(wbjhsj)) from BASE_SBWB_LS)");
+                    result = db.Query<base_sbwb_ls>(sql.ToString()).ToList();
+                    var list = Db.GetList<base_sbwb>();
+                    foreach (var item in list)
                     {
-                        result.Add(new base_sbwb_ls()
+                        var q = result.Where(t => t.gcdm == item.gcdm && t.scx == item.scx && t.gwh == item.gwh && t.wbxx == item.wbxx);
+                        if (q.Count() == 0)
                         {
-                            gcdm = item.gcdm,
-                            scx = item.scx,
-                            gwh = item.gwh,
-                            wbxx = item.wbxx,
-                            wbsh = item.wbsh,
-                            wbzt = "计划中",
-                            sfwb = "Y"
-                        });
+                            result.Add(new base_sbwb_ls()
+                            {
+                                gcdm = item.gcdm,
+                                scx = item.scx,
+                                gwh = item.gwh,
+                                wbxx = item.wbxx,
+                                wbsh = item.wbsh,
+                                wbzt = "计划中",
+                                sfwb = "Y"
+                            });
+                        }
                     }
+                    return result.OrderBy(t => t.gcdm).ThenBy(t => t.scx).ThenBy(t => t.wbsh);
                 }
-                return result.OrderBy(t=>t.gcdm).ThenBy(t=>t.scx).ThenBy(t=>t.wbsh);
             }
             catch (Exception)
             {

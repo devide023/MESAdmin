@@ -49,6 +49,9 @@
     <Compile Include="Common\IPageConfig.cs" />
     <Compile Include="Common\IRole.cs" />
     <Compile Include="Common\IUser.cs" />
+    <Compile Include="LBJ\BHDGL\IBHD.cs" />
+    <Compile Include="LBJ\DaoJu\IDaoJu.cs" />
+    <Compile Include="LBJ\DJGW\IDjGw.cs" />
     <Compile Include="LBJ\DZWD\IJsTc.cs" />
     <Compile Include="LBJ\DZWD\IJtFp.cs" />
     <Compile Include="LBJ\IBaseInfo.cs" />

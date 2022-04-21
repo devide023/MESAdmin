@@ -61,7 +61,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="base_ftpfilepath.cs" />
     <Compile Include="base_page_config.cs" />
+    <Compile Include="LBJ\ad_bjxx.cs" />
+    <Compile Include="LBJ\base_bhdxx.cs" />
+    <Compile Include="LBJ\base_cnc.cs" />
+    <Compile Include="LBJ\base_dbrjzx.cs" />
+    <Compile Include="LBJ\base_dbrjzx_ls.cs" />
+    <Compile Include="LBJ\base_dbrjgx.cs" />
+    <Compile Include="LBJ\base_rjsmxh.cs" />
     <Compile Include="LBJ\base_sbwb_ls.cs" />
     <Compile Include="LBJ\base_sbwb.cs" />
     <Compile Include="LBJ\base_rjxx.cs" />
@@ -70,13 +78,22 @@
     <Compile Include="LBJ\base_sbxx.cs" />
     <Compile Include="LBJ\base_gcxx.cs" />
     <Compile Include="LBJ\base_scxxx.cs" />
+    <Compile Include="LBJ\dbrjly_form.cs" />
+    <Compile Include="LBJ\lbj_qms_4mbhd.cs" />
     <Compile Include="LBJ\pp_zpjh.cs" />
+    <Compile Include="LBJ\sys_dbrjly.cs" />
     <Compile Include="LBJ\sys_jtfp_form.cs" />
     <Compile Include="LBJ\sys_ryjx.cs" />
     <Compile Include="LBJ\sys_wbzq_form.cs" />
+    <Compile Include="LBJ\zxjc_sbxx_ls_cnc.cs" />
+    <Compile Include="LBJ\zxjc_sbxx_ls_gj.cs" />
+    <Compile Include="LBJ\zxjc_sbxx_ls_hg.cs" />
+    <Compile Include="LBJ\zxjc_sbxx_ls_qx.cs" />
+    <Compile Include="LBJ\zxjc_sbxx_ls_spc.cs" />
     <Compile Include="LBJ\zxjc_gylx.cs" />
     <Compile Include="LBJ\zxjc_djxx.cs" />
     <Compile Include="LBJ\zxjc_djgw.cs" />
+    <Compile Include="LBJ\zxjc_smls.cs" />
     <Compile Include="LBJ\zxjc_t_tstc.cs" />
     <Compile Include="LBJ\zxjc_t_jstcfp.cs" />
     <Compile Include="LBJ\zxjc_t_jstc.cs" />
