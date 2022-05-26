@@ -172,40 +172,52 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         [HttpGet,Route("readxls")]
         public IHttpActionResult ReadTempFile(string fileid)
         {
-            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}"); 
+            FileInfo finfo = new FileInfo(filepath);
             try
             {
+                int no = 1;
+                int uid = _ryxx.MaxUserCode();
                 List<zxjc_ryxx> list = new List<zxjc_ryxx>();
                 if (!string.IsNullOrEmpty(fileid))
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn+1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn+1);
+                    finfo.Delete();
                     foreach (DataRow item in dataTable.Rows)
                     {
                         DateTime rsrq = DateTime.Today;
                         DateTime csrq = DateTime.Today.AddYears(-18);
-                        DateTime.TryParse(item[8].ToString(), out rsrq);
-                        DateTime.TryParse(item[9].ToString(), out csrq);
+                        DateTime.TryParse(item[11].ToString(), out rsrq);
+                        DateTime.TryParse(item[10].ToString(), out csrq);
                         list.Add(new zxjc_ryxx()
                         {
                             gcdm = item[0].ToString(),
                             scx = item[1].ToString(),
-                            gwh = item[2].ToString(),
-                            usercode = "",
+                            gwh = item[6].ToString(),
+                            usercode = CheckUserCode(uid + no),
                             username = item[3].ToString(),
                             ryxb = item[4].ToString(),
                             password = "123456",
                             rylx = item[5].ToString(),
-                            bzxx = item[6].ToString(),
-                            hgsg = item[7].ToString(),
+                            bzxx = item[7].ToString(),
+                            hgsg = "Y",
                             rsrq = rsrq,
-                            csrq = csrq
-                        }) ;
+                            csrq = csrq,
+                            jmh = Guid.NewGuid().ToString().Replace("-", "")
+                        }); ;
+                        no++;
                     }
-                    FileInfo finfo = new FileInfo(filepath);
-                    finfo.Delete();
-                    return Json(new { code = 1, msg = "ok",list = list });
+                    var ret = _ryxxservice.Add(list);
+                    if (ret > 0)
+                    {
+                        return Json(new { code = 1, msg = "数据导入成功" });
+                    }
+                    else
+                    {
+                        return Json(new { code = 0, msg = "数据导入失败" });
+                    }
                 }
                 else
                 {
@@ -214,7 +226,6 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             }
             catch (Exception)
             {
-                FileInfo finfo = new FileInfo(filepath);
                 finfo.Delete();
                 throw;
             }

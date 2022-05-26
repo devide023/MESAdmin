@@ -5,11 +5,11 @@
   pagefuns: {},
   fields: [{
       coltype: 'list',
-      prop: 'scx',
+      prop: 'SCX',
       label: '生产线',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 150,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
@@ -17,8 +17,15 @@
       },
       options: []
     }, {
+      coltype: 'string',
+      prop: 'JCRY',
+      label: '员工姓名',
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+    }, {
       coltype: 'list',
-      prop: 'gwh',
+      prop: 'GWH',
       label: '岗位号',
       headeralign: 'center',
       align: 'center',
@@ -29,39 +36,22 @@
       options: []
     }, {
       coltype: 'string',
-      prop: 'zjgs',
-      label: '总加工数',
+      prop: 'JGS',
+      label: '加工数',
       headeralign: 'center',
       align: 'center',
     }, {
       coltype: 'string',
-      prop: 'glf',
-      label: '工料废',
+      prop: 'HGS',
+      label: '合格数',
       headeralign: 'center',
       align: 'center',
     }, {
       coltype: 'string',
-      prop: 'dd',
-      label: '待定',
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      prop: 'dbs',
-      label: '打包数',
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      prop: 'hgl',
+      prop: 'HGL',
       label: '合格率',
       headeralign: 'center',
       align: 'center',
     },
   ],
-  queryapi: {
-    url: '/lbj/ryjx/list',
-    method: 'post',
-    callback: function (vm, res) {}
-  }
 }

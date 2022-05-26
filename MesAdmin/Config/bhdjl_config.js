@@ -1,6 +1,6 @@
 {
   isgradequery: true,
-  isbatoperate: true,
+  isbatoperate: false,
   isoperate: false,
   isfresh: true,
   isselect: true,
@@ -187,12 +187,12 @@
       overflowtooltip: true,
     },
   ],
-  form: {
+        form: {
     isdb: false,
     isedit: true
   },
   queryapi: {
-    url: 'lbj/bhdjl/list',
+    url: '/lbj/bhdjl/list',
     method: 'post',
     callback: function (_this, res) {},
   },

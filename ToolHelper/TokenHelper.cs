@@ -16,9 +16,12 @@ namespace ZDToolHelper
                 string token = string.Empty;
                 var headers = HttpContext.Current.Request.Headers;
                 var tokens = headers.GetValues("Authorization");
-                if (tokens.Length > 0)
+                if (tokens != null)
                 {
-                    token = tokens[0].Replace("Bearer ","");
+                    if (tokens.Length > 0)
+                    {
+                        token = tokens[0].Replace("Bearer ", "");
+                    }
                 }
                 return token;
             }

@@ -19,12 +19,12 @@
             fileid: fid
           }).then(function (result) {
             vm.$loading().close();
-            for (var i = 0; i < result.list.length; i++) {
-              var item = result.list[i];
-              vm.$set(item, 'isdb', false);
-              vm.$set(item, 'isedit', true);
-              vm.list.unshift(item);
+            if (result.code === 1) {
+              vm.$message.success(result.msg);
+            } else if (result.code === 0) {
+              vm.$message.error(result.msg);
             }
+            vm.getlist(vm.queryform);
           });
         } catch (error) {
           vm.$message.error(error);
@@ -33,6 +33,24 @@
         vm.$loading().close();
       }
     },
+    export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields.filter(function (i) {
+              return ['password'].indexOf(i.prop) === -1;
+            }), expdatalist);
+        } else if (res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this, res) {},
   },
   fields: [{
       coltype: 'list',
@@ -69,17 +87,18 @@
       width: 100,
     }, {
       coltype: 'string',
-      prop: 'password',
-      label: '密码',
+      prop: 'username',
+      width: 80,
+      dbprop: 'user_name',
+      label: '姓名',
       headeralign: 'center',
       align: 'center',
     }, {
       coltype: 'string',
-      prop: 'username',
-      dbprop: 'user_name',
-      label: '姓名',
+      prop: 'password',
+      label: '密码',
       headeralign: 'center',
-      align: 'left',
+      align: 'center',
     }, {
       coltype: 'list',
       prop: 'ryxb',
@@ -103,8 +122,8 @@
       align: 'center',
       width: 80,
       options: [{
-          label: '操作员工',
-          value: '操作员工'
+          label: '操作工',
+          value: '操作工'
         }, {
           label: '巡检',
           value: '巡检'

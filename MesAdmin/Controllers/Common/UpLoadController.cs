@@ -23,6 +23,7 @@ namespace MesAdmin.Controllers.Common
             pdf=1,
             image=2,
             excel=3,
+            video=4,
         }
         private IBaseInfo _baseinfo;
         public UpLoadController(IBaseInfo baseinfo)
@@ -61,6 +62,9 @@ namespace MesAdmin.Controllers.Common
                         case UploadWjLx.excel:
                             spath = "~/Upload/Excel/";
                             break;
+                        case UploadWjLx.video:
+                            spath = "~/Upload/Video/";
+                            break;
                         default:
                             spath = "~/Upload/";
                             break;
@@ -87,6 +91,28 @@ namespace MesAdmin.Controllers.Common
                 {
                     return new List<dynamic>();
                 }                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost, Route("video")]
+        public IHttpActionResult Uplad_DzGy_Mp4()
+        {
+            try
+            {
+                Dictionary<string, object> kv = new Dictionary<string, object>();
+                var list = File2Ftp("视频", UploadWjLx.video, out kv);
+                if (list.Count() > 0)
+                {
+                    return Json(new { code = 1, msg = "上传成功", files = list, extdata = kv });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "上传失败", files = list, extdata = kv });
+                }
             }
             catch (Exception)
             {

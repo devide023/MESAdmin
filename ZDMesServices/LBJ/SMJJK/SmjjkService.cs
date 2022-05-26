@@ -22,7 +22,7 @@ namespace ZDMesServices.LBJ.SMJJK
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
                     StringBuilder sql_cnt = new StringBuilder();
                     sql_cnt.Append("select count(1) from ZXJC_SMLS t where 1=1 ");
@@ -49,9 +49,16 @@ namespace ZDMesServices.LBJ.SMJJK
                             sql.Append($" order by {parm.default_order_colname} desc ");
                         }
                     }
-                    var q = db.Query<zxjc_smls>(OraPager(sql.ToString()), parm.sqlparam);
-                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
-                    return q;
+                    try
+                    {
+                        var q = db.Query<zxjc_smls>(OraPager(sql.ToString()), parm.sqlparam);
+                        resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                        return q;
+                    }
+                    catch (OracleException)
+                    {
+                        throw;
+                    }
                 }
             }
             catch (Exception)

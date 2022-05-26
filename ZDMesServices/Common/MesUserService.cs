@@ -10,8 +10,13 @@ using DapperExtensions;
 using DapperExtensions.Predicate;
 using Newtonsoft.Json;
 using System.Web;
+using Oracle.ManagedDataAccess.Client;
+using ZDMesInterceptor.LBJ;
+using Autofac.Extras.DynamicProxy;
+
 namespace ZDMesServices.Common
 {
+    [Intercept(typeof(CUDLogger))]
     public class MesUserService : BaseDao<mes_user_entity>, IUser
     {
         public MesUserService(string constr):base(constr)
@@ -23,24 +28,32 @@ namespace ZDMesServices.Common
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select count(id) from MES_USER_ENTITY where token = :token");
-                var qty = Db.Connection.ExecuteScalar<int>(sql.ToString(), new { token = token });
-                if (qty > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var pwd = ZDToolHelper.Tool.Str2MD5(newpwd);
-                    var ret = DB.Connection.Execute("update MES_USER_ENTITY set pwd = :pwd where token = :token", new { token = token, pwd = pwd });
-                    return ret > 0;
-                }
-                else
-                {
-                    return false;
+                    InitDB(db);
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select count(id) from MES_USER_ENTITY where token = :token");
+                    var qty = Db.Connection.ExecuteScalar<int>(sql.ToString(), new { token = token });
+                    if (qty > 0)
+                    {
+                        var pwd = ZDToolHelper.Tool.Str2MD5(newpwd);
+                        var ret = Db.Connection.Execute("update MES_USER_ENTITY set pwd = :pwd where token = :token", new { token = token, pwd = pwd });
+                        return ret > 0;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -48,44 +61,52 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var pre = Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token);
-                var q = Db.GetList<mes_user_entity>(pre);
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var user = q.First();
-                    var user_role_q = Predicates.Field<mes_user_role>(t => t.userid, Operator.Eq, user.id);
-                    var roleids = Db.GetList<mes_user_role>(user_role_q).Select(t => t.roleid);
-                    var role_q = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, roleids);
-                    var menuids = DB.GetList<mes_role_menu>(role_q);
-                    PredicateGroup pg = new PredicateGroup();
-                    pg.Operator = GroupOperator.And;
-                    pg.Predicates = new List<IPredicate>();
-                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, menuids.Select(t=>t.menuid)));
-                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.status, Operator.Eq, 1));
-                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string> {"01","02"}));
-                    var list = DB.GetList<mes_menu_entity>(pg).OrderBy(t=>t.seq);
-                    var rootlist = list.Where(t => t.pid == 0);
-                    foreach (var item in rootlist)
+                    InitDB(db);
+                    var pre = Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token);
+                    var q = Db.GetList<mes_user_entity>(pre);
+                    if (q.Count() > 0)
                     {
-                        item.menupermission = JsonConvert.DeserializeObject<sys_menu_permis>(menuids.Where(t => t.menuid == item.id).Select(t => t.permis).First());
-                        item.children = Get_User_SubMenus(list, menuids, item).ToList();
-                        //if (!string.IsNullOrEmpty(item.configpath))
-                        //{
-                        //    var configfullpath = configroot + item.configpath;
-                        //    item.viewconf = ZDToolHelper.Tool.ReadFile(configfullpath);
-                        //}
+                        var user = q.First();
+                        var user_role_q = Predicates.Field<mes_user_role>(t => t.userid, Operator.Eq, user.id);
+                        var roleids = Db.GetList<mes_user_role>(user_role_q).Select(t => t.roleid);
+                        var role_q = Predicates.Field<mes_role_menu>(t => t.roleid, Operator.Eq, roleids);
+                        var menuids = Db.GetList<mes_role_menu>(role_q);
+                        PredicateGroup pg = new PredicateGroup();
+                        pg.Operator = GroupOperator.And;
+                        pg.Predicates = new List<IPredicate>();
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, menuids.Select(t => t.menuid)));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.status, Operator.Eq, 1));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string> { "01", "02" }));
+                        var list = Db.GetList<mes_menu_entity>(pg).OrderBy(t => t.seq);
+                        var rootlist = list.Where(t => t.pid == 0);
+                        foreach (var item in rootlist)
+                        {
+                            item.menupermission = JsonConvert.DeserializeObject<sys_menu_permis>(menuids.Where(t => t.menuid == item.id).Select(t => t.permis).First());
+                            item.children = Get_User_SubMenus(list, menuids, item).ToList();
+                            //if (!string.IsNullOrEmpty(item.configpath))
+                            //{
+                            //    var configfullpath = configroot + item.configpath;
+                            //    item.viewconf = ZDToolHelper.Tool.ReadFile(configfullpath);
+                            //}
+                        }
+                        return rootlist;
                     }
-                    return rootlist;
-                }
-                else
-                {
-                    return new List<mes_menu_entity>();
+                    else
+                    {
+                        return new List<mes_menu_entity>();
+                    }
                 }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -117,25 +138,33 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var pre = Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token);
-                var q = Db.GetList<mes_user_entity>(pre);
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var user = q.First();
-                    var user_role_q = Predicates.Field<mes_user_role>(t => t.userid, Operator.Eq, user.id);
-                    var roleids = Db.GetList<mes_user_role>(user_role_q).Select(t => t.roleid);
-                    var role_q = Predicates.Field<mes_role_entity>(t => t.id, Operator.Eq, roleids);
-                    return DB.GetList<mes_role_entity>(role_q);
-                }
-                else
-                {
-                    return new List<mes_role_entity>();
+                    InitDB(db);
+                    var pre = Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token);
+                    var q = Db.GetList<mes_user_entity>(pre);
+                    if (q.Count() > 0)
+                    {
+                        var user = q.First();
+                        var user_role_q = Predicates.Field<mes_user_role>(t => t.userid, Operator.Eq, user.id);
+                        var roleids = Db.GetList<mes_user_role>(user_role_q).Select(t => t.roleid);
+                        var role_q = Predicates.Field<mes_role_entity>(t => t.id, Operator.Eq, roleids);
+                        return Db.GetList<mes_role_entity>(role_q);
+                    }
+                    else
+                    {
+                        return new List<mes_role_entity>();
+                    }
                 }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -143,23 +172,31 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var newtoken = new ZDToolHelper.JWTHelper().CreateToken();
-                var q = DB.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var user = q.First();
-                    user.token = newtoken;
-                    return DB.Update<mes_user_entity>(user);
-                }
-                else
-                {
-                    return false;
+                    InitDB(db);
+                    var newtoken = new ZDToolHelper.JWTHelper().CreateToken();
+                    var q = Db.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
+                    if (q.Count() > 0)
+                    {
+                        var user = q.First();
+                        user.token = newtoken;
+                        return Db.Update<mes_user_entity>(user);
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -179,12 +216,20 @@ namespace ZDMesServices.Common
                 {
                     list.Add(new { userid = userid, roleid = item });
                 }
-                return DB.Connection.Execute(sql.ToString(), list) > 0;
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.Connection.Execute(sql.ToString(), list) > 0;
+                }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -192,47 +237,65 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var q = DB.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
-                return q.FirstOrDefault();
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    var q = Db.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
+                    return q.FirstOrDefault();
+                }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
         public sys_userinfo_result GetUserInfo(string token)
         {
             try
             {
-                var q = DB.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    mes_user_entity user = q.First();
-                    var user_menus = this.Get_User_Menus(token).ToList();
-                    return new sys_userinfo_result()
+                    InitDB(db);
+                    var q = Db.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
+                    if (q.Count() > 0)
                     {
-                        code = 1,
-                        msg = "用户信息获取成功",
-                        userinfo = user,
-                        user_menus = user_menus
-                    };
-                }
-                else
-                {
-                    return new sys_userinfo_result()
+                        string server_path = "http://" + HttpContext.Current.Request.Url.Authority + "/Images/headimg/";
+                        mes_user_entity user = q.First();
+                        user.headimg = server_path + (string.IsNullOrEmpty(user.headimg) ? "default.jpg" : user.headimg);
+                        var user_menus = this.Get_User_Menus(token).ToList();
+                        return new sys_userinfo_result()
+                        {
+                            code = 1,
+                            msg = "用户信息获取成功",
+                            userinfo = user,
+                            user_menus = user_menus
+                        };
+                    }
+                    else
                     {
-                        code = 0,
-                        msg = "获取用户信息失败",
-                        userinfo = new mes_user_entity(),
-                        user_menus = new List<mes_menu_entity>()
-                    };
+                        return new sys_userinfo_result()
+                        {
+                            code = 0,
+                            msg = "获取用户信息失败",
+                            userinfo = new mes_user_entity(),
+                            user_menus = new List<mes_menu_entity>()
+                        };
+                    }
                 }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -240,28 +303,31 @@ namespace ZDMesServices.Common
         {
             try
             {
-
-                var pwd = ZDToolHelper.Tool.Str2MD5(user.password);
-                StringBuilder sql = new StringBuilder();
-                var isexsit = Db.Connection.ExecuteScalar<int>("select count(id) from mes_user_entity where code= :code and pwd= :pwd", new { code = user.username, pwd = pwd });
-                if (isexsit > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var token = Db.Connection.ExecuteScalar<string>("select token from mes_user_entity where code= :code and pwd= :pwd ", new { code = user.username, pwd = pwd });
-                    return new sys_login_result()
+                    InitDB(db);
+                    var pwd = ZDToolHelper.Tool.Str2MD5(user.password);
+                    StringBuilder sql = new StringBuilder();
+                    var isexsit = Db.Connection.ExecuteScalar<int>("select count(id) from mes_user_entity where code= :code and pwd= :pwd", new { code = user.username, pwd = pwd });
+                    if (isexsit > 0)
                     {
-                        code = 1,
-                        msg = "登录成功",
-                        token = token
-                    };
-                }
-                else
-                {
-                    return new sys_login_result()
+                        var token = Db.Connection.ExecuteScalar<string>("select token from mes_user_entity where code= :code and pwd= :pwd ", new { code = user.username, pwd = pwd });
+                        return new sys_login_result()
+                        {
+                            code = 1,
+                            msg = "登录成功",
+                            token = token
+                        };
+                    }
+                    else
                     {
-                        code = 0,
-                        msg = "用户名或密码错误",
-                        token = ""
-                    };
+                        return new sys_login_result()
+                        {
+                            code = 0,
+                            msg = "用户名或密码错误",
+                            token = ""
+                        };
+                    }
                 }
             }
             catch (Exception)
@@ -269,17 +335,24 @@ namespace ZDMesServices.Common
 
                 throw;
             }
+            finally
+            {
+                Db.Dispose();
+            }
         }
 
-        public sys_result Logout(string token)
+        public bool Logout()
         {
             try
             {
-                return new sys_result()
+                var token = ZDToolHelper.TokenHelper.GetToken;
+                ZDToolHelper.JWTHelper jwthelper = new ZDToolHelper.JWTHelper();
+                var newtoken = jwthelper.CreateToken();
+                using (var db = new OracleConnection(ConString))
                 {
-                    code = 1,
-                    msg = "成功退出系统"
-                };
+                    var ret = db.Execute("update mes_user_entity set token= :newtoken where token  = :token ", new { newtoken = newtoken, token = token });
+                    return ret > 0;
+                }
             }
             catch (Exception)
             {
@@ -292,56 +365,85 @@ namespace ZDMesServices.Common
         {
             try
             {
-                List<mes_user_entity> errorlist = new List<mes_user_entity>();
-                int okcnt = 0;
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select count(id) FROM mes_user_entity where code = :code");
-                foreach (var item in entitys)
+                using (var db = new OracleConnection(ConString))
                 {
-                    int qty = Db.Connection.ExecuteScalar<int>(sql.ToString(), new { code = item.code });
-                    if (qty == 0)
+                    InitDB(db);
+                    List<mes_user_entity> errorlist = new List<mes_user_entity>();
+                    int okcnt = 0;
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select count(id) FROM mes_user_entity where code = :code");
+                    foreach (var item in entitys)
                     {
-                        item.pwd = ZDToolHelper.Tool.Str2MD5("123456");
-                        item.token = new ZDToolHelper.JWTHelper().CreateToken();
-                        item.headimg = "default.jpg";
-                        var ret = DB.Insert<mes_user_entity>(item);
-                        if (ret > 0)
+                        int qty = db.ExecuteScalar<int>(sql.ToString(), new { code = item.code });
+                        if (qty == 0)
+                        {
+                            item.pwd = ZDToolHelper.Tool.Str2MD5("123456");
+                            item.token = new ZDToolHelper.JWTHelper().CreateToken();
+                            item.headimg = "default.jpg";
+                            var ret = Db.Insert<mes_user_entity>(item);
+                            if (ret > 0)
+                            {
+                                List<mes_user_role> rolelist = new List<mes_user_role>();
+                                foreach (var ritem in item.role)
+                                {
+                                    rolelist.Add(new mes_user_role()
+                                    {
+                                        userid = Convert.ToInt32(ret),
+                                        roleid = Convert.ToInt32(ritem)
+                                    });
+                                }
+                                Db.Insert<mes_user_role>(rolelist);
+                                okcnt++;
+                            }
+                        }
+                        else
                         {
                             okcnt++;
+                            errorlist.Add(item);
                         }
                     }
-                    else
-                    {
-                        okcnt++;
-                        errorlist.Add(item);
-                    }
+                    noklist = errorlist;
+                    return okcnt;
                 }
-                noklist = errorlist;
-                return okcnt;
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
         public override bool Del(IEnumerable<mes_user_entity> entitys)
         {
             try
             {
-                using (var transaction = DB.Connection.BeginTransaction())
+                using (var db = new OracleConnection(ConString))
                 {
-                    var p = new { id = entitys.Select(t => t.id) };
-                    var affectedRows1 = DB.Connection.Execute("delete from mes_user_entity where id in :id", p, transaction: transaction);
-                    var affectedRows2 = DB.Connection.Execute("delete from mes_user_role where userid in :id", p,transaction:transaction);
-                    transaction.Commit();
-                    if(affectedRows1!=-1 && affectedRows2 != -1)
+                    try
                     {
-                        return true;
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            var p = new { id = entitys.Select(t => t.id) };
+                            var affectedRows1 = db.Execute("delete from mes_user_entity where id in :id", p, transaction: transaction);
+                            var affectedRows2 = db.Execute("delete from mes_user_role where userid in :id", p, transaction: transaction);
+                            transaction.Commit();
+                            if (affectedRows1 != -1 && affectedRows2 != -1)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
                     }
-                    else
+                    finally
                     {
-                        return false;
+                        db.Close();
                     }
                 }
             }
@@ -351,13 +453,108 @@ namespace ZDMesServices.Common
                 throw;
             }
         }
+        public override IEnumerable<mes_user_entity> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select ta.id,ta.status, ta.code, ta.name, ta.pwd, ta.token, ta.headimg, ta.adduser,ta.addusername, ta.addtime, tc.id as roleid,tc.name as rolename");
+                    sql.Append(" from MES_USER_ENTITY ta, mes_user_role tb,mes_role_entity tc");
+                    sql.Append(" where  ta.id = tb.userid ");
+                    sql.Append(" and tb.roleid = tc.id ");
+                    StringBuilder sql_cnt = new StringBuilder();
+                    sql_cnt.Append("select count(ta.id) ");
+                    sql_cnt.Append(" from MES_USER_ENTITY ta, mes_user_role tb ,mes_role_entity tc");
+                    sql_cnt.Append(" where  ta.id = tb.userid ");
+                    sql_cnt.Append(" and tb.roleid = tc.id ");
+                    if (!string.IsNullOrEmpty(parm.sqlexp))
+                    {
+                        sql.Append(" and " + parm.sqlexp);
+                        sql_cnt.Append(" and " + parm.sqlexp);
+                    }
+                    if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                    {
+                        sql.Append(parm.orderbyexp);
+                    }
+                    else
+                    {
+                        if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                        {
+                            sql.Append($" order by {parm.default_order_colname} desc ");
+                        }
+                    }
+                    var user_role_dic = new Dictionary<int, mes_user_entity>();
+                    var list = db.Query<mes_user_entity, mes_role_entity, mes_user_entity>(OraPager(sql.ToString()), (ta, tb) =>
+                     {
+                         mes_user_entity user = new mes_user_entity();
+                         if (!user_role_dic.TryGetValue(ta.id, out user))
+                         {
+                             user = ta;
+                             user.role = new List<dynamic>();
+                             user_role_dic.Add(ta.id, user);
+                         }
+                         user.role.Add(tb.roleid);
+                         return user;
+                     }, param: parm.sqlparam, splitOn: "roleid").Distinct();
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
         public IEnumerable<mes_user_entity> GetUserByKey(string key)
         {
             try
             {
                 var exp = Predicates.Field<mes_user_entity>(t => t.name, Operator.Like, key);
-                return Db.GetList<mes_user_entity>(exp);
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.GetList<mes_user_entity>(exp);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                Db.Dispose();
+            }
+        }
+
+        public mes_user_entity CurrentUser()
+        {
+            try
+            {
+                var token = ZDToolHelper.TokenHelper.GetToken;
+                return GetUserByToken(token);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ResetPwd(int id, string pwd)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                var newpwd = ZDToolHelper.Tool.Str2MD5(pwd);
+                sql.Append("update MES_USER_ENTITY set pwd = :pwd where id = :id ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Execute(sql.ToString(), new { id = id, pwd = newpwd }) > 0;
+                }
             }
             catch (Exception)
             {

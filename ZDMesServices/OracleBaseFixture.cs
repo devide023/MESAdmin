@@ -16,15 +16,7 @@ namespace ZDMesServices
     public class OracleBaseFixture :IDisposable
     {
         private string connstr = string.Empty;
-        private OracleConnection connection;
         protected IDatabase Db;
-        public IDatabase DB
-        {
-            get
-            {
-                return Db;
-            }
-        }
         public string ConString
         {
             get
@@ -35,20 +27,26 @@ namespace ZDMesServices
         public OracleBaseFixture(string connstr)
         {
             this.connstr = ConfigurationManager.ConnectionStrings[connstr]?.ToString();
-            InitDB();
         }
         public void Dispose()
         {
-            connection.Dispose();
-            Db.Dispose();
+            Db?.Dispose();
         }
 
-        private void InitDB()
+        public void InitDB(OracleConnection con)
         {
-            var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new OracleDialect());
-            var sqlGenerator = new SqlGeneratorImpl(config);
-            connection = new OracleConnection(this.connstr);
-            Db = new Database(connection, sqlGenerator);
+            try
+            {
+                var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new OracleDialect());
+                var sqlGenerator = new SqlGeneratorImpl(config);
+                Db = new Database(con, sqlGenerator);
+            }
+            catch (Exception)
+            {
+                con.Close();
+                Db?.Dispose();
+                throw;
+            }
         }
 
         protected string OraPager(string sql)

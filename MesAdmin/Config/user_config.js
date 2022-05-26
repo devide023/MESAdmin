@@ -1,13 +1,9 @@
 {
   isgradequery: true,
+  isfresh: false,
+  isoperate: true,
   pagefuns: {
-    add_handle: function () {
-      var row = this.$deepClone(this.pageconfig.form);
-      row.status = 1;
-      row.adduser = this.$store.getters.name;
-      row.addtime = this.$parseTime(new Date());
-      this.list.unshift(row);
-    },
+    
   },
   fields: [{
       coltype: 'bool',
@@ -45,10 +41,25 @@
     }, {
       coltype: 'string',
       prop: 'name',
-      label: '用户姓名',
+      label: '用户名',
       headeralign: 'center',
       align: 'left',
-    }, {
+	  width:200,
+    },
+	{
+      coltype: 'list',
+      prop: 'role',
+      label: '角色',
+      headeralign: 'center',
+      align: 'left',
+	  multiple:true,
+	  inioptionapi: {
+        method: 'get',
+        url: '/role/all'
+      },
+      options: []
+    },
+	{
       coltype: 'string',
       prop: 'addusername',
       label: '录入人',
@@ -71,6 +82,7 @@
     name: '',
     adduser: '',
     addtime: '',
+	role:[],
     isdb: false,
     isedit: true
   },

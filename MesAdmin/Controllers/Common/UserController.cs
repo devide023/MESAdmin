@@ -143,5 +143,64 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
+        [HttpPost,Route("resetpwd")]
+        public IHttpActionResult ResetPwd(sys_changpwd_form form)
+        {
+            try
+            {
+               var b = _user.ResetPwd(form.id, form.pass);
+                if (b)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "重置密码成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "重置密码失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost,Route("changpwd")]
+        public IHttpActionResult User_ChangePwd(sys_changpwd_form form)
+        {
+            try
+            {
+                var token = ZDToolHelper.TokenHelper.GetToken;
+                var ret = _user.ChangePwd(token, form.pass);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "密码修改成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "密码修改失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

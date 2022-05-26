@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Autofac.Extras.DynamicProxy;
+using Dapper;
 using DapperExtensions.Mapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesInterceptor.LBJ;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
 
@@ -22,12 +24,20 @@ namespace ZDMesServices
         {
             try
             {
-                var ret = Db.Insert<T>(entity);
-                return ret;
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    var ret = Db.Insert<T>(entity);
+                    return ret;
+                }
             }
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -35,21 +45,30 @@ namespace ZDMesServices
         {
             try
             {
-                List<dynamic> list = new List<dynamic>();
-                using (var transaction = Db.Connection.BeginTransaction())
+                using (var db = new OracleConnection(ConString))
                 {
-                    foreach (var item in entitys)
+                    InitDB(db);
+                    List<dynamic> list = new List<dynamic>();
+                    db.Open();
+                    using (var transaction = Db.Connection.BeginTransaction())
                     {
-                        var ret = Db.Insert<T>(item,transaction);
-                        list.Add(ret);
+                        foreach (var item in entitys)
+                        {
+                            var ret = Db.Insert<T>(item, transaction);
+                            list.Add(ret);
+                        }
+                        transaction.Commit();
+                        return list.Count();
                     }
-                    transaction.Commit();
-                    return list.Count();
                 }
             }
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -62,11 +81,19 @@ namespace ZDMesServices
         {
             try
             {
-                return Db.Delete<T>(entity);
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.Delete<T>(entity);
+                }
             }
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -74,30 +101,38 @@ namespace ZDMesServices
         {
             try
             {
-                List<bool> list = new List<bool>();
-                foreach (var item in entitys)
+                using (var db = new OracleConnection(ConString))
                 {
-                    list.Add(Db.Delete<T>(item));
-                }
-                if (entitys.Count() == list.Count())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    InitDB(db);
+                    List<bool> list = new List<bool>();
+                    foreach (var item in entitys)
+                    {
+                        list.Add(Db.Delete<T>(item));
+                    }
+                    if (entitys.Count() == list.Count())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception)
             {
                 throw;
             }
+            finally
+            {
+                Db.Dispose();
+            }
         }
         public virtual IEnumerable<T> GetList(sys_page parm, out int resultcount)
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
                     resultcount = 0;
                     var colnames = string.Empty;
@@ -156,17 +191,29 @@ namespace ZDMesServices
 
                 throw;
             }
+            finally
+            {
+                Db.Dispose();
+            }
         }
 
         public virtual bool Modify(T entity)
         {
             try
             {
-                return Db.Update<T>(entity);
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.Update<T>(entity);
+                }
             }
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -174,24 +221,32 @@ namespace ZDMesServices
         {
             try
             {
-                List<bool> list = new List<bool>();
-                foreach (var item in entitys)
+                using (var db = new OracleConnection(ConString))
                 {
-                    list.Add(Db.Update<T>(item));
-                }
-                if (entitys.Count() == list.Count())
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    InitDB(db);
+                    List<bool> list = new List<bool>();
+                    foreach (var item in entitys)
+                    {
+                        list.Add(Db.Update<T>(item));
+                    }
+                    if (entitys.Count() == list.Count())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
     }

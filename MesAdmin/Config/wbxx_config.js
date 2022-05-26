@@ -12,6 +12,7 @@
   },
   batoperate: {
     import_by_add: function (_this, res) {
+		console.log(_this,res);
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
@@ -33,9 +34,22 @@
         _this.$loading().close();
       }
     },
-	import_by_replace: function (_this, res) {},
-    import_by_zh: function (_this, res) {},
-    export_excel: function (_this) {}
+	export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if(res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this,res) {},
   },
   fields: [{
       coltype: 'list',
@@ -48,9 +62,18 @@
         url: '/lbj/baseinfo/gcxx',
       },
       options: [],
-    }, {
-      coltype: 'list',
+    }, 
+	{
+		coltype: 'string',
       label: '生产线',
+      prop: 'scx',
+	  headeralign: 'center',
+      align: 'center',
+	  width:80
+	},
+	{
+      coltype: 'list',
+      label: '生产线名称',
       prop: 'scx',
       headeralign: 'center',
       align: 'center',
@@ -59,9 +82,18 @@
         url: '/lbj/baseinfo/scx?gcdm=9902',
       },
       options: [],
-    }, {
+    }, 
+	{
+		 coltype: 'string',
+      label: '岗位编号',
+      prop: 'gwh',
+	  headeralign: 'center',
+      align: 'center',
+	  width:80,
+	},
+	{
       coltype: 'list',
-      label: '岗位',
+      label: '岗位名称',
       prop: 'gwh',
       headeralign: 'center',
       align: 'center',
@@ -76,12 +108,14 @@
       prop: 'wbsx',
       headeralign: 'center',
       align: 'center',
+	  width:80,
     }, {
       coltype: 'string',
       label: '维保内容',
       prop: 'wbxx',
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
+	  
     }, {
       coltype: 'string',
       label: '备注',

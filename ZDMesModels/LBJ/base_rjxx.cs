@@ -25,7 +25,11 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 标准寿命 
         ///</summary>
-         public string rjbzsm { get; set; }
+         public int rjbzsm { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string rjxxbz { get; set; }
     }
 
     public class base_rjxx_mapper : ClassMapper<base_rjxx>
@@ -33,6 +37,7 @@ namespace ZDMesModels.LBJ
         public base_rjxx_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.rjxxbz).Column("bz");
             AutoMap();
         }
     }

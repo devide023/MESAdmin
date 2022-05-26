@@ -49,5 +49,34 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
+        [HttpPost,Route("logout")]
+        public IHttpActionResult Logout()
+        {
+            try
+            {
+               var ret = _userservice.Logout();
+                if (ret)
+                {
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "成功退出"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "退出失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

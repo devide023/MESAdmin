@@ -52,5 +52,10 @@ namespace ZDMesInterfaces.Common
         /// <param name="users"></param>
         /// <returns></returns>
         bool Save_Role_Users(sys_role_user_form from);
+        /// <summary>
+        /// 所有角色列表
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<mes_role_entity> All();
     }
 }

@@ -21,15 +21,15 @@ namespace ZDMesServices.LBJ.DJXX
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
-                   int ret = db.ExecuteScalar<int>("select count(gcdm) from ZXJC_DJGW where djno = :djno ", new { djno = djno });
+                    int ret = db.ExecuteScalar<int>("select count(gcdm) from ZXJC_DJGW where djno = :djno ", new { djno = djno });
                     return ret > 0;
-                }
+                }   
+                
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -38,14 +38,13 @@ namespace ZDMesServices.LBJ.DJXX
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
-                   return db.ExecuteScalar<int>("select count(djno) from ZXJC_DJGW");
+                    return db.ExecuteScalar<int>("select count(djno) from ZXJC_DJGW");
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

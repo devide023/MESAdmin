@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DapperExtensions.Mapper;
 namespace ZDMesModels.LBJ
 {
     /// <summary>
@@ -9,68 +10,129 @@ namespace ZDMesModels.LBJ
     public class zxjc_sbxx_ls_cnc
     {
         /// <summary>
-        /// 设备编号（资产号） 
+        ///设备编号（资产号）
         ///</summary>
-         public string sbbh { get; set; }
+        public string sbbh { get; set; }
         /// <summary>
-        /// 设备名称 
+        ///设备名称
         ///</summary>
-         public string sbmc { get; set; }
+        public string sbmc { get; set; }
         /// <summary>
-        /// 工厂 
+        ///工厂
         ///</summary>
-         public string gcdm { get; set; }
+        public string gcdm { get; set; }
         /// <summary>
-        /// 生产线 
+        ///生产线
         ///</summary>
-         public string scx { get; set; }
+        public string scx { get; set; }
         /// <summary>
-        /// 岗位号 
+        ///岗位号
         ///</summary>
-         public string gwh { get; set; }
+        public string gwh { get; set; }
         /// <summary>
-        /// 主轴实时转速、清洗温度、烘干温度 
+        ///加工数
         ///</summary>
-         public string data1 { get; set; }
+        public string jgs { get; set; }
         /// <summary>
-        /// 主轴实时进给、清洗压力 
+        ///运行状态
         ///</summary>
-         public string data2 { get; set; }
+        public string yxzt { get; set; }
         /// <summary>
-        /// 主轴实时负载 
+        ///循环时间
         ///</summary>
-         public string data3 { get; set; }
+        public string xhsj { get; set; }
         /// <summary>
-        /// 备用 
+        ///切削时间
         ///</summary>
-         public string data4 { get; set; }
+        public string qxsj { get; set; }
         /// <summary>
-        /// 备用 
+        ///操作时间
         ///</summary>
-         public string data5 { get; set; }
+        public string czsj { get; set; }
         /// <summary>
-        /// 备用 
+        ///开机时间
         ///</summary>
-         public string data6 { get; set; }
+        public string kjsj { get; set; }
         /// <summary>
-        /// 备用 
+        ///运行时间
         ///</summary>
-         public string data7 { get; set; }
+        public string yxsj { get; set; }
         /// <summary>
-        /// 备用 
+        ///节拍
         ///</summary>
-         public string data8 { get; set; }
+        public string jp { get; set; }
         /// <summary>
-        /// 备用 
+        ///进给速度
         ///</summary>
-         public string data9 { get; set; }
+        public string jjsd { get; set; }
         /// <summary>
-        /// 备用 
+        ///主轴转速
         ///</summary>
-         public string data10 { get; set; }
+        public string zzzs { get; set; }
         /// <summary>
-        /// 数据采集时间 
+        ///数据采集时间
         ///</summary>
-         public DateTime? lrsj { get; set; }
+        public DateTime lrsj { get; set; }
+        /// <summary>
+        ///ID
+        ///</summary>
+        public string id { get; set; }
+        /// <summary>
+        ///主轴刀具编号
+        ///</summary>
+        public string zzdjbh { get; set; }
+        /// <summary>
+        ///下一把刀具编号
+        ///</summary>
+        public string xybdjbh { get; set; }
+        /// <summary>
+        ///快速进给倍率
+        ///</summary>
+        public string ksjjbl { get; set; }
+        /// <summary>
+        ///进给速度超程倍率
+        ///</summary>
+        public string jjsdccbl { get; set; }
+        /// <summary>
+        ///主轴倍率
+        ///</summary>
+        public string zzbl { get; set; }
+        /// <summary>
+        ///当前程序名
+        ///</summary>
+        public string dqcxm { get; set; }
+        /// <summary>
+        ///报警编号
+        ///</summary>
+        public string bjbh { get; set; }
+        /// <summary>
+        ///主轴负载
+        ///</summary>
+        public string zzfz { get; set; }
+        /// <summary>
+        ///伺服负载1
+        ///</summary>
+        public string cffz1 { get; set; }
+        /// <summary>
+        ///伺服负载2
+        ///</summary>
+        public string cffz2 { get; set; }
+        /// <summary>
+        ///伺服负载3
+        ///</summary>
+        public string cffz3 { get; set; }
+        /// <summary>
+        ///伺服负载4
+        ///</summary>
+        public string cffz4 { get; set; }
+    }
+
+    public class zxjc_sbxx_ls_cnc_mapper:ClassMapper<zxjc_sbxx_ls_cnc>
+    {
+        public zxjc_sbxx_ls_cnc_mapper()
+        {
+            Map(t => t.id).Key(KeyType.Assigned);
+            AutoMap();
+        }
     }
 }

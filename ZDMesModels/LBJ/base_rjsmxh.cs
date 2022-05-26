@@ -34,7 +34,7 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 每件消耗寿命 
         ///</summary>
-        public string mjxhsm { get; set; }
+        public int mjxhsm { get; set; }
     }
 
     public class base_rjsmxh_mapper:ClassMapper<base_rjsmxh>

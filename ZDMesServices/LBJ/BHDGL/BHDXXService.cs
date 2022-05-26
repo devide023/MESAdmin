@@ -19,17 +19,11 @@ namespace ZDMesServices.LBJ.BHDGL
 
         public int Get_Max_BHD()
         {
-            try
+            using (var db = new OracleConnection(ConString))
             {
-                using (IDbConnection db = new OracleConnection(ConString))
-                {
-                  return  db.ExecuteScalar<int>("select count(gcdm) from BASE_BHDXX");
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
+                
+                    return db.ExecuteScalar<int>("select count(gcdm) from BASE_BHDXX");
+                
             }
         }
 
@@ -37,9 +31,10 @@ namespace ZDMesServices.LBJ.BHDGL
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
-                    return db.ExecuteScalar<int>("select count(gcdm) from BASE_BHDXX where bhdbh = :bhdbh",new { bhdbh = bhdno })>0;
+
+                    return db.ExecuteScalar<int>("select count(gcdm) from BASE_BHDXX where bhdbh = :bhdbh", new { bhdbh = bhdno }) > 0;
                 }
             }
             catch (Exception)

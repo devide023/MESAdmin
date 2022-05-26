@@ -76,11 +76,14 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 刃具刃磨次数 
         ///</summary>
-         public string rjrmcs { get; set; }
+         public int rjrmcs { get; set; }
         /// <summary>
         /// 刃具最后刃磨时间 
         ///</summary>
          public DateTime? rjzhrmsj { get; set; }
+
+        public string gwh { get; set; }
+        public int cxz { get; set; }
     }
 
     public class base_dbrjzx_ls_mapper : ClassMapper<base_dbrjzx_ls>

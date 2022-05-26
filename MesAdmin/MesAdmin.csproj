@@ -56,8 +56,8 @@
     <Reference Include="Autofac.Configuration, Version=6.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Configuration.6.0.0\lib\netstandard2.0\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Extras.DynamicProxy, Version=6.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Extras.DynamicProxy.6.0.0\lib\netstandard2.0\Autofac.Extras.DynamicProxy.dll</HintPath>
+    <Reference Include="Autofac.Extras.DynamicProxy, Version=6.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Extras.DynamicProxy.6.0.1\lib\netstandard2.0\Autofac.Extras.DynamicProxy.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.WebApi, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.WebApi2.6.1.0\lib\net472\Autofac.Integration.WebApi.dll</HintPath>
@@ -256,6 +256,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ZDMesInterceptor">
+      <HintPath>..\ZDMesInterceptor\bin\Debug\ZDMesInterceptor.dll</HintPath>
+    </Reference>
     <Reference Include="ZDMesInterfaces">
       <HintPath>..\ZDMesInterfaces\bin\Debug\ZDMesInterfaces.dll</HintPath>
     </Reference>
@@ -313,6 +316,8 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\Common\DownLoadController.cs" />
+    <Compile Include="Controllers\Common\LogController.cs" />
+    <Compile Include="Controllers\Common\MenuApiController.cs" />
     <Compile Include="Controllers\Common\MenuController.cs" />
     <Compile Include="Controllers\Common\UpLoadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -326,7 +331,9 @@
     <Compile Include="Controllers\LBJ\DAOJU\DaoBinController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjGxController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjLyController.cs" />
+    <Compile Include="Controllers\LBJ\DAOJU\DjReportController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\RenJuController.cs" />
+    <Compile Include="Controllers\LBJ\DAOJU\RenJuSmXhController.cs" />
     <Compile Include="Controllers\LBJ\DJGL\DJGWController.cs" />
     <Compile Include="Controllers\LBJ\DJGL\DJXXController.cs" />
     <Compile Include="Controllers\LBJ\GYGL\DZGYController.cs" />
@@ -356,6 +363,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Config\bhdjl_config.js" />
+    <Content Include="Config\bhdxx_config.js" />
+    <Content Include="Config\dbrjgx_config.js" />
+    <Content Include="Config\dbrjly_config.js" />
     <Content Include="Config\dbxx_config.js" />
     <Content Include="Config\djgw_config.js" />
     <Content Include="Config\djxx_config.js" />
@@ -371,6 +382,7 @@
     <Content Include="Config\ryjn_config.js" />
     <Content Include="Config\ryjx_config.js" />
     <Content Include="Config\ryxx_config.js" />
+    <Content Include="Config\sbsj_config.js" />
     <Content Include="Config\sbxx_config.js" />
     <Content Include="Config\scjh_config.js" />
     <Content Include="Config\user_config.js" />
@@ -384,6 +396,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\headimg\default.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -453,6 +466,7 @@
     <Folder Include="Upload\Excel\" />
     <Folder Include="Upload\Image\" />
     <Folder Include="Upload\PDF\" />
+    <Folder Include="Upload\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

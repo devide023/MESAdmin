@@ -19,37 +19,28 @@ namespace ZDMesModels.LBJ
         ///</summary>
         public string gcdm { get; set; }
         /// <summary>
-        /// 刀柄号 
-        ///</summary>
-         public string dbh { get; set; }
-        /// <summary>
-        /// 刀柄名称
-        /// </summary>
-         public string dbmc { get; set; }
-        /// <summary>
-        /// 刀柄类型
-        /// </summary>
-         public string dblx { get; set; }
-        /// <summary>
         /// 生产线 
         ///</summary>
         public string scx { get; set; }
         /// <summary>
+        /// 刀柄号 
+        ///</summary>
+        public string dbh { get; set; }
+        /// <summary>
+        /// 刀柄类型
+        /// </summary>
+
+        public string dblx { get; set; }
+
+        /// <summary>
         /// 设备号 
         ///</summary>
-         public string sbbh { get; set; }
+        public string sbbh { get; set; }
         /// <summary>
         /// 刃具类型 
         ///</summary>
          public string rjlx { get; set; }
-        /// <summary>
-        /// 刃具名称
-        /// </summary>
-        public string rjmc { get; set; }
-        /// <summary>
-        /// 产品状态
-        /// </summary>
-        public string cpzt { get; set; }
+        
         /// <summary>
         /// 刃具标准寿命 
         ///</summary>
@@ -89,11 +80,40 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 刃具刃磨次数 
         ///</summary>
-         public string rjrmcs { get; set; }
+         public int rjrmcs { get; set; }
         /// <summary>
         /// 刃具最后刃磨时间 
         ///</summary>
          public DateTime? rjzhrmsj { get; set; }
+        /// <summary>
+        /// 超限值
+        /// </summary>
+        public int cxz { get; set; }
+        /// <summary>
+        /// 岗位号
+        /// </summary>
+        public string gwh { get; set; }
+        public decimal rjzt { get; set; }
+        /// <summary>
+        /// 刃具信息
+        /// </summary>
+        public base_rjxx baserjxx { get; set; }
+        /// <summary>
+        /// 刀柄信息
+        /// </summary>
+        public base_dbxx basedbxx { get; set; }
+        /// <summary>
+        /// 设备信息
+        /// </summary>
+        public base_sbxx basesbxx { get; set; }
+        /// <summary>
+        /// 刀柄刃具对应关系
+        /// </summary>
+        public List<base_dbrjgx> dbrjdygx { get; set; }
+        /// <summary>
+        /// 绑定刃具类型ids
+        /// </summary>
+        public List<int> rjids { get; set; } = new List<int>();
     }
 
     public class base_dbrjzx_mapper : ClassMapper<base_dbrjzx>
@@ -101,10 +121,13 @@ namespace ZDMesModels.LBJ
         public base_dbrjzx_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
-            Map(t => t.dbmc).Ignore();
             Map(t => t.dblx).Ignore();
-            Map(t => t.cpzt).Ignore();
-            Map(t => t.rjmc).Ignore();
+            Map(t => t.baserjxx).Ignore();
+            Map(t => t.basedbxx).Ignore();
+            Map(t => t.basesbxx).Ignore();
+            Map(t => t.dbrjdygx).Ignore();
+            Map(t => t.rjids).Ignore();
+            Map(t => t.rjzt).Ignore();
             AutoMap();
         }
     }

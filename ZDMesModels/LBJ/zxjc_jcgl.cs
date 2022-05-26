@@ -9,7 +9,7 @@ namespace ZDMesModels.LBJ
     ///</summary>
     public class zxjc_jcgl
     {
-        public string rid { get; set; }
+        public int id { get; set; }
         /// <summary>
         /// 工厂 
         ///</summary>
@@ -80,7 +80,7 @@ namespace ZDMesModels.LBJ
     {
         public zxjc_jcgl_maper()
         {
-            Map(t => t.rid).Ignore();
+            Map(t => t.id).Key(KeyType.TriggerIdentity);
             Map(t => t.usercode).Column("user_code");
             AutoMap();
         }

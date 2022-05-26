@@ -12,6 +12,7 @@ namespace ZDMesModels
         ///主键
         ///</summary>
         public int id { get; set; }
+        public int roleid { get; set; }
         /// <summary>
         ///状态
         ///</summary>
@@ -24,6 +25,7 @@ namespace ZDMesModels
         ///角色名称
         ///</summary>
         public string name { get; set; }
+        public string rolename { get; set; }
         /// <summary>
         ///录入人
         ///</summary>
@@ -41,6 +43,8 @@ namespace ZDMesModels
         public mes_role_entity_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.roleid).Ignore();
+            Map(t => t.rolename).Ignore();
             AutoMap();
         }
     }

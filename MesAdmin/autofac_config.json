@@ -1,21 +1,22 @@
 {
   "modules": [
-    {
-      "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules",
-      "properties": {
-        "Constr": "testmes"
-      }
-    },
+
     {
       "type": "ZDMesModules.MF.BaseinfoModule, ZDMesModules",
       "properties": {
-        "Constr": "testmes"
+        "MFConstr": "mfmes"
+      }
+    },
+    {
+      "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules",
+      "properties": {
+        "TJConstr": "tjmes"
       }
     },
     {
       "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
       "properties": {
-        "Constr": "lbjmes"
+        "LBJConstr": "lbjmes"
       }
     }
   ]

@@ -26,12 +26,20 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
-                return DB.GetList<base_ftpfilepath>();
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.GetList<base_ftpfilepath>();
+                }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -39,7 +47,42 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
-               return DB.GetList<base_dbxx>();
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.GetList<base_dbxx>();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                Db.Dispose();
+            }
+        }
+
+        public IEnumerable<base_dbxx> Get_UnUse_DbInfo()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select gcdm, dbmc, dblx, dbh, bz ");
+                sql.Append(" FROM(select tb.*, (select count(*) FROM base_dbrjzx where dbh = tb.dbh) qty");
+                sql.Append("          FROM(select t1.dblx, (select dbh");
+                sql.Append("                            FROM   base_dbxx");
+                sql.Append("                            where  dblx = t1.dblx");
+                sql.Append("                            and    rownum < 2) as dbh");
+                sql.Append("                   FROM(select distinct dblx FROM base_dbxx) t1) ta, base_dbxx tb");
+                sql.Append("          where ta.dbh = tb.dbh) tm");
+                sql.Append(" where  tm.qty = 0");
+                sql.Append(" order by dblx asc");
+                using (var db = new OracleConnection(ConString))
+                {
+                        return db.Query<base_dbxx>(sql.ToString());
+                }
             }
             catch (Exception)
             {
@@ -52,12 +95,20 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
-               return DB.GetList<base_gcxx>();
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.GetList<base_gcxx>();
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -65,12 +116,20 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
-                return DB.GetList<base_gwzd>().OrderBy(t => t.gwh);
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.GetList<base_gwzd>().OrderBy(t => t.gwh);
+                }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -78,12 +137,20 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
-                return DB.GetList<base_rjxx>();
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.GetList<base_rjxx>();
+                }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -91,19 +158,27 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
-                if (string.IsNullOrEmpty(gcdm))
+                using (var db = new OracleConnection(ConString))
                 {
-                    return DB.GetList<base_scxxx>().OrderBy(t => t.scx);
-                }
-                else
-                {
-                    return DB.GetList<base_scxxx>(Predicates.Field<base_scxxx>(t=>t.gcdm, Operator.Eq, gcdm)).OrderBy(t=>t.scx);
+                    InitDB(db);
+                    if (string.IsNullOrEmpty(gcdm))
+                    {
+                        return Db.GetList<base_scxxx>().OrderBy(t => t.scx);
+                    }
+                    else
+                    {
+                        return Db.GetList<base_scxxx>(Predicates.Field<base_scxxx>(t => t.gcdm, Operator.Eq, gcdm)).OrderBy(t => t.scx);
+                    }
                 }
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -111,63 +186,11 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
-               var pre = Predicates.Field<zxjc_ryxx>(t => t.username, Operator.Like, key);
-               return DB.GetList<zxjc_ryxx>(pre);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public IEnumerable<base_cnc> Get_CNC_List()
-        {
-            try
-            {
-                return DB.GetList<base_cnc>();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public IEnumerable<base_cnc> Get_FreeCNC_List()
-        {
-            try
-            {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
-                    StringBuilder sql = new StringBuilder();
-                    sql.Append("select t.sbbh, sbmc ");
-                    sql.Append(" from BASE_CNC t");
-                    sql.Append(" where not exists(select * FROM base_dbrjzx where sbbh = t.sbbh)");
-                    return db.Query<base_cnc>(sql.ToString());
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// 空闲刀柄列表
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<base_dbxx> Get_FreeDb()
-        {
-            try
-            {
-                using (IDbConnection db = new OracleConnection(ConString))
-                {
-                    StringBuilder sql = new StringBuilder();
-                    sql.Append("select gcdm, dbh, dbmc, dblx, cgsj ");
-                    sql.Append(" from base_dbxx t ");
-                    sql.Append(" where t.dbzt = '空闲中' ");
-                    sql.Append(" and    not exists(select * FROM base_dbrjzx where dbh = t.dbh)");
-                    return db.Query<base_dbxx>(sql.ToString());
+                    InitDB(db);
+                    var pre = Predicates.Field<zxjc_ryxx>(t => t.username, Operator.Like, key);
+                    return Db.GetList<zxjc_ryxx>(pre);
                 }
             }
             catch (Exception)
@@ -175,8 +198,112 @@ namespace ZDMesServices.LBJ.BaseInfo
 
                 throw;
             }
+            finally
+            {
+                Db.Dispose();
+            }
         }
 
-        
+        public IEnumerable<base_sbxx> Get_SBXX_List()
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    return Db.GetList<base_sbxx>();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Db.Dispose();
+            }
+        }
+
+        public IEnumerable<dynamic> Get_UnUse_RjInfo(List<string> dbh)
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    var retlist = new List<dynamic>();
+                    if (dbh.Count > 0)
+                    {
+                        StringBuilder sql = new StringBuilder();
+                        sql.Append("select * ");
+                        sql.Append(" FROM(select ta.*, (select count(*) FROM base_dbrjzx where rjid = ta.rjid) qty");
+                        sql.Append("          from BASE_DBRJGX ta");
+                        sql.Append("          where ta.dbh in :dbh) tm");
+                        sql.Append(" where  tm.qty = 0");
+                        var gxlist = db.Query<base_dbrjgx>(sql.ToString(), new { dbh = dbh });
+                        var dislist = gxlist.Select(t => new { dbh = t.dbh, dblx = t.dblx }).Distinct();
+                        foreach (var item in dislist)
+                        {
+                            var qty = retlist.Where(t => t.value == item.dbh).Count();
+                            if (qty == 0)
+                            {
+                                var q = gxlist.Where(t => t.dbh == item.dbh);
+                                List<dynamic> sub = new List<dynamic>();
+                                foreach (var s in q)
+                                {
+                                    sub.Add(new
+                                    {
+                                        value = s.id,
+                                        label = s.djlx,
+                                    });
+                                }
+                                var entity = new
+                                {
+                                    label = item.dblx,
+                                    value = item.dbh,
+                                    children = sub
+                                };
+                                retlist.Add(entity);
+                            }
+                        }
+                    }
+                    return retlist;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_gwzd> GetGwXX(string scx)
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    var list = db.Query<base_gwzd>("select * from base_gwzd");
+                    var scxgwlist = db.Query<base_gwzd>("select * from base_gwzd where scx = :scx", new { scx = scx });
+                    foreach (var item in list)
+                    {
+                        var q = scxgwlist.Where(t => t.scx == item.scx && t.gwh == item.gwh);
+                        if (q.Count() == 0)
+                        {
+                            item.disabled = true;
+                        }
+                        else
+                        {
+                            item.disabled = false;
+                        }
+                    }
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

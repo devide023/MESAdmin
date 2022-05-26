@@ -45,6 +45,10 @@ namespace ZDMesModels
         ///录入时间
         ///</summary>
         public DateTime addtime { get; set; }
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public List<dynamic> role { get; set; }
     }
 
     public class mes_user_entity_mapper : ClassMapper<mes_user_entity>
@@ -52,6 +56,7 @@ namespace ZDMesModels
         public mes_user_entity_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.role).Ignore();
             AutoMap();
         }
     }

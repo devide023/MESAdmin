@@ -8,11 +8,21 @@
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
-    select_usercode_handle: function () {}
+    select_usercode_handle: function () {},
+    scx_field_change_handle(collist, item, row) {
+      var gwcol = collist.filter(i => i.prop === 'gwh');
+      this.$request('get', '/lbj/baseinfo/gwh?scx=' + item).then(function (res) {
+        if (res.code === 1) {
+          if (gwcol) {
+            gwcol[0].options = res.list;
+          }
+        }
+      });
+    },
   },
   isbatoperate: true,
-  batoperate:{
-	  import_by_add: function (vm, res) {
+  batoperate: {
+    import_by_add: function (vm, res) {
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
@@ -22,8 +32,8 @@
             vm.$loading().close();
             for (var i = 0; i < result.list.length; i++) {
               var item = result.list[i];
-			  vm.$set(item,'lrr',vm.$store.getters.name);
-			  vm.$set(item,'lrsj',vm.$parseTime(new Date()));
+              vm.$set(item, 'lrr', vm.$store.getters.name);
+              vm.$set(item, 'lrsj', vm.$parseTime(new Date()));
               vm.$set(item, 'isdb', false);
               vm.$set(item, 'isedit', true);
               vm.list.unshift(item);
@@ -36,6 +46,22 @@
         vm.$loading().close();
       }
     },
+    export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if (res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this, res) {},
   },
   form: {
     gcdm: '9902',
@@ -81,6 +107,7 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
+      change_fn_name: 'scx_field_change_handle',
       options: []
     }, {
       coltype: 'string',

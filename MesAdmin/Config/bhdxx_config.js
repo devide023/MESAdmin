@@ -74,22 +74,22 @@
     isedit: true
   },
   addapi: {
-    url: 'lbj/bhdxx/add',
+    url: '/lbj/bhdxx/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: 'lbj/bhdxx/edit',
+    url: '/lbj/bhdxx/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: 'lbj/bhdxx/del',
+    url: '/lbj/bhdxx/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: 'lbj/bhdxx/list',
+    url: '/lbj/bhdxx/list',
     method: 'post',
     callback: function (vm, res) {},
   },

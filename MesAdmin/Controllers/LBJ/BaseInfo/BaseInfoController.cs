@@ -45,6 +45,20 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        [HttpGet,Route("gwh")]
+        public IHttpActionResult GwhByScx(string scx)
+        {
+            try
+            {
+                var list = _baseinfo.GetGwXX(scx).Select(t => new { label = t.gwmc, value = t.gwh,disabled = t.disabled }).OrderBy(t=>t.value);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet, Route("gwzd")]
         public IHttpActionResult Gwzd()
         {
@@ -82,7 +96,7 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
         {
             try
             {
-                var list = _baseinfo.GetDbInfo().Select(t => new { label = t.dblx+"["+t.dbmc+"]", value = t.dbh });
+                var list = _baseinfo.GetDbInfo().OrderBy(t=>t.dblx);
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)
@@ -91,12 +105,12 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
-        [HttpGet, Route("free_db_list")]
-        public IHttpActionResult Free_DB_List()
+        [HttpGet,Route("unuse_dbxx")]
+        public IHttpActionResult UnUse_DbInfo()
         {
             try
             {
-                var list = _baseinfo.Get_FreeDb().OrderBy(t => t.dbh).Select(t => new { label = t.dblx + "(" + t.dbmc + ")", value = t.dbh });
+                var list = _baseinfo.Get_UnUse_DbInfo().OrderBy(t=>t.dblx);
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)
@@ -110,7 +124,7 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
         {
             try
             {
-                var list = _baseinfo.GetRjInfo().Select(t => new { label = t.rjmc, value = t.rjlx });
+                var list = _baseinfo.GetRjInfo();
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)
@@ -119,12 +133,12 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("cnc_list")]
-        public IHttpActionResult Get_CNC_List()
+        [HttpPost, Route("unuse_rjlx")]
+        public IHttpActionResult UnUse_RjLx(List<string> dbh)
         {
             try
             {
-                var list = _baseinfo.Get_CNC_List().Select(t => new { label = t.sbmc, value = t.sbbh }).OrderBy(t=>t.value);
+                var list = _baseinfo.Get_UnUse_RjInfo(dbh);
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)
@@ -133,12 +147,12 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
-        [HttpGet, Route("free_cnc_list")]
-        public IHttpActionResult Get_FreeCNC_List()
+        [HttpGet,Route("cnc_list_by_scx")]
+        public IHttpActionResult Get_CNC_List(string scx)
         {
             try
             {
-                var list = _baseinfo.Get_FreeCNC_List().Select(t => new { label = t.sbmc, value = t.sbbh }).OrderBy(t => t.value);
+                var list = _baseinfo.Get_SBXX_List().Where(t=>t.scx == scx).OrderBy(t=>t.sbbh);
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)

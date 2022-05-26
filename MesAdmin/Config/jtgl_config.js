@@ -4,7 +4,7 @@
   operate_fnlist: [{
       label: '上传Pdf',
       btntype: 'upload',
-      action: 'http://localhost:52655/api/upload/pdf',
+      action: 'http://localhost:52655/api/upload/jstc_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
           this.$message.success(response.msg);
@@ -15,7 +15,7 @@
           if (finditem) {
             finditem.jwdx = file.size;
             finditem.jcmc = file.name;
-            finditem.wjlj = file.name;
+            finditem.wjlj = response.files[0].fileid;
             finditem.scry = this.$store.getters.name;
             finditem.scsj = this.$parseTime(new Date());
           }
@@ -25,7 +25,7 @@
       }
     }, {
       label: '下载Pdf',
-      fnname: 'download_dzgypdf',
+      fnname: 'download_jstcpdf',
       btntype: 'text'
     }
   ],
@@ -36,11 +36,18 @@
       row.addtime = this.$parseTime(new Date());
       this.list.unshift(row);
     },
-    download_dzgypdf: function (row) {
-      console.log(row);
-      if (row.wjlj) {
-        window.open("http://localhost:52655/upload/downloadpdf?filename=" + row.wjlj);
-      }
+    download_jstcpdf: function (row) {
+		var _this = this;
+      this.$request('get', "download/ftp2web", {
+        wjlx: '技术通知',
+        wjlj: row.wjlj
+      }).then(function (res) {
+        if (res.code === 1) {
+          window.open("http://localhost:52655/api/download/downloadpdf?wjlj=" + row.wjlj);
+        } else if (res.code === 0) {
+          _this.$message.error(res.msg);
+        }
+      });
     }
   },
   isbatoperate: true,
@@ -67,9 +74,22 @@
         _this.$loading().close();
       }
     },
-    import_by_replace: function (_this, res) {},
-    import_by_zh: function (_this, res) {},
-    export_excel: function (_this) {}
+    export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if(res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this,res) {},
   },
   fields: [{
       coltype: 'list',

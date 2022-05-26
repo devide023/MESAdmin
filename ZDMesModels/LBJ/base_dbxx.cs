@@ -41,6 +41,11 @@ namespace ZDMesModels.LBJ
         /// 刀柄状态（已报废、使用中、空闲中） 
         ///</summary>
          public string dbzt { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string dbxxbz { get; set; }
+        
     }
 
     public class base_dbxx_mapper : ClassMapper<base_dbxx>
@@ -48,6 +53,7 @@ namespace ZDMesModels.LBJ
         public base_dbxx_mapper()
         {
             Map(t => t.dbh).Key(KeyType.Assigned);
+            Map(t => t.dbxxbz).Column("bz");
             AutoMap();
         }
     }

@@ -29,17 +29,17 @@ namespace ZDMesServices.Common
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select t1.permis ");
+                sql.Append(" FROM   mes_role_menu t1, mes_menu_entity t2, (select ta.roleid ");
+                sql.Append("          from mes_user_role ta, mes_user_entity tb ");
+                sql.Append("          where  ta.userid = tb.id ");
+                sql.Append("          and    tb.token = :token ) t3 ");
+                sql.Append(" where  t1.menuid = t2.id ");
+                sql.Append(" and t2.routepath = :path ");
+                sql.Append(" and t1.roleid = t3.roleid ");
+                using (var db = new OracleConnection(ConString))
                 {
-                    StringBuilder sql = new StringBuilder();
-                    sql.Append(" select t1.permis ");
-                    sql.Append(" FROM   mes_role_menu t1, mes_menu_entity t2, (select ta.roleid ");
-                    sql.Append("          from mes_user_role ta, mes_user_entity tb ");
-                    sql.Append("          where  ta.userid = tb.id ");
-                    sql.Append("          and    tb.token = :token ) t3 ");
-                    sql.Append(" where  t1.menuid = t2.id ");
-                    sql.Append(" and t2.routepath = :path ");
-                    sql.Append(" and t1.roleid = t3.roleid ");
                     var json = db.ExecuteScalar<string>(sql.ToString(), new { path = route, token = token });
                     return Newtonsoft.Json.JsonConvert.DeserializeObject<sys_menu_permis>(json);
                 }
@@ -57,16 +57,19 @@ namespace ZDMesServices.Common
                 var configroot = HttpContext.Current.Server.MapPath("~/Config/");
                 StringBuilder sql = new StringBuilder();
                 sql.Append("select configpath from mes_menu_entity where routepath = :path ");
-                var q = DB.Connection.Query<string>(sql.ToString(), new { path = route.Trim() });
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var conf = q.First();
-                    var configfullpath = configroot + conf;
-                    return Tool.ReadFile(configfullpath);
-                }
-                else
-                {
-                    return "{}";
+                    var q = db.Query<string>(sql.ToString(), new { path = route.Trim() });
+                    if (q.Count() > 0)
+                    {
+                        var conf = q.First();
+                        var configfullpath = configroot + conf;
+                        return Tool.ReadFile(configfullpath);
+                    }
+                    else
+                    {
+                        return "{}";
+                    }
                 }
             }
             catch (Exception)
@@ -83,20 +86,23 @@ namespace ZDMesServices.Common
                 var configroot = HttpContext.Current.Server.MapPath("~/Config/");
                 StringBuilder sql = new StringBuilder();
                 sql.Append("select configpath from mes_menu_entity where id = :id ");
-                var q = DB.Connection.Query<string>(sql.ToString(), new { id = menuid });
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var conf = q.First();
-                    var configfullpath = configroot + conf;
-                    var jsstr = Tool.ReadFile(configfullpath);
-                    Regex reg = new Regex(@"(?<fields>fields:[\w\W]*])");
-                    var fieldsinfo = reg.Match(jsstr).Groups["fields"].Value;
-                    fieldsinfo = fieldsinfo.Replace("fields:", "").Replace(" ","");
-                    return JsonConvert.DeserializeObject<List<sys_field_info>>(fieldsinfo);
-                }
-                else
-                {
-                    return new List<sys_field_info>();
+                    var q = db.Query<string>(sql.ToString(), new { id = menuid });
+                    if (q.Count() > 0)
+                    {
+                        var conf = q.First();
+                        var configfullpath = configroot + conf;
+                        var jsstr = Tool.ReadFile(configfullpath);
+                        Regex reg = new Regex(@"(?<fields>fields:[\w\W]*])");
+                        var fieldsinfo = reg.Match(jsstr).Groups["fields"].Value;
+                        fieldsinfo = fieldsinfo.Replace("fields:", "").Replace(" ", "");
+                        return JsonConvert.DeserializeObject<List<sys_field_info>>(fieldsinfo);
+                    }
+                    else
+                    {
+                        return new List<sys_field_info>();
+                    }
                 }
             }
             catch (Exception)
@@ -110,8 +116,9 @@ namespace ZDMesServices.Common
         {
             try
             {
+
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select t1.fnname,t1.btntxt,t1.btntype,t1.icon ");
+                sql.Append("select distinct * from (select t1.fnname,t1.btntxt,t1.btntype,t1.icon ");
                 sql.Append("  FROM   mes_menu_entity t1, mes_role_menu t2, mes_user_role t3, mes_user_entity t4 ");
                 sql.Append("  where  t1.id = t2.menuid ");
                 sql.Append("  and    t2.roleid = t2.roleid ");
@@ -119,9 +126,12 @@ namespace ZDMesServices.Common
                 sql.Append("  and    t1.menutype = '03' ");
                 sql.Append("  and    t1.pid = ");
                 sql.Append("         (select id from mes_menu_entity where routepath = :route ) ");
-                sql.Append("  and t4.token = :token order by t1.seq asc,t1.id asc");
-                var q = DB.Connection.Query<sys_pagefn_info>(sql.ToString(), new { route = route, token = token });
-                return q.ToList();
+                sql.Append("  and t4.token = :token order by t1.seq asc,t1.id asc )");
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<sys_pagefn_info>(sql.ToString(), new { route = route, token = token });
+                    return q.ToList();
+                }
             }
             catch (Exception)
             {
@@ -141,8 +151,11 @@ namespace ZDMesServices.Common
                 sql.Append(" from mes_menu_entity ");
                 sql.Append(" where menutype = '02' ");
                 sql.Append(" order  by pid, id");
-                list.AddRange(DB.Connection.Query<sys_route_component>(sql.ToString()));
-                return list;
+                using (var db = new OracleConnection(ConString))
+                {
+                    list.AddRange(db.Query<sys_route_component>(sql.ToString()));
+                    return list;
+                }
             }
             catch (Exception)
             {

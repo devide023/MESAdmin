@@ -33,6 +33,16 @@ namespace ZDMesModels.LBJ
         /// 匹配刃具类型 
         ///</summary>
          public string djlx { get; set; }
+        /// <summary>
+        /// 刀柄类型
+        /// </summary>
+        public string dblx { get; set; }
+
+        public List<base_dbrjgx> children { get; set; }
+        /// <summary>
+        /// 刃具信息
+        /// </summary>
+        public base_rjxx baserjxx { get; set; }
     }
 
     public class base_dbrjgx_mapper : ClassMapper<base_dbrjgx>
@@ -40,6 +50,8 @@ namespace ZDMesModels.LBJ
         public base_dbrjgx_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.children).Ignore();
+            Map(t => t.baserjxx).Ignore();
             AutoMap();
         }
     }

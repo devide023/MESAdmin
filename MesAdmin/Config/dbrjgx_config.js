@@ -23,9 +23,11 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
-              _this.$message.error(result.msg);
-            }
+            } else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            }else{
+				_this.$message.error(result.msg);
+			}
           });
         } catch (error) {
           _this.$message.error(error);
@@ -34,9 +36,22 @@
         _this.$loading().close();
       }
     },
-    import_by_replace: function (vm, res) {},
-    import_by_zh: function (vm, res) {},
-    export_excel: function (vm) {}
+    export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if (res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this, res) {},
   },
   fields: [{
       coltype: 'list',
@@ -47,7 +62,7 @@
       width: 150,
       inioptionapi: {
         method: 'get',
-        url: 'lbj/baseinfo/gcxx',
+        url: '/lbj/baseinfo/gcxx',
       },
       options: [],
     }, {
@@ -58,29 +73,26 @@
       width: 300,
       align: 'center',
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '刀柄号',
       prop: 'dbh',
       headeralign: 'center',
       width: 300,
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: 'lbj/baseinfo/dbxx',
-      },
-      options: [],
     }, {
-      coltype: 'list',
+      coltype: 'string',
+      label: '刀柄类型',
+      prop: 'dblx',
+      headeralign: 'center',
+      width: 300,
+      align: 'center'
+    }, {
+      coltype: 'string',
       label: '刃具类型',
       prop: 'djlx',
       headeralign: 'center',
       width: 200,
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: 'lbj/baseinfo/rjlx',
-      },
-      options: [],
     }, ],
   form: {
     gcdm: '9902',
@@ -91,22 +103,22 @@
     isedit: true
   },
   addapi: {
-    url: 'lbj/dbrjgx/add',
+    url: '/lbj/dbrjgx/add',
     method: 'post',
     callback: function (_this, res) {},
   },
   editapi: {
-    url: 'lbj/dbrjgx/edit',
+    url: '/lbj/dbrjgx/edit',
     method: 'post',
     callback: function (_this, res) {},
   },
   delapi: {
-    url: 'lbj/dbrjgx/del',
+    url: '/lbj/dbrjgx/del',
     method: 'post',
     callback: function (_this, res) {},
   },
   queryapi: {
-    url: 'lbj/dbrjgx/list',
+    url: '/lbj/dbrjgx/list',
     method: 'post',
     callback: function (_this, res) {},
   },

@@ -12,7 +12,7 @@
       var _this = this;
       if (this.selectlist.length > 0) {
         var postdata = this.selectlist.map(t => t.id);
-        this.$request('post', 'lbj/dbrjly/zxrjrm', postdata).then(function (res) {
+        this.$request('post', '/lbj/dbrjly/zxrjrm', postdata).then(function (res) {
           if (res.code === 1) {
             _this.$message.success(res.msg);
           } else if (res.code === 0) {
@@ -149,22 +149,22 @@
     isedit: true
   },
   addapi: {
-    url: 'lbj/dbrjly/add',
+    url: '/lbj/dbrjly/add',
     method: 'post',
     callback: function (_this, res) {},
   },
   editapi: {
-    url: 'lbj/dbrjly/edit',
+    url: '/lbj/dbrjly/edit',
     method: 'post',
     callback: function (_this, res) {},
   },
   delapi: {
-    url: 'lbj/dbrjly/del',
+    url: '/lbj/dbrjly/del',
     method: 'post',
     callback: function (_this, res) {},
   },
   queryapi: {
-    url: 'lbj/dbrjly/list',
+    url: '/lbj/dbrjly/list',
     method: 'post',
     callback: function (_this, res) {},
   },

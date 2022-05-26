@@ -16,7 +16,7 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 设备名称 
         ///</summary>
-         public string sbmc { get; set; }
+        public string sbmc { get; set; }
         /// <summary>
         /// 工厂 
         ///</summary>
@@ -64,7 +64,7 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 备注 
         ///</summary>
-         public string bz { get; set; }
+         public string sbxxbz { get; set; }
         /// <summary>
         /// 录入人 
         ///</summary>
@@ -80,6 +80,7 @@ namespace ZDMesModels.LBJ
         public basesbxx_mapper()
         {
             Map(t => t.sbbh).Key(KeyType.Assigned);
+            Map(t => t.sbxxbz).Column("bz");
             AutoMap();
         }
     }

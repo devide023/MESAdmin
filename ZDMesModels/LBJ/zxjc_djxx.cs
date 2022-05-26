@@ -28,7 +28,7 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 机型 
         ///</summary>
-         public string jxno { get; set; }
+         public string engineno { get; set; }
         /// <summary>
         /// 状态码 
         ///</summary>
@@ -65,7 +65,7 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.id).Key(KeyType.Assigned);
             Map(t => t.statusno).Column("status_no");
-            Map(t => t.jxno).Column("jx_no");
+            Map(t => t.engineno).Column("engine_no");
             AutoMap();
         }
     }

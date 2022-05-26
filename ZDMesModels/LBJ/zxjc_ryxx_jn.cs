@@ -18,9 +18,13 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string usercode { get; set; }
         /// <summary>
+        /// 人员姓名
+        /// </summary>
+        public string username { get; set; }
+        /// <summary>
         /// 技能编号 
         ///</summary>
-         public string jnbh { get; set; }
+        public string jnbh { get; set; }
         /// <summary>
         /// 技能信息 
         ///</summary>
@@ -64,6 +68,7 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.jnbh).Key(KeyType.Assigned);
             Map(t => t.usercode).Column("user_code");
+            Map(t => t.username).Ignore();
             AutoMap();
         }
     }

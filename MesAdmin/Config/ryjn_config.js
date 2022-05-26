@@ -24,8 +24,8 @@
             vm.$loading().close();
             for (var i = 0; i < result.list.length; i++) {
               var item = result.list[i];
-			  vm.$set(item,'lrr',vm.$store.getters.name);
-			  vm.$set(item,'lrsj',vm.$parseTime(new Date()));
+              vm.$set(item, 'lrr', vm.$store.getters.name);
+              vm.$set(item, 'lrsj', vm.$parseTime(new Date()));
               vm.$set(item, 'isdb', false);
               vm.$set(item, 'isedit', true);
               vm.list.unshift(item);
@@ -38,7 +38,22 @@
         vm.$loading().close();
       }
     },
-
+    export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if (res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this, res) {},
   },
   fields: [{
       coltype: 'list',
@@ -75,7 +90,9 @@
     }, {
       coltype: 'string',
       prop: 'usercode',
+	  dbprop:'user_code',
       label: '账号',
+	  width:80,
       headeralign: 'center',
       align: 'center',
       suggest: function (key, cb) {
@@ -90,6 +107,13 @@
         });
       },
       select_handlename: 'select_usercode_handle'
+    }, {
+      coltype: 'string',
+      prop: 'username',
+      label: '姓名',
+	  width:80,
+      headeralign: 'center',
+      align: 'center',
     }, {
       coltype: 'string',
       prop: 'jnxx',
@@ -114,20 +138,20 @@
       headeralign: 'center',
       align: 'center',
       options: [{
-          label: '装配',
-          value: '装配'
+          label: '打码',
+          value: '打码'
         }, {
-          label: '测试',
-          value: '测试'
+          label: '机加',
+          value: '机加'
         }, {
-          label: '校验',
-          value: '校验'
+          label: '检漏',
+          value: '检漏'
         }, {
-          label: '安全',
-          value: '安全'
+          label: '清洗',
+          value: '清洗'
         }, {
-          label: '其他',
-          value: '其他'
+          label: '检测',
+          value: '检测'
         }
       ]
     }, {

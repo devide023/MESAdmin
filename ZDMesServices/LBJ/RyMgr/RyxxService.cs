@@ -10,6 +10,8 @@ using ZDMesModels.LBJ;
 using Dapper;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.RyMgr
 {
@@ -23,12 +25,13 @@ namespace ZDMesServices.LBJ.RyMgr
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
-                    StringBuilder sql = new StringBuilder();
-                    sql.Append("select count(user_code) from ZXJC_RYXX where user_code = :usercode");
-                    var ret = db.ExecuteScalar<int>(sql.ToString(), new { usercode = usercode });
-                    return ret > 0;
+                    
+                        StringBuilder sql = new StringBuilder();
+                        sql.Append("select count(user_code) from ZXJC_RYXX where user_code = :usercode");
+                        var ret = db.ExecuteScalar<int>(sql.ToString(), new { usercode = usercode });
+                        return ret > 0;
                 }
             }
             catch (Exception)
@@ -42,7 +45,7 @@ namespace ZDMesServices.LBJ.RyMgr
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
+                using (var db = new OracleConnection(ConString))
                 {
                     StringBuilder sql = new StringBuilder();
                     sql.Append("select count(user_code) from ZXJC_RYXX");

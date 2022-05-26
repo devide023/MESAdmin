@@ -8,6 +8,8 @@ using ZDMesModels;
 using DapperExtensions;
 using DapperExtensions.Predicate;
 using Dapper;
+using Oracle.ManagedDataAccess.Client;
+
 namespace ZDMesServices.Common
 {
     public class MesMenuService : BaseDao<mes_menu_entity>,IMenu
@@ -35,21 +37,29 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var subs = new List<mes_menu_entity>();
-                var q = Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid);
-                var sublist = Db.GetList<mes_menu_entity>(q).OrderBy(t => t.pid).ThenBy(t=>t.seq);
-                foreach (var item in sublist)
+                using (var db = new OracleConnection(ConString))
                 {
-                    item.children = GetSubList(item.id).ToList();
-                    //item.hasChildren = list.Where(t => t.pid == item.id).Count() > 0;
-                    subs.Add(item);
+                    InitDB(db);
+                    var subs = new List<mes_menu_entity>();
+                    var q = Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid);
+                    var sublist = Db.GetList<mes_menu_entity>(q).OrderBy(t => t.pid).ThenBy(t => t.seq);
+                    foreach (var item in sublist)
+                    {
+                        item.children = GetSubList(item.id).ToList();
+                        //item.hasChildren = list.Where(t => t.pid == item.id).Count() > 0;
+                        subs.Add(item);
+                    }
+                    return subs;
                 }
-                return subs;
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -57,23 +67,30 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var pre = Predicates.Field<mes_role_menu>(t => t.menuid, Operator.Eq, menuid);
-                var q = DB.GetList<mes_role_menu>(pre);
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var pre1 = Predicates.Field<mes_role_entity>(t => t.id, Operator.Eq, q.Select(t => t.roleid));
-                    var list = DB.GetList<mes_role_entity>(pre1);
-                    return list;
-                }
-                else
-                {
-                    return new List<mes_role_entity>();
+                    InitDB(db);
+                    var pre = Predicates.Field<mes_role_menu>(t => t.menuid, Operator.Eq, menuid);
+                    var q = Db.GetList<mes_role_menu>(pre);
+                    if (q.Count() > 0)
+                    {
+                        var pre1 = Predicates.Field<mes_role_entity>(t => t.id, Operator.Eq, q.Select(t => t.roleid));
+                        var list = Db.GetList<mes_role_entity>(pre1);
+                        return list;
+                    }
+                    else
+                    {
+                        return new List<mes_role_entity>();
+                    }
                 }
             }
             catch (Exception)
             {
-
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -81,25 +98,31 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var pre = Predicates.Field<mes_role_menu>(t => t.menuid, Operator.Eq, menuid);
-                var q = DB.GetList<mes_role_menu>(pre);
-                if (q.Count() > 0)
+                using (var db = new OracleConnection(ConString))
                 {
-                    var pre1 = Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, q.Select(t=>t.roleid));
-                    var userids = DB.GetList<mes_user_role>(pre1).Select(t => t.userid).Distinct();
-                    var pre2 = Predicates.Field<mes_user_entity>(t => t.id, Operator.Eq, userids);
-                    return Db.GetList<mes_user_entity>(pre2);
+                    InitDB(db);
+                    var pre = Predicates.Field<mes_role_menu>(t => t.menuid, Operator.Eq, menuid);
+                    var q = Db.GetList<mes_role_menu>(pre);
+                    if (q.Count() > 0)
+                    {
+                        var pre1 = Predicates.Field<mes_user_role>(t => t.roleid, Operator.Eq, q.Select(t => t.roleid));
+                        var userids = Db.GetList<mes_user_role>(pre1).Select(t => t.userid).Distinct();
+                        var pre2 = Predicates.Field<mes_user_entity>(t => t.id, Operator.Eq, userids);
+                        return Db.GetList<mes_user_entity>(pre2);
+                    }
+                    else
+                    {
+                        return new List<mes_user_entity>();
+                    }
                 }
-                else
-                {
-                    return new List<mes_user_entity>();
-                }
-                
             }
             catch (Exception)
             {
-
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -107,13 +130,20 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var sub = DB.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
-                return sub.Count();
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    var sub = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
+                    return sub.Count();
+                }
             }
             catch (Exception)
             {
-
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -121,17 +151,25 @@ namespace ZDMesServices.Common
         {
             try
             {
-               var root = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0)).OrderBy(t=>t.id).ThenBy(t=>t.seq);
-                foreach (var item in root)
+                using (var db = new OracleConnection(ConString))
                 {
-                    item.children = Get_SubMenu(item.id).ToList();
+                    InitDB(db);
+                    var root = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0)).OrderBy(t => t.id).ThenBy(t => t.seq);
+                    foreach (var item in root)
+                    {
+                        item.children = Get_SubMenu(item.id).ToList();
+                    }
+                    return root;
                 }
-                return root;
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -139,28 +177,35 @@ namespace ZDMesServices.Common
         {
             try
             {
-                PredicateGroup pg = new PredicateGroup()
+                using (var db = new OracleConnection(ConString))
                 {
-                    Operator = GroupOperator.And,
-                    Predicates = new List<IPredicate>()
-                };
-                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
-                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() {"01","02","03"}));
-                var sub = DB.GetList<mes_menu_entity>(pg).OrderBy(t=>t.seq);
-                foreach (var item in sub)
-                {
-                    if (item.menutype == "03")
+                    InitDB(db);
+                    PredicateGroup pg = new PredicateGroup()
                     {
-                        item.name = item.btntxt;
+                        Operator = GroupOperator.And,
+                        Predicates = new List<IPredicate>()
+                    };
+                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
+                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() { "01", "02", "03" }));
+                    var sub = Db.GetList<mes_menu_entity>(pg).OrderBy(t => t.seq);
+                    foreach (var item in sub)
+                    {
+                        if (item.menutype == "03")
+                        {
+                            item.name = item.btntxt;
+                        }
+                        item.children = Get_SubMenu(item.id).ToList();
                     }
-                    item.children= Get_SubMenu(item.id).ToList();
+                    return sub;
                 }
-                return sub;
             }
             catch (Exception)
             {
-
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -168,17 +213,24 @@ namespace ZDMesServices.Common
         {
             try
             {
-                var root = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0)).OrderBy(t => t.id).ThenBy(t => t.seq);
-                foreach (var item in root)
+                using (var db = new OracleConnection(ConString))
                 {
-                    item.children = Get_SubTree(item.id).ToList();
+                    InitDB(db);
+                    var root = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0)).OrderBy(t => t.id).ThenBy(t => t.seq);
+                    foreach (var item in root)
+                    {
+                        item.children = Get_SubTree(item.id).ToList();
+                    }
+                    return root;
                 }
-                return root;
             }
             catch (Exception)
             {
-
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
 
@@ -186,28 +238,35 @@ namespace ZDMesServices.Common
         {
             try
             {
-                PredicateGroup pg = new PredicateGroup()
+                using (var db = new OracleConnection(ConString))
                 {
-                    Operator = GroupOperator.And,
-                    Predicates = new List<IPredicate>()
-                };
-                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
-                pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() { "01", "02", "04" }));
-                var sub = DB.GetList<mes_menu_entity>(pg).OrderBy(t => t.seq);
-                foreach (var item in sub)
-                {
-                    if (item.menutype == "04")
+                    InitDB(db);
+                    PredicateGroup pg = new PredicateGroup()
                     {
-                        item.name = item.btntxt;
+                        Operator = GroupOperator.And,
+                        Predicates = new List<IPredicate>()
+                    };
+                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
+                    pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() { "01", "02", "04" }));
+                    var sub = Db.GetList<mes_menu_entity>(pg).OrderBy(t => t.seq);
+                    foreach (var item in sub)
+                    {
+                        if (item.menutype == "04")
+                        {
+                            item.name = item.btntxt;
+                        }
+                        item.children = Get_SubTree(item.id).ToList();
                     }
-                    item.children = Get_SubTree(item.id).ToList();
+                    return sub;
                 }
-                return sub;
             }
             catch (Exception)
             {
-
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
     }

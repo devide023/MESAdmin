@@ -29,48 +29,20 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string gwh { get; set; }
         /// <summary>
-        /// 主轴实时转速、清洗温度、烘干温度 
-        ///</summary>
-         public string data1 { get; set; }
+        /// 开机状态
+        /// </summary>
+        public string kjzt { get; set; }
         /// <summary>
-        /// 主轴实时进给、清洗压力 
-        ///</summary>
-         public string data2 { get; set; }
+        /// 运行状态
+        /// </summary>
+        public string yxzt { get; set; }
         /// <summary>
-        /// 主轴实时负载 
-        ///</summary>
-         public string data3 { get; set; }
+        /// 录入时间
+        /// </summary>
+        public string lrsj { get; set; }
         /// <summary>
-        /// 备用 
-        ///</summary>
-         public string data4 { get; set; }
-        /// <summary>
-        /// 备用 
-        ///</summary>
-         public string data5 { get; set; }
-        /// <summary>
-        /// 备用 
-        ///</summary>
-         public string data6 { get; set; }
-        /// <summary>
-        /// 备用 
-        ///</summary>
-         public string data7 { get; set; }
-        /// <summary>
-        /// 备用 
-        ///</summary>
-         public string data8 { get; set; }
-        /// <summary>
-        /// 备用 
-        ///</summary>
-         public string data9 { get; set; }
-        /// <summary>
-        /// 备用 
-        ///</summary>
-         public string data10 { get; set; }
-        /// <summary>
-        /// 数据采集时间 
-        ///</summary>
-         public DateTime? lrsj { get; set; }
+        /// ID
+        /// </summary>
+        public string id { get; set; }
     }
 }

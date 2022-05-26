@@ -21,6 +21,12 @@ namespace ZDMesInterfaces.LBJ
         /// <returns></returns>
         IEnumerable<base_scxxx> GetScxXX(string gcdm);
         /// <summary>
+        /// 岗位信息
+        /// </summary>
+        /// <param name="scx"></param>
+        /// <returns></returns>
+        IEnumerable<base_gwzd> GetGwXX(string scx);
+        /// <summary>
         /// 岗位站点信息
         /// </summary>
         /// <returns></returns>
@@ -37,25 +43,26 @@ namespace ZDMesInterfaces.LBJ
         /// <returns></returns>
         IEnumerable<base_rjxx> GetRjInfo();
         /// <summary>
+        /// 未使用刃具信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<dynamic> Get_UnUse_RjInfo(List<string> dbh);
+        /// <summary>
         /// 获取刀柄基础信息
         /// </summary>
         /// <returns></returns>
         IEnumerable<base_dbxx> GetDbInfo();
         /// <summary>
-        /// 获取空闲刀柄列表
+        /// 未使用刀柄信息
         /// </summary>
         /// <returns></returns>
-        IEnumerable<base_dbxx> Get_FreeDb();
+        IEnumerable<base_dbxx> Get_UnUse_DbInfo();
         /// <summary>
-        /// 获取数控车床设备列表
+        /// 获取设备列表
         /// </summary>
         /// <returns></returns>
-        IEnumerable<base_cnc> Get_CNC_List();
-        /// <summary>
-        /// 获取设备未绑定CNC列表
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<base_cnc> Get_FreeCNC_List();
+        IEnumerable<base_sbxx> Get_SBXX_List();
+        
         /// <summary>
         /// ftp配置信息
         /// </summary>

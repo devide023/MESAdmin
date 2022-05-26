@@ -35,9 +35,22 @@
         _this.$loading().close();
       }
     },
-    import_by_replace: function (vm, res) {},
-    import_by_zh: function (vm, res) {},
-    export_excel: function (vm) {}
+    export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if(res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this,res) {},
   },
   fields: [{
       coltype: 'list',
@@ -64,6 +77,8 @@
       prop: 'dbmc',
       headeralign: 'center',
       align: 'center',
+	  width:150,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       label: '刀柄类型',
@@ -85,8 +100,8 @@
       align: 'center',
       width: 100,
       options: [{
-          label: '空闲',
-          value: '空闲'
+          label: '空闲中',
+          value: '空闲中'
         }, {
           label: '使用中',
           value: '使用中'

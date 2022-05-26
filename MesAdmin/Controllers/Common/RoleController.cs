@@ -214,5 +214,19 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
+        [HttpGet,Route("all")]
+        public IHttpActionResult Get_All_Roles()
+        {
+            try
+            {
+                var list = _role.All().Select(t => new { label = t.name, value = t.id });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

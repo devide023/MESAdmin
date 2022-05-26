@@ -5,10 +5,22 @@
   isselect:false,
   pagefuns: {},
   batoperate: {
-    import_by_add: function (vm, res) {},
-    import_by_replace: function (vm, res) {},
-    import_by_zh: function (vm, res) {},
-    export_excel: function (vm) {}
+    export_excel(_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if(res.code === 0) {
+          this.$message.error(res.msg);
+        }
+      });
+    },
+    import_by_replace(_this, res) {},
+    import_by_zh(_this,res) {},
   },
   fields: [{
       coltype: 'list',
@@ -48,8 +60,8 @@
       options: []
     }, {
       coltype: 'string',
-      prop: 'jxno',
-      dbprop: 'jx_no',
+      prop: 'engineno',
+      dbprop: 'engine_no',
       label: '机型',
       headeralign: 'center',
       align: 'center',
@@ -112,7 +124,7 @@
     gcdm: '',
     scx: '',
     gwh: '',
-    jxno: '',
+    engineno: '',
     statusno: '',
     djno: '',
     djxx: '',

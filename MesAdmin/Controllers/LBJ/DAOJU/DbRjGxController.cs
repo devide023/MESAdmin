@@ -12,6 +12,7 @@ using System.Web;
 using System.IO;
 using Aspose.Cells;
 using System.Data;
+using ZDMesInterfaces.LBJ.ImportData;
 
 namespace MesAdmin.Controllers.LBJ.DAOJU
 {
@@ -19,9 +20,11 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
     public class DbRjGxController : ApiController
     {
         private IDbOperate<base_dbrjgx> _dbrjgxservice;
-        public DbRjGxController(IDbOperate<base_dbrjgx> dbrjgxservice)
+        private IImportData<base_dbrjgx> _impservice;
+        public DbRjGxController(IDbOperate<base_dbrjgx> dbrjgxservice, IImportData<base_dbrjgx> impservice)
         {
             _dbrjgxservice = dbrjgxservice;
+            _impservice = impservice;
         }
 
         [HttpPost, SearchFilter, Route("list")]
@@ -157,14 +160,22 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                             djlx = item[3].ToString()
                         });
                     }
-                    var ret = _dbrjgxservice.Add(list);
+                    var ret = _impservice.NewImportData(list);
                     finfo.Delete();
-                    if (ret > 0)
+                    if (ret.oklist.Count == list.Count)
                     {
                         return Json(new sys_result()
                         {
                             code = 1,
-                            msg = "数据导入成功"
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.repeatlist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
                         });
                     }
                     else
@@ -172,7 +183,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                         return Json(new sys_result()
                         {
                             code = 0,
-                            msg = "数据导入失败"
+                            msg = $"数据导入失败"
                         });
                     }
                 }

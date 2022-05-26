@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 namespace MesAdmin.Controllers.LBJ.DAOJU
@@ -18,9 +19,11 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
     public class RenJuController : ApiController
     {
         private IDbOperate<base_rjxx> _rjxxservice;
-        public RenJuController(IDbOperate<base_rjxx> rjxxservice)
+        private IImportData<base_rjxx> _impservice;
+        public RenJuController(IDbOperate<base_rjxx> rjxxservice, IImportData<base_rjxx> impservice)
         {
             _rjxxservice = rjxxservice;
+            _impservice = impservice;
         }
 
         [HttpPost, SearchFilter, Route("list")]
@@ -153,17 +156,26 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                             gcdm = item[0].ToString(),
                             rjlx = item[1].ToString(),
                             rjmc = item[2].ToString(),
-                            rjbzsm=item[3].ToString()
+                            rjbzsm=Convert.ToInt32(item[3].ToString()),
+                            rjxxbz = item[4].ToString()
                         });
                     }
-                    var ret = _rjxxservice.Add(list);
+                    var ret = _impservice.NewImportData(list);
                     finfo.Delete();
-                    if (ret > 0)
+                    if (ret.oklist.Count == list.Count)
                     {
                         return Json(new sys_result()
                         {
                             code = 1,
-                            msg = "数据导入成功"
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if(ret.repeatlist.Count>0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
                         });
                     }
                     else
@@ -171,7 +183,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                         return Json(new sys_result()
                         {
                             code = 0,
-                            msg = "数据导入失败"
+                            msg = $"数据导入失败"
                         });
                     }
                 }

@@ -22,6 +22,12 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <returns></returns>
         IEnumerable<sys_dbrjly> DbRjGxList(string dbh);
         /// <summary>
+        /// 刀柄刃具关系
+        /// </summary>
+        /// <param name="dbh"></param>
+        /// <returns></returns>
+        IEnumerable<sys_db_rj_gx> DbRjGxList(List<string> dbh);
+        /// <summary>
         /// 刀柄号查询刀柄刃具在线
         /// </summary>
         /// <param name="dbh"></param>
@@ -40,19 +46,58 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <returns></returns>
         bool SetRjSm(List<int> ids);
         /// <summary>
-        /// 生产线查机加设备列表
-        /// </summary>
-        /// <param name="scx"></param>
-        /// <returns></returns>
-        IEnumerable<base_cnc> Get_CnC_By_Scx(string scx);
-        /// <summary>
         /// 设备编号查询刀柄
         /// </summary>
         /// <param name="sbbh"></param>
         /// <returns></returns>
         IEnumerable<base_dbxx> GetDbxxBySbbh(string sbbh);
-
-
-        
+        /// <summary>
+        /// 刀柄领用
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        bool DaoBinRenJuLy(dbrjlyform form);
+        /// <summary>
+        /// 刀柄号获取刃具信息
+        /// </summary>
+        /// <param name="dbbh"></param>
+        /// <returns></returns>
+        IEnumerable<base_dbrjgx> GetRjxxByDbBh(List<string> dbh);
+        /// <summary>
+        /// 安装刃具
+        /// </summary>
+        /// <param name="zxlist"></param>
+        /// <returns></returns>
+        bool InstallRjXx(List<base_dbrjzx> zxlist);
+        /// <summary>
+        /// 卸载刃具
+        /// </summary>
+        /// <param name="zxids"></param>
+        /// <returns></returns>
+        bool UnInstallRjXx(List<int> zxids);
+        /// <summary>
+        /// 刀柄号查刃具在线
+        /// </summary>
+        /// <param name="dbh"></param>
+        /// <returns></returns>
+        IEnumerable<base_dbrjzx> GetRjZxByDbh(string dbh);
+        /// <summary>
+        /// 根据刀柄号选择刃具类型
+        /// </summary>
+        /// <param name="dbh"></param>
+        /// <returns></returns>
+        IEnumerable<base_dbrjzx> ChooseRjlxByDbh(string dbh);
+        /// <summary>
+        /// 在线刃具安装
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        bool ZxRjInstall(List<base_dbrjzx> list);
+        /// <summary>
+        /// 在线刃具更换
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        bool ZxRjChange(List<base_dbrjzx> list);
     }
 }

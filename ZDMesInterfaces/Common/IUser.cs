@@ -24,8 +24,16 @@ namespace ZDMesInterfaces.Common
         /// 修改密码
         /// </summary>
         /// <param name="token"></param>
+        /// <param name="newpwd">未加密密码</param>
         /// <returns></returns>
         bool ChangePwd(string token,string newpwd);
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pwd"></param>
+        /// <returns></returns>
+        bool ResetPwd(int id, string pwd);
         /// <summary>
         /// 重置Token
         /// </summary>
@@ -50,7 +58,7 @@ namespace ZDMesInterfaces.Common
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        sys_result Logout(string token);
+        bool Logout();
         /// <summary>
         /// 根据token获取用户信息、菜单权限
         /// </summary>
@@ -69,7 +77,11 @@ namespace ZDMesInterfaces.Common
         /// <param name="token"></param>
         /// <returns></returns>
         mes_user_entity GetUserByToken(string token);
-
+        /// <summary>
+        /// 当前登录用户信息
+        /// </summary>
+        /// <returns></returns>
+        mes_user_entity CurrentUser();
 
     }
 }

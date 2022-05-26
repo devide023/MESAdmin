@@ -23,8 +23,7 @@ namespace ZDMesServices.LBJ.DZWD
         {
             try
             {
-                using (IDbConnection db = new OracleConnection(ConString))
-                {
+                
                     StringBuilder sql_cnt = new StringBuilder();
                     sql_cnt.Append("select count(id) from ZXJC_T_JSTCFP t where 1=1 ");
                     StringBuilder sql = new StringBuilder();
@@ -50,10 +49,13 @@ namespace ZDMesServices.LBJ.DZWD
                             sql.Append($" order by {parm.default_order_colname} desc ");
                         }
                     }
+                using (var db = new OracleConnection(ConString))
+                {
                     var q = db.Query<zxjc_t_jstcfp>(OraPager(sql.ToString()), parm.sqlparam);
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
-                }
+                }  
+                
             }
             catch (Exception)
             {
@@ -77,15 +79,24 @@ namespace ZDMesServices.LBJ.DZWD
                 sql.Append(" and    to_date(expire_date, 'yyyy-mm-dd') >= sysdate) order by yxqx2 asc");
                 StringBuilder sql1 = new StringBuilder();
                 sql1.Append("select jtid, jcmc, wjlj, yxqx1, yxqx2, 1 as type,fp_flg as fpflg from zxjc_t_jstc where fp_flg = 'N' ");
-                var list = Db.Connection.Query<zxjc_t_jstc>(sql1.ToString()).ToList();
-                var list1 = Db.Connection.Query<zxjc_t_jstc>(sql.ToString());
-                list.AddRange(list1);
-                return list.Where(t=>t.fpflg=="N");
+                using (var db = new OracleConnection(ConString))
+                {
+                    InitDB(db);
+                    var list = Db.Connection.Query<zxjc_t_jstc>(sql1.ToString()).ToList();
+                    var list1 = Db.Connection.Query<zxjc_t_jstc>(sql.ToString());
+                    list.AddRange(list1);
+                    return list.Where(t => t.fpflg == "N");
+                }
+
             }
             catch (Exception)
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
     }

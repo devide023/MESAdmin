@@ -85,6 +85,10 @@ namespace ZDMesModels.LBJ
         /// 自动合格标识 
         ///</summary>
          public string iszdhg { get; set; }
+        /// <summary>
+        /// 前端展示用
+        /// </summary>
+        public bool disabled { get; set; }
     }
 
     public class basegwzd_mapper : ClassMapper<base_gwzd>
@@ -93,6 +97,7 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.gwh).Key(KeyType.Assigned);
             Map(t => t.usercode).Column("user_code");
+            Map(t => t.disabled).Ignore();
             AutoMap();
         }
     }
