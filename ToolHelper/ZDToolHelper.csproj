@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="FtpHelper.cs" />
     <Compile Include="JWTHelper.cs" />

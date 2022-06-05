@@ -26,9 +26,16 @@ namespace ZDMesServices
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    var ret = Db.Insert<T>(entity);
-                    return ret;
+                    try
+                    {
+                        InitDB(db);
+                        var ret = Db.Insert<T>(entity);
+                        return ret;
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -47,18 +54,33 @@ namespace ZDMesServices
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    List<dynamic> list = new List<dynamic>();
-                    db.Open();
-                    using (var transaction = Db.Connection.BeginTransaction())
+                    try
                     {
-                        foreach (var item in entitys)
+                        db.Open();
+                        InitDB(db);
+                        List<dynamic> list = new List<dynamic>();
+                        using (var transaction = db.BeginTransaction())
                         {
-                            var ret = Db.Insert<T>(item, transaction);
-                            list.Add(ret);
+                            try
+                            {
+                                foreach (var item in entitys)
+                                {
+                                    var ret = Db.Insert<T>(item, transaction);
+                                    list.Add(ret);
+                                }
+                                transaction.Commit();
+                                return list.Count();
+                            }
+                            catch (Exception)
+                            {
+                                transaction.Rollback();
+                                throw;
+                            }
                         }
-                        transaction.Commit();
-                        return list.Count();
+                    }
+                    finally
+                    {
+                        db.Close();
                     }
                 }
             }
@@ -83,8 +105,15 @@ namespace ZDMesServices
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.Delete<T>(entity);
+                    try
+                    {
+                        InitDB(db);
+                        return Db.Delete<T>(entity);
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -103,19 +132,26 @@ namespace ZDMesServices
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    List<bool> list = new List<bool>();
-                    foreach (var item in entitys)
+                    try
                     {
-                        list.Add(Db.Delete<T>(item));
+                        InitDB(db);
+                        List<bool> list = new List<bool>();
+                        foreach (var item in entitys)
+                        {
+                            list.Add(Db.Delete<T>(item));
+                        }
+                        if (entitys.Count() == list.Count())
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
-                    if (entitys.Count() == list.Count())
+                    finally
                     {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
+                        db.Close();
                     }
                 }
             }
@@ -134,56 +170,64 @@ namespace ZDMesServices
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    resultcount = 0;
-                    var colnames = string.Empty;
-                    IClassMapper mapper = Db.GetMap<T>();
-                    var tablename = mapper.TableName;
-                    var cols = mapper.Properties;
-                    foreach (var item in cols)
+                    try
                     {
-                        if (!item.Ignored)
+                        InitDB(db);
+                        resultcount = 0;
+                        var colnames = string.Empty;
+                        IClassMapper mapper = Db.GetMap<T>();
+                        var tablename = mapper.TableName;
+                        var cols = mapper.Properties;
+                        foreach (var item in cols)
                         {
-                            if (item.ColumnName == item.Name)
+                            if (!item.Ignored)
                             {
-                                colnames += item.ColumnName + ",";
-                            }
-                            else
-                            {
-                                colnames += item.ColumnName + $" as {item.Name},";
+                                if (item.ColumnName == item.Name)
+                                {
+                                    colnames += item.ColumnName + ",";
+                                }
+                                else
+                                {
+                                    colnames += item.ColumnName + $" as {item.Name},";
+                                }
                             }
                         }
-                    }
-                    if (!string.IsNullOrEmpty(colnames))
-                    {
-                        colnames = colnames.Remove(colnames.Length - 1);
-                    }
-                    else
-                    {
-                        colnames = "*";
-                    }
-                    StringBuilder sql = new StringBuilder();
-                    sql.Append($"select {colnames} from {tablename} where 1=1 ");
-                    StringBuilder sql_cnt = new StringBuilder();
-                    sql_cnt.Append($"select count(*) from {tablename} where 1=1 ");
-                    if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
-                    {
-                        sql.Append(" and " + parm.sqlexp);
-                        sql_cnt.Append(" and " + parm.sqlexp);
-                    }
-                    if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
-                    {
-                        sql.Append(parm.orderbyexp);
-                    }
-                    else
-                    {
-                        if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                        if (!string.IsNullOrEmpty(colnames))
                         {
-                            sql.Append($" order by {parm.default_order_colname} desc ");
+                            colnames = colnames.Remove(colnames.Length - 1);
                         }
+                        else
+                        {
+                            colnames = "*";
+                        }
+                        StringBuilder sql = new StringBuilder();
+                        sql.Append($"select {colnames} from {tablename} where 1=1 ");
+                        StringBuilder sql_cnt = new StringBuilder();
+                        sql_cnt.Append($"select count(*) from {tablename} where 1=1 ");
+                        if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                        {
+                            sql.Append(" and " + parm.sqlexp);
+                            sql_cnt.Append(" and " + parm.sqlexp);
+                        }
+                        if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                        {
+                            sql.Append(parm.orderbyexp);
+                        }
+                        else
+                        {
+                            if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                            {
+                                sql.Append($" order by {parm.default_order_colname} desc ");
+                            }
+                        }
+                        var q = db.Query<T>(OraPager(sql.ToString()), parm.sqlparam);
+                        resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                        return q;
                     }
-                    var q = db.Query<T>(OraPager(sql.ToString()), parm.sqlparam);
-                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
-                    return q;
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -203,8 +247,15 @@ namespace ZDMesServices
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.Update<T>(entity);
+                    try
+                    {
+                        InitDB(db);
+                        return Db.Update<T>(entity);
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -223,19 +274,26 @@ namespace ZDMesServices
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    List<bool> list = new List<bool>();
-                    foreach (var item in entitys)
+                    try
                     {
-                        list.Add(Db.Update<T>(item));
+                        InitDB(db);
+                        List<bool> list = new List<bool>();
+                        foreach (var item in entitys)
+                        {
+                            list.Add(Db.Update<T>(item));
+                        }
+                        if (entitys.Count() == list.Count())
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
-                    if (entitys.Count() == list.Count())
+                    finally
                     {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
+                        db.Close();
                     }
                 }
             }

@@ -25,7 +25,7 @@ namespace ZDMesServices.Common
             {
                 StringBuilder sql = new StringBuilder();
                 sql.Append("select ta.*, tc.name as menuname ");
-                sql.Append(" FROM   mes_log ta, (select menuid, ('/api' || trim(api)) as api");
+                sql.Append(" FROM   mes_oper_log ta, (select menuid, ('/api' || trim(api)) as api");
                 sql.Append("          FROM   mes_menu_api) tb, mes_menu_entity tc");
                 sql.Append(" where ta.path = tb.api(+)");
                 sql.Append(" and tb.menuid = tc.id(+)");
@@ -34,7 +34,7 @@ namespace ZDMesServices.Common
                 using (var db = new OracleConnection(ConString))
                 {
                     parm.sqlparam.Add(":czrid", _user.CurrentUser().id);
-                    resultcount = db.ExecuteScalar<int>("select count(id) from mes_log where czrid = :czrid ", parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>("select count(id) from mes_oper_log where czrid = :czrid ", parm.sqlparam);
                     return db.Query<mes_oper_log>(OraPager(sql.ToString()), parm.sqlparam);
                 }
             }

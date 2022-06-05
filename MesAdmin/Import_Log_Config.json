@@ -1,0 +1,32 @@
+[
+  {
+    "tablename": "base_dbxx",
+    "xinzeng": [ "dbh" ],
+    "replace": [ "dbh" ],
+    "zhonghe": [ "dbh" ],
+    "updatecol": ["dbmc","dblx","dbzt","bz"]
+
+  },
+  {
+    "tablename": "base_rjxx",
+    "xinzeng": [ "rjlx" ],
+    "replace": [ "rjlx" ],
+    "zhonghe": [ "rjlx", "rjbzsm" ],
+    "updatecol": [ "rjmc", "rjbzsm", "bz" ]
+
+  },
+  {
+    "tablename": "base_dbrjgx",
+    "xinzeng": [ "dbh", "cpzt", "djlx" ],
+    "replace": [ "cpzt" ],
+    "zhonghe": [ "dbh", "cpzt", "djlx" ],
+    "updatecol": [ "dbh", "cpzt", "djlx" ]
+  },
+  {
+    "tablename": "base_dbrjzx",
+    "xinzeng": [ "scx", "dbh", "sbbh", "rjlx" ],
+    "replace": [ "scx" ],
+    "zhonghe": [ "scx", "dbh", "sbbh", "rjlx" ],
+    "updatecol": [ "rjlyr", "dblyr"]
+  }
+]

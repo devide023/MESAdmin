@@ -83,7 +83,9 @@
     <Compile Include="LBJ\lbj_qms_4mbhd.cs" />
     <Compile Include="LBJ\pp_zpjh.cs" />
     <Compile Include="LBJ\sys_dbrjly.cs" />
+    <Compile Include="LBJ\sys_dbrj_bgly_form.cs" />
     <Compile Include="LBJ\sys_db_rj.cs" />
+    <Compile Include="LBJ\sys_import_log_config.cs" />
     <Compile Include="LBJ\sys_jtfp_form.cs" />
     <Compile Include="LBJ\sys_ryjx.cs" />
     <Compile Include="LBJ\sys_wbzq_form.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="sys_sort.cs" />
     <Compile Include="sys_user.cs" />
     <Compile Include="mes_user_entity.cs" />
+    <Compile Include="TJ\zxjc_jrgy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MF\" />

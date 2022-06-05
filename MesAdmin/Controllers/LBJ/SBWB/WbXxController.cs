@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 namespace MesAdmin.Controllers.LBJ.SBWB
@@ -18,10 +19,12 @@ namespace MesAdmin.Controllers.LBJ.SBWB
     public class WbXxController : ApiController
     {
         private IDbOperate<base_sbwb> _sbwbservice;
+        private IImportData<base_sbwb> _impservice;
         private IUser _user;
-        public WbXxController(IDbOperate<base_sbwb> sbwbservice, IUser user)
+        public WbXxController(IDbOperate<base_sbwb> sbwbservice, IUser user, IImportData<base_sbwb> impservice)
         {
             _sbwbservice = sbwbservice;
+            _impservice = impservice;
             _user = user;
         }
         [HttpPost, SearchFilter, Route("list")]
@@ -163,15 +166,23 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                             lrsj = DateTime.Now,
                         });
                     }
-                    var ret = _sbwbservice.Add(list);
+                    var ret = _impservice.NewImportData(list);
                     FileInfo finfo = new FileInfo(filepath);
                     finfo.Delete();
-                    if (ret > 0)
+                    if (ret.oklist.Count == list.Count)
                     {
                         return Json(new sys_result()
                         {
                             code = 1,
-                            msg = "数据保存成功"
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.repeatlist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
                         });
                     }
                     else
@@ -179,9 +190,9 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                         return Json(new sys_result()
                         {
                             code = 0,
-                            msg = "数据保存失败"
+                            msg = $"数据导入失败"
                         });
-                    }                    
+                    }
                 }
                 else
                 {

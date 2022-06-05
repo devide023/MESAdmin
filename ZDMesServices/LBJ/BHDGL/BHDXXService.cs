@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using ZDMesInterfaces.LBJ.BHDGL;
 using ZDMesModels.LBJ;
 using Dapper;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.LBJ;
+
 namespace ZDMesServices.LBJ.BHDGL
 {
     public class BHDXXService:BaseDao<base_bhdxx>,IBHD

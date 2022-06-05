@@ -21,23 +21,15 @@ namespace ZDMesInterceptor.LBJ
 {
     public class CUDLogger : IInterceptor
     {
-        private string _constr = string.Empty;
-        private IDatabase Db;
         private mes_oper_log updatelog = new mes_oper_log();
         private string _oracleconstr = string.Empty;
         private mes_user_entity userinfo;
+        private SqlGeneratorImpl sqlGenerator;
         public CUDLogger(string constr)
         {
-            _constr = constr;
             _oracleconstr = ConfigurationManager.ConnectionStrings[constr]?.ToString();
             var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new OracleDialect());
-            var sqlGenerator = new SqlGeneratorImpl(config);
-            var connection = new OracleConnection(_oracleconstr);
-            Db = new Database(connection, sqlGenerator);
-            using (var db = new OracleConnection(_oracleconstr))
-            {
-                userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
-            }
+            sqlGenerator = new SqlGeneratorImpl(config);
         }
         public void Intercept(IInvocation invocation)
         {
@@ -91,6 +83,7 @@ namespace ZDMesInterceptor.LBJ
                 {
                     if (invocation.Arguments.Length > 0)
                     {
+                        userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
                         updatelog.czr = userinfo.name;
                         updatelog.czrid = userinfo.id;
                         updatelog.czrq = DateTime.Now;
@@ -149,8 +142,24 @@ namespace ZDMesInterceptor.LBJ
                 {
                     if (invocation.Arguments.Length > 0)
                     {
-                        updatelog.newdata = JsonConvert.SerializeObject(invocation.Arguments[0]);
-                        Db.Insert<mes_oper_log>(updatelog);
+                        using (var db = new OracleConnection(_oracleconstr))
+                        {
+                            IDatabase Db = new Database(db, sqlGenerator);
+                            try
+                            {
+                                updatelog.newdata = JsonConvert.SerializeObject(invocation.Arguments[0]);
+                                Db.Insert<mes_oper_log>(updatelog);
+                            }
+                            catch (Exception)
+                            {
+                                throw;
+                            }
+                            finally
+                            {
+                                db.Close();
+                                Db.Dispose();
+                            }
+                        }
                     }
                 }
             }
@@ -176,16 +185,33 @@ namespace ZDMesInterceptor.LBJ
                             var t = (invocation.Arguments[0] as IEnumerable<object>).First().GetType();
                             tbname = t.Name;
                         }
-                        Db.Insert<mes_oper_log>(new mes_oper_log()
+                        using (var db = new OracleConnection(_oracleconstr))
                         {
-                            name = tbname,
-                            czr = userinfo.name,
-                            czrid = userinfo.id,
-                            lx = "del",
-                            czrq = DateTime.Now,
-                            path = url,
-                            newdata = JsonConvert.SerializeObject(invocation.Arguments[0])
-                        }) ;
+                            userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
+                            IDatabase Db = new Database(db, sqlGenerator);
+                            try
+                            {
+                                Db.Insert<mes_oper_log>(new mes_oper_log()
+                                {
+                                    name = tbname,
+                                    czr = userinfo.name,
+                                    czrid = userinfo.id,
+                                    lx = "del",
+                                    czrq = DateTime.Now,
+                                    path = url,
+                                    newdata = JsonConvert.SerializeObject(invocation.Arguments[0])
+                                });
+                            }
+                            catch(Exception)
+                            {
+                                throw;
+                            }
+                            finally
+                            {
+                                db.Close();
+                                Db.Dispose();
+                            }
+                        }
                     }
                 }
             }
@@ -224,16 +250,34 @@ namespace ZDMesInterceptor.LBJ
                             var t = (invocation.Arguments[0] as IEnumerable<object>).First().GetType();
                             tbname = t.Name;
                         }
-                        Db.Insert<mes_oper_log>(new mes_oper_log()
+                        using (var db = new OracleConnection(_oracleconstr))
                         {
-                            name = tbname,
-                            czr = userinfo.name,
-                            czrid = userinfo.id,
-                            lx = "add",
-                            czrq = DateTime.Now,
-                            path = url,
-                            newdata = JsonConvert.SerializeObject(invocation.Arguments[0])
-                        });
+                            userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
+                            IDatabase Db = new Database(db, sqlGenerator);
+                            try
+                            {
+                                Db.Insert<mes_oper_log>(new mes_oper_log()
+                                {
+                                    name = tbname,
+                                    czr = userinfo.name,
+                                    czrid = userinfo.id,
+                                    lx = "add",
+                                    czrq = DateTime.Now,
+                                    path = url,
+                                    newdata = JsonConvert.SerializeObject(invocation.Arguments[0])
+                                });
+                            }
+                            catch (Exception)
+                            {
+
+                                throw;
+                            }
+                            finally
+                            {
+                                db.Close();
+                                Db.Dispose();
+                            }
+                        }
                     }
                 }
             }
@@ -243,5 +287,6 @@ namespace ZDMesInterceptor.LBJ
                 throw;
             }
         }
+
     }
 }

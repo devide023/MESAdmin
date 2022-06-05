@@ -10,6 +10,8 @@ using DapperExtensions;
 using DapperExtensions.Predicate;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.SBWB
 {
@@ -28,9 +30,9 @@ namespace ZDMesServices.LBJ.SBWB
                 {
                     try
                     {
-                        InitDB(db);
                         db.Open();
-                        using (var tran = Db.Connection.BeginTransaction())
+                        InitDB(db);
+                        using (var tran = db.BeginTransaction())
                         {
                             try
                             {
@@ -80,6 +82,7 @@ namespace ZDMesServices.LBJ.SBWB
             {
                 using (var db = new OracleConnection(ConString))
                 {
+                    InitDB(db);
                     PredicateGroup pg = new PredicateGroup()
                     {
                         Operator = GroupOperator.And,
@@ -101,6 +104,10 @@ namespace ZDMesServices.LBJ.SBWB
 
                 throw;
             }
+            finally
+            {
+                Db.Dispose();
+            }
         }
 
         public IEnumerable<base_sbwb_ls> WbZqList()
@@ -109,31 +116,39 @@ namespace ZDMesServices.LBJ.SBWB
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    List<base_sbwb_ls> result = new List<base_sbwb_ls>();
-                    StringBuilder sql = new StringBuilder();
-                    sql.Append("select autoid, gcdm, scx, gwh, wbsh, wbxx, wbjhsj, wbzt, wbwcsj, wbwcr, lrr, lrsj ");
-                    sql.Append(" from BASE_SBWB_LS t ");
-                    sql.Append(" where trunc(wbjhsj) = (select max(trunc(wbjhsj)) from BASE_SBWB_LS)");
-                    result = db.Query<base_sbwb_ls>(sql.ToString()).ToList();
-                    var list = Db.GetList<base_sbwb>();
-                    foreach (var item in list)
+                    try
                     {
-                        var q = result.Where(t => t.gcdm == item.gcdm && t.scx == item.scx && t.gwh == item.gwh && t.wbxx == item.wbxx);
-                        if (q.Count() == 0)
+                        InitDB(db);
+                        List<base_sbwb_ls> result = new List<base_sbwb_ls>();
+                        StringBuilder sql = new StringBuilder();
+                        sql.Append("select autoid, gcdm, scx, gwh, wbsh, wbxx, wbjhsj, wbzt, wbwcsj, wbwcr, lrr, lrsj ");
+                        sql.Append(" from BASE_SBWB_LS t ");
+                        sql.Append(" where trunc(wbjhsj) = (select max(trunc(wbjhsj)) from BASE_SBWB_LS)");
+                        result = db.Query<base_sbwb_ls>(sql.ToString()).ToList();
+                        var list = Db.GetList<base_sbwb>();
+                        foreach (var item in list)
                         {
-                            result.Add(new base_sbwb_ls()
+                            var q = result.Where(t => t.gcdm == item.gcdm && t.scx == item.scx && t.gwh == item.gwh && t.wbxx == item.wbxx);
+                            if (q.Count() == 0)
                             {
-                                gcdm = item.gcdm,
-                                scx = item.scx,
-                                gwh = item.gwh,
-                                wbxx = item.wbxx,
-                                wbsh = item.wbsh,
-                                wbzt = "计划中",
-                                sfwb = "Y"
-                            });
+                                result.Add(new base_sbwb_ls()
+                                {
+                                    gcdm = item.gcdm,
+                                    scx = item.scx,
+                                    gwh = item.gwh,
+                                    wbxx = item.wbxx,
+                                    wbsh = item.wbsh,
+                                    wbzt = "计划中",
+                                    sfwb = "Y"
+                                });
+                            }
                         }
+                        return result.OrderBy(t => t.gcdm).ThenBy(t => t.scx).ThenBy(t => t.wbsh);
                     }
-                    return result.OrderBy(t => t.gcdm).ThenBy(t => t.scx).ThenBy(t => t.wbsh);
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)

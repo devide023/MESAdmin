@@ -282,6 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomDirectRouteProvide.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
@@ -353,6 +354,7 @@
     <Compile Include="Controllers\LBJ\SJCJ\SJCJController.cs" />
     <Compile Include="Controllers\LBJ\SMJJK\SMJJKController.cs" />
     <Compile Include="Controllers\LBJ\YCGL\YCGLController.cs" />
+    <Compile Include="Controllers\TJ\GYGL\GYGLController.cs" />
     <Compile Include="Filters\ApiExceptionAttribute.cs" />
     <Compile Include="Filters\CheckLoginAttribute.cs" />
     <Compile Include="Filters\SearchFilter.cs" />
@@ -365,10 +367,12 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Config\bhdjl_config.js" />
     <Content Include="Config\bhdxx_config.js" />
+    <Content Include="Config\daojurenjuzx_config.js" />
     <Content Include="Config\dbrjgx_config.js" />
     <Content Include="Config\dbrjly_config.js" />
     <Content Include="Config\dbxx_config.js" />
     <Content Include="Config\djgw_config.js" />
+    <Content Include="Config\djreport_config.js" />
     <Content Include="Config\djxx_config.js" />
     <Content Include="Config\dzgy_config.js" />
     <Content Include="Config\gwxx_config.js" />
@@ -377,6 +381,7 @@
     <Content Include="Config\jtfp_config.js" />
     <Content Include="Config\jtgl_config.js" />
     <Content Include="Config\menu_config.js" />
+    <Content Include="Config\rjsmxh_config.js" />
     <Content Include="Config\rjxx_config.js" />
     <Content Include="Config\role_config.js" />
     <Content Include="Config\ryjn_config.js" />
@@ -385,6 +390,8 @@
     <Content Include="Config\sbsj_config.js" />
     <Content Include="Config\sbxx_config.js" />
     <Content Include="Config\scjh_config.js" />
+    <Content Include="Config\smjjk_config.js" />
+    <Content Include="Config\tj\tj_jrgy_config.js" />
     <Content Include="Config\user_config.js" />
     <Content Include="Config\wbxx_config.js" />
     <Content Include="Config\wbzq_config.js" />
@@ -427,6 +434,9 @@
     <Content Include="LBJ_baseinfo_module_config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Config\jtfp_config.js.bak" />
+    <Content Include="Config\rjsmxh_config.js.bak" />
+    <Content Include="Import_Log_Config.json" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -456,11 +466,15 @@
     <Content Include="TJ_baseinfo_module_config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Template\LBJ\刀柄刃具关系.xlsx" />
+    <Content Include="Template\LBJ\刀柄刃具在线.xlsx" />
+    <Content Include="Template\LBJ\刀柄基础数据.xlsx" />
+    <Content Include="Template\LBJ\刃具基础数据.xlsx" />
+    <Content Include="Template\LBJ\刃具寿命消耗.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\MF\" />
-    <Folder Include="Controllers\TJ\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="Upload\Excel\" />

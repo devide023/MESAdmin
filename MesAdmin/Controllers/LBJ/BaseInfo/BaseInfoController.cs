@@ -119,6 +119,34 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        [HttpGet, Route("unuse_dbrj_tree")]
+        public IHttpActionResult UnUse_DbRj_Tree()
+        {
+            try
+            {
+                var list = _baseinfo.UnUse_DbRj_Tree().OrderBy(t => t.dblx);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("unuse_db_list")]
+        public IHttpActionResult UnUse_Db_List()
+        {
+            try
+            {
+                var list = _baseinfo.Get_UnUseDbList().OrderBy(t => t.dblx);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet,Route("rjlx")]
         public IHttpActionResult GetRjLxList()
         {
@@ -152,7 +180,7 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
         {
             try
             {
-                var list = _baseinfo.Get_SBXX_List().Where(t=>t.scx == scx).OrderBy(t=>t.sbbh);
+                var list = _baseinfo.Get_SBXX_List().Where(t=>t.scx == scx && t.sblx == "CNC").OrderBy(t=>t.sbbh);
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)

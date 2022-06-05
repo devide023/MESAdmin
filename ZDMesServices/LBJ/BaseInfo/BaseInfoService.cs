@@ -12,6 +12,8 @@ using ZDMesModels;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.BaseInfo
 {
@@ -28,8 +30,15 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.GetList<base_ftpfilepath>();
+                    try
+                    {
+                        InitDB(db);
+                        return Db.GetList<base_ftpfilepath>();
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -49,8 +58,15 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.GetList<base_dbxx>();
+                    try
+                    {
+                        InitDB(db);
+                        return Db.GetList<base_dbxx>();
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -61,6 +77,61 @@ namespace ZDMesServices.LBJ.BaseInfo
             finally
             {
                 Db.Dispose();
+            }
+        }
+
+        public IEnumerable<base_dbxx> Get_UnUseDbList()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select ta.dbmc,ta.dbh,ta.dblx,ta.dbzt,ta.bz from ( ");
+                sql.Append(" select t.*, (select count(*) from BASE_DBRJZX where dbh = t.dbh) qty FROM base_dbxx t ");
+                sql.Append(" ) ta where ta.qty = 0");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_dbxx>(sql.ToString());
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_dbxx> UnUse_DbRj_Tree()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select t1.*, t2.id, t2.rjid, t2.djlx ");
+                sql.Append(" FROM(select ta.dbmc, ta.dbh, ta.dblx, ta.dbzt, ta.bz");
+                sql.Append("          from(select t.*, (select count(*) from BASE_DBRJZX where dbh = t.dbh) qty");
+                sql.Append("                   FROM   base_dbxx t) ta");
+                sql.Append("          where  ta.qty = 0) t1, base_dbrjgx t2");
+                sql.Append(" where  t1.dbh = t2.dbh");
+                using (var db = new OracleConnection(ConString))
+                {
+                    Dictionary<string, base_dbxx> dic = new Dictionary<string, base_dbxx>();
+                    var list = db.Query<base_dbxx, base_dbrjgx, base_dbxx>(sql.ToString(),(ta,tb)=> {
+                        base_dbxx entity = new base_dbxx();
+                        if(!dic.TryGetValue(ta.dbh, out entity))
+                        {
+                            entity = ta;
+                            entity.children = new List<base_dbrjgx>();
+                            dic.Add(ta.dbh, ta);
+                        }
+                        entity.children.Add(tb);
+                        return entity;
+                    },splitOn:"id").Distinct().ToList();
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -97,8 +168,15 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.GetList<base_gcxx>();
+                    try
+                    {
+                        InitDB(db);
+                        return Db.GetList<base_gcxx>();
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -118,8 +196,15 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.GetList<base_gwzd>().OrderBy(t => t.gwh);
+                    try
+                    {
+                        InitDB(db);
+                        return Db.GetList<base_gwzd>().OrderBy(t => t.gwh);
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -139,8 +224,15 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.GetList<base_rjxx>();
+                    try
+                    {
+                        InitDB(db);
+                        return Db.GetList<base_rjxx>();
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -160,14 +252,25 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    if (string.IsNullOrEmpty(gcdm))
+                    try
                     {
-                        return Db.GetList<base_scxxx>().OrderBy(t => t.scx);
+                        List<string> scx = new List<string>();
+                        scx.Add("J503");
+                        scx.Add("J505");
+                        scx.Add("J507");
+                        InitDB(db);
+                        if (string.IsNullOrEmpty(gcdm))
+                        {
+                            return Db.GetList<base_scxxx>().Where(t=>scx.Contains(t.scx)).OrderBy(t => t.scx);
+                        }
+                        else
+                        {
+                            return Db.GetList<base_scxxx>(Predicates.Field<base_scxxx>(t => t.gcdm, Operator.Eq, gcdm)).Where(t => scx.Contains(t.scx)).OrderBy(t => t.scx);
+                        }
                     }
-                    else
+                    finally
                     {
-                        return Db.GetList<base_scxxx>(Predicates.Field<base_scxxx>(t => t.gcdm, Operator.Eq, gcdm)).OrderBy(t => t.scx);
+                        db.Close();
                     }
                 }
             }
@@ -188,9 +291,16 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    var pre = Predicates.Field<zxjc_ryxx>(t => t.username, Operator.Like, key);
-                    return Db.GetList<zxjc_ryxx>(pre);
+                    try
+                    {
+                        InitDB(db);
+                        var pre = Predicates.Field<zxjc_ryxx>(t => t.username, Operator.Like, key);
+                        return Db.GetList<zxjc_ryxx>(pre);
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)
@@ -210,8 +320,15 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    return Db.GetList<base_sbxx>();
+                    try
+                    {
+                        InitDB(db);
+                        return Db.GetList<base_sbxx>();
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)

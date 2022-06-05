@@ -179,7 +179,9 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             try
             {
                 var list = _gxservice.ChooseRjlxByDbh(dbh);
-                return Json(new { code = 1, msg = "ok", list = list });
+                var scx = list.Select(t => t.scx).FirstOrDefault();
+                var sbbh = list.Select(t=>t.sbbh).FirstOrDefault();
+                return Json(new { code = 1, msg = "ok", list = list,scx = scx,sbbh = sbbh });
             }
             catch (Exception)
             {
@@ -243,6 +245,27 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                 
             }
         }
+        [HttpPost, Route("save_dbrjzx")]
+        public IHttpActionResult Save_DbRjZx_Change(sys_dbrj_bgly_form form) 
+        {
+            try
+            {
+                var ret = _gxservice.Save_DbRjZx_Change(form);
+                if (ret)
+                {
+                    return Json(new { code = 1, msg = "ok" });
+                }
+                else
+                {
+                    return Json(new { code = 1, msg = "数据保存失败" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         [HttpGet,Route("readxls")]
         public IHttpActionResult ReadTempFile(string fileid)
@@ -256,7 +279,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
                     string token = ZDToolHelper.TokenHelper.GetToken;
                     foreach (DataRow item in dataTable.Rows)
                     {

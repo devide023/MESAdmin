@@ -4,10 +4,18 @@
   isoperate: false,
   isfresh: true,
   isselect: true,
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
+    },
+	download_template_file() {
+      window.open('http://172.16.201.125:7002/template/lbj/刃具基础数据.xlsx');
     }
   },
   batoperate: {

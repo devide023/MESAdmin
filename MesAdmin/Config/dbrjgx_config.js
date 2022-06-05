@@ -5,11 +5,19 @@
   isfresh: true,
   isselect: true,
   operate_fnlist: [],
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     },
+    download_template_file() {
+      window.open('http://172.16.201.125:7002/template/lbj/刀柄刃具关系.xlsx');
+    }
   },
   batoperate: {
     import_by_add: function (_this, res) {
@@ -25,9 +33,9 @@
               _this.getlist(_this.queryform);
             } else if (result.code === 2) {
               _this.$message.warning(result.msg);
-            }else{
-				_this.$message.error(result.msg);
-			}
+            } else {
+              _this.$message.error(result.msg);
+            }
           });
         } catch (error) {
           _this.$message.error(error);

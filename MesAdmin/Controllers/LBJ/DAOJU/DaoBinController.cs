@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 namespace MesAdmin.Controllers.LBJ.DAOJU
@@ -18,10 +19,12 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
     public class DaoBinController : ApiController
     {
         private IDbOperate<base_dbxx> _dbxxservice;
+        private IImportData<base_dbxx> _impservice;
         private IUser _user;
-        public DaoBinController(IDbOperate<base_dbxx> dbxxservice, IUser user)
+        public DaoBinController(IDbOperate<base_dbxx> dbxxservice, IUser user, IImportData<base_dbxx> impservice)
         {
             _dbxxservice = dbxxservice;
+            _impservice = impservice;
             _user = user;
         }
 
@@ -137,6 +140,141 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
         [HttpGet, Route("readxls")]
         public IHttpActionResult ReadTempFile(string fileid)
         {
+            try
+            {
+                List<base_dbxx> list = new List<base_dbxx>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    list = ReadData(fileid);
+                    var ret = _impservice.NewImportData(list);
+                    if (ret.oklist.Count == list.Count)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.repeatlist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls_by_replace")]
+        public IHttpActionResult Import_By_Replace(string fileid)
+        {
+            try
+            {
+                List<base_dbxx> list = new List<base_dbxx>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    list = ReadData(fileid);
+                    var ret = _impservice.ReaplaceImportData(list);
+                    if (ret.oklist.Count == list.Count)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.dellist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls_by_zh")]
+        public IHttpActionResult Import_By_ZH(string fileid)
+        {
+            try
+            {
+                List<base_dbxx> list = new List<base_dbxx>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    list = ReadData(fileid);
+                    var ret = _impservice.ZhImportData(list);
+                    if (ret.oklist.Count == list.Count)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.orginallist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,更新{ret.orginallist.Count}条"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private List<base_dbxx> ReadData(string fileid)
+        {
             string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
             FileInfo finfo = new FileInfo(filepath);
             try
@@ -146,45 +284,24 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
                     string token = ZDToolHelper.TokenHelper.GetToken;
                     foreach (DataRow item in dataTable.Rows)
                     {
                         list.Add(new base_dbxx()
                         {
-                          gcdm = item[0].ToString(),
-                          dbh = item[1].ToString(),
-                          dbmc = item[2].ToString(),
-                          dblx = item[3].ToString(),
-                          cgsj = Convert.ToDateTime(item[4].ToString()),
-                          dbzt = item[5].ToString(),
-                          lrr = _user.GetUserByToken(token).name,
-                          lrsj = DateTime.Now
-                        });
-                    }
-                    var ret = _dbxxservice.Add(list);
-                    finfo.Delete();
-                    if (ret > 0)
-                    {
-                        return Json(new sys_result()
-                        {
-                            code = 1,
-                            msg = "数据导入成功"
-                        });
-                    }
-                    else
-                    {
-                        return Json(new sys_result()
-                        {
-                            code = 0,
-                            msg = "数据导入失败"
+                            gcdm = item[0].ToString(),
+                            dbh = item[1].ToString(),
+                            dbmc = item[2].ToString(),
+                            dblx = item[3].ToString(),
+                            cgsj = Convert.ToDateTime(item[4].ToString()),
+                            dbzt = item[5].ToString(),
+                            lrr = _user.GetUserByToken(token).name,
+                            lrsj = DateTime.Now
                         });
                     }
                 }
-                else
-                {
-                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
-                }
+                return list;
             }
             catch (Exception)
             {

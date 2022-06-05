@@ -4,12 +4,20 @@
   isoperate: false,
   isfresh: true,
   isselect: true,
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   operate_fnlist: [],
   pagefuns: {
-	  add_handle: function () {
+    add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     },
+    download_template_file() {
+      window.open('http://172.16.201.125:7002/template/lbj/刃具寿命消耗.xlsx');
+    }
   },
   batoperate: {
     import_by_add: function (_this, res) {
@@ -43,13 +51,57 @@
         if (res.code === 1) {
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
-        } else if(res.code === 0) {
+        } else if (res.code === 0) {
           this.$message.error(res.msg);
         }
       });
     },
-    import_by_replace(_this, res) {},
-    import_by_zh(_this,res) {},
+    import_by_replace(_this, res) {
+      if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          _this.$request('get', '/lbj/rjsmxh/readxls_by_replace', {
+            fileid: fid
+          }).then(function (result) {
+            if (result.code === 1) {
+              _this.$message.success(result.msg);
+              _this.getlist(_this.queryform);
+            } else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            } else if (result.code === 0) {
+              _this.$message.error(result.msg);
+            }
+          });
+        } catch (error) {
+          _this.$message.error(error);
+        }
+      } else {
+        _this.$loading().close();
+      }
+    },
+    import_by_zh(_this, res) {
+		if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          _this.$request('get', '/lbj/rjsmxh/readxls_by_zh', {
+            fileid: fid
+          }).then(function (result) {
+            if (result.code === 1) {
+              _this.$message.success(result.msg);
+              _this.getlist(_this.queryform);
+            } else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            } else if (result.code === 0) {
+              _this.$message.error(result.msg);
+            }
+          });
+        } catch (error) {
+          _this.$message.error(error);
+        }
+      } else {
+        _this.$loading().close();
+      }
+	},
   },
   fields: [{
       coltype: 'list',

@@ -9,6 +9,8 @@ using Dapper;
 using ZDMesModels;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.DZWD
 {
@@ -81,22 +83,16 @@ namespace ZDMesServices.LBJ.DZWD
                 sql1.Append("select jtid, jcmc, wjlj, yxqx1, yxqx2, 1 as type,fp_flg as fpflg from zxjc_t_jstc where fp_flg = 'N' ");
                 using (var db = new OracleConnection(ConString))
                 {
-                    InitDB(db);
-                    var list = Db.Connection.Query<zxjc_t_jstc>(sql1.ToString()).ToList();
-                    var list1 = Db.Connection.Query<zxjc_t_jstc>(sql.ToString());
+                    var list = db.Query<zxjc_t_jstc>(sql1.ToString()).ToList();
+                    var list1 = db.Query<zxjc_t_jstc>(sql.ToString());
                     list.AddRange(list1);
                     return list.Where(t => t.fpflg == "N");
                 }
-
             }
             catch (Exception)
             {
 
                 throw;
-            }
-            finally
-            {
-                Db.Dispose();
             }
         }
     }

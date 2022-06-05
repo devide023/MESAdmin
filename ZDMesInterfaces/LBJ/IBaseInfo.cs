@@ -58,6 +58,16 @@ namespace ZDMesInterfaces.LBJ
         /// <returns></returns>
         IEnumerable<base_dbxx> Get_UnUse_DbInfo();
         /// <summary>
+        /// 未使用刀柄信息,换刀
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_dbxx> Get_UnUseDbList();
+        /// <summary>
+        /// 未使用刀柄，刃具信息树形
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_dbxx> UnUse_DbRj_Tree();
+        /// <summary>
         /// 获取设备列表
         /// </summary>
         /// <returns></returns>

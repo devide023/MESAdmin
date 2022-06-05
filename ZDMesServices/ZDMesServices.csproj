@@ -179,6 +179,7 @@
     <Compile Include="TJ\Common\OpLogService.cs" />
     <Compile Include="TJ\Common\RoleService.cs" />
     <Compile Include="TJ\Common\UserService.cs" />
+    <Compile Include="TJ\GYGL\GYGLService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MF\" />

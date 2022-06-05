@@ -9,6 +9,7 @@ namespace ZDMesModels.LBJ
     ///</summary>
     public class base_dbxx
     {
+        public string id { get; set; }
         /// <summary>
         /// 工厂 
         ///</summary>
@@ -45,7 +46,13 @@ namespace ZDMesModels.LBJ
         /// 备注
         /// </summary>
         public string dbxxbz { get; set; }
-        
+        /// <summary>
+        /// 刀柄刃具关系
+        /// </summary>
+        public List<base_dbrjgx> children { get; set; }
+
+        public string label { get; set; }
+
     }
 
     public class base_dbxx_mapper : ClassMapper<base_dbxx>
@@ -54,6 +61,9 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.dbh).Key(KeyType.Assigned);
             Map(t => t.dbxxbz).Column("bz");
+            Map(t => t.children).Ignore();
+            Map(t => t.label).Ignore();
+            Map(t => t.id).Ignore();
             AutoMap();
         }
     }

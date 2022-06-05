@@ -147,7 +147,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
                     string token = ZDToolHelper.TokenHelper.GetToken;
                     foreach (DataRow item in dataTable.Rows)
                     {

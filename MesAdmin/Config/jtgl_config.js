@@ -4,7 +4,7 @@
   operate_fnlist: [{
       label: '上传Pdf',
       btntype: 'upload',
-      action: 'http://localhost:52655/api/upload/jstc_pdf',
+      action: 'http://172.16.201.125:7002/api/upload/jstc_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
           this.$message.success(response.msg);
@@ -43,7 +43,7 @@
         wjlj: row.wjlj
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://localhost:52655/api/download/downloadpdf?wjlj=" + row.wjlj);
+          window.open("http://172.16.201.125:7002/api/download/downloadpdf?wjlj=" + row.wjlj);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }

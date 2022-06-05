@@ -99,5 +99,11 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <param name="list"></param>
         /// <returns></returns>
         bool ZxRjChange(List<base_dbrjzx> list);
+        /// <summary>
+        /// 更换刀柄刃具
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
+        bool Save_DbRjZx_Change(sys_dbrj_bgly_form form);
     }
 }

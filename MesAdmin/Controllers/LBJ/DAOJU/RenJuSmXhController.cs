@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 
@@ -19,9 +20,11 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
     public class RenJuSmXhController : ApiController
     {
         private IDbOperate<base_rjsmxh> _rjsmxhservice;
-        public RenJuSmXhController(IDbOperate<base_rjsmxh> rjsmxhservice)
+        private IImportData<base_rjsmxh> _importservice;
+        public RenJuSmXhController(IDbOperate<base_rjsmxh> rjsmxhservice, IImportData<base_rjsmxh> importservice)
         {
             _rjsmxhservice = rjsmxhservice;
+            _importservice = importservice;
         }
         [HttpPost, SearchFilter, Route("list")]
         public IHttpActionResult GetList(sys_page parm)
@@ -145,7 +148,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
                     string token = ZDToolHelper.TokenHelper.GetToken;
                     foreach (DataRow item in dataTable.Rows)
                     {
@@ -160,14 +163,22 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
 
                         });
                     }
-                    var ret = _rjsmxhservice.Add(list);
+                    var ret = _importservice.NewImportData(list);
                     finfo.Delete();
-                    if (ret > 0)
+                    if (ret.oklist.Count == list.Count)
                     {
                         return Json(new sys_result()
                         {
                             code = 1,
-                            msg = "数据导入成功"
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.repeatlist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
                         });
                     }
                     else
@@ -175,7 +186,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                         return Json(new sys_result()
                         {
                             code = 0,
-                            msg = "数据导入失败"
+                            msg = $"数据导入失败"
                         });
                     }
                 }

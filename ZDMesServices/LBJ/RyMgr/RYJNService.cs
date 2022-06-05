@@ -10,6 +10,8 @@ using Dapper;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using ZDMesModels;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.RyMgr
 {

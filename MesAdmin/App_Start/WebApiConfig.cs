@@ -1,4 +1,5 @@
-﻿using MesAdmin.Filters;
+﻿using MesAdmin.App_Start;
+using MesAdmin.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace MesAdmin
             // Web API 配置和服务
             //config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Web API 路由
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes(new CustomDirectRouteProvide());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

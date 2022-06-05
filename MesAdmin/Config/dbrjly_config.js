@@ -4,9 +4,17 @@
   isoperate: false,
   isfresh: true,
   isselect: true,
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   pagefuns: {
     add_handle: function () {
       this.dialogVisible = true;
+    },
+	download_template_file() {
+      window.open('http://172.16.201.125:7002/template/lbj/刀柄刃具在线.xlsx');
     },
     rjrm_handle: function () {
       var _this = this;

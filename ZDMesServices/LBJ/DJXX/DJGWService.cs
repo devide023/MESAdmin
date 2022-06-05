@@ -8,6 +8,9 @@ using ZDMesModels.LBJ;
 using System.Data;
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.LBJ;
+
 namespace ZDMesServices.LBJ.DJXX
 {
     public class DJGWService:BaseDao<zxjc_djgw>, IDjGw

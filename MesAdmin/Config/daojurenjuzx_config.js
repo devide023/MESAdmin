@@ -1,9 +1,14 @@
 {
   isgradequery: true,
   isbatoperate: true,
-  isoperate: true,
+  isoperate: false,
   isfresh: true,
   isselect: true,
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   operate_fnlist: [{
       label: '卸载',
       fnname: 'uninstall_rjlx_handle',
@@ -42,15 +47,37 @@
         if (res.code === 1) {
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
-        } else if(res.code === 0) {
+        } else if (res.code === 0) {
           this.$message.error(res.msg);
         }
       });
     },
     import_by_replace(_this, res) {},
-    import_by_zh(_this,res) {},
+    import_by_zh(_this, res) {},
   },
   pagefuns: {
+    rjxz_handle: function () {
+      var _this = this;
+      if (this.selectlist.length > 0) {
+        this.$confirm("你确定要卸载刀柄刃具?", "警告", {
+          type: "warning",
+          cancelButtonClass: "el-button--primary",
+          confirmButtonClass: "el-button--danger",
+        }).then(function () {
+          var ids = _this.selectlist.map((i) => i.id);
+          _this.$request('post', '/lbj/dbrjly/uninstall', ids).then(function (res) {
+            if (res.code === 1) {
+              _this.$message.success(res.msg);
+              _this.getlist(_this.queryform);
+            } else if (res.code === 0) {
+              _this.$message.error(res.msg);
+            }
+          });
+        })
+      } else {
+        this.$message.warning('请选择要卸载的刀柄刃具');
+      }
+    },
     uninstall_rjlx_handle: function (row) {
       console.log(row);
       var _this = this;
@@ -77,24 +104,34 @@
     add_handle: function () {
       this.dialogVisible = true;
     },
-	change_rj_handle:function(){
-		this.installVisible = true;
-	},
+    change_rj_handle: function () {
+      this.installVisible = true;
+    },
     rjrm_handle: function () {
       var _this = this;
       if (this.selectlist.length > 0) {
-        var postdata = this.selectlist.map(t => t.id);
-        this.$request('post', '/lbj/dbrjly/zxrjrm', postdata).then(function (res) {
-          if (res.code === 1) {
-            _this.$message.success(res.msg);
-          } else if (res.code === 0) {
-            _this.$message.error(res.msg);
-          }
+        this.$confirm("刃磨将重置刃具当前寿命确定要刃磨?", "警告", {
+          type: "warning",
+          cancelButtonClass: "el-button--primary",
+          confirmButtonClass: "el-button--danger",
+        }).then(function () {
+          var postdata = _this.selectlist.map(t => t.id);
+          _this.$request('post', '/lbj/dbrjly/zxrjrm', postdata).then(function (res) {
+            if (res.code === 1) {
+              _this.$message.success(res.msg);
+              _this.getlist(_this.queryform);
+            } else if (res.code === 0) {
+              _this.$message.error(res.msg);
+            }
+          });
         });
       } else {
         this.$message.warning('请选择刃具');
       }
-    }
+    },
+    download_template_file() {
+      window.open('http://172.16.201.125:7002/template/lbj/刀柄刃具在线.xlsx');
+    },
   },
   fields: [{
       coltype: 'list',

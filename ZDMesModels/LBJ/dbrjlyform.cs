@@ -25,9 +25,9 @@ namespace ZDMesModels.LBJ
         /// </summary>
         public List<string> dbh { get; set; }
         /// <summary>
-        /// 刃具类型
+        /// 刀柄刃具关系ids
         /// </summary>
-        public List<dynamic> rjlx { get; set; }
+        public List<int> dbrjids { get; set; }
         /// <summary>
         /// 领用人
         /// </summary>

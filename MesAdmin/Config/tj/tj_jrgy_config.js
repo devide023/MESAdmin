@@ -1,0 +1,80 @@
+{
+  isgradequery: true,
+  isbatoperate: true,
+  isoperate: false,
+  isfresh: true,
+  isselect: true,
+  operate_fnlist: [],
+  pagefuns: {
+    add_handle: function () {},
+  },
+  fields: [{
+      coltype: 'list',
+      label: '工厂',
+      prop: 'gcdm',
+      headeralign: 'center',
+      align: 'center',
+      options: [],
+    }, {
+      coltype: 'list',
+      label: '生产线',
+      prop: 'scx',
+      headeralign: 'center',
+      align: 'center',
+      options: [],
+    }, {
+      coltype: 'string',
+      label: '岗位号',
+      prop: 'gwh',
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '程序号',
+      prop: 'cxh',
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '最小值',
+      prop: 'min',
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '最大值',
+      prop: 'max',
+      headeralign: 'center',
+      align: 'center',
+    }, ],
+  form: {
+    gcdm: '',
+    scx: '',
+    gwh: '',
+    cxh: '',
+    min: '',
+    max: '',
+    isdb: false,
+    isedit: true
+  },
+  addapi: {
+    url: 'tj/gygl/jrgy/add',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  editapi: {
+    url: 'tj/gygl/jrgy/edit',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  delapi: {
+    url: 'tj/gygl/jrgy/del',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  queryapi: {
+    url: 'tj/gygl/jrgy/list',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+}

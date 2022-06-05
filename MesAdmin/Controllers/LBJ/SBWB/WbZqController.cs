@@ -82,7 +82,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                 var userinfo = _user.GetUserByToken(token);
                 int xsh = 1;
                 string gwh = string.Empty, scx = string.Empty;
-                foreach (var item in form.sbwbls)
+                foreach (var item in form.sbwbls.OrderBy(t=>t.scx))
                 {
                     item.autoid = Guid.NewGuid().ToString();
                     item.wbjhsj = form.next_date;
@@ -91,11 +91,11 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                     item.wbzt = "计划中";
                     item.wbwcr = "";
                     item.wbwcsj = null;
-                    gwh = item.gwh;
-                    scx = item.scx;
                     if(gwh != item.gwh && scx != item.scx)
                     {
                         xsh = 1;
+                        gwh = item.gwh;
+                        scx = item.scx;
                     }
                     item.wbsh = xsh;
                     savedata.Add(item);

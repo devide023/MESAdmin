@@ -279,6 +279,13 @@ namespace ZDMesServices.Common
                     contents.Append("}");
                     if (!fi.Exists)
                     {
+                        var pos = configpath.LastIndexOf("/");
+                        var dirpath = configpath.Substring(0, pos);
+                        DirectoryInfo dirinfo = new DirectoryInfo(dirpath);
+                        if (!dirinfo.Exists)
+                        {
+                            dirinfo.Create();
+                        }
                         File.WriteAllText(configpath, contents.ToString());
                     }
                     else

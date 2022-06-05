@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Autofac.Extras.DynamicProxy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesInterceptor.LBJ;
 using ZDMesModels;
 
 namespace ZDMesInterfaces.LBJ.ImportData
 {
+    [Intercept(typeof(ImportLog))]
     public interface IImportData<T> where T: class, new()
     {
         /// <summary>
