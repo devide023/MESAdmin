@@ -167,6 +167,7 @@
       dbprop: 'ta.sbbh',
       headeralign: 'center',
       align: 'center',
+      sortable: true,
     }, {
       coltype: 'string',
       label: '设备名称',
@@ -174,6 +175,7 @@
       subprop: 'sbmc',
       headeralign: 'center',
       align: 'center',
+      overflowtooltip: true,
     }, {
       coltype: 'string',
       label: '刀柄编号',
@@ -181,6 +183,7 @@
       dbprop: 'ta.dbh',
       headeralign: 'center',
       align: 'center',
+      sortable: true,
     }, {
       coltype: 'string',
       label: '刀柄类型',
@@ -188,6 +191,7 @@
       subprop: 'dblx',
       headeralign: 'center',
       align: 'center',
+      overflowtooltip: true,
     }, {
       coltype: 'string',
       label: '刀柄名称',
@@ -218,6 +222,7 @@
       dbprop: 'ta.rjbzsm',
       headeralign: 'center',
       align: 'center',
+      sortable: true,
     }, {
       coltype: 'string',
       label: '当前寿命',
@@ -225,34 +230,48 @@
       dbprop: 'ta.rjdqsm',
       headeralign: 'center',
       align: 'center',
+      sortable: true,
     }, {
-      coltype: 'string',
-      label: '刀柄领用人',
-      prop: 'dblyr',
+      coltype: 'progress',
+      label: '刃具状态',
+      prop: 'rjzt',
       headeralign: 'center',
       align: 'center',
-    }, {
-      coltype: 'datetime',
-      label: '刀柄领用时间',
-      prop: 'dblysj',
-      dbprop: 'ta.dblysj',
-      headeralign: 'center',
-      align: 'center',
-      overflowtooltip: true,
+      width: 100,
+      sortable: true,
     }, {
       coltype: 'string',
-      label: '刃具领用人',
+      label: '领用人',
       prop: 'rjlyr',
       headeralign: 'center',
       align: 'center',
     }, {
       coltype: 'datetime',
-      label: '刃具领用时间',
+      label: '领用时间',
       prop: 'rjlysj',
       headeralign: 'center',
       align: 'center',
       overflowtooltip: true,
     }, ],
+  trbginfo: {
+    colname: 'rjzt',
+    logiclist: [{
+        logic: 'between',
+        val0: 90,
+        val1: 95,
+        classname: 'warning-row',
+      }, {
+        logic: 'between',
+        val0: 95,
+        val1: 100,
+        classname: 'danger-row',
+      }, {
+        logic: '>',
+        val0: 100,
+        classname: 'error-row',
+      },
+    ]
+  },
   form: {
     gcdm: '',
     scx: '',

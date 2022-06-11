@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Autofac.Extras.DynamicProxy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesInterceptor;
 using ZDMesModels;
 namespace ZDMesInterfaces.Common
 {
+    [Intercept(typeof(UserLog))]
     public interface IUser
     {
         /// <summary>
@@ -39,7 +42,7 @@ namespace ZDMesInterfaces.Common
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        bool ReSetToken(string token);
+        bool ReSetToken(int id);
         /// <summary>
         /// 保存用户角色
         /// </summary>

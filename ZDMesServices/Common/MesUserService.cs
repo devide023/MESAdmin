@@ -49,10 +49,6 @@ namespace ZDMesServices.Common
 
                 throw;
             }
-            finally
-            {
-                Db.Dispose();
-            }
         }
 
         public IEnumerable<mes_menu_entity> Get_User_Menus(string token)
@@ -180,7 +176,7 @@ namespace ZDMesServices.Common
             }
         }
 
-        public bool ReSetToken(string token)
+        public bool ReSetToken(int id)
         {
             try
             {
@@ -190,7 +186,7 @@ namespace ZDMesServices.Common
                     {
                         InitDB(db);
                         var newtoken = new ZDToolHelper.JWTHelper().CreateToken();
-                        var q = Db.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.token, Operator.Eq, token));
+                        var q = Db.GetList<mes_user_entity>(Predicates.Field<mes_user_entity>(t => t.id, Operator.Eq, id));
                         if (q.Count() > 0)
                         {
                             var user = q.First();
@@ -397,13 +393,14 @@ namespace ZDMesServices.Common
                         int okcnt = 0;
                         StringBuilder sql = new StringBuilder();
                         sql.Append("select count(id) FROM mes_user_entity where code = :code");
+                        var jwt = new ZDToolHelper.JWTHelper();
                         foreach (var item in entitys)
                         {
                             int qty = db.ExecuteScalar<int>(sql.ToString(), new { code = item.code });
                             if (qty == 0)
                             {
                                 item.pwd = ZDToolHelper.Tool.Str2MD5("123456");
-                                item.token = new ZDToolHelper.JWTHelper().CreateToken();
+                                item.token = jwt.CreateToken();
                                 item.headimg = "default.jpg";
                                 var ret = Db.Insert<mes_user_entity>(item);
                                 if (ret > 0)
@@ -490,15 +487,15 @@ namespace ZDMesServices.Common
                 using (var db = new OracleConnection(ConString))
                 {
                     StringBuilder sql = new StringBuilder();
-                    sql.Append("select ta.id,ta.status, ta.code, ta.name, ta.pwd, ta.token, ta.headimg, ta.adduser,ta.addusername, ta.addtime, tc.id as roleid,tc.name as rolename");
-                    sql.Append(" from MES_USER_ENTITY ta, mes_user_role tb,mes_role_entity tc");
-                    sql.Append(" where  ta.id = tb.userid ");
-                    sql.Append(" and tb.roleid = tc.id ");
+                    sql.Append("select ta.id,ta.status, ta.code, ta.name, ta.pwd, ta.token, ta.headimg, ta.adduser,ta.addusername, ta.addtime, tb.id as roleid,tb.name as rolename");
+                    sql.Append(" from MES_USER_ENTITY ta, (select t2.id,t2.name,t1.userid from mes_user_role t1,mes_role_entity t2 where t1.roleid = t2.id) tb");
+                    sql.Append(" where  ta.id = tb.userid(+) ");
+                    //sql.Append(" and tb.roleid = tc.id ");
                     StringBuilder sql_cnt = new StringBuilder();
                     sql_cnt.Append("select count(ta.id) ");
-                    sql_cnt.Append(" from MES_USER_ENTITY ta, mes_user_role tb ,mes_role_entity tc");
-                    sql_cnt.Append(" where  ta.id = tb.userid ");
-                    sql_cnt.Append(" and tb.roleid = tc.id ");
+                    sql_cnt.Append(" from MES_USER_ENTITY ta, (select t2.id,t2.name,t1.userid from mes_user_role t1,mes_role_entity t2 where t1.roleid = t2.id) tb");
+                    sql_cnt.Append(" where  ta.id = tb.userid(+) ");
+                    //sql_cnt.Append(" and tb.roleid = tc.id ");
                     if (!string.IsNullOrEmpty(parm.sqlexp))
                     {
                         sql.Append(" and " + parm.sqlexp);
@@ -525,7 +522,10 @@ namespace ZDMesServices.Common
                              user.role = new List<dynamic>();
                              user_role_dic.Add(ta.id, user);
                          }
-                         user.role.Add(tb.roleid);
+                         if (tb != null)
+                         {
+                             user.role.Add(tb.roleid);
+                         }
                          return user;
                      }, param: parm.sqlparam, splitOn: "roleid").Distinct();
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
@@ -598,6 +598,6 @@ namespace ZDMesServices.Common
 
                 throw;
             }
-        }
+        }        
     }
 }

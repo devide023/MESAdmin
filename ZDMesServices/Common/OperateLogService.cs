@@ -24,18 +24,18 @@ namespace ZDMesServices.Common
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select ta.*, tc.name as menuname ");
-                sql.Append(" FROM   mes_oper_log ta, (select menuid, ('/api' || trim(api)) as api");
-                sql.Append("          FROM   mes_menu_api) tb, mes_menu_entity tc");
-                sql.Append(" where ta.path = tb.api(+)");
-                sql.Append(" and tb.menuid = tc.id(+)");
+                sql.Append("select ta.*, tb.name as menuname ");
+                sql.Append(" FROM   mes_oper_log ta, (select distinct t1.menuid, ('/api' || trim(t1.api)) as api, t2.name ");
+                sql.Append("          FROM   mes_menu_api t1, mes_menu_entity t2 ");
+                sql.Append("          where  t1.menuid = t2.id) tb");
+                sql.Append(" where  ta.path = tb.api(+) ");
                 sql.Append(" and ta.czrid = :czrid ");
                 sql.Append(" order by ta.czrq desc ");
                 using (var db = new OracleConnection(ConString))
                 {
                     parm.sqlparam.Add(":czrid", _user.CurrentUser().id);
                     resultcount = db.ExecuteScalar<int>("select count(id) from mes_oper_log where czrid = :czrid ", parm.sqlparam);
-                    return db.Query<mes_oper_log>(OraPager(sql.ToString()), parm.sqlparam);
+                    return db.Query<mes_oper_log>(OraPager(sql.ToString()), parm.sqlparam).Distinct();
                 }
             }
             catch (Exception)

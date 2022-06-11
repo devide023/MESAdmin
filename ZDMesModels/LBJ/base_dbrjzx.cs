@@ -23,6 +23,10 @@ namespace ZDMesModels.LBJ
         ///</summary>
         public string scx { get; set; }
         /// <summary>
+        /// 生产线名称
+        /// </summary>
+        public string  scxmc { get; set; }
+        /// <summary>
         /// 刀柄号 
         ///</summary>
         public string dbh { get; set; }
@@ -39,7 +43,7 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 刃具类型 
         ///</summary>
-         public string rjlx { get; set; }
+        public string rjlx { get; set; }
         
         /// <summary>
         /// 刃具标准寿命 
@@ -93,6 +97,10 @@ namespace ZDMesModels.LBJ
         /// 岗位号
         /// </summary>
         public string gwh { get; set; }
+        /// <summary>
+        /// 刃具刃磨人
+        /// </summary>
+        public string rjrmr { get; set; }
         public decimal rjzt { get; set; }
         /// <summary>
         /// 刃具信息
@@ -128,6 +136,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.dbrjdygx).Ignore();
             Map(t => t.rjids).Ignore();
             Map(t => t.rjzt).Ignore();
+            Map(t => t.scxmc).Ignore();
             AutoMap();
         }
     }

@@ -15,7 +15,7 @@
       },
       options: []
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'scx',
       label: '生产线',
       headeralign: 'center',

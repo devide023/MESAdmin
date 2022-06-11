@@ -18,6 +18,9 @@ using ZDToolHelper;
 
 namespace ZDMesInterceptor.LBJ
 {
+    /// <summary>
+    /// 数据导入日志
+    /// </summary>
     public class ImportLog: IInterceptor
     {
         private mes_oper_log updatelog = new mes_oper_log();
@@ -112,38 +115,119 @@ namespace ZDMesInterceptor.LBJ
                 //返回类型
                 var returntype = T.MakeGenericType(new[] { Type.GetType(fxtyname) });
                 PropertyInfo[] pros = returntype.GetProperties();
-                //是否存在oklist属性
-                var sfczok = pros.Where(t => t.Name == "oklist");
-                if (sfczok.Count() > 0)
+
+                using (var db = new OracleConnection(_oracleconstr))
                 {
-                    var oklist = sfczok.First().GetValue(invocation.ReturnValue) as IEnumerable<object>;
-                    if (oklist.Count() > 0)
+                    var userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
+                    IDatabase Db = new Database(db, sqlGenerator);
+                    try
                     {
-                        using (var db = new OracleConnection(_oracleconstr))
+                        IEnumerable<object> insert_list = new List<object>();
+                        IEnumerable<object> del_list = new List<object>();
+                        IEnumerable<object> update_list = new List<object>();
+                        //是否存在orginallist属性
+                        var sfcz_gxjl = pros.Where(t => t.Name == "orginallist");
+                        if (sfcz_gxjl.Count() > 0)
                         {
-                            IDatabase Db = new Database(db, sqlGenerator);
-                            try
+                            //获取更新之前原始记录
+                            var gxjl = sfcz_gxjl.First().GetValue(invocation.ReturnValue) as IEnumerable<object>;
+                            if (gxjl.Count() > 0)
                             {
-                                var userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
-                                Db.Insert<mes_oper_log>(new mes_oper_log()
-                                {
-                                    name = tbname,
-                                    czr = userinfo.name,
-                                    czrid = userinfo.id,
-                                    lx = czlx.ToString(),
-                                    czrq = DateTime.Now,
-                                    path = url,
-                                    newdata = JsonConvert.SerializeObject(oklist)
-                                });
-                            }
-                            finally
-                            {
-                                db.Close();
-                                Db.Dispose();
+                                update_list = gxjl;
                             }
                         }
+                        //是否存在dellist属性
+                        var sfcz_scjl = pros.Where(t => t.Name == "dellist");
+                        if (sfcz_scjl.Count() > 0)
+                        {
+                            //获取删除之前原始记录
+                            var scjl = sfcz_scjl.First().GetValue(invocation.ReturnValue) as IEnumerable<object>;
+                            if (scjl.Count() > 0)
+                            {
+                                del_list = scjl;
+                            }
+                        }
+                        //是否存在oklist属性
+                        var sfczok = pros.Where(t => t.Name == "oklist");
+                        if (sfczok.Count() > 0)
+                        {
+                            //获取新增记录
+                            var xzjl = sfczok.First().GetValue(invocation.ReturnValue) as IEnumerable<object>;
+                            if (xzjl.Count() > 0)
+                            {
+                                insert_list = xzjl;
+                            }
+                        }
+                        //替换操作
+                        if (del_list.Count() > 0 && insert_list.Count() > 0)
+                        {
+                            Db.Insert<mes_oper_log>(new mes_oper_log()
+                            {
+                                name = tbname,
+                                czr = userinfo.name,
+                                czrid = userinfo.id,
+                                lx = czlx.ToString(),
+                                czrq = DateTime.Now,
+                                path = url,
+                                newdata = JsonConvert.SerializeObject(del_list)
+                            });
+                            Db.Insert<mes_oper_log>(new mes_oper_log()
+                            {
+                                name = tbname,
+                                czr = userinfo.name,
+                                czrid = userinfo.id,
+                                lx = czlx.ToString(),
+                                czrq = DateTime.Now,
+                                path = url,
+                                newdata = JsonConvert.SerializeObject(insert_list)
+                            });
+                        }
+                        //综合导入
+                        else if (update_list.Count() > 0 && insert_list.Count() > 0) {
+                            Db.Insert<mes_oper_log>(new mes_oper_log()
+                            {
+                                name = tbname,
+                                czr = userinfo.name,
+                                czrid = userinfo.id,
+                                lx = czlx.ToString(),
+                                czrq = DateTime.Now,
+                                path = url,
+                                olddata = JsonConvert.SerializeObject(update_list)
+                            });
+                            Db.Insert<mes_oper_log>(new mes_oper_log()
+                            {
+                                name = tbname,
+                                czr = userinfo.name,
+                                czrid = userinfo.id,
+                                lx = czlx.ToString(),
+                                czrq = DateTime.Now,
+                                path = url,
+                                newdata = JsonConvert.SerializeObject(insert_list)
+                            });
+
+
+                        }
+                        //新增导入
+                        else if(insert_list.Count()>0 && update_list.Count() == 0 && del_list.Count() == 0)
+                        {
+                            Db.Insert<mes_oper_log>(new mes_oper_log()
+                            {
+                                name = tbname,
+                                czr = userinfo.name,
+                                czrid = userinfo.id,
+                                lx = czlx.ToString(),
+                                czrq = DateTime.Now,
+                                path = url,
+                                newdata = JsonConvert.SerializeObject(insert_list)
+                            });
+                        }
                     }
-                }
+                    finally
+                    {
+                        db.Close();
+                        Db.Dispose();
+                    }
+                }                
             }
             catch (Exception)
             {

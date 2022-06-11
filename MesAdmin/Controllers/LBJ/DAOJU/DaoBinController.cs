@@ -205,7 +205,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                         return Json(new sys_result()
                         {
                             code = 2,
-                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条"
+                            msg = $"文件数据{list.Count()}条，替换{ret.dellist.Count}条"
                         });
                     }
                     else

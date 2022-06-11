@@ -84,10 +84,19 @@
       align: 'left',
       width: 80,
       overflowtooltip: true,
-    }, {
-      coltype: 'list',
+    },
+{
+      coltype: 'string',
       prop: 'gwh',
       label: '岗位号',
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+    },
+	{
+      coltype: 'list',
+      prop: 'gwh',
+      label: '岗位名称',
       headeralign: 'center',
       align: 'center',
       width: 150,

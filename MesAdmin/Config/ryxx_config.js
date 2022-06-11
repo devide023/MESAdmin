@@ -84,6 +84,7 @@
       label: '账号',
       headeralign: 'center',
       align: 'center',
+	  sortable:true,
       width: 100,
     }, {
       coltype: 'string',

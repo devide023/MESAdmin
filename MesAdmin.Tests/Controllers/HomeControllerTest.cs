@@ -11,9 +11,10 @@ namespace MesAdmin.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            Workbook wk = new Workbook(@"D:\DeskTop\gwzd.xlsx");
-            Cells cells = wk.Worksheets[0].Cells;
-            System.Data.DataTable dataTable1 = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn);
+            for (int i = 0; i < 5; i++)
+            {
+               var token = new ZDToolHelper.JWTHelper().CreateToken();
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace ZDMesServices.LBJ.DAOJU
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select base_dbrjzx.*, (select dblx from base_dbxx where dbh = base_dbrjzx.dbh) as dblx, round((rjdqsm / rjbzsm) * 100, 2) as rjzt ");
+                sql.Append("select base_dbrjzx.*, (select dblx from base_dbxx where dbh = base_dbrjzx.dbh and rownum < 2) as dblx, round((rjdqsm / rjbzsm) * 100, 2) as rjzt ");
                 sql.Append(" from base_dbrjzx where 1=1 ");
 
                 StringBuilder sql_cnt = new StringBuilder();

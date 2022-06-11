@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesInterceptor;
 using ZDMesInterceptor.LBJ;
 using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesServices.LBJ.ImportData;
@@ -26,6 +27,8 @@ namespace ZDMesModules.LBJ
             //注册拦截器
             builder.Register(c => new CUDLogger(LBJConstr));
             builder.Register(c => new ImportLog(LBJConstr));
+            builder.Register(c => new DaoJuLog(LBJConstr));
+            builder.Register(c => new UserLog(LBJConstr));
             var baseinfo_module_config = new ConfigurationBuilder();
             baseinfo_module_config.AddJsonFile("LBJ_baseinfo_module_config.json");
             // Register the ConfigurationModule with Autofac.

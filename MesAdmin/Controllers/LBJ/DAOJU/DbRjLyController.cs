@@ -54,6 +54,25 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             {
             }
         }
+        [HttpPost,Route("search_dbrjzx")]
+        public IHttpActionResult Search_DbRjZx(sys_dbrjzx_form form)
+        {
+            try
+            {
+                var list = _gxservice.Search_DbRjZx(form);
+                return Json(new sys_search_result()
+                {
+                    code = 1,
+                    msg = "ok",
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpPost,Route("dbrjgx")]
         public IHttpActionResult Get_DbrjgxList(List<string> dbh)
         {
@@ -69,7 +88,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             }
         }
         /// <summary>
-        /// 首次领用
+        /// 刀柄刃具首次领用
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
@@ -158,11 +177,11 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             }
         }
         [HttpGet, Route("zxbydbh")]
-        public IHttpActionResult GetRjZxByDbh(string dbh)
+        public IHttpActionResult GetRjZxByDbh(string dbh,string scx,string sbbh)
         {
             try
             {
-                var list = _gxservice.GetRjZxByDbh(dbh);
+                var list = _gxservice.GetRjZxByDbh(dbh,scx,sbbh);
                 var rlist = list.Select(t => new { t.dbh, t.sbbh, t.scx }).Distinct().OrderBy(t=>t.scx).ThenBy(t=>t.sbbh).ThenBy(t=>t.dbh);
                 return Json(new { code = 1, msg = "ok", list = rlist });
             }

@@ -83,6 +83,7 @@
     <Compile Include="LBJ\lbj_qms_4mbhd.cs" />
     <Compile Include="LBJ\pp_zpjh.cs" />
     <Compile Include="LBJ\sys_dbrjly.cs" />
+    <Compile Include="LBJ\sys_dbrjzx_form.cs" />
     <Compile Include="LBJ\sys_dbrj_bgly_form.cs" />
     <Compile Include="LBJ\sys_db_rj.cs" />
     <Compile Include="LBJ\sys_import_log_config.cs" />

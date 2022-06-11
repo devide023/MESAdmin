@@ -73,7 +73,8 @@
       label: '生产线',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 110,
+	  sortable:true,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
@@ -86,13 +87,15 @@
       label: '技能编号',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 120,
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'usercode',
 	  dbprop:'user_code',
       label: '账号',
-	  width:80,
+	  sortable:true,
+	  width:110,
       headeralign: 'center',
       align: 'center',
       suggest: function (key, cb) {

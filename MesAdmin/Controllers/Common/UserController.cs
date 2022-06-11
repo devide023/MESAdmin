@@ -202,5 +202,34 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
+        [HttpPost,Route("resettoken")]
+        public IHttpActionResult ResetToken(mes_user_entity entity)
+        {
+            try
+            {
+                var ret = _user.ReSetToken(entity.id);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "重置Token成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "重置Token失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

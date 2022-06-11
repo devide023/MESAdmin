@@ -81,6 +81,10 @@ namespace ZDMesModels.LBJ
         /// 刃具最后刃磨时间 
         ///</summary>
          public DateTime? rjzhrmsj { get; set; }
+        /// <summary>
+        /// 刃具刃磨人
+        /// </summary>
+        public string rjrmr { get; set; }
 
         public string gwh { get; set; }
         public int cxz { get; set; }

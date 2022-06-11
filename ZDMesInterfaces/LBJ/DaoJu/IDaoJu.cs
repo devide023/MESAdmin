@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Autofac.Extras.DynamicProxy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesInterceptor.LBJ;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 namespace ZDMesInterfaces.LBJ.DaoJu
 {
+    [Intercept(typeof(DaoJuLog))]
     public interface IDaoJu
     {
         /// <summary>
@@ -52,7 +55,7 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <returns></returns>
         IEnumerable<base_dbxx> GetDbxxBySbbh(string sbbh);
         /// <summary>
-        /// 刀柄领用
+        /// 刀柄领用，2022-06-03
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
@@ -76,11 +79,17 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <returns></returns>
         bool UnInstallRjXx(List<int> zxids);
         /// <summary>
+        /// 生产线，设备编号，刀柄号查询刀柄刃具在线信息
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        IEnumerable<base_dbrjzx> Search_DbRjZx(sys_dbrjzx_form form);
+        /// <summary>
         /// 刀柄号查刃具在线
         /// </summary>
         /// <param name="dbh"></param>
         /// <returns></returns>
-        IEnumerable<base_dbrjzx> GetRjZxByDbh(string dbh);
+        IEnumerable<base_dbrjzx> GetRjZxByDbh(string dbh, string scx, string sbbh);
         /// <summary>
         /// 根据刀柄号选择刃具类型
         /// </summary>
@@ -100,7 +109,7 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <returns></returns>
         bool ZxRjChange(List<base_dbrjzx> list);
         /// <summary>
-        /// 更换刀柄刃具
+        /// 更换刀柄刃具 2022-06-03
         /// </summary>
         /// <param name="from"></param>
         /// <returns></returns>

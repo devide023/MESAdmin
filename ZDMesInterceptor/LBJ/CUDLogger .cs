@@ -19,6 +19,9 @@ using ZDMesModels;
 using System.Text;
 namespace ZDMesInterceptor.LBJ
 {
+    /// <summary>
+    /// 基础增、删、改日志
+    /// </summary>
     public class CUDLogger : IInterceptor
     {
         private mes_oper_log updatelog = new mes_oper_log();
