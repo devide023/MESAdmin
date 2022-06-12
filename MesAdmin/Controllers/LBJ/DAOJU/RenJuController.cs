@@ -135,8 +135,124 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                 throw;
             }
         }
+        [HttpGet, Route("readxls_by_replace")]
+        public IHttpActionResult ReadTempFile_Replace(string fileid)
+        {
+            try
+            {
+                List<base_rjxx> list = new List<base_rjxx>();
+                list = ReadData(fileid);
+                var ret = _impservice.ReaplaceImportData(list);
+                if (ret.oklist.Count == list.Count)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = $"成功导入数据{list.Count()}条"
+                    });
+                }
+                else if (ret.dellist.Count > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 2,
+                        msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,替换{ret.dellist.Count}条"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = $"数据导入失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls_by_zh")]
+        public IHttpActionResult ReadTempFile_ZH(string fileid)
+        {
+            try
+            {
+                List<base_rjxx> list = new List<base_rjxx>();
+                list = ReadData(fileid);
+                var ret = _impservice.NewImportData(list);
+                if (ret.oklist.Count == list.Count)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = $"成功导入数据{list.Count()}条"
+                    });
+                }
+                else if (ret.orginallist.Count > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 2,
+                        msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,更新{ret.orginallist.Count}条"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = $"数据导入失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet, Route("readxls")]
         public IHttpActionResult ReadTempFile(string fileid)
+        {
+            try
+            {
+                List<base_rjxx> list = new List<base_rjxx>();
+                list = ReadData(fileid);
+                var ret = _impservice.NewImportData(list);
+                if (ret.oklist.Count == list.Count)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = $"成功导入数据{list.Count()}条"
+                    });
+                }
+                else if (ret.repeatlist.Count > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 2,
+                        msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = $"数据导入失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private List<base_rjxx> ReadData(string fileid)
         {
             string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
             FileInfo finfo = new FileInfo(filepath);
@@ -156,41 +272,13 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                             gcdm = item[0].ToString(),
                             rjlx = item[1].ToString(),
                             rjmc = item[2].ToString(),
-                            rjbzsm=Convert.ToInt32(item[3].ToString()),
+                            rjbzsm = Convert.ToInt32(item[3].ToString()),
                             rjxxbz = item[4].ToString()
                         });
                     }
-                    var ret = _impservice.NewImportData(list);
-                    finfo.Delete();
-                    if (ret.oklist.Count == list.Count)
-                    {
-                        return Json(new sys_result()
-                        {
-                            code = 1,
-                            msg = $"成功导入数据{list.Count()}条"
-                        });
-                    }
-                    else if(ret.repeatlist.Count>0)
-                    {
-                        return Json(new sys_result()
-                        {
-                            code = 2,
-                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
-                        });
-                    }
-                    else
-                    {
-                        return Json(new sys_result()
-                        {
-                            code = 0,
-                            msg = $"数据导入失败"
-                        });
-                    }
                 }
-                else
-                {
-                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
-                }
+                finfo.Delete();
+                return list;
             }
             catch (Exception)
             {

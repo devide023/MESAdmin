@@ -1,0 +1,66 @@
+[
+  {
+    "tablename": "base_dbxx",
+    "xinzeng": [ "dbh" ],
+    "replace": [ "dbh" ],
+    "zhonghe": [ "dbh" ],
+    "updatecol": [ "dbmc", "dblx", "dbzt", "bz" ]
+  },
+  {
+    "tablename": "base_rjxx",
+    "xinzeng": [ "rjlx" ],
+    "replace": [ "rjlx" ],
+    "zhonghe": [ "rjlx", "rjbzsm" ],
+    "updatecol": [ "rjmc", "rjbzsm", "bz" ]
+
+  },
+  {
+    "tablename": "base_dbrjgx",
+    "xinzeng": [ "dbh", "cpzt", "djlx" ],
+    "replace": [ "cpzt" ],
+    "zhonghe": [ "dbh", "cpzt", "djlx" ],
+    "updatecol": [ "dbh", "cpzt", "djlx" ]
+  },
+  {
+    "tablename": "base_dbrjzx",
+    "xinzeng": [ "scx", "dbh", "sbbh", "rjlx" ],
+    "replace": [ "scx" ],
+    "zhonghe": [ "scx", "dbh", "sbbh", "rjlx" ],
+    "updatecol": [ "rjlyr", "dblyr" ]
+  },
+  {
+    "tablename": "zxjc_ryxx",
+    "xinzeng": [ "user_code" ],
+    "replace": [ "user_code" ],
+    "zhonghe": [ "user_code" ],
+    "updatecol": [ "scx", "rylx", "gwh", "bzxx", "ryxb", "csrq", "rsrq" ]
+  },
+  {
+    "tablename": "zxjc_ryxx_jn",
+    "xinzeng": [ "user_code", "scx", "gwh" ],
+    "replace": [ "user_code" ],
+    "zhonghe": [ "user_code", "scx", "gwh" ],
+    "updatecol": [ "jnxx", "jnfl", "jnsj", "jnsld" ]
+  },
+  {
+    "tablename": "zxjc_jcgl",
+    "xinzeng": [ "user_code", "scx", "gwh", "fsrq" ],
+    "replace": [],
+    "zhonghe": [],
+    "updatecol": []
+  },
+  {
+    "tablename": "base_sbwb",
+    "xinzeng": [ "scx", "gwh","wbxx" ],
+    "replace": [ "scx", "gwh"],
+    "zhonghe": [ "scx", "gwh", "wbxx" ],
+    "updatecol": [ "scx", "gwh", "wbxx","bz" ]
+  },
+  {
+    "tablename": "zxjc_djgw",
+    "xinzeng": [ "scx", "gwh", "djxx" ],
+    "replace": [ "scx", "gwh" ],
+    "zhonghe": [ "scx", "gwh","djno"],
+    "updatecol": [ "scx", "gwh", "djno", "djxx","status_no" ]
+  }
+]

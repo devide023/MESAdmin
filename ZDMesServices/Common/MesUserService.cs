@@ -219,13 +219,6 @@ namespace ZDMesServices.Common
         {
             try
             {
-                StringBuilder sql = new StringBuilder();
-                sql.Append(" declare \n");
-                sql.Append(" begin \n");
-                sql.Append(" delete from mes_user_role where userid in :userid; \n");
-                sql.Append(" insert into mes_user_role(userid,roleid) values (:userid,:roleid); \n");
-                sql.Append(" commit; \n");
-                sql.Append(" end;\n");
                 List<dynamic> list = new List<dynamic>();
                 foreach (var item in roleids)
                 {
@@ -233,7 +226,29 @@ namespace ZDMesServices.Common
                 }
                 using (var db = new OracleConnection(ConString))
                 {
-                    return db.Execute(sql.ToString(), list) > 0;
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                db.Execute("delete from mes_user_role where userid in :userid", new { userid = userid }, trans);
+                                db.Execute("insert into mes_user_role(userid,roleid) values (:userid,:roleid)", list, trans);
+                                trans.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)

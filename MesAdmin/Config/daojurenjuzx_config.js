@@ -48,12 +48,18 @@
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
         } else if (res.code === 0) {
-          this.$message.error(res.msg);
+          _this.$message.error(res.msg);
         }
       });
     },
-    import_by_replace(_this, res) {},
-    import_by_zh(_this, res) {},
+    import_by_replace(_this, res) {
+		_this.$loading().close();
+		_this.$message.error('暂不支持替换导入！');
+	},
+    import_by_zh(_this, res) {
+		_this.$loading().close();
+		_this.$message.error('暂不支持综合导入！');
+	},
   },
   pagefuns: {
     rjxz_handle: function () {
@@ -173,6 +179,7 @@
       label: '设备名称',
       prop: 'basesbxx',
       subprop: 'sbmc',
+	  dbprop:'td.sbmc',
       headeralign: 'center',
       align: 'center',
       overflowtooltip: true,
@@ -189,6 +196,7 @@
       label: '刀柄类型',
       prop: 'basedbxx',
       subprop: 'dblx',
+	  dbprop:'tb.dblx',
       headeralign: 'center',
       align: 'center',
       overflowtooltip: true,
@@ -239,6 +247,7 @@
       align: 'center',
       width: 100,
       sortable: true,
+	  searchable:false,
     }, {
       coltype: 'string',
       label: '领用人',

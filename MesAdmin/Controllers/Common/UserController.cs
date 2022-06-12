@@ -96,8 +96,22 @@ namespace MesAdmin.Controllers.Common
         {
             try
             {
-                var ret = _userservice.Modify(entitys);
-                if (ret)
+                List<mes_user_entity> retlist = new List<mes_user_entity>();
+                foreach (var item in entitys)
+                {
+                    List<Int32> roleids = new List<int>();
+                    item.role.ForEach(i => roleids.Add(Convert.ToInt32(i)));
+                    var isok = _userservice.Modify(item);
+                    if (isok)
+                    {
+                       var ok =  _user.Save_User_Roles(item.id, roleids);
+                        if (ok)
+                        {
+                            retlist.Add(item);
+                        }
+                    }
+                }
+                if (retlist.Count == entitys.Count)
                 {
                     return Json(new sys_result()
                     {

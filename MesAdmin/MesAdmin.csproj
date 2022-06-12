@@ -436,7 +436,9 @@
     </Content>
     <Content Include="Config\jtfp_config.js.bak" />
     <Content Include="Config\rjsmxh_config.js.bak" />
-    <Content Include="Import_Log_Config.json" />
+    <Content Include="Import_Config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>

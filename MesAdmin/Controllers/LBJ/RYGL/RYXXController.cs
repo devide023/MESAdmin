@@ -15,18 +15,20 @@ using System.Web;
 using ZDMesInterfaces.LBJ.RyMgr;
 using System.Data;
 using Aspose.Cells;
-
+using ZDMesInterfaces.LBJ.ImportData;
 namespace MesAdmin.Controllers.LBJ.RYGL
 {
     [RoutePrefix("api/lbj/ryxx")]
     public class RYXXController : ApiController
     {
         private IDbOperate<zxjc_ryxx> _ryxxservice;
+        private IImportData<zxjc_ryxx> _importservice;
         private IRyXx _ryxx;
         private int i = 1;
-        public RYXXController(IDbOperate<zxjc_ryxx> ryxxservice,IRyXx ryxx)
+        public RYXXController(IDbOperate<zxjc_ryxx> ryxxservice,IRyXx ryxx,IImportData<zxjc_ryxx> importservice)
         {
             _ryxxservice = ryxxservice;
+            _importservice = importservice;
             _ryxx = ryxx;
         }
 
@@ -169,6 +171,102 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 throw;
             }
         }
+        [HttpGet, Route("readxls_by_zh")]
+        public IHttpActionResult ReadTempFile_By_Zh(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            FileInfo finfo = new FileInfo(filepath);
+            try
+            {
+                List<zxjc_ryxx> list = new List<zxjc_ryxx>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    list = ReadData(fileid);
+                    var ret = _importservice.ZhImportData(list);
+                    if (ret.oklist.Count == list.Count)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.dellist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，替换{ret.dellist.Count}条"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                finfo.Delete();
+                throw;
+            }
+        }
+        [HttpGet, Route("readxls_by_replace")]
+        public IHttpActionResult ReadTempFile_By_Replace(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            FileInfo finfo = new FileInfo(filepath);
+            try
+            {
+                List<zxjc_ryxx> list = new List<zxjc_ryxx>();
+                if (!string.IsNullOrEmpty(fileid))
+                {
+                    list = ReadData(fileid);
+                    var ret = _importservice.ReaplaceImportData(list);
+                    if (ret.oklist.Count == list.Count)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.dellist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，替换{ret.dellist.Count}条"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
+                }
+            }
+            catch (Exception)
+            {
+                finfo.Delete();
+                throw;
+            }
+        }
         [HttpGet,Route("readxls")]
         public IHttpActionResult ReadTempFile(string fileid)
         {
@@ -209,20 +307,77 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                         }); ;
                         no++;
                     }
-                    var ret = _ryxxservice.Add(list);
-                    if (ret > 0)
+                    var ret = _importservice.NewImportData(list);
+                    if (ret.oklist.Count == list.Count)
                     {
-                        return Json(new { code = 1, msg = "数据导入成功" });
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.repeatlist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，重复{ret.repeatlist.Count}条"
+                        });
                     }
                     else
                     {
-                        return Json(new { code = 0, msg = "数据导入失败" });
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
                     }
                 }
                 else
                 {
                     return Json(new { code = 0, msg = "读取文件失败,请确认文件是否上传成功" });
                 }
+            }
+            catch (Exception)
+            {
+                finfo.Delete();
+                throw;
+            }
+        }
+
+        private List<zxjc_ryxx> ReadData(string fileid)
+        {
+            string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+            FileInfo finfo = new FileInfo(filepath);
+            List<zxjc_ryxx> list = new List<zxjc_ryxx>();
+            try
+            {
+                Workbook wk = new Workbook(filepath);
+                Cells cells = wk.Worksheets[0].Cells;
+                DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                foreach (DataRow item in dataTable.Rows)
+                {
+                    DateTime rsrq = DateTime.Today;
+                    DateTime csrq = DateTime.Today.AddYears(-18);
+                    DateTime.TryParse(item[11].ToString(), out rsrq);
+                    DateTime.TryParse(item[10].ToString(), out csrq);
+                    list.Add(new zxjc_ryxx()
+                    {
+                        gcdm = item[0].ToString(),
+                        scx = item[1].ToString(),
+                        usercode = item[2].ToString(),
+                        username = item[3].ToString(),
+                        ryxb = item[4].ToString(),
+                        rylx = item[5].ToString(),
+                        gwh = item[6].ToString(),
+                        bzxx = item[7].ToString(),
+                        hgsg = "Y",
+                        rsrq = rsrq,
+                        csrq = csrq
+                    }); 
+                }
+                finfo.Delete();
+                return list;
             }
             catch (Exception)
             {

@@ -1,6 +1,7 @@
 ﻿{
   isgradequery: true,
   isoperate: false,
+  isfresh: true,
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
@@ -8,6 +9,9 @@
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
+	download_template_file:function(){
+		window.open('http://172.16.201.125:7002/template/lbj/奖惩数据.xlsx');
+	},
     select_usercode_handle: function () {},
     scx_field_change_handle(collist, item, row) {
       var gwcol = collist.filter(i => i.prop === 'gwh');
@@ -21,6 +25,11 @@
     },
   },
   isbatoperate: true,
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   batoperate: {
     import_by_add: function (vm, res) {
       if (res.files.length > 0) {
@@ -56,12 +65,18 @@
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
         } else if (res.code === 0) {
-          this.$message.error(res.msg);
+          _this.$message.error(res.msg);
         }
       });
     },
-    import_by_replace(_this, res) {},
-    import_by_zh(_this, res) {},
+    import_by_replace(_this, res) {
+		_this.$loading().close();
+		_this.$message.error('暂不支持批量替换导入');
+	},
+    import_by_zh(_this, res) {
+		_this.$loading().close();
+		_this.$message.error('暂不支持综合导入');
+	},
   },
   form: {
     gcdm: '9902',

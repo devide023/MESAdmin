@@ -50,18 +50,30 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             }
         }
         [HttpPost, Route("add")]
-        public IHttpActionResult Add(List<base_dbxx> entitys)
+        public IHttpActionResult Add(List<base_dbxx> entitys )
         {
             try
             {
-                int ret = _dbxxservice.Add(entitys);
+                IEnumerable<base_dbxx> notoklist = new List<base_dbxx>();
+                int ret = _dbxxservice.Add(entitys,out notoklist);
                 if (ret > 0)
                 {
-                    return Json(new sys_result()
+                    if (notoklist.Count() == 0)
                     {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"部分数据保存成功,重复{notoklist.Count()}条"
+                        });
+                    }
                 }
                 else
                 {

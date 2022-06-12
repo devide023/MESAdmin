@@ -52,7 +52,7 @@
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
         } else if (res.code === 0) {
-          this.$message.error(res.msg);
+          _this.$message.error(res.msg);
         }
       });
     },

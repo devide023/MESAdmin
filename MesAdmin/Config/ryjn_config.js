@@ -1,6 +1,7 @@
 ﻿{
   isgradequery: true,
   isoperate: false,
+  isfresh: true,
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
@@ -8,10 +9,18 @@
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
+	download_template_file:function(){
+		window.open('http://172.16.201.125:7002/template/lbj/员工技能信息.xlsx');
+	},
     select_usercode_handle: function () {
       console.log(this.$basepage);
     }
-  },
+  },  
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   isbatoperate: true,
   batoperate: {
     import_by_add: function (vm, res) {
@@ -48,12 +57,54 @@
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
         } else if (res.code === 0) {
-          this.$message.error(res.msg);
+          _this.$message.error(res.msg);
         }
       });
     },
-    import_by_replace(_this, res) {},
-    import_by_zh(_this, res) {},
+    import_by_replace(_this, res) {
+		if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          _this.$request('get', '/lbj/ryjn/readxls_by_replace', {
+            fileid: fid
+          }).then(function (result) {
+            _this.$loading().close();
+            if (result.code === 1) {
+              _this.$message.success(result.msg);
+            } else if (result.code === 0) {
+              _this.$message.error(result.msg);
+            }
+            _this.getlist(_this.queryform);
+          });
+        } catch (error) {
+          _this.$message.error(error);
+        }
+      } else {
+        _this.$loading().close();
+      }
+	},
+    import_by_zh(_this, res) {
+		if (res.files.length > 0) {
+        var fid = res.files[0].fileid;
+        try {
+          _this.$request('get', '/lbj/ryjn/readxls_by_zh', {
+            fileid: fid
+          }).then(function (result) {
+            _this.$loading().close();
+            if (result.code === 1) {
+              _this.$message.success(result.msg);
+            } else if (result.code === 0) {
+              _this.$message.error(result.msg);
+            }
+            _this.getlist(_this.queryform);
+          });
+        } catch (error) {
+          _this.$message.error(error);
+        }
+      } else {
+        _this.$loading().close();
+      }
+	},
   },
   fields: [{
       coltype: 'list',
