@@ -25,14 +25,11 @@ namespace ZDMesServices.LBJ.SMJJK
                 using (var db = new OracleConnection(ConString))
                 {
                     StringBuilder sql_cnt = new StringBuilder();
-                    sql_cnt.Append("select count(1) from ZXJC_SMLS t where 1=1 ");
+                    sql_cnt.Append("select count(*) from ZXJC_SMLS t where 1=1 ");
                     StringBuilder sql = new StringBuilder();
-                    sql.Append(@"SELECT t1.*, (CASE WHEN (t1.SMJBS = '首件' AND t2.SMJBS = '末件') OR ( t2.SMJBS = '首件' AND t1.SMJBS = '末件') THEN 'Y'
-									                      ELSE 'N' 
-									                      END) AS SFBH
-                                       FROM ZXJC_SMLS t1
-                                       LEFT JOIN ZXJC_SMLS t2 ON t1.SCX = t2.SCX AND t1.BC = t2.BC AND t1.JCSJ != t2.JCSJ");
-                    sql.Append("");
+                    sql.Append("SELECT rowid as rid ,gcdm, scx, status_no as statusno,(select wlmc from base_wlxx where wlbm = ZXJC_SMLS.status_no and rownum < 2) as wlmc, engine_no as engineno, order_no as orderno, bc,smjbs, cpzt, jczpdz, zpjcjg, jcr, jcsj, szbjg, szbry, szbjcsj, lrsj, wcsj, scbz,'N' as sfbh");
+                    sql.Append(" FROM ZXJC_SMLS where 1=1 ");
+                  
                     if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                     {
                         sql.Append(" and " + parm.sqlexp);
@@ -48,6 +45,10 @@ namespace ZDMesServices.LBJ.SMJJK
                         {
                             sql.Append($" order by {parm.default_order_colname} desc ");
                         }
+                        else
+                        {
+                            sql.Append($" order by lrsj desc ");
+                        }
                     }
                     try
                     {
@@ -60,6 +61,33 @@ namespace ZDMesServices.LBJ.SMJJK
                         throw;
                     }
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public override bool Modify(IEnumerable<zxjc_smls> entitys)
+        {
+            try
+            {
+                List<zxjc_smls> oklist = new List<zxjc_smls>();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update zxjc_smls set jczpdz = :jczpdz where rowid = :rid");
+                using (var db = new OracleConnection(ConString))
+                {
+                    foreach (var item in entitys)
+                    {
+                        int ret = db.Execute(sql.ToString(), item);
+                        if (ret > 0)
+                        {
+                            oklist.Add(item);
+                        }
+                    }
+                }
+                return oklist.Count == entitys.Count();
             }
             catch (Exception)
             {

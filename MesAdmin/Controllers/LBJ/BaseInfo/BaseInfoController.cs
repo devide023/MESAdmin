@@ -22,7 +22,7 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
         {
             try
             {
-                var list = _baseinfo.GetGCXX().Select(t => new { label = t.gcmc, value = t.gcdm });
+                var list = _baseinfo.GetGCXX().Where(t=>t.gcdm =="9902").Select(t => new { label = t.gcmc, value = t.gcdm });
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)
@@ -58,6 +58,12 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
 
                 throw;
             }
+        }
+        [HttpGet, Route("scx_gwh")]
+        public IHttpActionResult GetGwhByScx(string scx)
+        {
+            var list = _baseinfo.GetGwListByScx(scx).Select(t => new { label = t.gwmc, value = t.gwh }).OrderBy(t => t.value);
+            return Json(new { code = 1, msg = "ok", list = list });
         }
         [HttpGet, Route("gwzd")]
         public IHttpActionResult Gwzd()

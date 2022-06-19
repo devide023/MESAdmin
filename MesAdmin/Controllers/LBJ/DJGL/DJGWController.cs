@@ -243,7 +243,7 @@ namespace MesAdmin.Controllers.LBJ.DJGL
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
                     string token = ZDToolHelper.TokenHelper.GetToken;
                     int maxno = _djgw.MaxDjNo();
                     foreach (DataRow item in dataTable.Rows)
@@ -335,7 +335,7 @@ namespace MesAdmin.Controllers.LBJ.DJGL
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
                     foreach (DataRow item in dataTable.Rows)
                     {
                         list.Add(new zxjc_djgw()

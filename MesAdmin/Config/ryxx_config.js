@@ -127,6 +127,17 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
+	  change_fn_name: function (_this, collist, val, row) {
+        row.gwh = '';
+        _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
+          if (res.code === 1) {
+            row.gwhoptions = res.list;
+          }
+        });
+      },
+	  clear_fn_name:function(_this,row){
+		  row.gwh = '';
+	  },
       options: []
     }, {
       coltype: 'string',
@@ -199,7 +210,8 @@
         method: 'get',
         url: '/lbj/baseinfo/gwzd'
       },
-      options: []
+      options: [],
+	  relation:'gwhoptions',
     }, {
       coltype: 'list',
       prop: 'bzxx',
@@ -230,16 +242,16 @@
       label: '照片',
       headeralign: 'center',
       align: 'center',
-      action: 'http://localhost:52655/api/upload/image',
+      action: 'http://172.16.201.125:7002/api/upload/image',
       accept: '.jpg,.jpeg,.png',
       before_upload: function (file) {
         var isJPG = file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png";
-        var isLt2M = file.size / 1024 / 1024 < 2;
+        var isLt2M = file.size / 1024 / 1024 < 5;
         if (!isJPG) {
           this.$message.error("上传头像图片只能是JPG,PNG格式!");
         }
         if (!isLt2M) {
-          this.$message.error("上传头像图片大小不能超过 2MB!");
+          this.$message.error("上传头像图片大小不能超过 5MB!");
         }
         return isJPG && isLt2M;
       },
@@ -296,6 +308,7 @@
     csrq: '',
     rsrq: '',
     scbz: 'N',
+	gwhoptions:[],
     isdb: false,
     isedit: true,
 

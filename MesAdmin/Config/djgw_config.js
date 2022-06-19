@@ -125,6 +125,17 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
+	  change_fn_name: function (_this, collist, val, row) {
+        row.gwh = '';
+        _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
+          if (res.code === 1) {
+            row.gwhoptions = res.list;
+          }
+        });
+      },
+	  clear_fn_name:function(_this,row){
+		  row.gwh = '';
+	  },
       options: []
     }, {
       coltype: 'string',
@@ -134,14 +145,6 @@
       align: 'left',
       width: 80,
       overflowtooltip: true,
-    },
-{
-      coltype: 'string',
-      prop: 'gwh',
-      label: '岗位号',
-      headeralign: 'center',
-      align: 'center',
-      width: 80,
     },
 	{
       coltype: 'list',
@@ -154,7 +157,8 @@
         method: 'get',
         url: '/lbj/baseinfo/gwzd'
       },
-      options: []
+      options: [],
+	  relation:'gwhoptions',
     }, {
       coltype: 'string',
       prop: 'statusno',
@@ -206,6 +210,7 @@
     scbz: 'N',
     lrr: '',
     lrsj: '',
+	gwhoptions:[],
     isdb: false,
     isedit: true,
   },

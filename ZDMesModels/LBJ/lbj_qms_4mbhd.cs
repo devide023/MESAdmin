@@ -201,12 +201,22 @@ namespace ZDMesModels.LBJ
         /// 维修设备确认 
         ///</summary>
          public string wxsbryqr { get; set; }
+        /// <summary>
+        /// 触发类型
+        /// </summary>
+        public string trigtype { get; set; }
+        /// <summary>
+        /// 变化类型
+        /// </summary>
+        public string changetype { get; set; }
     }
     public class lbj_qms_4mbhd_mapper : ClassMapper<lbj_qms_4mbhd>
     {
         public lbj_qms_4mbhd_mapper()
         {
             Map(t => t.id).Key(KeyType.Assigned);
+            Map(t => t.trigtype).Column("trig_type");
+            Map(t => t.changetype).Column("change_type");
             AutoMap();
         }
     }

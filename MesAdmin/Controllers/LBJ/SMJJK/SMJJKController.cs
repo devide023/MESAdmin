@@ -35,5 +35,34 @@ namespace MesAdmin.Controllers.LBJ.SMJJK
                 list = list
             });
         }
+        [HttpPost,Route("edit")]
+        public IHttpActionResult Edit(List<zxjc_smls> entitys)
+        {
+            try
+            {
+                var ret = _smjjkservice.Modify(entitys);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "数据修改成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "数据修改失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

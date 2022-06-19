@@ -91,6 +91,7 @@ namespace ZDMesInterceptor.LBJ
                         updatelog.czrid = userinfo.id;
                         updatelog.czrq = DateTime.Now;
                         updatelog.lx = "update";
+                        updatelog.name = "";
                         updatelog.path = url;
                         DynamicParameters p = new DynamicParameters();
                         if (invocation.Arguments[0].GetType().Name.Contains("List"))

@@ -97,6 +97,9 @@ namespace ZDMesServices.Common
                         Regex reg = new Regex(@"(?<fields>fields:[\w\W]*])");
                         var fieldsinfo = reg.Match(jsstr).Groups["fields"].Value;
                         fieldsinfo = fieldsinfo.Replace("fields:", "").Replace(" ", "");
+                        Regex regfn = new Regex(@":function[\w\W]*?},");
+                        fieldsinfo = regfn.Replace(fieldsinfo, ":##");
+                        fieldsinfo = fieldsinfo.Replace("##{", "'',},{").Replace("##","'',");
                         return JsonConvert.DeserializeObject<List<sys_field_info>>(fieldsinfo);
                     }
                     else
@@ -116,21 +119,35 @@ namespace ZDMesServices.Common
         {
             try
             {
-
-                StringBuilder sql = new StringBuilder();
-                sql.Append("select distinct * from (select t1.fnname,t1.btntxt,t1.btntype,t1.icon ");
-                sql.Append("  FROM   mes_menu_entity t1, mes_role_menu t2, mes_user_role t3, mes_user_entity t4 ");
-                sql.Append("  where  t1.id = t2.menuid ");
-                sql.Append("  and    t2.roleid = t2.roleid ");
-                sql.Append("  and    t3.userid = t4.id ");
-                sql.Append("  and    t1.menutype = '03' ");
-                sql.Append("  and    t1.pid = ");
-                sql.Append("         (select id from mes_menu_entity where routepath = :route ) ");
-                sql.Append("  and t4.token = :token order by t1.seq asc,t1.id asc )");
+                List<string> permis_list = new List<string>();
+                StringBuilder menusql = new StringBuilder();
+                menusql.Append("select id from mes_menu_entity where routepath = :route");
+                StringBuilder roleidsql = new StringBuilder();
+                roleidsql.Append("select distinct roleid FROM mes_user_role ta,mes_user_entity tb where ta.userid = tb.id and tb.token = :token ");
                 using (var db = new OracleConnection(ConString))
                 {
-                    var q = db.Query<sys_pagefn_info>(sql.ToString(), new { route = route, token = token });
-                    return q.ToList();
+                    var menuids = db.Query<int>(menusql.ToString(), new { route = route });
+                    var roleids = db.Query<int>(roleidsql.ToString(), new { token = token });
+                    var permis = db.Query<string>("select permis FROM mes_role_menu where menuid in :menuids and roleid in :roleids ", new { menuids = menuids, roleids = roleids });
+                    foreach (var item in permis)
+                    {
+                        var p = JsonConvert.DeserializeObject<sys_menu_permis>(item);
+                        if (p.funs.Count > 0)
+                        {
+                            permis_list.AddRange(p.funs);
+                        }
+                    }
+                    if (permis_list.Distinct().Count() > 0)
+                    {
+                        var q = db.Query<sys_pagefn_info>("select * FROM mes_menu_entity where pid in :menuid and menutype = '03' and name in :permis ", new { menuid = menuids, permis = permis_list.Distinct() });
+                        return q.ToList();
+                    }
+                    else
+                    {
+                        //var q = db.Query<sys_pagefn_info>("select * FROM mes_menu_entity where pid in :menuid and menutype = '03' ", new { menuid = menuids });
+                        //return q.ToList();
+                        return new List<sys_pagefn_info>();
+                    }                    
                 }
             }
             catch (Exception)

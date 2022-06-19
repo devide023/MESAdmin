@@ -9,9 +9,9 @@
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     },
-	download_template_file:function(){
-		window.open('http://172.16.201.125:7002/template/lbj/设备维保基础信息.xlsx');
-	}
+    download_template_file: function () {
+      window.open('http://172.16.201.125:7002/template/lbj/维保基础信息.xlsx');
+    }
   },
   bat_btnlist: [{
       btntxt: '模板下载',
@@ -41,7 +41,7 @@
         _this.$loading().close();
       }
     },
-	export_excel(_this) {
+    export_excel(_this) {
       _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
         pageindex: 1,
         pagesize: 65535,
@@ -50,13 +50,13 @@
         if (res.code === 1) {
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
-        } else if(res.code === 0) {
+        } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
       });
     },
     import_by_replace(_this, res) {
-		if (res.files.length > 0) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/wbxx/readxls_by_replace', {
@@ -76,9 +76,9 @@
       } else {
         _this.$loading().close();
       }
-	},
-    import_by_zh(_this,res) {
-		if (res.files.length > 0) {
+    },
+    import_by_zh(_this, res) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/wbxx/readxls_by_zh', {
@@ -98,7 +98,7 @@
       } else {
         _this.$loading().close();
       }
-	},
+    },
   },
   fields: [{
       coltype: 'list',
@@ -111,18 +111,9 @@
         url: '/lbj/baseinfo/gcxx',
       },
       options: [],
-    }, 
-	{
-		coltype: 'string',
-      label: '生产线',
-      prop: 'scx',
-	  headeralign: 'center',
-      align: 'center',
-	  width:80
-	},
-	{
+    }, {
       coltype: 'list',
-      label: '生产线名称',
+      label: '生产线',
       prop: 'scx',
       headeralign: 'center',
       align: 'center',
@@ -130,19 +121,29 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902',
       },
+	  change_fn_name: function (_this, collist, val, row) {
+        row.gwh = '';
+        _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
+          if (res.code === 1) {
+            row.gwhoptions = res.list;
+          }
+        });
+      },
+	  clear_fn_name:function(_this,row){
+		  row.gwh = '';
+	  },
       options: [],
-    }, 
-	{
-		 coltype: 'string',
-      label: '岗位编号',
-      prop: 'gwh',
-	  headeralign: 'center',
+    }, {
+      coltype: 'string',
+      label: '生产线编号',
+      prop: 'scx',
+      headeralign: 'center',
       align: 'center',
-	  width:80,
-	},
-	{
+      width: 100,
+      searchable: false,
+    }, {
       coltype: 'list',
-      label: '岗位名称',
+      label: '岗位',
       prop: 'gwh',
       headeralign: 'center',
       align: 'center',
@@ -151,20 +152,30 @@
         url: '/lbj/baseinfo/gwzd',
       },
       options: [],
+	  relation:'gwhoptions',
+    }, {
+      coltype: 'string',
+      label: '岗位编号',
+      prop: 'gwh',
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+      searchable: false,
     }, {
       coltype: 'int',
       label: '顺序',
-      prop: 'wbsx',
+      prop: 'wbsh',
       headeralign: 'center',
       align: 'center',
-	  width:80,
+      width: 80,
+      searchable: false,
     }, {
       coltype: 'string',
       label: '维保内容',
       prop: 'wbxx',
       headeralign: 'center',
       align: 'left',
-	  
+
     }, {
       coltype: 'string',
       label: '备注',
@@ -193,6 +204,16 @@
       inactivevalue: 'N',
     }, ],
   form: {
+	  gcdm:'9902',
+	  scx:'',
+	  gwh:'',
+	  wbsh:'',
+	  wbxx:'',
+	  bz:'',
+	  lrr:'',
+	  lrsj:'',
+	  scbz:'N',
+	  gwhoptions:[],
     isdb: false,
     isedit: true
   },

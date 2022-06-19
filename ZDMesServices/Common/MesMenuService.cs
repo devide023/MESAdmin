@@ -19,6 +19,91 @@ namespace ZDMesServices.Common
 
         }
 
+        public override int Add(IEnumerable<mes_menu_entity> entitys)
+        {
+            try
+            {
+                List<mes_menu_entity> oklist = new List<mes_menu_entity>();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select count(id) FROM mes_menu_entity where menutype = '02' and routepath = :routepath");
+                StringBuilder sqlfun = new StringBuilder();
+                sqlfun.Append("select count(id) FROM mes_menu_entity where pid = :pid and menutype = '03' and name = :name and fnname = :fnname");
+                StringBuilder sqlcol = new StringBuilder();
+                sqlcol.Append("select count(id) FROM mes_menu_entity where pid=:pid and menutype = '04' and name = :name");
+                var pagelist = entitys.Where(t => t.menutype == "02");
+                var funlist = entitys.Where(t => t.menutype == "03");
+                var collist = entitys.Where(t => t.menutype == "04");
+                using (var db = new  OracleConnection(ConString))
+                {
+                    try
+                    {
+                        InitDB(db);
+                        foreach (var item in pagelist)
+                        {
+                            var cnt = db.ExecuteScalar<int>(sql.ToString(), new { routepath = item.routepath });
+                            if (cnt == 0)
+                            {
+                                Db.Insert<mes_menu_entity>(item);
+                                oklist.Add(item);
+                            }
+                        }
+                        foreach (var item in funlist)
+                        {
+                            var cnt = db.ExecuteScalar<int>(sqlfun.ToString(), new { pid = item.pid , name = item.name, fnname = item.fnname });
+                            if (cnt == 0)
+                            {
+                                Db.Insert<mes_menu_entity>(item);
+                                oklist.Add(item);
+                            }
+                        }
+                        foreach (var item in collist)
+                        {
+                            var cnt = db.ExecuteScalar<int>(sqlcol.ToString(), new { pid = item.pid, name = item.name });
+                            if (cnt == 0)
+                            {
+                                Db.Insert<mes_menu_entity>(item);
+                                oklist.Add(item);
+                            }
+                        }
+                        return oklist.Count;
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                Db.Dispose();
+            }
+        }
+
+        //public override bool Modify(IEnumerable<mes_menu_entity> entitys)
+        //{
+        //    List<mes_menu_entity> oklist = new List<mes_menu_entity>();
+        //    StringBuilder sql = new StringBuilder();
+        //    sql.Append("update mes_menu_entity set code = :code,name=:name,btntxt=:btntxt,menutype=:menutype,fnname=:fnname,btntype=:btntype,icon=:icon,routepath=:routepath,viewpath=:viewpath,seq = :seq,configpath=:configpath,componentname=:componentname where id = :id");
+        //    using (var db = new OracleConnection(ConString))
+        //    {
+        //        foreach (var item in entitys)
+        //        {
+
+        //           int ret = db.Execute(sql.ToString(), item);
+        //            if (ret > 0)
+        //            {
+        //                oklist.Add(item);
+        //            }
+        //        }
+        //        return oklist.Count == entitys.Count();
+        //    }
+        //}
+
         public override IEnumerable<mes_menu_entity> GetList(sys_page parm, out int resultcount)
         {
             using (var db = new OracleConnection(ConString))

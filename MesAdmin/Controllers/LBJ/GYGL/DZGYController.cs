@@ -145,7 +145,7 @@ namespace MesAdmin.Controllers.LBJ.GYGL
                 {
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTable(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
                     foreach (DataRow item in dataTable.Rows)
                     {
                         list.Add(new zxjc_t_dzgy()

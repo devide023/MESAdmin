@@ -3,6 +3,10 @@ using MesAdmin.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web.Mvc;
 using Aspose.Cells;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using ZDMesModels;
+
 namespace MesAdmin.Tests.Controllers
 {
     [TestClass]
@@ -11,9 +15,14 @@ namespace MesAdmin.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            for (int i = 0; i < 5; i++)
+            try
             {
-               var token = new ZDToolHelper.JWTHelper().CreateToken();
+                
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+                throw;
             }
         }
     }

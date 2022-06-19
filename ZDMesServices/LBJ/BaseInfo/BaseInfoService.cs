@@ -393,6 +393,23 @@ namespace ZDMesServices.LBJ.BaseInfo
             }
         }
 
+        public IEnumerable<base_gwzd> GetGwListByScx(string scx)
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    var scxgwlist = db.Query<base_gwzd>("select * from base_gwzd where scx = :scx", new { scx = scx });
+                    return scxgwlist;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<base_gwzd> GetGwXX(string scx)
         {
             try

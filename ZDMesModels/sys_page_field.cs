@@ -12,8 +12,20 @@ namespace ZDMesModels
         public string label { get; set; }
         public string prop { get; set; }
         public string dbprop { get; set; }
+        /// <summary>
+        /// 关联对象属性
+        /// </summary>
+        public string subprop { get; set; }
         public string width { get; set; }
         public bool overflowtooltip { get; set; }
+        /// <summary>
+        /// 是否在下拉搜索中列出
+        /// </summary>
+        public bool searchable { get; set; }
+        /// <summary>
+        /// 是否排序
+        /// </summary>
+        public bool sortable { get; set; }
         public string headeralign { get; set; }
         public string align { get; set; }
         /// <summary>

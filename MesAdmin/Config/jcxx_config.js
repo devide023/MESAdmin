@@ -9,9 +9,9 @@
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
-	download_template_file:function(){
-		window.open('http://172.16.201.125:7002/template/lbj/奖惩数据.xlsx');
-	},
+    download_template_file: function () {
+      window.open('http://172.16.201.125:7002/template/lbj/奖惩数据.xlsx');
+    },
     select_usercode_handle: function () {},
     scx_field_change_handle(collist, item, row) {
       var gwcol = collist.filter(i => i.prop === 'gwh');
@@ -70,13 +70,13 @@
       });
     },
     import_by_replace(_this, res) {
-		_this.$loading().close();
-		_this.$message.error('暂不支持批量替换导入');
-	},
+      _this.$loading().close();
+      _this.$message.error('暂不支持批量替换导入');
+    },
     import_by_zh(_this, res) {
-		_this.$loading().close();
-		_this.$message.error('暂不支持综合导入');
-	},
+      _this.$loading().close();
+      _this.$message.error('暂不支持综合导入');
+    },
   },
   form: {
     gcdm: '9902',
@@ -95,6 +95,7 @@
     bz: '',
     lrr: '',
     lrsj: '',
+    gwhoptions: [],
     isdb: false,
     isedit: true,
   },
@@ -122,7 +123,17 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
-      change_fn_name: 'scx_field_change_handle',
+      change_fn_name: function (_this, collist, val, row) {
+        row.gwh = '';
+        _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
+          if (res.code === 1) {
+            row.gwhoptions = res.list;
+          }
+        });
+      },
+      clear_fn_name: function (_this, row) {
+        row.gwh = '';
+      },
       options: []
     }, {
       coltype: 'string',
@@ -166,7 +177,8 @@
         method: 'get',
         url: '/lbj/baseinfo/gwzd'
       },
-      options: []
+      relation: 'gwhoptions',
+      options: [],
     }, {
       coltype: 'string',
       prop: 'lx',

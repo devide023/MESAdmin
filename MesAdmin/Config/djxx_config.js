@@ -46,6 +46,20 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
+	  change_fn_name: function (_this, collist, val,row) {
+		  row.gwh = '';
+        var gwcol = collist.filter(i => i.prop === 'gwh');
+        _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
+          if (res.code === 1) {
+            if (gwcol) {
+              gwcol[0].choose_options = res.list;
+            }
+          }
+        });
+      },
+	  clear_fn_name:function(_this,row){
+		  row.gwh = '';
+	  },
       options: []
     }, {
       coltype: 'list',
@@ -57,7 +71,8 @@
         method: 'get',
         url: '/lbj/baseinfo/gwzd'
       },
-      options: []
+      options: [],
+	  choose_options:[],
     }, {
       coltype: 'string',
       prop: 'engineno',

@@ -53,12 +53,13 @@
       label: '任务状态',
       headeralign: 'center',
       align: 'center',
-      width: 100,
+      width: 150,
       fixed: 'left',
       overflowtooltip: true,
     }, {
       coltype: 'list',
-      prop: 'trig_type',
+      prop: 'trigtype',
+	  dbprop:'trig_type',
       label: '触发类型',
       headeralign: 'center',
       align: 'center',
@@ -66,35 +67,36 @@
       overflowtooltip: true,
       options: [{
           label: '自动',
-          value: '自动'
+          value: '1'
         }, {
           label: '人工',
-          value: '人工'
+          value: '2'
         }
       ]
     }, {
       coltype: 'list',
-      prop: 'trig_type',
+      prop: 'changetype',
+	  dbprop:'change_type',
       label: '变化点类型',
       headeralign: 'center',
       align: 'center',
-      width: 150,
+      width: 100,
       overflowtooltip: true,
       options: [{
           label: '人员',
-          value: 1
+          value: '1'
         }, {
           label: '刀具',
-          value: 2
+          value: '2'
         }, {
           label: '换产',
-          value: 3
+          value: '3'
         }, {
           label: '程序号变更',
-          value: 4
+          value: '4'
         }, {
           label: 'API数据',
-          value: 5
+          value: '5'
         }
       ]
     }, {
@@ -103,7 +105,7 @@
       label: '产品型号',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 130,
       overflowtooltip: true,
     }, {
       coltype: 'string',

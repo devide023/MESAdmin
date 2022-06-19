@@ -12,6 +12,7 @@ namespace ZDMesModels.LBJ
     /// </summary>
     public class zxjc_smls
     {
+        public string rid { get; set; }
         /// <summary>
         /// 工厂
         /// </summary>
@@ -26,6 +27,10 @@ namespace ZDMesModels.LBJ
         /// 状态码
         /// </summary>
         public string statusno { get; set; }
+        /// <summary>
+        /// 产品名称
+        /// </summary>
+        public string wlmc { get; set; }
 
         /// <summary>
         /// 产品件号
@@ -115,6 +120,8 @@ namespace ZDMesModels.LBJ
             Map(t => t.statusno).Column("status_no");
             Map(t => t.engineno).Column("engine_no");
             Map(t => t.orderno).Column("order_no");
+            Map(t => t.rid).Ignore();
+            Map(t => t.wlmc).Ignore();
             AutoMap();
         }
     }

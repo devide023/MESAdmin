@@ -26,6 +26,7 @@ namespace ZDMesInterfaces.LBJ
         /// <param name="scx"></param>
         /// <returns></returns>
         IEnumerable<base_gwzd> GetGwXX(string scx);
+        IEnumerable<base_gwzd> GetGwListByScx(string scx);
         /// <summary>
         /// 岗位站点信息
         /// </summary>

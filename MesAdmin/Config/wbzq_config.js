@@ -62,12 +62,15 @@
       prop: 'wbsh',
       headeralign: 'center',
       align: 'center',
+	  width:80,
     }, {
       coltype: 'string',
       label: '维保内容',
       prop: 'wbxx',
       headeralign: 'center',
-      align: 'center',
+	  width:180,
+	  overflowtooltip: true,
+      align: 'left',
     }, {
       coltype: 'date',
       label: '计划时间',
