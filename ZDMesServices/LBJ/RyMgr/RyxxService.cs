@@ -12,6 +12,7 @@ using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using Autofac.Extras.DynamicProxy;
 using ZDMesInterceptor.LBJ;
+using ZDMesInterfaces.LBJ;
 
 namespace ZDMesServices.LBJ.RyMgr
 {

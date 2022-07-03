@@ -22,12 +22,12 @@ namespace ZDMesServices.LBJ.DAOJU
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select base_dbrjzx.*, (select dblx from base_dbxx where dbh = base_dbrjzx.dbh and rownum < 2) as dblx, round((rjdqsm / rjbzsm) * 100, 2) as rjzt ");
-                sql.Append(" from base_dbrjzx where 1=1 ");
+                sql.Append("select * from ( select base_dbrjzx.*, (select dblx from base_dbxx where dbh = base_dbrjzx.dbh and rownum < 2) as dblx, round((rjdqsm / rjbzsm) * 100, 2) as rjzt ");
+                sql.Append(" from base_dbrjzx) where 1=1 ");
 
                 StringBuilder sql_cnt = new StringBuilder();
-                sql_cnt.Append("select count(*) from base_dbrjzx where 1=1 ");
-
+                sql_cnt.Append("select count(*) from (select base_dbrjzx.*,(select dblx from base_dbxx where dbh = base_dbrjzx.dbh and rownum < 2) as dblx,round((rjdqsm / rjbzsm) * 100, 2) as rjzt from base_dbrjzx) where 1=1 ");
+                                
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {
                     sql.Append(" and " + parm.sqlexp);

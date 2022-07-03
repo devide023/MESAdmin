@@ -20,92 +20,46 @@ namespace ZDMesServices.LBJ.DAOJU
         {
         }
 
-        //public sys_import_result<base_dbrjgx> NewImportData(List<base_dbrjgx> data)
-        //{
-        //    try
-        //    {
-        //        sys_import_result<base_dbrjgx> ret = new sys_import_result<base_dbrjgx>();
-        //        List<base_dbrjgx> oklist = new List<base_dbrjgx>();
-        //        List<base_dbrjgx> repeatlist = new List<base_dbrjgx>();
-        //        StringBuilder sql = new StringBuilder();
-        //        sql.Append("select count(*) ");
-        //        sql.Append(" FROM   base_dbrjgx ");
-        //        sql.Append(" where  dbh = :dbh ");
-        //        sql.Append(" and    djlx = :djlx ");
-        //        StringBuilder dbxxsql = new StringBuilder();
-        //        dbxxsql.Append("select * FROM base_dbxx where dbh = :dbh");
-        //        StringBuilder rjxxsql = new StringBuilder();
-        //        rjxxsql.Append("select * FROM base_rjxx where rjlx = :rjlx ");
-        //        using (var db = new OracleConnection(ConString))
-        //        {
-        //            InitDB(db);
-        //            try
-        //            {
-        //                foreach (var item in data)
-        //                {
-        //                    var qty = db.ExecuteScalar<int>(sql.ToString(), new { dbh = item.dbh, djlx = item.djlx });
-        //                    if (qty == 0)
-        //                    {
-        //                        var dbxxobj = db.Query<base_dbxx>(dbxxsql.ToString(), new { dbh = item.dbh }).FirstOrDefault();
-        //                        var rjxxobj = db.Query<base_rjxx>(rjxxsql.ToString(), new { rjlx = item.djlx }).FirstOrDefault();
-        //                        item.dblx = dbxxobj?.dblx;
-        //                        item.djlx = rjxxobj!=null?rjxxobj.rjlx:string.Empty;
-        //                        item.rjid = rjxxobj!=null? rjxxobj.id:0;
-        //                        Db.Insert<base_dbrjgx>(item);
-        //                        oklist.Add(item);
-        //                    }
-        //                    else
-        //                    {
-        //                        repeatlist.Add(item);
-        //                    }
-        //                }
-        //                ret.oklist = oklist;
-        //                ret.repeatlist = repeatlist;
-        //                return ret;
-        //            }
-        //            finally
-        //            {
-        //                db.Close();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        throw;
-        //    }
-        //}
+        public override IEnumerable<base_dbrjgx> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select gcdm, dbh, cpzt, (select wlmc ");
+                sql.Append(" FROM   base_wlxx ");
+                sql.Append(" where  wlbm = base_dbrjgx.cpzt ");
+                sql.Append(" and    rownum < 2) as wlmc, djlx, rjid, id, dblx from base_dbrjgx where 1=1 ");
+                StringBuilder sql_cnt = new StringBuilder();
+                sql_cnt.Append($"select count(*) from base_dbrjgx where 1=1 ");
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<base_dbrjgx>(OraPager(sql.ToString()), parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
+                }
+            }
+            catch (Exception)
+            {
 
-        //public sys_import_result<base_dbrjgx> ReaplaceImportData(List<base_dbrjgx> data)
-        //{
-        //    try
-        //    {
-        //        sys_import_result<base_dbrjgx> ret = new sys_import_result<base_dbrjgx>();
+                throw;
+            }
+        }
 
-
-        //        return ret;
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
-
-        //public sys_import_result<base_dbrjgx> ZhImportData(List<base_dbrjgx> data)
-        //{
-        //    try
-        //    {
-        //        sys_import_result<base_dbrjgx> ret = new sys_import_result<base_dbrjgx>();
-
-
-        //        return ret;
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
     }
 }

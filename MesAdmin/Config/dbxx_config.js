@@ -140,15 +140,9 @@
       label: '刀柄类型',
       prop: 'dblx',
       headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'date',
-      label: '采购时间',
-      prop: 'cgsj',
-      headeralign: 'center',
-      align: 'center',
-      width: 100,
-    }, {
+      align: 'left',
+	  width:200,
+    },  {
       coltype: 'list',
       label: '刀柄状态',
       prop: 'dbzt',
@@ -180,7 +174,7 @@
       headeralign: 'center',
       align: 'center',
       width: 130,
-    }, ],
+    }],
   form: {
     gcdm: '9902',
     dbmc: '',

@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ;
 using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.LBJ;
@@ -20,12 +21,14 @@ namespace MesAdmin.Controllers.LBJ.SBWB
     {
         private IDbOperate<base_sbwb> _sbwbservice;
         private IImportData<base_sbwb> _impservice;
+        private IBaseInfo _baseinfo;
         private IUser _user;
-        public WbXxController(IDbOperate<base_sbwb> sbwbservice, IUser user, IImportData<base_sbwb> impservice)
+        public WbXxController(IDbOperate<base_sbwb> sbwbservice, IUser user, IImportData<base_sbwb> impservice,IBaseInfo baseinfo)
         {
             _sbwbservice = sbwbservice;
             _impservice = impservice;
             _user = user;
+            _baseinfo = baseinfo;
         }
         [HttpPost, SearchFilter, Route("list")]
         public IHttpActionResult GetList(sys_page parm)
@@ -33,7 +36,12 @@ namespace MesAdmin.Controllers.LBJ.SBWB
             try
             {
                 int resultcount = 0;
+                var sbxxlist = _baseinfo.Get_SBXX_List();
                 var list = _sbwbservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    item.sbxxoptions = sbxxlist.Where(t => t.scx == item.scx).Select(t => new sys_column_options {label=t.sbmc,value=t.sbbh }).Distinct().ToList();
+                }
                 return Json(new sys_search_result()
                 {
                     code = 1,
@@ -247,7 +255,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                             autoid = Guid.NewGuid().ToString(),
                             gcdm = item[0].ToString(),
                             scx = item[1].ToString(),
-                            gwh = item[2].ToString(),
+                            sbbh = item[2].ToString(),
                             wbsh = Convert.ToInt32( item[3].ToString()),
                             wbxx = item[4].ToString(),
                             bz=item[5].ToString(),
@@ -315,7 +323,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                         {
                             gcdm = item[0].ToString(),
                             scx = item[1].ToString(),
-                            gwh = item[2].ToString(),
+                            sbbh = item[2].ToString(),
                             wbsh = Convert.ToInt32(item[3].ToString()),
                             wbxx = item[4].ToString(),
                             bz = item[5].ToString(),

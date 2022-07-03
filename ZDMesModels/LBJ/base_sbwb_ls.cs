@@ -22,9 +22,13 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string scx { get; set; }
         /// <summary>
-        /// 岗位号 
+        /// 岗位号
+        /// </summary>
+        public string gwh { get; set; }
+        /// <summary>
+        /// 设备编号 
         ///</summary>
-         public string gwh { get; set; }
+        public string sbbh { get; set; }
         /// <summary>
         /// 维保顺序 
         ///</summary>
@@ -37,10 +41,11 @@ namespace ZDMesModels.LBJ
         /// 维保计划时间 
         ///</summary>
          public DateTime? wbjhsj { get; set; }
+         public DateTime? wbjhsjend { get; set; }
         /// <summary>
         /// 维保状态 计划中 已完成 已取消 
         ///</summary>
-         public string wbzt { get; set; }
+        public string wbzt { get; set; }
         /// <summary>
         /// 维保完成时间 
         ///</summary>
@@ -68,6 +73,7 @@ namespace ZDMesModels.LBJ
         public base_sbwb_ls_mapper()
         {
             Map(t => t.autoid).Key(KeyType.Assigned);
+            Map(t => t.wbjhsjend).Column("wbjhsj_end");
             Map(t => t.sfwb).Ignore();
             AutoMap();
         }

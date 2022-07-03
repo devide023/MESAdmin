@@ -13,5 +13,17 @@ namespace ZDMesInterfaces.LBJ.JTGL
         /// </summary>
         /// <returns></returns>
         IEnumerable<zxjc_t_jstc> Get_WFP_List();
+        /// <summary>
+        /// 更新技通分配状态
+        /// </summary>
+        /// <param name="jtids"></param>
+        /// <returns></returns>
+        bool Update_JtFpZt(List<string> jtids);
+        /// <summary>
+        /// 取消分配
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        bool CancleFP(List<zxjc_t_jstc> entitys);
     }
 }

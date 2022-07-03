@@ -15,6 +15,8 @@ using Aspose.Cells;
 using System.Data;
 using ZDToolHelper;
 using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesInterfaces.LBJ;
+
 namespace MesAdmin.Controllers.LBJ.RYGL
 {
     [RoutePrefix("api/lbj/ryjn")]
@@ -23,12 +25,18 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         private int i = 0;
         private IDbOperate<zxjc_ryxx_jn> _ryjnservice;
         private IImportData<zxjc_ryxx_jn> _importservice;
+        private IBaseInfo _baseinfo;
         private IRyJn _ryjn;
-        public RYJNController(IDbOperate<zxjc_ryxx_jn> ryjnservice, IRyJn ryjn,IImportData<zxjc_ryxx_jn> importservice)
+        private IDbSeq _seqservice;
+        private IUser _user;
+        public RYJNController(IDbOperate<zxjc_ryxx_jn> ryjnservice, IRyJn ryjn,IImportData<zxjc_ryxx_jn> importservice, IDbSeq seqservice,IUser user,IBaseInfo baseinfo)
         {
             _ryjnservice = ryjnservice;
             _importservice = importservice;
             _ryjn = ryjn;
+            _seqservice = seqservice;
+            _user = user;
+            _baseinfo = baseinfo;
         }
 
         [HttpPost, SearchFilter, Route("list")]
@@ -37,7 +45,30 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             try
             {
                 int resultcount = 0;
+                var gwzdlist = _baseinfo.GetGwZd();
+                var ryxxlist = _baseinfo.RyxxList();
                 var list = _ryjnservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    var options = new List<sys_column_options>();
+                    var l = gwzdlist.Where(t => t.scx == item.scx);
+                    foreach (var o in l)
+                    {
+                        var q = options.Where(t => t.value == o.gwh);
+                        if (q.Count() == 0)
+                        {
+                            options.Add(new sys_column_options { label = o.gwmc, value = o.gwh });
+                        }
+                    }
+                    item.gwhoptions = options;
+                    var useroptions = new List<sys_column_options>();
+                    var ryq = ryxxlist.Where(t => t.scx == item.scx);
+                    foreach (var o in ryq)
+                    {
+                        useroptions.Add(new sys_column_options { label = o.username, value = o.usercode });
+                    }
+                    item.useroptions = useroptions;
+                }
                 return Json(new sys_search_result()
                 {
                     code = 1,
@@ -79,29 +110,47 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         {
             try
             {
-                int maxno = _ryjn.MaxJnNo();
-                int no = 1;
-                foreach (var item in entitys)
-                {
-                    item.jnbh = CheckJnNo(maxno + no);
-                    no++;
-                }
-                var ret = _ryjnservice.Add(entitys);
-                if (ret > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
-                }
-                else
+                var checkquery = entitys.Where(t => string.IsNullOrEmpty(t.usercode) || string.IsNullOrEmpty(t.gwh));
+                if (checkquery.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据保存失败"
-                    });
+                        msg = "账号、岗位信息不能为空"
+                    }) ;
+                }
+                else
+                {
+                    foreach (var item in entitys)
+                    {
+                        var jnbh = _seqservice.Get_Seq_Number("seq_mes_jnbh");
+                        item.jnbh = "JN" + jnbh.ToString().PadLeft(4, '0');
+                    }
+                    var ret = _ryjnservice.Add(entitys);
+                    if (ret == entitys.Count)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                    else if (ret < entitys.Count && ret != 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "部分数据保存成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据保存失败,账号信息不存在"
+                        });
+                    }
                 }
             }
             catch (Exception)
@@ -144,22 +193,34 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         {
             try
             {
-                var ret = _ryjnservice.Modify(entitys);
-                if (ret)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据修改成功"
-                    });
-                }
-                else
+                var checkquery = entitys.Where(t => string.IsNullOrEmpty(t.usercode) || string.IsNullOrEmpty(t.gwh));
+                if (checkquery.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据修改失败"
+                        msg = "账号、岗位信息不能为空"
                     });
+                }
+                else
+                {
+                    var ret = _ryjnservice.Modify(entitys);
+                    if (ret)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据修改成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据修改失败"
+                        });
+                    }
                 }
             }
             catch (Exception)
@@ -267,6 +328,8 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 List<zxjc_ryxx_jn> list = new List<zxjc_ryxx_jn>();
                 if (!string.IsNullOrEmpty(fileid))
                 {
+                    var token = TokenHelper.GetToken;
+                    var userinfo = _user.GetUserByToken(token);
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
                     DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
@@ -286,6 +349,8 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                             jnsld = Convert.ToInt32(item[6].ToString()),
                             jnxx = item[7].ToString(),
                             sfhg = "Y",
+                            lrr = userinfo.name,
+                            lrsj=DateTime.Now
                         });
                         no++;
                     }
@@ -338,6 +403,8 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 List<zxjc_ryxx_jn> list = new List<zxjc_ryxx_jn>();
                 if (!string.IsNullOrEmpty(fileid))
                 {
+                    var token = TokenHelper.GetToken;
+                    var userinfo = _user.GetUserByToken(token);
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
                     DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
@@ -353,6 +420,8 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                             jnsj = Convert.ToDateTime(item[5].ToString()),
                             jnsld = Convert.ToInt32(item[6].ToString()),
                             jnxx = item[7].ToString(),
+                            lrr = userinfo.name,
+                            lrsj = DateTime.Now
                         });
                     }
                     finfo.Delete();

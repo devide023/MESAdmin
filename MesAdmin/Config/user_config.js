@@ -8,6 +8,7 @@
   fields: [{
       coltype: 'bool',
       prop: 'status',
+	  dbprop:'ta.status',
       label: '状态',
       headeralign: 'center',
       align: 'center',
@@ -34,6 +35,7 @@
     }, {
       coltype: 'string',
       prop: 'code',
+	  dbprop:'ta.code',
       label: '用户编码',
       headeralign: 'center',
       align: 'left',
@@ -41,6 +43,7 @@
     }, {
       coltype: 'string',
       prop: 'name',
+	  dbprop:'ta.name',
       label: '用户名',
       headeralign: 'center',
       align: 'left',
@@ -57,7 +60,8 @@
         method: 'get',
         url: '/role/all'
       },
-      options: []
+      options: [],
+	  searchable:false
     },
 	{
       coltype: 'string',

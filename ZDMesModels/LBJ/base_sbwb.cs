@@ -22,13 +22,21 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string scx { get; set; }
         /// <summary>
-        /// 岗位号 
+        /// 岗位号
+        /// </summary>
+        public string gwh { get; set; }
+        /// <summary>
+        /// 设备编号 
         ///</summary>
-         public string gwh { get; set; }
+        public string sbbh { get; set; }
+        /// <summary>
+        /// 设备名称
+        /// </summary>
+         public string sbmc { get; set; }
         /// <summary>
         /// 维保顺序 
         ///</summary>
-         public decimal wbsh { get; set; }
+        public decimal wbsh { get; set; }
         /// <summary>
         /// 维保内容 
         ///</summary>
@@ -49,6 +57,10 @@ namespace ZDMesModels.LBJ
         /// 删除标记（Y N） 
         ///</summary>
          public string scbz { get; set; }
+        /// <summary>
+        /// 设备信息选项
+        /// </summary>
+        public List<sys_column_options> sbxxoptions { get; set; }
     }
 
     public class base_sbwb_mapper : ClassMapper<base_sbwb>
@@ -56,6 +68,8 @@ namespace ZDMesModels.LBJ
         public base_sbwb_mapper()
         {
             Map(t => t.autoid).Key(KeyType.Assigned);
+            Map(t => t.sbmc).Ignore();
+            Map(t => t.sbxxoptions).Ignore();
             AutoMap();
         }
     }

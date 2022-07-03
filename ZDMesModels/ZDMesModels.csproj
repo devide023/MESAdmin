@@ -78,6 +78,7 @@
     <Compile Include="LBJ\base_sbxx.cs" />
     <Compile Include="LBJ\base_gcxx.cs" />
     <Compile Include="LBJ\base_scxxx.cs" />
+    <Compile Include="LBJ\base_wlxx.cs" />
     <Compile Include="LBJ\dbrjlyform.cs" />
     <Compile Include="LBJ\dbrjly_form.cs" />
     <Compile Include="LBJ\lbj_qms_4mbhd.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="LBJ\sys_jtfp_form.cs" />
     <Compile Include="LBJ\sys_ryjx.cs" />
     <Compile Include="LBJ\sys_wbzq_form.cs" />
+    <Compile Include="LBJ\sys_wbzq_gl_form.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_cnc.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_jly.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_hg.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="LBJ\zxjc_sbxx_ls_spc_hj.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_ylj.cs" />
     <Compile Include="LBJ\zxjc_smls.cs" />
+    <Compile Include="LBJ\zxjc_t_dzgy_sp.cs" />
     <Compile Include="LBJ\zxjc_t_tstc.cs" />
     <Compile Include="LBJ\zxjc_t_jstcfp.cs" />
     <Compile Include="LBJ\zxjc_t_jstc.cs" />
@@ -113,6 +116,7 @@
     <Compile Include="mes_user_role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sys_changpwd_form.cs" />
+    <Compile Include="sys_column_options.cs" />
     <Compile Include="sys_field_info.cs" />
     <Compile Include="sys_import_result.cs" />
     <Compile Include="sys_login_result.cs" />
@@ -137,6 +141,10 @@
     <Compile Include="sys_sort.cs" />
     <Compile Include="sys_user.cs" />
     <Compile Include="mes_user_entity.cs" />
+    <Compile Include="TJ\tj_base_scxxx.cs" />
+    <Compile Include="TJ\zxjc_gj_csyq.cs" />
+    <Compile Include="TJ\zxjc_gxzd.cs" />
+    <Compile Include="TJ\zxjc_gylx.cs" />
     <Compile Include="TJ\zxjc_jrgy.cs" />
   </ItemGroup>
   <ItemGroup>

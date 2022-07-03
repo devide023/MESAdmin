@@ -45,27 +45,39 @@ namespace MesAdmin.Controllers.LBJ.GYGL
             }
         }
         [HttpPost, Route("add")]
-        public IHttpActionResult AddRyxx(List<zxjc_t_dzgy> entitys)
+        public IHttpActionResult Add(List<zxjc_t_dzgy> entitys)
         {
             try
             {
-                entitys.ForEach(i => i.gyid = Guid.NewGuid().ToString());
-                int ret = _dzgyservice.Add(entitys);
-                if (ret > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
-                }
-                else
+                var q = entitys.Where(t => string.IsNullOrEmpty(t.statusno) || string.IsNullOrEmpty(t.scx) || string.IsNullOrEmpty(t.gybh));
+                if (q.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据保存失败"
+                        msg = "生产线、工艺编号、产品不能为空"
                     });
+                }
+                else
+                {
+                    entitys.ForEach(i => i.gyid = Guid.NewGuid().ToString());
+                    int ret = _dzgyservice.Add(entitys);
+                    if (ret > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据保存失败"
+                        });
+                    }
                 }
             }
             catch (Exception)
@@ -80,22 +92,34 @@ namespace MesAdmin.Controllers.LBJ.GYGL
         {
             try
             {
-                var ret = _dzgyservice.Modify(entitys);
-                if (ret)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据修改成功"
-                    });
-                }
-                else
+                var q = entitys.Where(t => string.IsNullOrEmpty(t.statusno) || string.IsNullOrEmpty(t.scx) || string.IsNullOrEmpty(t.gybh));
+                if (q.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据修改失败"
+                        msg = "生产线、工艺编号、产品不能为空"
                     });
+                }
+                else
+                {
+                    var ret = _dzgyservice.Modify(entitys);
+                    if (ret)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据修改成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据修改失败"
+                        });
+                    }
                 }
             }
             catch (Exception)

@@ -212,16 +212,19 @@ namespace ZDMesInterceptor
                         try
                         {
                             var userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = result.token }).FirstOrDefault();
-                            Db.Insert<mes_oper_log>(new mes_oper_log()
+                            if (userinfo != null)
                             {
-                                name = "mes_user_entity",
-                                czr = userinfo.name,
-                                czrid = userinfo.id,
-                                lx = "登录",
-                                czrq = DateTime.Now,
-                                path = url,
-                                newdata = JsonConvert.SerializeObject(new {result.code,result.msg })
-                            });
+                                Db.Insert<mes_oper_log>(new mes_oper_log()
+                                {
+                                    name = "mes_user_entity",
+                                    czr = userinfo.name,
+                                    czrid = userinfo.id,
+                                    lx = "登录",
+                                    czrq = DateTime.Now,
+                                    path = url,
+                                    newdata = JsonConvert.SerializeObject(new { result.code, result.msg })
+                                });
+                            }
                         }
                         finally
                         {

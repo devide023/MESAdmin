@@ -12,7 +12,7 @@
       headeralign: 'center',
       align: 'center',
       width: 80,
-	  fixed:'left',
+      fixed: 'left',
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/gcxx',
@@ -25,7 +25,7 @@
       headeralign: 'center',
       align: 'center',
       width: 100,
-	  fixed:'left',
+      fixed: 'left',
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
@@ -36,7 +36,7 @@
       coltype: 'string',
       label: '排产计划号',
       prop: 'zpjhh',
-	  fixed:'left',
+      fixed: 'left',
       width: 100,
       headeralign: 'center',
       align: 'center',
@@ -48,7 +48,7 @@
       width: 80,
       headeralign: 'center',
       align: 'center',
-	  fixed:'left',
+      fixed: 'left',
     }, {
       coltype: 'string',
       label: '机型',
@@ -56,7 +56,7 @@
       headeralign: 'center',
       width: 100,
       align: 'center',
-	  fixed:'left',
+      fixed: 'left',
     }, {
       coltype: 'string',
       label: '状态编码',
@@ -85,7 +85,7 @@
       prop: 'jhsj',
       headeralign: 'center',
       width: 140,
-	  overflowtooltip: true,
+      overflowtooltip: true,
       align: 'center',
     }, {
       coltype: 'bool',
@@ -117,7 +117,7 @@
       dbprop: 'sx_sj',
       headeralign: 'center',
       width: 100,
-	  overflowtooltip: true,
+      overflowtooltip: true,
       align: 'center',
     }, {
       coltype: 'date',
@@ -126,7 +126,7 @@
       dbprop: 'xx_sj',
       headeralign: 'center',
       width: 100,
-	  overflowtooltip: true,
+      overflowtooltip: true,
       align: 'center',
     }, {
       coltype: 'int',
@@ -143,6 +143,7 @@
       headeralign: 'center',
       width: 100,
       align: 'center',
+      overflowtooltip: true,
     }, {
       coltype: 'string',
       label: '客户代码',
@@ -151,6 +152,27 @@
       width: 100,
       align: 'center',
     }, {
+      coltype: 'string',
+      label: '状态',
+      prop: 'zt',
+      headeralign: 'center',
+      width: 80,
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '部门',
+      prop: 'scbm',
+      headeralign: 'center',
+      width: 100,
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '班次',
+      prop: 'bc',
+      headeralign: 'center',
+      width: 100,
+      align: 'center',
+    },  {
       coltype: 'string',
       label: '客户批次号',
       prop: 'khpch',
@@ -166,7 +188,7 @@
       align: 'center',
     }, {
       coltype: 'string',
-      label: '录入嗯',
+      label: '录入人',
       prop: 'lrr',
       headeralign: 'center',
       width: 100,
@@ -177,7 +199,7 @@
       prop: 'lrsj',
       headeralign: 'center',
       width: 100,
-	  overflowtooltip: true,
+      overflowtooltip: true,
       align: 'center',
     },
   ],

@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ;
+using ZDMesInterfaces.LBJ.DZWD;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 namespace MesAdmin.Controllers.LBJ.DZWD
@@ -19,9 +20,13 @@ namespace MesAdmin.Controllers.LBJ.DZWD
     public class JTGLController : ApiController
     {
         private IDbOperate<zxjc_t_jstc> _jtglservice;
-        public JTGLController(IDbOperate<zxjc_t_jstc> jtglservice)
+        private IAudit<zxjc_t_jstc> _auditservice;
+        private IJsTc _jts;
+        public JTGLController(IDbOperate<zxjc_t_jstc> jtglservice, IAudit<zxjc_t_jstc> auditservice, IJsTc jts)
         {
             _jtglservice = jtglservice;
+            _auditservice = auditservice;
+            _jts = jts;
         }
 
         [HttpPost, SearchFilter, Route("list")]
@@ -31,6 +36,10 @@ namespace MesAdmin.Controllers.LBJ.DZWD
             {
                 int resultcount = 0;
                 var list = _jtglservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    item.fpmx = _jts.Fp_Detail(item.jtid);
+                }
                 return Json(new sys_search_result()
                 {
                     code = 1,
@@ -110,7 +119,29 @@ namespace MesAdmin.Controllers.LBJ.DZWD
         {
             try
             {
-                var ret = _jtglservice.Del(entitys);
+                List<zxjc_t_jstc> deldata = new List<zxjc_t_jstc>();
+                List<zxjc_t_jstc> nodeldata = new List<zxjc_t_jstc>();
+                foreach (var item in entitys)
+                {
+                    var candel = _jts.CanDel(item.jtid);
+                    if (candel)
+                    {
+                        deldata.Add(item);
+                    }
+                    else
+                    {
+                        nodeldata.Add(item);
+                    }
+                }
+                if (nodeldata.Count > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 2,
+                        msg = "已审核或已分配的文档不能删除"
+                    });
+                }
+                var ret = _jtglservice.Del(deldata);
                 if (ret)
                 {
                     return Json(new sys_result()
@@ -193,5 +224,90 @@ namespace MesAdmin.Controllers.LBJ.DZWD
                 throw;
             }
         }
+        [HttpPost, SearchFilter, Route("auditlist")]
+        public IHttpActionResult AuditList(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                //if (!string.IsNullOrEmpty(parm.sqlexp))
+                //{
+                //    parm.sqlexp += " and shbz = 'N' ";
+                //}
+                //else
+                //{
+                //    parm.sqlexp = " shbz = 'N' ";
+                //}                
+                var list = _jtglservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    item.fpmx = _jts.Fp_Detail(item.jtid);
+                }
+                return Json(new sys_search_result()
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost, SearchFilter, Route("mydoclist")]
+        public IHttpActionResult MyDocList(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                var list = _jts.My_Doc_List(parm, out resultcount);
+                return Json(new sys_search_result()
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost,Route("audit")]
+        public IHttpActionResult AuditJSTC(List<zxjc_t_jstc> entitys)
+        {
+            try
+            {
+                var ids = entitys.Select(t => t.jtid).ToList();
+               var ret = _auditservice.AuditBill(ids);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "审核成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "审核失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

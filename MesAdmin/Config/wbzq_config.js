@@ -47,13 +47,13 @@
       options: [],
     }, {
       coltype: 'list',
-      label: '岗位号',
-      prop: 'gwh',
+      label: '设备名称',
+      prop: 'sbbh',
       headeralign: 'center',
       align: 'center',
       inioptionapi: {
         method: 'get',
-        url: '/lbj/baseinfo/gwzd',
+        url: '/lbj/baseinfo/sbxx',
       },
       options: [],
     }, {
@@ -72,18 +72,38 @@
 	  overflowtooltip: true,
       align: 'left',
     }, {
-      coltype: 'date',
-      label: '计划时间',
+      coltype: 'datetime',
+      label: '计划开始时间',
       prop: 'wbjhsj',
       headeralign: 'center',
       align: 'center',
-    }, {
+	  overflowtooltip: true,
+    }, 
+	{
+      coltype: 'datetime',
+      label: '计划结束时间',
+      prop: 'wbjhsjend',
+	  dbprop:'wbjhsj_end',
+      headeralign: 'center',
+      align: 'center',
+	  overflowtooltip: true,
+    },
+	{
       coltype: 'list',
       label: '维保状态',
       prop: 'wbzt',
       headeralign: 'center',
       align: 'center',
-      options: [],
+      options: [
+	  {
+		  label:'已完成',
+		  value:'已完成'
+	  },
+	  {
+		  label:'计划中',
+		  value:'计划中'
+	  },
+	  ],
     }, {
       coltype: 'string',
       label: '完成人',
@@ -108,7 +128,7 @@
       prop: 'lrsj',
       headeralign: 'center',
       align: 'center',
-    }, ],
+    }],
   form: {
     gcdm: '',
     scx: '',

@@ -89,20 +89,24 @@
     <Compile Include="LBJ\DaoJu\IDaoJu.cs" />
     <Compile Include="LBJ\DaoJu\IDjReport.cs" />
     <Compile Include="LBJ\DJGW\IDjGw.cs" />
+    <Compile Include="LBJ\DZWD\IAudit.cs" />
     <Compile Include="LBJ\DZWD\IJsTc.cs" />
     <Compile Include="LBJ\DZWD\IJtFp.cs" />
     <Compile Include="LBJ\IBaseInfo.cs" />
+    <Compile Include="LBJ\ICheckData.cs" />
+    <Compile Include="LBJ\IDbSeq.cs" />
     <Compile Include="LBJ\ImportData\IImportData.cs" />
     <Compile Include="LBJ\JTGL\IJTFP.cs" />
     <Compile Include="LBJ\RyMgr\IRyJn.cs" />
     <Compile Include="LBJ\RyMgr\IRyJx.cs" />
     <Compile Include="LBJ\RyMgr\IRyXx.cs" />
+    <Compile Include="LBJ\SBWB\ISBGW.cs" />
     <Compile Include="LBJ\SBWB\ISbWbZq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TJ\ITJBaseInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LBJ\JHGL\" />
-    <Folder Include="TJ\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

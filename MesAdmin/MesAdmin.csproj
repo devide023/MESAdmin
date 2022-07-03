@@ -342,6 +342,7 @@
     <Compile Include="Controllers\LBJ\DZWD\JTGLController.cs" />
     <Compile Include="Controllers\LBJ\DZWD\TSTCController.cs" />
     <Compile Include="Controllers\LBJ\GWZD\GWZDController.cs" />
+    <Compile Include="Controllers\LBJ\GYGL\DZGYSPController.cs" />
     <Compile Include="Controllers\LBJ\GYGL\GYLXController.cs" />
     <Compile Include="Controllers\LBJ\JHGL\SCJHController.cs" />
     <Compile Include="Controllers\LBJ\RYGL\RYJCController.cs" />
@@ -354,8 +355,10 @@
     <Compile Include="Controllers\LBJ\SJCJ\SJCJController.cs" />
     <Compile Include="Controllers\LBJ\SMJJK\SMJJKController.cs" />
     <Compile Include="Controllers\LBJ\YCGL\YCGLController.cs" />
-    <Compile Include="Controllers\TJ\GYGL\GYGLController.cs" />
+    <Compile Include="Controllers\TJ\BaseInfo\TJJCXXController.cs" />
+    <Compile Include="Controllers\TJ\GYGL\JRGYController.cs" />
     <Compile Include="Filters\ApiExceptionAttribute.cs" />
+    <Compile Include="Filters\CheckData.cs" />
     <Compile Include="Filters\CheckLoginAttribute.cs" />
     <Compile Include="Filters\SearchFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -473,6 +476,10 @@
     <Content Include="Template\LBJ\刀柄基础数据.xlsx" />
     <Content Include="Template\LBJ\刃具基础数据.xlsx" />
     <Content Include="Template\LBJ\刃具寿命消耗.xlsx" />
+    <Content Include="Template\LBJ\员工基础数据.xlsx" />
+    <Content Include="Template\LBJ\员工技能信息.xlsx" />
+    <Content Include="Template\LBJ\奖惩数据.xlsx" />
+    <Content Include="Template\LBJ\维保基础信息.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

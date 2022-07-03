@@ -10,68 +10,80 @@ using Oracle.ManagedDataAccess.Client;
 using Dapper;
 using Autofac.Extras.DynamicProxy;
 using ZDMesInterceptor.LBJ;
+using ZDMesInterfaces.LBJ.SBWB;
 
 namespace ZDMesServices.LBJ.SBWB
 {
     public class WbXxService:BaseDao<base_sbwb>
     {
-        public WbXxService(string constr):base(constr)
+        private ISBGW _sbgw;
+        public WbXxService(string constr, ISBGW sbgw) :base(constr)
         {
+            _sbgw = sbgw;
+        }
+        public override int Add(IEnumerable<base_sbwb> entitys)
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    foreach (var item in entitys)
+                    {
+                        item.gwh = _sbgw.GetGWH_By_Sbbh(item.sbbh);
+                        item.autoid = Guid.NewGuid().ToString();
+                    }
+                    return base.Add(entitys);
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
 
-        //public sys_import_result<base_sbwb> NewImportData(List<base_sbwb> data)
-        //{
-        //    try
-        //    {
-        //        sys_import_result<base_sbwb> ret = new sys_import_result<base_sbwb>();
-        //        List<base_sbwb> oklist = new List<base_sbwb>();
-        //        List<base_sbwb> repeatlist = new List<base_sbwb>();
-        //        StringBuilder sql = new StringBuilder();
-        //        sql.Append("select * FROM base_sbwb where gcdm = :gcdm and scx = :scx and gwh = :gwh and wbxx = :wbxx");
-        //        using (var db = new OracleConnection(ConString))
-        //        {
-        //            try
-        //            {
-        //                InitDB(db);
-        //                foreach (var item in data)
-        //                {
-        //                    var q = db.Query<base_sbwb>(sql.ToString(), item);
-        //                    if (q.Count() == 0)
-        //                    {
-        //                        var r = Db.Insert<base_sbwb>(item);
-        //                        oklist.Add(item);
-        //                    }
-        //                    else
-        //                    {
-        //                        repeatlist.AddRange(q);
-        //                    }
-        //                }
-        //            }
-        //            finally
-        //            {
-        //                db.Close();
-        //            }
-        //        }
-        //        ret.oklist = oklist;
-        //        ret.repeatlist = repeatlist;
-        //        return ret;
-        //    }
-        //    catch (Exception)
-        //    {
+        public override IEnumerable<base_sbwb> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select autoid, gcdm, wbsh, wbxx, bz, lrr, lrsj, scbz,scx,sbbh ");
+                sql.Append(" from base_sbwb ");
+                sql.Append(" where 1 = 1 ");
+                StringBuilder sql_cnt = new StringBuilder();
+                sql_cnt.Append($"select count(*) from base_sbwb  where 1=1 ");
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                    else
+                    {
+                        sql.Append($" order by scx asc,sbbh asc,wbsh asc ");
+                    }
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<base_sbwb>(OraPager(sql.ToString()), parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
+                }
+            }
+            catch (Exception)
+            {
 
-        //        throw;
-        //    }
-        //}
-
-        //public sys_import_result<base_sbwb> ReaplaceImportData(List<base_sbwb> data)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public sys_import_result<base_sbwb> ZhImportData(List<base_sbwb> data)
-        //{
-        //    throw new NotImplementedException();
-        //}
+                throw;
+            }
+        }
     }
 }

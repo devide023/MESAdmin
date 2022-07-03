@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZDMesInterfaces.LBJ.DJGW
 {
+    /// <summary>
+    /// 点检岗位
+    /// </summary>
     public interface IDjGw
     {
         /// <summary>

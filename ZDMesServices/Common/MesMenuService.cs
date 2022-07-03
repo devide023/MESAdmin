@@ -30,9 +30,12 @@ namespace ZDMesServices.Common
                 sqlfun.Append("select count(id) FROM mes_menu_entity where pid = :pid and menutype = '03' and name = :name and fnname = :fnname");
                 StringBuilder sqlcol = new StringBuilder();
                 sqlcol.Append("select count(id) FROM mes_menu_entity where pid=:pid and menutype = '04' and name = :name");
+                StringBuilder sqlbat = new StringBuilder();
+                sqlbat.Append("select count(id) FROM mes_menu_entity where pid = :pid and menutype = '05' and name = :name");
                 var pagelist = entitys.Where(t => t.menutype == "02");
                 var funlist = entitys.Where(t => t.menutype == "03");
                 var collist = entitys.Where(t => t.menutype == "04");
+                var batlist = entitys.Where(t => t.menutype == "05");
                 using (var db = new  OracleConnection(ConString))
                 {
                     try
@@ -50,6 +53,15 @@ namespace ZDMesServices.Common
                         foreach (var item in funlist)
                         {
                             var cnt = db.ExecuteScalar<int>(sqlfun.ToString(), new { pid = item.pid , name = item.name, fnname = item.fnname });
+                            if (cnt == 0)
+                            {
+                                Db.Insert<mes_menu_entity>(item);
+                                oklist.Add(item);
+                            }
+                        }
+                        foreach (var item in batlist)
+                        {
+                            var cnt = db.ExecuteScalar<int>(sqlbat.ToString(), new { pid = item.pid, name = item.name });
                             if (cnt == 0)
                             {
                                 Db.Insert<mes_menu_entity>(item);
@@ -320,11 +332,11 @@ namespace ZDMesServices.Common
                             Predicates = new List<IPredicate>()
                         };
                         pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
-                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() { "01", "02", "03" }));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() { "01", "02", "03","05" }));
                         var sub = Db.GetList<mes_menu_entity>(pg).OrderBy(t => t.seq);
                         foreach (var item in sub)
                         {
-                            if (item.menutype == "03")
+                            if (item.menutype == "03" || item.menutype == "05")
                             {
                                 item.name = item.btntxt;
                             }
@@ -404,6 +416,81 @@ namespace ZDMesServices.Common
                                 item.name = item.btntxt;
                             }
                             item.children = Get_SubTree(item.id).ToList();
+                        }
+                        return sub;
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Db.Dispose();
+            }
+        }
+
+        public IEnumerable<mes_menu_entity> Get_BatTree()
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        InitDB(db);
+                        var root = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, 0)).OrderBy(t => t.id).ThenBy(t => t.seq);
+                        foreach (var item in root)
+                        {
+                            item.children = Get_SubBatTree(item.id).ToList();
+                        }
+                        return root;
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Db.Dispose();
+            }
+        }
+
+        private IEnumerable<mes_menu_entity> Get_SubBatTree(int pid)
+        {
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        InitDB(db);
+                        PredicateGroup pg = new PredicateGroup()
+                        {
+                            Operator = GroupOperator.And,
+                            Predicates = new List<IPredicate>()
+                        };
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.pid, Operator.Eq, pid));
+                        pg.Predicates.Add(Predicates.Field<mes_menu_entity>(t => t.menutype, Operator.Eq, new List<string>() { "01", "02", "05" }));
+                        var sub = Db.GetList<mes_menu_entity>(pg).OrderBy(t => t.seq);
+                        foreach (var item in sub)
+                        {
+                            if (item.menutype == "05")
+                            {
+                                item.name = item.btntxt;
+                            }
+                            item.children = Get_SubBatTree(item.id).ToList();
                         }
                         return sub;
                     }

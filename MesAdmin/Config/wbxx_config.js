@@ -7,6 +7,8 @@
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
+	  row.lrr = this.$store.getters.name;
+	  row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
     download_template_file: function () {
@@ -30,7 +32,11 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
+            }
+			else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            }
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
           });
@@ -50,7 +56,8 @@
         if (res.code === 1) {
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
-        } else if (res.code === 0) {
+        }
+		else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
       });
@@ -66,7 +73,11 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
+            }
+			else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            }
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
           });
@@ -88,7 +99,11 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
+            }
+			else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            }
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
           });
@@ -122,15 +137,15 @@
         url: '/lbj/baseinfo/scx?gcdm=9902',
       },
 	  change_fn_name: function (_this, collist, val, row) {
-        row.gwh = '';
-        _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
+		 row.sbbh = '';
+        _this.$request('get', '/lbj/baseinfo/scx_sbxx?scx=' + val).then(function (res) {
           if (res.code === 1) {
-            row.gwhoptions = res.list;
+            row.sbxxoptions = res.list;
           }
         });
       },
 	  clear_fn_name:function(_this,row){
-		  row.gwh = '';
+		  row.sbbh = '';
 	  },
       options: [],
     }, {
@@ -143,31 +158,32 @@
       searchable: false,
     }, {
       coltype: 'list',
-      label: '岗位',
-      prop: 'gwh',
+      label: '设备名称',
+      prop: 'sbbh',
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
+	  inioptionapi: {
         method: 'get',
-        url: '/lbj/baseinfo/gwzd',
+        url: '/lbj/baseinfo/sbxx',
       },
-      options: [],
-	  relation:'gwhoptions',
+	  options:[],
+	  relation:'sbxxoptions',
     }, {
       coltype: 'string',
-      label: '岗位编号',
-      prop: 'gwh',
+      label: '设备编号',
+      prop: 'sbbh',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 100,
       searchable: false,
+	  overflowtooltip: true,
     }, {
       coltype: 'int',
       label: '顺序',
       prop: 'wbsh',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 100,
       searchable: false,
     }, {
       coltype: 'string',
@@ -194,25 +210,18 @@
       prop: 'lrsj',
       headeralign: 'center',
       align: 'center',
-    }, {
-      coltype: 'bool',
-      label: '删除标志',
-      prop: 'scbz',
-      headeralign: 'center',
-      align: 'center',
-      activevalue: 'Y',
-      inactivevalue: 'N',
-    }, ],
+    }],
   form: {
 	  gcdm:'9902',
 	  scx:'',
-	  gwh:'',
+	  sbbh:'',
 	  wbsh:'',
 	  wbxx:'',
 	  bz:'',
 	  lrr:'',
 	  lrsj:'',
 	  scbz:'N',
+	  sbxxoptions:[],
 	  gwhoptions:[],
     isdb: false,
     isedit: true

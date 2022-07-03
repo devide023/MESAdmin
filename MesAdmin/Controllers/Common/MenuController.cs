@@ -154,7 +154,7 @@ namespace MesAdmin.Controllers.Common
                     code = 1,
                     msg = "ok",
                     list = list,
-                    fields = collist
+                    fields = collist,
                 });
             }
             catch (Exception)

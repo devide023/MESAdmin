@@ -7,6 +7,9 @@ using ZDMesModels;
 using ZDMesModels.LBJ;
 namespace ZDMesInterfaces.LBJ
 {
+    /// <summary>
+    /// 基础信息接口
+    /// </summary>
     public interface IBaseInfo
     {
         /// <summary>
@@ -79,5 +82,21 @@ namespace ZDMesInterfaces.LBJ
         /// </summary>
         /// <returns></returns>
         IEnumerable<base_ftpfilepath> FtpConfig();
+        /// <summary>
+        /// 获取物料编码
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<base_wlxx> WLBM_By_Key(string key);
+        /// <summary>
+        /// 用户列表
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<mes_menu_entity> UserList();
+        /// <summary>
+        /// 人员信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<zxjc_ryxx> RyxxList();
     }
 }

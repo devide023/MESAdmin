@@ -81,6 +81,22 @@ namespace ZDMesModels.LBJ
         /// 分类
         /// </summary>
         public int type { get; set; }
+        /// <summary>
+        /// 审核标志
+        /// </summary>
+        public string shbz { get; set; }
+        /// <summary>
+        /// 审核人
+        /// </summary>
+        public string shr { get; set; }
+        /// <summary>
+        /// 审核时间
+        /// </summary>
+        public string shsj { get; set; }
+        /// <summary>
+        /// 分配明细
+        /// </summary>
+        public string fpmx { get; set; }
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>
@@ -91,6 +107,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.fpflg).Column("fp_flg");
             Map(t => t.fpsj).Column("fp_sj");
             Map(t => t.type).Ignore();
+            Map(t => t.fpmx).Ignore();
             AutoMap();
         }
     }

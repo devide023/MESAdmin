@@ -258,7 +258,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                         return Json(new sys_result()
                         {
                             code = 0,
-                            msg = $"数据导入失败"
+                            msg = $"数据导入失败,导入未配置。"
                         });
                     }
                 }

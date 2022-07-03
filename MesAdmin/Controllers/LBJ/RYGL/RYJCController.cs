@@ -12,6 +12,8 @@ using System.IO;
 using System.Web;
 using Aspose.Cells;
 using System.Data;
+using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesInterfaces.LBJ;
 
 namespace MesAdmin.Controllers.LBJ.RYGL
 {
@@ -19,9 +21,17 @@ namespace MesAdmin.Controllers.LBJ.RYGL
     public class RYJCController : ApiController
     {
         private IDbOperate<zxjc_jcgl> _jcglservice;
-        public RYJCController(IDbOperate<zxjc_jcgl> jcglservice)
+        private IImportData<zxjc_jcgl> _importservice;
+        private ICheckData _cks;
+        private IUser _userservice;
+        private IBaseInfo _baseinfo;
+        public RYJCController(IDbOperate<zxjc_jcgl> jcglservice, IImportData<zxjc_jcgl> importservice, ICheckData cks, IUser userservice, IBaseInfo baseinfo)
         {
             _jcglservice = jcglservice;
+            _importservice = importservice;
+            _cks = cks;
+            _userservice = userservice;
+            _baseinfo = baseinfo;
         }
 
         [HttpPost, SearchFilter, Route("list")]
@@ -30,7 +40,22 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             try
             {
                 int resultcount = 0;
+                var gwzdlist = _baseinfo.GetGwZd();
                 var list = _jcglservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    var options = new List<sys_column_options>();
+                    var l = gwzdlist.Where(t => t.scx == item.scx);
+                    foreach (var o in l)
+                    {
+                        var q = options.Where(t => t.value == o.gwh);
+                        if (q.Count() == 0)
+                        {
+                            options.Add(new sys_column_options { label = o.gwmc, value = o.gwh });
+                        }
+                    }
+                    item.gwhoptions = options;
+                }
                 return Json(new sys_search_result()
                 {
                     code = 1,
@@ -45,28 +70,53 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 throw;
             }
         }
-
         [HttpPost, Route("add")]
         public IHttpActionResult Add(List<zxjc_jcgl> entitys)
         {
             try
             {
-                var ret = _jcglservice.Add(entitys);
-                if (ret > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
-                }
-                else
+                var checkquery = entitys.Where(t => string.IsNullOrEmpty(t.usercode) || string.IsNullOrEmpty(t.gwh) || string.IsNullOrEmpty(t.jcxx));
+                if (checkquery.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据保存失败"
+                        msg = "账号、岗位、明细字段不能为空"
                     });
+                }
+                else
+                {
+                    var q = entitys.Where(t => !_cks.Valid<zxjc_jcgl>("user_code", t.usercode)).ToList();
+                    if (q.Count > 0)
+                    {
+                        string codes = string.Empty;
+                        q.ForEach(t => codes = codes + t.usercode + ",");
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"账号{codes}非法请检查"
+                        });
+                    }
+                    else
+                    {
+                        var ret = _jcglservice.Add(entitys);
+                        if (ret > 0)
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 1,
+                                msg = "数据保存成功"
+                            });
+                        }
+                        else
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 0,
+                                msg = "数据保存失败"
+                            });
+                        }
+                    }
                 }
             }
             catch (Exception)
@@ -109,22 +159,48 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         {
             try
             {
-                var ret = _jcglservice.Modify(entitys);
-                if (ret)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据修改成功"
-                    });
-                }
-                else
+                var checkquery = entitys.Where(t => string.IsNullOrEmpty(t.usercode) || string.IsNullOrEmpty(t.gwh) || string.IsNullOrEmpty(t.jcxx));
+                if (checkquery.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据修改失败"
+                        msg = "账号、岗位、明细字段不能为空"
                     });
+                }
+                else
+                {
+                    var q = entitys.Where(t => !_cks.Valid<zxjc_jcgl>("user_code", t.usercode)).ToList();
+                    if (q.Count > 0)
+                    {
+                        string codes = string.Empty;
+                        q.ForEach(t => codes = codes + t.usercode + ",");
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"账号{codes}非法请检查"
+                        });
+                    }
+                    else
+                    {
+                        var ret = _jcglservice.Modify(entitys);
+                        if (ret)
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 1,
+                                msg = "数据修改成功"
+                            });
+                        }
+                        else
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 0,
+                                msg = "数据修改失败"
+                            });
+                        }
+                    }
                 }
             }
             catch (Exception)
@@ -142,6 +218,8 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 List<zxjc_jcgl> list = new List<zxjc_jcgl>();
                 if (!string.IsNullOrEmpty(fileid))
                 {
+                    var token = ZDToolHelper.TokenHelper.GetToken;
+                    var uifno = _userservice.GetUserByToken(token);
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
                     DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
@@ -163,11 +241,37 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                             khr = item[11].ToString(),
                             khbm = item[12].ToString(),
                             bz = item[13].ToString(),
+                            lrr = uifno.name,
+                            lrsj=DateTime.Now
                         });
                     }
                     FileInfo finfo = new FileInfo(filepath);
                     finfo.Delete();
-                    return Json(new { code = 1, msg = "ok", list = list });
+                    var ret = _importservice.NewImportData(list);
+                    if (ret.oklist.Count == list.Count)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.repeatlist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，导入{ret.oklist.Count}条,重复{ret.repeatlist.Count}条"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
+                    }
                 }
                 else
                 {

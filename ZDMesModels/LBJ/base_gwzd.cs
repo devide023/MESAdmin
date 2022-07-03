@@ -9,10 +9,11 @@ namespace ZDMesModels.LBJ
     ///</summary>
     public class base_gwzd
     {
+        public string rid { get; set; }
         /// <summary>
         /// 工厂 
         ///</summary>
-         public string gcdm { get; set; }
+        public string gcdm { get; set; }
         /// <summary>
         /// 生产线 
         ///</summary>
@@ -98,6 +99,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.gwh).Key(KeyType.Assigned);
             Map(t => t.usercode).Column("user_code");
             Map(t => t.disabled).Ignore();
+            Map(t => t.rid).Ignore();
             AutoMap();
         }
     }

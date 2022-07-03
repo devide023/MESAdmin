@@ -9,6 +9,10 @@ using ZDMesModels;
 
 namespace ZDMesInterfaces.LBJ.ImportData
 {
+    /// <summary>
+    /// 数据导入接口
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [Intercept(typeof(ImportLog))]
     public interface IImportData<T> where T: class, new()
     {

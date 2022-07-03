@@ -61,6 +61,10 @@
         }, {
           label: 'danger',
           value: '04'
+        },
+		{
+          label: 'success',
+          value: '05'
         }
       ],
       options: [{
@@ -75,6 +79,10 @@
         }, {
           label: '字段',
           value: '04'
+        },
+		{
+          label: '批量',
+          value: '05'
         }
       ]
     }, {

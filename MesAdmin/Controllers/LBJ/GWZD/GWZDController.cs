@@ -40,5 +40,34 @@ namespace MesAdmin.Controllers.LBJ.GWZD
                 throw;
             }
         }
+        [HttpPost, Route("edit")]
+        public IHttpActionResult Edit(List<base_gwzd> entitys)
+        {
+            try
+            {
+                var ret = _gwzdservice.Modify(entitys);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "数据保存成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "数据保存失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@
     },
     rjrm_handle: function () {
       var _this = this;
-      if (this.selectlist.length > 0) {
+      if (_this.selectlist.length > 0) {
         var postdata = this.selectlist.map(t => t.id);
         this.$request('post', '/lbj/dbrjly/zxrjrm', postdata).then(function (res) {
           if (res.code === 1) {

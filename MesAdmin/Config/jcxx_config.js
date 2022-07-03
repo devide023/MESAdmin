@@ -39,14 +39,14 @@
             fileid: fid
           }).then(function (result) {
             vm.$loading().close();
-            for (var i = 0; i < result.list.length; i++) {
-              var item = result.list[i];
-              vm.$set(item, 'lrr', vm.$store.getters.name);
-              vm.$set(item, 'lrsj', vm.$parseTime(new Date()));
-              vm.$set(item, 'isdb', false);
-              vm.$set(item, 'isedit', true);
-              vm.list.unshift(item);
+            if (result.code === 1) {
+              vm.$message.success(result.msg);
+            } else if (result.code === 2) {
+              vm.$message.warning(result.msg);
+            } else if (result.code === 0) {
+              vm.$message.error(result.msg);
             }
+            vm.getlist(vm.queryform);
           });
         } catch (error) {
           vm.$message.error(error);
@@ -154,6 +154,14 @@
       },
       select_handlename: 'select_usercode_handle'
     }, {
+      coltype: 'string',
+      prop: 'username',
+      label: '姓名',
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+      overflowtooltip: true,
+    }, {
       coltype: 'list',
       prop: 'bzxx',
       label: '班组',
@@ -170,7 +178,7 @@
     }, {
       coltype: 'list',
       prop: 'gwh',
-      label: '岗位号',
+      label: '岗位',
       headeralign: 'center',
       align: 'center',
       inioptionapi: {
@@ -180,20 +188,17 @@
       relation: 'gwhoptions',
       options: [],
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'lx',
-      label: '考核类型',
+      label: '类型',
       headeralign: 'center',
       align: 'center',
       options: [{
-          label: '质量异常',
-          value: '质量异常'
+          label: '奖励',
+          value: '奖励'
         }, {
-          label: '错装',
-          value: '错装'
-        }, {
-          label: '漏装',
-          value: '漏装'
+          label: '惩罚',
+          value: '惩罚'
         }
       ]
     }, {

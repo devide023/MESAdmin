@@ -45,6 +45,10 @@ namespace ZDMesModels.LBJ
         /// 录入时间 
         ///</summary>
          public DateTime? lrsj { get; set; }
+        /// <summary>
+        /// 岗位选项
+        /// </summary>
+        public List<sys_column_options> gwhoptions { get; set; }
     }
 
     public class zxjc_djgw_mapper : ClassMapper<zxjc_djgw>
@@ -53,6 +57,7 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.djno).Key(KeyType.Assigned);
             Map(t => t.statusno).Column("status_no");
+            Map(t => t.gwhoptions).Ignore();
             AutoMap();
         }
     }

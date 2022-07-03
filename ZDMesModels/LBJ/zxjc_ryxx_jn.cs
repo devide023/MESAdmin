@@ -61,6 +61,14 @@ namespace ZDMesModels.LBJ
         /// 技能熟练度 
         ///</summary>
          public int jnsld { get; set; }
+        /// <summary>
+        /// 岗位列选项
+        /// </summary>
+        public List<sys_column_options> gwhoptions { get; set; }
+        /// <summary>
+        /// 生产线人员选项
+        /// </summary>
+        public List<sys_column_options> useroptions { get; set; }        
     }
     public class zxjcryxxjn_mapper : ClassMapper<zxjc_ryxx_jn>
     {
@@ -69,6 +77,8 @@ namespace ZDMesModels.LBJ
             Map(t => t.jnbh).Key(KeyType.Assigned);
             Map(t => t.usercode).Column("user_code");
             Map(t => t.username).Ignore();
+            Map(t => t.gwhoptions).Ignore();
+            Map(t => t.useroptions).Ignore();
             AutoMap();
         }
     }

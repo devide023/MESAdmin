@@ -19,9 +19,13 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string usercode { get; set; }
         /// <summary>
+        /// 人员名称
+        /// </summary>
+        public string username { get; set; }
+        /// <summary>
         /// 生产线 
         ///</summary>
-         public string scx { get; set; }
+        public string scx { get; set; }
         /// <summary>
         /// 班组 
         ///</summary>
@@ -74,6 +78,10 @@ namespace ZDMesModels.LBJ
         /// 录入时间 
         ///</summary>
          public DateTime lrsj { get; set; }
+        /// <summary>
+        /// 岗位列选项
+        /// </summary>
+        public List<sys_column_options> gwhoptions { get; set; }
     }
 
     public class zxjc_jcgl_maper : ClassMapper<zxjc_jcgl>
@@ -82,6 +90,8 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
             Map(t => t.usercode).Column("user_code");
+            Map(t => t.username).Ignore();
+            Map(t => t.gwhoptions).Ignore();
             AutoMap();
         }
     }

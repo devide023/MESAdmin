@@ -34,15 +34,15 @@ namespace ZDMesServices.LBJ.ImportData
                 var configlist = confighelper.Read_Import_LogConfig();
                 string tbname = string.Empty;
                 tbname = typeof(T).Name;
-                var rules = configlist.Where(t => t.tablename == tbname).FirstOrDefault().xinzeng;
-                if (rules.Count > 0)
+                var rules = configlist.Where(t => t.tablename == tbname);
+                if (rules.Count() > 0)
                 {
-
+                    var xzruleslist = rules.FirstOrDefault().xinzeng;
                     Type p = Type.GetType(typeof(T).FullName + ",ZDMesModels");
                     PropertyInfo[] pi = p.GetProperties();
                     StringBuilder sql = new StringBuilder();
                     sql.Append($"select count(*) from {tbname} where 1=1 ");
-                    foreach (var item in rules)
+                    foreach (var item in xzruleslist)
                     {
                         sql.Append($" and {item} =  :{item} ");
                     }
@@ -54,7 +54,7 @@ namespace ZDMesServices.LBJ.ImportData
                             foreach (var item in data)
                             {
                                 DynamicParameters dyp = new DynamicParameters();
-                                foreach (var col in rules)
+                                foreach (var col in xzruleslist)
                                 {
                                     var cz = pi.Where(t => t.Name == col);
                                     if (cz.Count() > 0)

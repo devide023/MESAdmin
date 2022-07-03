@@ -133,7 +133,7 @@
       align: 'center',
       width: 100,
       overflowtooltip: true,
-    },
+    }
   ],
   form: {
     gcdm: '',
@@ -146,7 +146,10 @@
     djjg: '',
     bz: '',
     lrr: '',
-    lrsj: ''
+    lrsj: '',
+	gwhoptions:[],
+	isdb:false,
+	isedit:true,
   },
   addapi: {
     url: '/lbj/djxx/add',

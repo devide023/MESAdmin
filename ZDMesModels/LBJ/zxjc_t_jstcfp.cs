@@ -18,6 +18,10 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string jtid { get; set; }
         /// <summary>
+        /// 技术通知编号
+        /// </summary>
+        public string jcbh { get; set; }
+        /// <summary>
         /// 技通名称
         /// </summary>
         public string jtmc { get; set; }
@@ -77,6 +81,10 @@ namespace ZDMesModels.LBJ
         /// 组长录入时间 
         ///</summary>
          public DateTime? lrsj2 { get; set; }
+        /// <summary>
+        /// 人员列表
+        /// </summary>
+        public List<int> rylist { get; set; }
     }
 
     public class zxjc_t_jstcfp_mapper : ClassMapper<zxjc_t_jstcfp>
@@ -85,10 +93,12 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.id).Key(KeyType.Assigned);
             Map(t => t.jtmc).Ignore();
+            Map(t => t.jcbh).Ignore();
             Map(t => t.wjlj).Ignore();
             Map(t => t.gcmc).Ignore();
             Map(t => t.scxmc).Ignore();
             Map(t => t.gwmc).Ignore();
+            Map(t => t.rylist).Ignore();
             Map(t => t.statusno).Column("status_no");            
             Map(t => t.jxno).Column("jx_no");
             AutoMap();

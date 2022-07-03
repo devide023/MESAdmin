@@ -52,15 +52,16 @@
       label: '识别方式',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 120,
 	  options: [{label:'自动',value:'自动'},{label:'人工',value:'人工'}]
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'sbtj',
       label: '识别条件',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 120,
+	  options: [{label:'手动',value:'手动'},{label:'自动',value:'自动'}]
     },
   ],
   form: {

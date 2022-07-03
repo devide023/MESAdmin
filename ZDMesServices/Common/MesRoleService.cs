@@ -120,19 +120,25 @@ namespace ZDMesServices.Common
                                         role_menu.roleid = form.mes_role_entity.id;
                                         if (menu.menutype == "02")
                                         {
-                                            var ids = form.permission.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                            var ids = form.permission.Where(t => t.pid == menu.id && t.menutype =="03").Select(t => t.id).ToList();
                                             var funs = new List<string>();
                                             if (ids.Count > 0)
                                             {
                                                 funs = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, ids)).Select(t => t.name).ToList();
                                             }
-                                            var editids = form.editfields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                            var batids = form.permission.Where(t => t.pid == menu.id && t.menutype == "05").Select(t => t.id).ToList();
+                                            var bats = new List<string>();
+                                            if (batids.Count > 0)
+                                            {
+                                                bats = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, batids)).Select(t => t.name).ToList();
+                                            }
+                                            var editids = form.editfields.Where(t => t.pid == menu.id && t.menutype == "04").Select(t => t.id).ToList();
                                             var editfields = new List<string>();
                                             if (editids.Count > 0)
                                             {
                                                 editfields = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, editids)).Select(t => t.name).ToList();
                                             }
-                                            var hideids = form.hidefields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                            var hideids = form.hidefields.Where(t => t.pid == menu.id && t.menutype == "04").Select(t => t.id).ToList();
                                             var hidefields = new List<string>();
                                             if (hideids.Count > 0)
                                             {
@@ -142,7 +148,8 @@ namespace ZDMesServices.Common
                                             {
                                                 editfields = editfields,
                                                 hidefields = hidefields,
-                                                funs = funs
+                                                funs = funs,
+                                                batbtns = bats,
                                             });
                                             role_menu.permis = permis;
                                         }
@@ -378,19 +385,25 @@ namespace ZDMesServices.Common
                                     role_menu.roleid = roleid;
                                     if (menu.menutype == "02")
                                     {
-                                        var ids = form.permission.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                        var ids = form.permission.Where(t => t.pid == menu.id && t.menutype=="03").Select(t => t.id).ToList();
                                         var funs = new List<string>();
                                         if (ids.Count > 0)
                                         {
                                             funs = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, ids)).Select(t => t.name).ToList();
                                         }
-                                        var editids = form.editfields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                        var bats = new List<string>();
+                                        var batids = form.permission.Where(t => t.pid == menu.id && t.menutype == "05").Select(t => t.id).ToList();
+                                        if (batids.Count > 0)
+                                        {
+                                            bats = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, batids)).Select(t => t.name).ToList();
+                                        }
+                                        var editids = form.editfields.Where(t => t.pid == menu.id && t.menutype == "04").Select(t => t.id).ToList();
                                         var editfields = new List<string>();
                                         if (editids.Count > 0)
                                         {
                                             editfields = Db.GetList<mes_menu_entity>(Predicates.Field<mes_menu_entity>(t => t.id, Operator.Eq, editids)).Select(t => t.name).ToList();
                                         }
-                                        var hideids = form.hidefields.Where(t => t.pid == menu.id).Select(t => t.id).ToList();
+                                        var hideids = form.hidefields.Where(t => t.pid == menu.id && t.menutype == "04").Select(t => t.id).ToList();
                                         var hidefields = new List<string>();
                                         if (hideids.Count > 0)
                                         {
@@ -400,7 +413,8 @@ namespace ZDMesServices.Common
                                         {
                                             editfields = editfields,
                                             hidefields = hidefields,
-                                            funs = funs
+                                            funs = funs,
+                                            batbtns = bats,
                                         });
                                         role_menu.permis = permis;
                                     }

@@ -198,8 +198,10 @@ namespace ZDMesServices.LBJ.BaseInfo
                 {
                     try
                     {
-                        InitDB(db);
-                        return Db.GetList<base_gwzd>().OrderBy(t => t.gwh);
+                        StringBuilder sql = new StringBuilder();
+                        sql.Append("select gcdm, scx, gwh, gwmc, gwlx, gwfl, glgwh, shbz, gzty, pcsip, bz, lrr, lrsj, shr, shsj, cjqxdl, dlsj, dlbbh from BASE_GWZD ");
+                        var list = db.Query<base_gwzd>(sql.ToString()).OrderBy(t => t.gwh);
+                        return list;
                     }
                     finally
                     {
@@ -211,10 +213,6 @@ namespace ZDMesServices.LBJ.BaseInfo
             {
 
                 throw;
-            }
-            finally
-            {
-                Db.Dispose();
             }
         }
 
@@ -430,6 +428,65 @@ namespace ZDMesServices.LBJ.BaseInfo
                             item.disabled = false;
                         }
                     }
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_wlxx> WLBM_By_Key(string key)
+        {
+            using (var db = new OracleConnection(ConString))
+            {
+                try
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select wlbm, wlmc ");
+                    sql.Append(" FROM   base_wlxx ");
+                    sql.Append(" where  wlmc like  :key ");
+                    sql.Append(" order  by wlbm asc");
+                    var list = db.Query<base_wlxx>(sql.ToString(), new { key = "%" + key + "%" });
+                    return list;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+        public IEnumerable<mes_menu_entity> UserList()
+        {
+            using (var db = new OracleConnection(ConString))
+            {
+                try
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select id, code, name FROM mes_user_entity order by name asc");
+                    var list = db.Query<mes_menu_entity>(sql.ToString());
+                    return list;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        public IEnumerable<zxjc_ryxx> RyxxList()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select user_code as usercode, user_name as username, scx, gwh FROM zxjc_ryxx ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    var list = db.Query<zxjc_ryxx>(sql.ToString());
                     return list;
                 }
             }

@@ -13,6 +13,12 @@ namespace ZDMesInterfaces.LBJ.DaoJu
     public interface IDaoJu
     {
         /// <summary>
+        /// 刀柄以旧换新，以坏换新,领用
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        bool OldToNew(List<base_dbrjzx> entitys);
+        /// <summary>
         /// 刀柄刃具领用
         /// </summary>
         /// <param name="from"></param>

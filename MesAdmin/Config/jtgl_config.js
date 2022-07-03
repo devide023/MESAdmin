@@ -1,26 +1,32 @@
 ﻿{
   isgradequery: true,
   isoperate: true,
+  disedit: {
+    fieldname: 'shbz',
+    fieldvalue: 'Y'
+  },
   operate_fnlist: [{
       label: '上传Pdf',
       btntype: 'upload',
       action: 'http://172.16.201.125:7002/api/upload/jstc_pdf',
       callback: function (response, file) {
+        var _this = this;
         if (response.code === 1) {
-          this.$message.success(response.msg);
+          _this.$message.success(response.msg);
+          _this.$loading().close();
           let rowid = response.extdata.rowkey;
-          let finditem = this.$basepage.list.find(function (i) {
+          let finditem = _this.$basepage.list.find(function (i) {
             return i.rowkey === rowid;
           });
           if (finditem) {
             finditem.jwdx = file.size;
             finditem.jcmc = file.name;
             finditem.wjlj = response.files[0].fileid;
-            finditem.scry = this.$store.getters.name;
-            finditem.scsj = this.$parseTime(new Date());
+            finditem.scry = _this.$store.getters.name;
+            finditem.scsj = _this.$parseTime(new Date());
           }
         } else {
-          this.$message.error(response.msg);
+          _this.$message.error(response.msg);
         }
       }
     }, {
@@ -36,8 +42,22 @@
       row.addtime = this.$parseTime(new Date());
       this.list.unshift(row);
     },
+    audit_handle: function () {
+      var _this = this;
+      if (_this.selectlist.length > 0) {
+        this.$request('post', '/lbj/jtgl/audit', _this.selectlist).then(function (res) {
+          if (res.code === 1) {
+            _this.$message.success(res.msg);
+          } else if (res.code === 0) {
+            _this.$message.error(res.msg);
+          }
+        });
+      } else {
+        _this.$message.warning('请选审核项目');
+      }
+    },
     download_jstcpdf: function (row) {
-		var _this = this;
+      var _this = this;
       this.$request('get', "download/ftp2web", {
         wjlx: '技术通知',
         wjlj: row.wjlj
@@ -83,13 +103,13 @@
         if (res.code === 1) {
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
-        } else if(res.code === 0) {
+        } else if (res.code === 0) {
           this.$message.error(res.msg);
         }
       });
     },
     import_by_replace(_this, res) {},
-    import_by_zh(_this,res) {},
+    import_by_zh(_this, res) {},
   },
   fields: [{
       coltype: 'list',
@@ -122,18 +142,32 @@
       label: '技通编号',
       headeralign: 'center',
       align: 'center',
+      width: 150,
+      overflowtooltip: true,
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'wjfl',
       label: '分类',
       headeralign: 'center',
       align: 'center',
+      options: [{
+          label: '技通',
+          value: '技通'
+        }, {
+          label: '技改',
+          value: '技改'
+        }, {
+          label: '作业要求',
+          value: '作业要求'
+        }
+      ]
     }, {
       coltype: 'string',
       prop: 'jcmc',
       label: '技通名称',
       headeralign: 'center',
       align: 'center',
+      width: 150,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -187,6 +221,24 @@
       inactivevalue: 'N',
     }, {
       coltype: 'string',
+      prop: 'fpmx',
+      label: '分配明细',
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+      overflowtooltip: true,
+      searchable: false,
+    }, {
+      coltype: 'bool',
+      prop: 'shbz',
+      label: '审核标志',
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+      activevalue: 'Y',
+      inactivevalue: 'N',
+    }, {
+      coltype: 'string',
       prop: 'fpr',
       label: '分配人',
       headeralign: 'center',
@@ -196,6 +248,19 @@
       prop: 'fpsj',
       dbprop: 'fp_sj',
       label: '分配日期',
+      headeralign: 'center',
+      align: 'center',
+      overflowtooltip: true,
+    }, {
+      coltype: 'string',
+      prop: 'shr',
+      label: '审核人',
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'datetime',
+      prop: 'shsj',
+      label: '审核日期',
       headeralign: 'center',
       align: 'center',
       overflowtooltip: true,
@@ -219,8 +284,12 @@
     fpflg: 'N',
     fpsj: '',
     fpr: '',
+    shbz: 'N',
+    shr: '',
+    shsj: '',
     isedit: true,
     isdb: false,
+    remotelist: [],
   },
   addapi: {
     url: '/lbj/jtgl/add',

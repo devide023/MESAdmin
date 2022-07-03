@@ -131,11 +131,13 @@
   <ItemGroup>
     <Compile Include="BaseDao.cs" />
     <Compile Include="Common\MesMenuApiService.cs" />
+    <Compile Include="Common\MesSeqService.cs" />
     <Compile Include="Common\OperateLogService.cs" />
     <Compile Include="Common\PageConfigService.cs" />
     <Compile Include="LBJ\BaseInfo\BaseInfoService.cs" />
     <Compile Include="LBJ\BHDGL\BHDJLService.cs" />
     <Compile Include="LBJ\BHDGL\BHDXXService.cs" />
+    <Compile Include="LBJ\CheckData\CheckDataService.cs" />
     <Compile Include="LBJ\DAOJU\DaoBinService.cs" />
     <Compile Include="LBJ\DAOJU\DbRjGxService.cs" />
     <Compile Include="LBJ\DAOJU\DbRjLyService.cs" />
@@ -144,11 +146,13 @@
     <Compile Include="LBJ\DAOJU\RjSmXhService.cs" />
     <Compile Include="LBJ\DJXX\DJGWService.cs" />
     <Compile Include="LBJ\DJXX\DJXXService.cs" />
+    <Compile Include="LBJ\DZWD\AuditService.cs" />
     <Compile Include="LBJ\GYGL\DZGYService.cs" />
     <Compile Include="LBJ\DZWD\JTFPService.cs" />
     <Compile Include="LBJ\DZWD\JTGLService.cs" />
     <Compile Include="LBJ\DZWD\TSTCService.cs" />
     <Compile Include="LBJ\GWMgr\GwZdService.cs" />
+    <Compile Include="LBJ\GYGL\DZGYSPService.cs" />
     <Compile Include="LBJ\GYGL\GYLXService.cs" />
     <Compile Include="LBJ\ImportData\ImportDataService.cs" />
     <Compile Include="LBJ\JHGL\ZpJhService.cs" />
@@ -157,6 +161,7 @@
     <Compile Include="LBJ\RyMgr\RYJXService.cs" />
     <Compile Include="LBJ\RyMgr\RyxxService.cs" />
     <Compile Include="LBJ\SBMgr\SbxxService.cs" />
+    <Compile Include="LBJ\SBWB\GWSBService.cs" />
     <Compile Include="LBJ\SBWB\WbXxService.cs" />
     <Compile Include="LBJ\SBWB\WbZqService.cs" />
     <Compile Include="LBJ\SJCJ\CNC_SJCJService.cs" />
@@ -173,6 +178,7 @@
     <Compile Include="Common\MesMenuService.cs" />
     <Compile Include="Common\MesRoleService.cs" />
     <Compile Include="Common\MesUserService.cs" />
+    <Compile Include="TJ\BaseInfo\BaseInfoService.cs" />
     <Compile Include="TJ\Common\ConfigServicecs.cs" />
     <Compile Include="TJ\Common\MenuApiService.cs" />
     <Compile Include="TJ\Common\MenuService.cs" />

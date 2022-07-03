@@ -121,12 +121,23 @@
       options: [],
     }, {
       coltype: 'string',
-      label: '产品',
+      label: '产品编号',
       prop: 'cpzt',
       headeralign: 'center',
       width: 300,
       align: 'center',
-    }, {
+    },
+{
+      coltype: 'string',
+      label: '产品名称',
+      prop: 'wlmc',
+      headeralign: 'center',
+      width: 300,
+      align: 'center',
+	  overflowtooltip: true,
+	  searchable:false,
+    },
+	{
       coltype: 'string',
       label: '刀柄号',
       prop: 'dbh',
@@ -147,7 +158,7 @@
       headeralign: 'center',
       width: 200,
       align: 'center',
-    }, ],
+    }],
   form: {
     gcdm: '9902',
     dbh: '',

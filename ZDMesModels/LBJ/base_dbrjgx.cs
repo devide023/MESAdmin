@@ -30,9 +30,13 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string cpzt { get; set; }
         /// <summary>
+        /// 物料名称
+        /// </summary>
+        public string wlmc { get; set; }
+        /// <summary>
         /// 匹配刃具类型 
         ///</summary>
-         public string djlx { get; set; }
+        public string djlx { get; set; }
         /// <summary>
         /// 刀柄类型
         /// </summary>
@@ -52,6 +56,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.id).Key(KeyType.TriggerIdentity);
             Map(t => t.children).Ignore();
             Map(t => t.baserjxx).Ignore();
+            Map(t => t.wlmc).Ignore();
             AutoMap();
         }
     }

@@ -139,7 +139,7 @@
       width: 150,
       headeralign: 'center',
       align: 'center',
-    }, ],
+    }],
   form: {
     gcdm: '9902',
     rjlx: '',

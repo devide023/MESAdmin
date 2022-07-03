@@ -32,13 +32,16 @@ namespace MesAdmin.Controllers
                 var pagepermis = _pageconfig.GetPagePermis(path, token);
                 //页面按钮
                 var pagebtns = _pageconfig.GetPageFnList(path, token);
+                //批量操作按钮
+                var batbtns = _pageconfig.GetPageBatList(path, token);
                 return Json(new
                 {
                     code = 1,
                     msg = "ok",
                     pageconfig = config,
                     pagepermis = pagepermis,
-                    pagebtns = pagebtns
+                    pagebtns = pagebtns,
+                    batbtns = batbtns,
                 });
             }
             catch (Exception)

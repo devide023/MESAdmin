@@ -11,6 +11,7 @@ namespace ZDMesModels.LBJ
     /// </summary>
     public class base_rjsmxh
     {
+        public string rid { get; set; }
         /// <summary>
         /// 工厂 
         ///</summary>
@@ -24,6 +25,10 @@ namespace ZDMesModels.LBJ
         ///</summary>
         public string cpzt { get; set; }
         /// <summary>
+        /// 物料名称
+        /// </summary>
+        public string wlmc { get; set; }
+        /// <summary>
         /// 生产线 
         ///</summary>
         public string scx { get; set; }
@@ -31,6 +36,10 @@ namespace ZDMesModels.LBJ
         /// 设备号 
         ///</summary>
         public string sbbh { get; set; }
+        /// <summary>
+        /// 设备名称
+        /// </summary>
+        public string sbmc { get; set; }
         /// <summary>
         /// 每件消耗寿命 
         ///</summary>
@@ -41,6 +50,9 @@ namespace ZDMesModels.LBJ
     {
         public base_rjsmxh_mapper()
         {
+            Map(t => t.rid).Ignore();
+            Map(t => t.wlmc).Ignore();
+            Map(t => t.sbmc).Ignore();
             AutoMap();
         }
     }

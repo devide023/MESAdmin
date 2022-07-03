@@ -94,12 +94,16 @@ namespace ZDMesServices.Common
                         var conf = q.First();
                         var configfullpath = configroot + conf;
                         var jsstr = Tool.ReadFile(configfullpath);
-                        Regex reg = new Regex(@"(?<fields>fields:[\w\W]*])");
+                        Regex reg = new Regex(@"(?<fields>fields:.*\[\{.+\}\])");
                         var fieldsinfo = reg.Match(jsstr).Groups["fields"].Value;
                         fieldsinfo = fieldsinfo.Replace("fields:", "").Replace(" ", "");
                         Regex regfn = new Regex(@":function[\w\W]*?},");
                         fieldsinfo = regfn.Replace(fieldsinfo, ":##");
                         fieldsinfo = fieldsinfo.Replace("##{", "'',},{").Replace("##","'',");
+                        if(fieldsinfo.LastIndexOf(",") == fieldsinfo.Length - 1)
+                        {
+                            fieldsinfo = fieldsinfo.Remove(fieldsinfo.Length - 1);
+                        }
                         return JsonConvert.DeserializeObject<List<sys_field_info>>(fieldsinfo);
                     }
                     else
@@ -297,11 +301,15 @@ namespace ZDMesServices.Common
                     if (!fi.Exists)
                     {
                         var pos = configpath.LastIndexOf("/");
-                        var dirpath = configpath.Substring(0, pos);
-                        DirectoryInfo dirinfo = new DirectoryInfo(dirpath);
-                        if (!dirinfo.Exists)
+                        if (pos != -1)
                         {
-                            dirinfo.Create();
+                            var dirpath = configpath;
+                            dirpath = configpath.Substring(0, pos);
+                            DirectoryInfo dirinfo = new DirectoryInfo(dirpath);
+                            if (!dirinfo.Exists)
+                            {
+                                dirinfo.Create();
+                            }
                         }
                         File.WriteAllText(configpath, contents.ToString());
                     }
@@ -312,6 +320,48 @@ namespace ZDMesServices.Common
                     }
                 }
                 return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<sys_pagefn_info> GetPageBatList(string route, string token)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select id from mes_menu_entity where routepath = :route");
+            StringBuilder roleidsql = new StringBuilder();
+            roleidsql.Append("select distinct roleid FROM mes_user_role ta,mes_user_entity tb where ta.userid = tb.id and tb.token = :token ");
+            try
+            {
+                List<string> permis_list = new List<string>();
+                using (var db = new OracleConnection(ConString))
+                {
+                    var menuids = db.Query<int>(sql.ToString(), new { route = route });
+                    var roleids = db.Query<int>(roleidsql.ToString(), new { token = token });
+                    var permis = db.Query<string>("select permis FROM mes_role_menu where menuid in :menuids and roleid in :roleids ", new { menuids = menuids, roleids = roleids });
+                    foreach (var item in permis)
+                    {
+                        var p = JsonConvert.DeserializeObject<sys_menu_permis>(item);
+                        if (p.batbtns.Count > 0)
+                        {
+                            permis_list.AddRange(p.batbtns);
+                        }
+                    }
+                    if (permis_list.Distinct().Count() > 0)
+                    {
+                        var q = db.Query<sys_pagefn_info>("select * FROM mes_menu_entity where pid in :menuid and menutype = '05' and name in :permis ", new { menuid = menuids, permis = permis_list.Distinct() });
+                        return q.ToList();
+                    }
+                    else
+                    {
+                        //var q = db.Query<sys_pagefn_info>("select * FROM mes_menu_entity where pid in :menuid and menutype = '03' ", new { menuid = menuids });
+                        //return q.ToList();
+                        return new List<sys_pagefn_info>();
+                    }
+                }
             }
             catch (Exception)
             {

@@ -80,7 +80,7 @@
     }, {
       coltype: 'image',
       prop: 'jczpdz',
-      label: '首件照片',
+      label: '首末件照片',
       headeralign: 'center',
       align: 'center',
       width: 130,
@@ -113,14 +113,14 @@
     }, {
       coltype: 'string',
       prop: 'zpjcjg',
-      label: '首件照片结果',
+      label: '首末件照片结果',
       headeralign: 'center',
       align: 'center',
       width: 130,
     }, {
       coltype: 'string',
       prop: 'jcr',
-      label: '首件检测人',
+      label: '首末件检测人',
       headeralign: 'center',
       align: 'center',
       width: 130,

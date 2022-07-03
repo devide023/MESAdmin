@@ -30,7 +30,11 @@
             vm.$loading().close();
             if (result.code === 1) {
               vm.$message.success(result.msg);
-            } else if (result.code === 0) {
+            }
+			else if(result.code === 2){
+				vm.$message.warning(result.msg);
+			}
+			else if (result.code === 0) {
               vm.$message.error(result.msg);
             }
             vm.getlist(vm.queryform);
@@ -68,7 +72,11 @@
             _this.$loading().close();
             if (result.code === 1) {
               _this.$message.success(result.msg);
-            } else if (result.code === 0) {
+            }
+			else if(result.code === 2){
+				_this.$message.warning(result.msg);
+			}
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
             _this.getlist(_this.queryform);
@@ -90,7 +98,11 @@
             _this.$loading().close();
             if (result.code === 1) {
               _this.$message.success(result.msg);
-            } else if (result.code === 0) {
+            }
+			else if(result.code === 2){
+				_this.$message.warning(result.msg);
+			}
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
             _this.getlist(_this.queryform);
@@ -222,8 +234,8 @@
           label: '白班',
           value: '白班'
         }, {
-          label: '晚班',
-          value: '晚班'
+          label: '夜班',
+          value: '夜班'
         }
       ],
       width: 80
@@ -300,7 +312,7 @@
     username: '',
     password: '123456',
     ryxb: '男',
-    rylx: '',
+    rylx: '操作工',
     gwh: '',
     bzxx: '白班',
     hgsg: 'Y',

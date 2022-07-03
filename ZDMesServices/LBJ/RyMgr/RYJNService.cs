@@ -22,6 +22,35 @@ namespace ZDMesServices.LBJ.RyMgr
 
         }
 
+        public override int Add(IEnumerable<zxjc_ryxx_jn> entitys)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select count(*) FROM zxjc_ryxx where user_code = :usercode");
+            using (var db = new OracleConnection(ConString))
+            {
+                InitDB(db);
+                try
+                {
+                    List<dynamic> oklist = new List<dynamic>();
+                    foreach (var item in entitys)
+                    {
+                        var cnt = db.ExecuteScalar<int>(sql.ToString(), new { usercode = item.usercode });
+                        if (cnt > 0)
+                        {
+                            var isok = Db.Insert<zxjc_ryxx_jn>(item);
+                            oklist.Add(isok);
+                        }
+                    }
+                    return oklist.Count;
+                }
+                finally
+                {
+                    Db.Dispose();
+                }
+            }
+            
+        }
+
         public override IEnumerable<zxjc_ryxx_jn> GetList(sys_page parm, out int resultcount)
         {
             StringBuilder sql = new StringBuilder();
@@ -31,7 +60,7 @@ namespace ZDMesServices.LBJ.RyMgr
             sql.Append(" and    rownum < 2) as username, t.jnbh, t.jnxx, t.scx, t.gwh, t.sfhg, t.lrr, t.lrsj, t.jnfl, t.jnsj, t.jnsld ");
             sql.Append(" from   ZXJC_RYXX_JN t where 1=1 ");
             StringBuilder sql_cnt = new StringBuilder();
-            sql_cnt.Append("select count(*) from zxjc_ryxx where 1=1 ");
+            sql_cnt.Append("select count(*) from zxjc_ryxx_jn where 1=1 ");
             if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
             {
                 sql.Append(" and " + parm.sqlexp);

@@ -31,7 +31,10 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
+            }else if(result.code === 2){
+				_this.$message.warning(result.msg);
+			}
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
           });
@@ -140,19 +143,37 @@
       prop: 'cpzt',
       headeralign: 'center',
       align: 'center',
-    }, {
+    },
+{
+      coltype: 'string',
+      label: '产品名称',
+      prop: 'wlmc',
+      headeralign: 'center',
+      align: 'center',
+	  searchable:false,
+    },
+	{
       coltype: 'string',
       label: '设备编号',
       prop: 'sbbh',
       headeralign: 'center',
       align: 'center',
-    }, {
+    }, 
+	{
+      coltype: 'string',
+      label: '设备名称',
+      prop: 'sbmc',
+      headeralign: 'center',
+      align: 'center',
+	  searchable:false,
+    },
+	{
       coltype: 'int',
       label: '每件消耗寿命',
       prop: 'mjxhsm',
       headeralign: 'center',
       align: 'center',
-    }, ],
+    }],
   form: {
     gcdm: '9902',
     scx: '',

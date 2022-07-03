@@ -31,7 +31,11 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
+            }
+			else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            }
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
           });
@@ -67,7 +71,11 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
+            }
+			else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            }
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
           });
@@ -89,7 +97,11 @@
             if (result.code === 1) {
               _this.$message.success(result.msg);
               _this.getlist(_this.queryform);
-            } else if (result.code === 0) {
+            }
+			else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            }
+			else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
           });
@@ -161,14 +173,6 @@
 	  relation:'gwhoptions',
     }, {
       coltype: 'string',
-      prop: 'statusno',
-      dbprop: 'status_no',
-      label: '产品',
-      headeralign: 'center',
-      align: 'center',
-      width: 150,
-    }, {
-      coltype: 'string',
       prop: 'djxx',
       label: '点检内容',
       headeralign: 'center',
@@ -198,8 +202,7 @@
       align: 'center',
       width: 130,
       overflowtooltip: true,
-    },
-  ],
+    }],
   form: {
     gcdm: '9902',
     scx: '',

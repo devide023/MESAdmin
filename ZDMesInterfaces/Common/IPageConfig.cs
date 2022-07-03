@@ -38,6 +38,13 @@ namespace ZDMesInterfaces.Common
         /// <returns></returns>
         List<sys_pagefn_info> GetPageFnList(string route, string token);
         /// <summary>
+        /// 获取页面批处理按钮
+        /// </summary>
+        /// <param name="route"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        List<sys_pagefn_info> GetPageBatList(string route, string token);
+        /// <summary>
         /// 获取路由路径与组件对应关系
         /// </summary>
         /// <returns></returns>

@@ -68,6 +68,10 @@ namespace ZDMesModels.LBJ
         ///离入职信息
         ///</summary>
         public string scbz { get; set; }
+        /// <summary>
+        /// 岗位选项
+        /// </summary>
+        public List<sys_column_options> gwhoptions { get; set; }
     }
 
     public class zxjc_ryxx_mapper : ClassMapper<zxjc_ryxx>
@@ -78,6 +82,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.usercode).Column("user_code");
             Map(t => t.username).Column("user_name");
             Map(t => t.password).Column("pass_word");
+            Map(t => t.gwhoptions).Ignore();
             AutoMap();
         }
     }

@@ -8,6 +8,7 @@ namespace ZDMesModels
 {
     public class sys_pagefn_info
     {
+        public string name { get; set; }
         /// <summary>
         /// 按钮执行函数名称
         /// </summary>

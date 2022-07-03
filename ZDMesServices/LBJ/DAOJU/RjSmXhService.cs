@@ -20,64 +20,71 @@ namespace ZDMesServices.LBJ.DAOJU
         public RjSmXhService(string constr) : base(constr)
         {
             
-        }        
+        }
 
-        //public sys_import_result<base_rjsmxh> NewImportData(List<base_rjsmxh> data)
-        //{
-        //    try
-        //    {
-        //        sys_import_result<base_rjsmxh> ret = new sys_import_result<base_rjsmxh>();
-        //        List<base_rjsmxh> oklist = new List<base_rjsmxh>();
-        //        List<base_rjsmxh> repeatlist = new List<base_rjsmxh>();
-        //        StringBuilder sql = new StringBuilder();
-        //        sql.Append("select count(*) from base_rjsmxh where scx = :scx and sbbh = :sbbh and rjlx =:rjlx and cpzt = :cpzt");
-        //        using (var db = new OracleConnection(ConString))
-        //        {
-        //            try
-        //            {
-        //                InitDB(db);
-        //                foreach (var item in data)
-        //                {
-        //                    int cnt = db.ExecuteScalar<int>(sql.ToString(), new { scx = item.scx, sbbh = item.sbbh, rjlx = item.rjlx, cpzt = item.cpzt });
-        //                    if (cnt == 0)
-        //                    {
-        //                        Db.Insert<base_rjsmxh>(item);
-        //                        oklist.Add(item);
-        //                    }
-        //                    else
-        //                    {
-        //                        repeatlist.Add(item);
-        //                    }
-        //                }
-        //                ret.oklist = oklist;
-        //                ret.repeatlist = repeatlist;
-        //            }
-        //            finally
-        //            {
-        //                db.Close();
-        //            }
+        public override IEnumerable<base_rjsmxh> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select rowid as rid,gcdm, rjlx, cpzt, (select wlmc ");
+                sql.Append(" FROM   base_wlxx ");
+                sql.Append(" where  wlbm = base_rjsmxh.cpzt ");
+                sql.Append(" and    rownum < 2) as wlmc, scx, sbbh, (select sbmc ");
+                sql.Append(" FROM   base_sbxx ");
+                sql.Append(" where  sbbh = ");
+                sql.Append("        base_rjsmxh.sbbh ");
+                sql.Append(" and rownum< 2) as sbmc, mjxhsm ");
+                sql.Append(" from   base_rjsmxh where 1=1 ");
+                StringBuilder sql_cnt = new StringBuilder();
+                sql_cnt.Append($"select count(*) from base_rjsmxh where 1=1 ");
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<base_rjsmxh>(OraPager(sql.ToString()), parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
+                }
+            }
+            catch (Exception)
+            {
 
-        //        }
-        //        return ret;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        Db.Dispose();
-        //    }
-        //}
+                throw;
+            }
+        }
 
-        //public sys_import_result<base_rjsmxh> ReaplaceImportData(List<base_rjsmxh> data)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public sys_import_result<base_rjsmxh> ZhImportData(List<base_rjsmxh> data)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public override bool Del(IEnumerable<base_rjsmxh> entitys)
+        {
+            List<base_rjsmxh> oklist = new List<base_rjsmxh>();
+            StringBuilder sql = new StringBuilder();
+            sql.Append("delete from base_rjsmxh where rowid = :rid");
+            using (var db = new OracleConnection(ConString))
+            {
+                foreach (var item in entitys)
+                {
+                    var q = db.Execute(sql.ToString(), new { rid = item.rid});
+                    if (q > 0)
+                    {
+                        oklist.Add(item);
+                    }
+                }
+                return oklist.Count == entitys.Count();
+            }
+        }
     }
 }

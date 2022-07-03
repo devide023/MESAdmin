@@ -11,5 +11,6 @@ namespace ZDMesModels
         public List<string> funs { get; set; } = new List<string>();
         public List<string> editfields { get; set; } = new List<string>();
         public List<string> hidefields { get; set; } = new List<string>();
+        public List<string> batbtns { get; set; } = new List<string>();
     }
 }

@@ -20,6 +20,10 @@ namespace ZDMesModules.TJ
         {
             var AssServices = Assembly.Load("ZDMesServices");
             builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.TJ")).WithParameter("constr", TJConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
+
+            var AssInterfaces = Assembly.Load("ZDMesInterfaces");
+            builder.RegisterAssemblyTypes(AssInterfaces).Where(t=>t.FullName.StartsWith("ZDMesInterfaces.TJ"));
+
             var baseinfo_module_config = new ConfigurationBuilder();
             baseinfo_module_config.AddJsonFile("TJ_baseinfo_module_config.json");
             // Register the ConfigurationModule with Autofac.

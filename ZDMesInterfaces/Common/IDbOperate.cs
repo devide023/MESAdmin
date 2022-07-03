@@ -9,6 +9,10 @@ using ZDMesModels;
 
 namespace ZDMesInterfaces.Common
 {
+    /// <summary>
+    /// 基本增、删、改、查操作
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [Intercept(typeof(CUDLogger))]
     public interface IDbOperate<T> where T : class, new()
     {

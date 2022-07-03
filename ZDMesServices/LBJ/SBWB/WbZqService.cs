@@ -17,9 +17,10 @@ namespace ZDMesServices.LBJ.SBWB
 {
     public class WbZqService:BaseDao<base_sbwb_ls>, ISbWbZq
     {
-        public WbZqService(string constr):base(constr)
+        private ISBGW _sbgw;
+        public WbZqService(string constr, ISBGW sbgw) :base(constr)
         {
-
+            _sbgw = sbgw;
         }
 
         public override int Add(IEnumerable<base_sbwb_ls> entitys)
@@ -44,9 +45,10 @@ namespace ZDMesServices.LBJ.SBWB
                                     pg.Predicates.Clear();
                                     pg.Predicates.Add(Predicates.Field<base_sbwb_ls>(t => t.gcdm, Operator.Eq, item.gcdm));
                                     pg.Predicates.Add(Predicates.Field<base_sbwb_ls>(t => t.scx, Operator.Eq, item.scx));
-                                    pg.Predicates.Add(Predicates.Field<base_sbwb_ls>(t => t.gwh, Operator.Eq, item.gwh));
+                                    pg.Predicates.Add(Predicates.Field<base_sbwb_ls>(t => t.sbbh, Operator.Eq, item.sbbh));
                                     pg.Predicates.Add(Predicates.Field<base_sbwb_ls>(t => t.wbzt, Operator.Eq, "计划中"));
                                     Db.Delete<base_sbwb_ls>(pg, tran);
+                                    item.gwh = _sbgw.GetGWH_By_Sbbh(item.sbbh);
                                 }
                                 Db.Insert<base_sbwb_ls>(entitys, tran);
                                 tran.Commit();
@@ -121,29 +123,50 @@ namespace ZDMesServices.LBJ.SBWB
                         InitDB(db);
                         List<base_sbwb_ls> result = new List<base_sbwb_ls>();
                         StringBuilder sql = new StringBuilder();
-                        sql.Append("select autoid, gcdm, scx, gwh, wbsh, wbxx, wbjhsj, wbzt, wbwcsj, wbwcr, lrr, lrsj ");
+                        sql.Append("select autoid, gcdm, scx, sbbh, wbsh, wbxx, wbjhsj,wbjhsj_end as wbjhsjend, wbzt, wbwcsj, wbwcr, lrr, lrsj ");
                         sql.Append(" from BASE_SBWB_LS t ");
                         sql.Append(" where trunc(wbjhsj) = (select max(trunc(wbjhsj)) from BASE_SBWB_LS)");
                         result = db.Query<base_sbwb_ls>(sql.ToString()).ToList();
-                        var list = Db.GetList<base_sbwb>();
+                        var list = Db.GetList<base_sbwb>().OrderBy(t=>t.scx).ThenBy(t=>t.sbbh).ThenBy(t=>t.wbsh);
+                        List<base_sbwb_ls> result_list = new List<base_sbwb_ls>();
                         foreach (var item in list)
                         {
-                            var q = result.Where(t => t.gcdm == item.gcdm && t.scx == item.scx && t.gwh == item.gwh && t.wbxx == item.wbxx);
+                            var q = result.Where(t => t.gcdm == item.gcdm && t.scx == item.scx && t.sbbh == item.sbbh && t.wbxx == item.wbxx);
                             if (q.Count() == 0)
                             {
-                                result.Add(new base_sbwb_ls()
+                                result_list.Add(new base_sbwb_ls()
                                 {
                                     gcdm = item.gcdm,
                                     scx = item.scx,
-                                    gwh = item.gwh,
+                                    sbbh = item.sbbh,
                                     wbxx = item.wbxx,
                                     wbsh = item.wbsh,
-                                    wbzt = "计划中",
+                                    wbzt = "",
+                                    wbjhsj = null,
+                                    wbjhsjend=null,
+                                    sfwb = "Y"
+                                }) ;
+                            }
+                            else
+                            {
+                                var o = q.First();
+                                result_list.Add(new base_sbwb_ls()
+                                {
+                                    gcdm = item.gcdm,
+                                    scx = item.scx,
+                                    sbbh = item.sbbh,
+                                    wbxx = item.wbxx,
+                                    wbsh = item.wbsh,
+                                    wbzt = o.wbzt,
+                                    wbjhsj = o.wbjhsj,
+                                    wbjhsjend = o.wbjhsjend,
+                                    wbwcr = o.wbwcr,
+                                    wbwcsj = o.wbwcsj,
                                     sfwb = "Y"
                                 });
                             }
                         }
-                        return result.OrderBy(t => t.gcdm).ThenBy(t => t.scx).ThenBy(t => t.wbsh);
+                        return result_list.OrderBy(t => t.gcdm).ThenBy(t => t.scx).ThenBy(t=>t.sbbh).ThenBy(t => t.wbsh);
                     }
                     finally
                     {
@@ -155,6 +178,10 @@ namespace ZDMesServices.LBJ.SBWB
             {
 
                 throw;
+            }
+            finally
+            {
+                Db.Dispose();
             }
         }
     }

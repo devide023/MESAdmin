@@ -1,7 +1,7 @@
 ﻿{
   isgradequery: true,
   isoperate: false,
-  isselect: false,
+  isselect: true,
   pagefuns: {},
   fields: [{
       coltype: 'list',
@@ -128,5 +128,10 @@
     url: '/lbj/gwzd/list',
     method: 'post',
     callback: function (vm, res) {}
-  }
+  },
+  editapi: {
+    url: '/lbj/gwzd/edit',
+    method: 'post',
+    callback: function (vm, res) {}
+  },
 }

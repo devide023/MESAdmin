@@ -36,5 +36,10 @@ namespace ZDMesInterfaces.Common
         /// </summary>
         /// <returns></returns>
         IEnumerable<mes_menu_entity> Get_ColsTree();
+        /// <summary>
+        /// 获取页面批量操作菜单树
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<mes_menu_entity> Get_BatTree();
     }
 }

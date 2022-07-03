@@ -62,6 +62,20 @@
 	},
   },
   pagefuns: {
+	old2new_handle:function(){
+		var _this = this;
+      if (_this.selectlist.length > 0) {
+        this.$request('post', '/lbj/dbrjly/old2new', _this.selectlist).then(function (res) {
+          if (res.code === 1) {
+            _this.$message.success(res.msg);
+          } else if (res.code === 0) {
+            _this.$message.error(res.msg);
+          }
+        });
+      } else {
+        _this.$message.warning('请选择刃具');
+      }
+	},
     rjxz_handle: function () {
       var _this = this;
       if (this.selectlist.length > 0) {
@@ -261,7 +275,7 @@
       headeralign: 'center',
       align: 'center',
       overflowtooltip: true,
-    }, ],
+    }],
   trbginfo: {
     colname: 'rjzt',
     logiclist: [{

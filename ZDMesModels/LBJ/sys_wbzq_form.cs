@@ -9,9 +9,9 @@ namespace ZDMesModels.LBJ
     public class sys_wbzq_form
     {
         /// <summary>
-        /// 下次维保时间
+        /// 下次维保时间段
         /// </summary>
-        public DateTime next_date { get; set; }
+        public List<string> next_date { get; set; }
         /// <summary>
         /// 维保项目
         /// </summary>

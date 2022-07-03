@@ -16,6 +16,8 @@ using ZDMesInterfaces.LBJ.RyMgr;
 using System.Data;
 using Aspose.Cells;
 using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesInterfaces.LBJ;
+
 namespace MesAdmin.Controllers.LBJ.RYGL
 {
     [RoutePrefix("api/lbj/ryxx")]
@@ -23,13 +25,17 @@ namespace MesAdmin.Controllers.LBJ.RYGL
     {
         private IDbOperate<zxjc_ryxx> _ryxxservice;
         private IImportData<zxjc_ryxx> _importservice;
+        private IBaseInfo _baseinfo;
         private IRyXx _ryxx;
+        private IDbSeq _seqservice;
         private int i = 1;
-        public RYXXController(IDbOperate<zxjc_ryxx> ryxxservice,IRyXx ryxx,IImportData<zxjc_ryxx> importservice)
+        public RYXXController(IDbOperate<zxjc_ryxx> ryxxservice,IRyXx ryxx,IImportData<zxjc_ryxx> importservice, IBaseInfo baseinfo, IDbSeq seqservice)
         {
             _ryxxservice = ryxxservice;
             _importservice = importservice;
+            _baseinfo = baseinfo;
             _ryxx = ryxx;
+            _seqservice = seqservice;
         }
 
         [HttpPost, SearchFilter, Route("list")]
@@ -37,8 +43,23 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         {
             try
             {
+                var gwzdlist = _baseinfo.GetGwZd();
                 int resultcount = 0;
                 var list = _ryxxservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    var options = new List<sys_column_options>();
+                    var l = gwzdlist.Where(t => t.scx == item.scx);
+                    foreach (var o in l)
+                    {
+                        var q = options.Where(t => t.value == o.gwh);
+                        if (q.Count() == 0)
+                        {
+                            options.Add(new sys_column_options { label = o.gwmc, value = o.gwh });
+                        }
+                    }
+                    item.gwhoptions = options;
+                }
                 return Json(new sys_search_result()
                 {
                     code = 1,
@@ -59,29 +80,39 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         {
             try
             {
-                int no = 1;
-                int uid = _ryxx.MaxUserCode();
-                foreach (var item in entitys)
-                {
-                    item.usercode = CheckUserCode(uid + no);
-                    no++;
-                }
-                int ret = _ryxxservice.Add(entitys);
-                if (ret > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
-                }
-                else
+                var q = entitys.Where(t => string.IsNullOrEmpty(t.scx) || string.IsNullOrEmpty(t.gwh) || string.IsNullOrEmpty(t.username));
+                if (q.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据保存失败"
+                        msg = "生产线、姓名、岗位不能为空"
                     });
+                }
+                else
+                {
+                    foreach (var item in entitys)
+                    {
+                        long rybh = _seqservice.Get_Seq_Number("seq_mes_rybh");
+                        item.usercode = rybh.ToString().PadLeft(6, '0');
+                    }
+                    int ret = _ryxxservice.Add(entitys);
+                    if (ret > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据保存失败"
+                        });
+                    }
                 }
             }
             catch (Exception)
@@ -96,22 +127,34 @@ namespace MesAdmin.Controllers.LBJ.RYGL
         {
             try
             {
-                var ret = _ryxxservice.Modify(entitys);
-                if (ret)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = "数据修改成功"
-                    });
-                }
-                else
+                var q = entitys.Where(t => string.IsNullOrEmpty(t.scx) || string.IsNullOrEmpty(t.gwh) || string.IsNullOrEmpty(t.username));
+                if (q.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据修改失败"
+                        msg = "生产线、姓名、岗位不能为空"
                     });
+                }
+                else
+                {
+                    var ret = _ryxxservice.Modify(entitys);
+                    if (ret)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据修改成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据修改失败"
+                        });
+                    }
                 }
             }
             catch (Exception)
@@ -285,6 +328,7 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                     finfo.Delete();
                     foreach (DataRow item in dataTable.Rows)
                     {
+                        long rybh = _seqservice.Get_Seq_Number("seq_mes_rybh");
                         DateTime rsrq = DateTime.Today;
                         DateTime csrq = DateTime.Today.AddYears(-18);
                         DateTime.TryParse(item[11].ToString(), out rsrq);
@@ -294,7 +338,7 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                             gcdm = item[0].ToString(),
                             scx = item[1].ToString(),
                             gwh = item[6].ToString(),
-                            usercode = CheckUserCode(uid + no),
+                            usercode = rybh.ToString().PadLeft(6, '0'),
                             username = item[3].ToString(),
                             ryxb = item[4].ToString(),
                             password = "123456",
@@ -303,8 +347,9 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                             hgsg = "Y",
                             rsrq = rsrq,
                             csrq = csrq,
+                            scbz="N",
                             jmh = Guid.NewGuid().ToString().Replace("-", "")
-                        }); ;
+                        });
                         no++;
                     }
                     var ret = _importservice.NewImportData(list);
@@ -372,8 +417,9 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                         gwh = item[6].ToString(),
                         bzxx = item[7].ToString(),
                         hgsg = "Y",
+                        scbz="N",
                         rsrq = rsrq,
-                        csrq = csrq
+                        csrq = csrq,
                     }); 
                 }
                 finfo.Delete();

@@ -4,9 +4,10 @@
   operate_fnlist: [{
       label: '上传Pdf',
       btntype: 'upload',
-      action: 'http://localhost:52655/api/upload/dzgy_pdf',
+      action: 'http://172.16.201.125:7002/api/upload/dzgy_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
+			this.$loading().close();
           this.$message.success(response.msg);
           let rowid = response.extdata.rowkey;
           let finditem = this.$basepage.list.find(function (i) {
@@ -31,9 +32,10 @@
     }, {
       label: '上传视频',
       btntype: 'uploadvideo',
-      action: 'http://localhost:52655/api/upload/video',
+      action: 'http://172.16.201.125:7002/api/upload/video',
       callback: function (response, file) {
         if (response.code === 1) {
+			this.$loading().close();
           this.$message.success(response.msg);
           let rowid = response.extdata.rowkey;
           let finditem = this.$basepage.list.find(function (i) {
@@ -42,7 +44,6 @@
           if (finditem) {
             finditem.jwdx = file.size;
             finditem.gymc = file.name;
-            finditem.gybh = '';
             finditem.wjlj = response.files[0].fileid;
             finditem.scry = this.$store.getters.name;
             finditem.scsj = this.$parseTime(new Date());
@@ -58,7 +59,7 @@
       btntype: 'text'
     }
   ],
-  isbatoperate: true,
+  isbatoperate: false,
   isfresh: true,
   pagefuns: {
     add_handle: function () {
@@ -74,7 +75,7 @@
         wjlj: row.wjlj
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://localhost:52655/api/download/downloadpdf?wjlj=" + row.wjlj);
+          window.open("http://172.16.201.125:7002/api/download/downloadpdf?wjlj=" + row.wjlj);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -87,7 +88,7 @@
         wjlj: row.wjlj
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://localhost:52655/api/download/downloadpdf?wjlj=" + row.wjlj);
+          window.open("http://172.16.201.125:7002/api/download/downloadpdf?wjlj=" + row.wjlj);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -165,21 +166,34 @@
       label: '工艺编号',
       headeralign: 'center',
       align: 'center',
-      width: 100,
+      width: 150,
+	  overflowtooltip: true,
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'statusno',
       label: '产品',
       headeralign: 'center',
       align: 'center',
       width: 150,
+	  multiple:false,
+	  remote:function(q,_this,row){
+		  if(q){
+			  _this.$request('get','/lbj/baseinfo/wlbm_by_key',{key:q}).then(function(res){
+				 if(res.code === 1){
+					 row.remotelist = res.list;
+				 } else{
+					 return [];
+				 }
+			  });
+		  }
+	  }
     }, {
       coltype: 'string',
       prop: 'gymc',
       label: '工艺名称',
       headeralign: 'center',
       align: 'left',
-      width: 150,
+      width: 280,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -203,9 +217,10 @@
       align: 'left',
       width: 80,
       options: [{
-          label: '图纸',
-          value: '图纸'
-        }, {
+          label: '工艺',
+          value: '工艺'
+        },
+		{
           label: '视频',
           value: '视频'
         }
@@ -217,7 +232,7 @@
       headeralign: 'center',
       align: 'center',
       width: 140
-    },
+    }
   ],
   form: {
     gcdm: '9902',
@@ -226,9 +241,10 @@
     gymc: '',
     gyms: '',
     jwdx: '',
-    wjfl: '图纸',
+    wjfl: '工艺',
     scsj: '',
     wjlj: '',
+	remotelist:[],
     isdb: false,
     isedit: true,
   },
