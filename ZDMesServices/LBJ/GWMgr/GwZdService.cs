@@ -21,7 +21,7 @@ namespace ZDMesServices.LBJ.GWMgr
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append($"select rowid as rid, gcdm, scx, gwh, gwmc, gwlx, gwfl, glgwh, shbz, gzty, pcsip, bz, lrr, lrsj, shr, shsj, cjqxdl, dlsj, dlbbh from base_gwzd where 1=1 ");
+                sql.Append($"select rowid as rid, gcdm, scx, gwh, gwmc, gwlx,gwzlx, gwfl, glgwh, shbz, gzty, pcsip, bz, lrr, lrsj, shr, shsj, cjqxdl, dlsj, dlbbh from base_gwzd where 1=1 ");
                 StringBuilder sql_cnt = new StringBuilder();
                 sql_cnt.Append($"select count(*) from base_gwzd where 1=1 ");
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))

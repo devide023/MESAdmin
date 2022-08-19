@@ -18,6 +18,12 @@
       "properties": {
         "LBJConstr": "lbjmes"
       }
+    },
+    {
+      "type": "ZDMesModules.CD.CDGCModule, ZDMesModules",
+      "properties": {
+        "CDGCConstr": "cdgcmes"
+      }
     }
   ]
 }

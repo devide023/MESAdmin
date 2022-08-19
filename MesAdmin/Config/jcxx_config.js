@@ -95,6 +95,7 @@
     bz: '',
     lrr: '',
     lrsj: '',
+	useroptions:[],
     gwhoptions: [],
     isdb: false,
     isedit: true,
@@ -125,34 +126,43 @@
       },
       change_fn_name: function (_this, collist, val, row) {
         row.gwh = '';
+		row.usercode='';
         _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
           if (res.code === 1) {
             row.gwhoptions = res.list;
           }
         });
+		_this.$request('get', '/lbj/baseinfo/scx_ryxx?scx=' + val).then(function (res) {
+          if (res.code === 1) {
+            row.useroptions = res.list;
+          }
+        });
       },
       clear_fn_name: function (_this, row) {
         row.gwh = '';
+		row.usercode='';
       },
       options: []
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'usercode',
+	  dbprop: 'user_code',
       label: '账号',
       headeralign: 'center',
       align: 'center',
-      suggest: function (key, cb) {
-        this.$request('get', '/lbj/baseinfo/usercode', {
-          key: key
-        }).then(function (res) {
-          if (res.code === 1) {
-            cb(res.list)
-          } else {
-            this.$message.error(res.msg)
-          }
-        })
+      options: [],
+	  change_fn_name: function (_this, collist, val, row){
+		  var f = row.useroptions.filter(function(i){
+			 return i.value === val;
+		  });
+		  if(f.length>0){
+		  row.username = f[0].label;
+		  }
+	  },
+	  clear_fn_name: function (_this, row) {
+		row.username='';
       },
-      select_handlename: 'select_usercode_handle'
+	  relation:'useroptions'
     }, {
       coltype: 'string',
       prop: 'username',

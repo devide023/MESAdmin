@@ -16,5 +16,6 @@ namespace ZDMesInterfaces.LBJ
         /// </summary>
         /// <returns></returns>
         bool Valid<T>(string colname, object data);
+
     }
 }

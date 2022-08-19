@@ -9,9 +9,9 @@
       row.addtime = this.$parseTime(new Date());
       this.list.unshift(row);
     },
-	download_template_file:function(){
-		window.open('http://172.16.201.125:7002/template/lbj/员工基础数据.xlsx');
-	}
+    download_template_file: function () {
+      window.open('http://172.16.201.125:7002/template/lbj/员工基础数据.xlsx');
+    }
   },
   bat_btnlist: [{
       btntxt: '模板下载',
@@ -30,11 +30,9 @@
             vm.$loading().close();
             if (result.code === 1) {
               vm.$message.success(result.msg);
-            }
-			else if(result.code === 2){
-				vm.$message.warning(result.msg);
-			}
-			else if (result.code === 0) {
+            } else if (result.code === 2) {
+              vm.$message.warning(result.msg);
+            } else if (result.code === 0) {
               vm.$message.error(result.msg);
             }
             vm.getlist(vm.queryform);
@@ -63,7 +61,7 @@
       });
     },
     import_by_replace(_this, res) {
-		if (res.files.length > 0) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/ryxx/readxls_by_replace', {
@@ -72,11 +70,9 @@
             _this.$loading().close();
             if (result.code === 1) {
               _this.$message.success(result.msg);
-            }
-			else if(result.code === 2){
-				_this.$message.warning(result.msg);
-			}
-			else if (result.code === 0) {
+            } else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            } else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
             _this.getlist(_this.queryform);
@@ -87,9 +83,9 @@
       } else {
         _this.$loading().close();
       }
-	},
+    },
     import_by_zh(_this, res) {
-		if (res.files.length > 0) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/ryxx/readxls_by_zh', {
@@ -98,11 +94,9 @@
             _this.$loading().close();
             if (result.code === 1) {
               _this.$message.success(result.msg);
-            }
-			else if(result.code === 2){
-				_this.$message.warning(result.msg);
-			}
-			else if (result.code === 0) {
+            } else if (result.code === 2) {
+              _this.$message.warning(result.msg);
+            } else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
             _this.getlist(_this.queryform);
@@ -113,7 +107,7 @@
       } else {
         _this.$loading().close();
       }
-	},
+    },
   },
   fields: [{
       coltype: 'list',
@@ -139,7 +133,7 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
-	  change_fn_name: function (_this, collist, val, row) {
+      change_fn_name: function (_this, collist, val, row) {
         row.gwh = '';
         _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
           if (res.code === 1) {
@@ -147,9 +141,9 @@
           }
         });
       },
-	  clear_fn_name:function(_this,row){
-		  row.gwh = '';
-	  },
+      clear_fn_name: function (_this, row) {
+        row.gwh = '';
+      },
       options: []
     }, {
       coltype: 'string',
@@ -158,7 +152,7 @@
       label: '账号',
       headeralign: 'center',
       align: 'center',
-	  sortable:true,
+      sortable: true,
       width: 100,
     }, {
       coltype: 'string',
@@ -189,6 +183,13 @@
           value: '女'
         }
       ]
+    }, {
+      coltype: 'string',
+      prop: 'tel',
+      label: '手机号码',
+      headeralign: 'center',
+      align: 'center',
+	  width:150,
     }, {
       coltype: 'list',
       prop: 'rylx',
@@ -223,7 +224,7 @@
         url: '/lbj/baseinfo/gwzd'
       },
       options: [],
-	  relation:'gwhoptions',
+      relation: 'gwhoptions',
     }, {
       coltype: 'list',
       prop: 'bzxx',
@@ -313,6 +314,7 @@
     password: '123456',
     ryxb: '男',
     rylx: '操作工',
+	tel:'',
     gwh: '',
     bzxx: '白班',
     hgsg: 'Y',
@@ -320,7 +322,7 @@
     csrq: '',
     rsrq: '',
     scbz: 'N',
-	gwhoptions:[],
+    gwhoptions: [],
     isdb: false,
     isedit: true,
 

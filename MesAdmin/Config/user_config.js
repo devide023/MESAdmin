@@ -50,6 +50,14 @@
 	  width:200,
     },
 	{
+      coltype: 'string',
+      prop: 'tel',
+      label: '手机号码',
+      headeralign: 'center',
+      align: 'center',
+	  width:150,
+    },
+	{
       coltype: 'list',
       prop: 'role',
       label: '角色',
@@ -84,6 +92,7 @@
     status: 1,
     code: '',
     name: '',
+	tel:'',
     adduser: '',
     addtime: '',
 	role:[],

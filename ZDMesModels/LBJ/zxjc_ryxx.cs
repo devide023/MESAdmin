@@ -69,6 +69,10 @@ namespace ZDMesModels.LBJ
         ///</summary>
         public string scbz { get; set; }
         /// <summary>
+        /// 手机号码
+        /// </summary>
+        public string tel { get; set; }
+        /// <summary>
         /// 岗位选项
         /// </summary>
         public List<sys_column_options> gwhoptions { get; set; }

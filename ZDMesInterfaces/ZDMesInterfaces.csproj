@@ -71,7 +71,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZDMesInterceptor">
+    <Reference Include="ZDMesInterceptor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ZDMesInterceptor\bin\Debug\ZDMesInterceptor.dll</HintPath>
     </Reference>
     <Reference Include="ZDMesModels">
@@ -79,12 +80,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CDGC\IDjkjjb.cs" />
+    <Compile Include="CDGC\IGtjc.cs" />
+    <Compile Include="CDGC\IGtjc_Result.cs" />
     <Compile Include="Common\IDbOperate.cs" />
     <Compile Include="Common\IMenu.cs" />
     <Compile Include="Common\IMesMenuApi.cs" />
     <Compile Include="Common\IPageConfig.cs" />
     <Compile Include="Common\IRole.cs" />
     <Compile Include="Common\IUser.cs" />
+    <Compile Include="LBJ\App\IApp.cs" />
     <Compile Include="LBJ\BHDGL\IBHD.cs" />
     <Compile Include="LBJ\DaoJu\IDaoJu.cs" />
     <Compile Include="LBJ\DaoJu\IDjReport.cs" />
@@ -95,6 +100,7 @@
     <Compile Include="LBJ\IBaseInfo.cs" />
     <Compile Include="LBJ\ICheckData.cs" />
     <Compile Include="LBJ\IDbSeq.cs" />
+    <Compile Include="LBJ\IFormCheck.cs" />
     <Compile Include="LBJ\ImportData\IImportData.cs" />
     <Compile Include="LBJ\JTGL\IJTFP.cs" />
     <Compile Include="LBJ\RyMgr\IRyJn.cs" />

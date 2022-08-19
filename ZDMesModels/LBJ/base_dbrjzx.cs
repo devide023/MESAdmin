@@ -103,6 +103,10 @@ namespace ZDMesModels.LBJ
         public string rjrmr { get; set; }
         public decimal rjzt { get; set; }
         /// <summary>
+        /// 刃具使用位置
+        /// </summary>
+        public string rjwz { get; set; }
+        /// <summary>
         /// 刃具信息
         /// </summary>
         public base_rjxx baserjxx { get; set; }

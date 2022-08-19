@@ -1,4 +1,6 @@
-﻿using MesAdmin.Filters;
+﻿using Autofac;
+using Autofac.Integration.WebApi;
+using MesAdmin.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ;
 using ZDMesModels;
+using ZDMesServices.LBJ.CheckData;
 
 namespace MesAdmin.Controllers.Common
 {
@@ -20,40 +24,54 @@ namespace MesAdmin.Controllers.Common
             _userservice = userservice;
             _user = user;
         }
-        [HttpPost, Route("add")]
+        [HttpPost,CheckData,Route("add")]
         public IHttpActionResult Add(List<mes_user_entity> entitys)
         {
             try
             {
                 IEnumerable<mes_user_entity> noklist = new List<mes_user_entity>();
-                var ret = _userservice.Add(entitys,out noklist);
-                if (ret > 0)
+                var errtel = entitys.Where(t => !ZDToolHelper.Tool.CheckTelNumber(t.tel));
+                if (errtel.Count() > 0)
                 {
-                    if (noklist.Count() == 0)
-                    {
-                        return Json(new sys_result()
-                        {
-                            code = 1,
-                            msg = "数据保存成功"
-                        });
-                    }
-                    else
-                    {
-                        return Json(new
-                        {
-                            code = 2,
-                            msg = "数据保存失败",
-                            noklist = noklist
-                        });
-                    }
-                }
-                else
-                {
+                    string temp = string.Empty;
+                    errtel.ToList().ForEach(t => temp = temp + t.tel+",");
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据保存失败"
+                        msg = $"手机号{temp}不正确"
                     });
+                }
+                else
+                {
+                    var ret = _userservice.Add(entitys, out noklist);
+                    if (ret > 0)
+                    {
+                        if (noklist.Count() == 0)
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 1,
+                                msg = "数据保存成功"
+                            });
+                        }
+                        else
+                        {
+                            return Json(new
+                            {
+                                code = 2,
+                                msg = "数据保存失败",
+                                noklist = noklist
+                            });
+                        }
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据保存失败"
+                        });
+                    }
                 }
             }
             catch (Exception)
@@ -91,7 +109,7 @@ namespace MesAdmin.Controllers.Common
                 throw;
             }
         }
-        [HttpPost, Route("edit")]
+        [HttpPost,CheckData, Route("edit")]
         public IHttpActionResult Edit(List<mes_user_entity> entitys)
         {
             try

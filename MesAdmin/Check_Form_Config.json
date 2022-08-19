@@ -1,0 +1,87 @@
+[
+  {
+    "model": "ZDMesModels.mes_user_entity,ZDMesModels",
+    "fields": [
+      {
+        "colname": "name",
+        "collabel": "用户名"
+      },
+      {
+        "colname": "code",
+        "collabel": "用户编码"
+      },
+      {
+        "colname": "tel",
+        "collabel": "手机号码"
+      },
+      {
+        "colname": "role",
+        "collabel": "角色"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.LBJ.zxjc_ryxx,ZDMesModels",
+    "fields": [
+      {
+        "colname": "scx",
+        "collabel": "生产线"
+      },
+      {
+        "colname": "tel",
+        "collabel": "手机号码"
+      },
+      {
+        "colname": "gwh",
+        "collabel": "岗位"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.LBJ.zxjc_ryxx_jn,ZDMesModels",
+    "fields": [
+      {
+        "colname": "scx",
+        "collabel": "生产线"
+      },
+      {
+        "colname": "usercode",
+        "collabel": "人员账号"
+      },
+      {
+        "colname": "gwh",
+        "collabel": "岗位"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.LBJ.App_Menu,ZDMesModels",
+    "fields": [
+      {
+        "colname": "name",
+        "collabel": "菜单名称"
+      },
+      {
+        "colname": "status",
+        "collabel": "状态"
+      },
+      {
+        "colname": "seq",
+        "collabel": "菜单权重"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.LBJ.app_role,ZDMesModels",
+    "fields": [
+      {
+        "colname": "name",
+        "collabel": "角色名称"
+      },
+      {
+        "colname": "status",
+        "collabel": "状态"
+      }
+    ]
+  }
+]

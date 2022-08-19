@@ -265,7 +265,8 @@
     <Reference Include="ZDMesModels">
       <HintPath>..\ZDMesModels\bin\Debug\ZDMesModels.dll</HintPath>
     </Reference>
-    <Reference Include="ZDMesModules">
+    <Reference Include="ZDMesModules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ZDMesModules\bin\Debug\ZDMesModules.dll</HintPath>
     </Reference>
     <Reference Include="ZDMesServices">
@@ -316,6 +317,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CDGC\GTJC\GTJCBaseDataController.cs" />
+    <Compile Include="Controllers\CDGC\GTJC\GTJCDataController.cs" />
+    <Compile Include="Controllers\CDGC\JJBGL\DJKJJBController.cs" />
+    <Compile Include="Controllers\CDGC\JJBGL\GTJJBController.cs" />
+    <Compile Include="Controllers\CDGC\RYGL\RYGLController.cs" />
     <Compile Include="Controllers\Common\DownLoadController.cs" />
     <Compile Include="Controllers\Common\LogController.cs" />
     <Compile Include="Controllers\Common\MenuApiController.cs" />
@@ -326,6 +332,8 @@
     <Compile Include="Controllers\Common\LoginController.cs" />
     <Compile Include="Controllers\Common\RoleController.cs" />
     <Compile Include="Controllers\Common\UserController.cs" />
+    <Compile Include="Controllers\LBJ\App\AppMenuController.cs" />
+    <Compile Include="Controllers\LBJ\App\AppRoleController.cs" />
     <Compile Include="Controllers\LBJ\BaseInfo\BaseInfoController.cs" />
     <Compile Include="Controllers\LBJ\BHDGL\BHDJLController.cs" />
     <Compile Include="Controllers\LBJ\BHDGL\BHDXXController.cs" />
@@ -368,6 +376,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Config\appmenu_config.js" />
+    <Content Include="Config\approle_config.js" />
+    <Content Include="Config\auditjt_config.js" />
     <Content Include="Config\bhdjl_config.js" />
     <Content Include="Config\bhdxx_config.js" />
     <Content Include="Config\daojurenjuzx_config.js" />
@@ -403,6 +414,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Error.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -442,6 +454,10 @@
     <Content Include="Import_Config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Check_Form_Config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CDGC_module_config.json" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -486,6 +502,7 @@
     <Folder Include="Controllers\MF\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
+    <Folder Include="Template\CDGC\" />
     <Folder Include="Upload\Excel\" />
     <Folder Include="Upload\Image\" />
     <Folder Include="Upload\PDF\" />

@@ -170,6 +170,7 @@
       sortable: true,
     }, {
       coltype: 'list',
+	  searchtype:'string',
       prop: 'usercode',
       dbprop: 'user_code',
       label: '账号',
@@ -197,6 +198,7 @@
       width: 80,
       headeralign: 'center',
       align: 'center',
+	  searchable:false,
     }, {
       coltype: 'string',
       prop: 'jnxx',

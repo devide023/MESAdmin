@@ -28,6 +28,10 @@ namespace ZDMesModels.LBJ
         /// 综合导入规则，更新字段
         /// </summary>
         public List<string> updatecol { get; set; }
+        /// <summary>
+        /// 替换方式：1：先删除再新增，2：修改字段
+        /// </summary>
+        public int replacetype { get; set; } = 1;
     }
 
 }

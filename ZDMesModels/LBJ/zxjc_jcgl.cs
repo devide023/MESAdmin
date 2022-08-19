@@ -82,6 +82,10 @@ namespace ZDMesModels.LBJ
         /// 岗位列选项
         /// </summary>
         public List<sys_column_options> gwhoptions { get; set; }
+        /// <summary>
+        /// 生产线人员选项
+        /// </summary>
+        public List<sys_column_options> useroptions { get; set; }
     }
 
     public class zxjc_jcgl_maper : ClassMapper<zxjc_jcgl>
@@ -92,6 +96,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.usercode).Column("user_code");
             Map(t => t.username).Ignore();
             Map(t => t.gwhoptions).Ignore();
+            Map(t => t.useroptions).Ignore();
             AutoMap();
         }
     }

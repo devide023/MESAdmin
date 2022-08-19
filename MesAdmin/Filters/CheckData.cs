@@ -7,15 +7,33 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using ZDMesInterfaces.LBJ;
 using ZDMesServices.LBJ.CheckData;
+using System.IO;
+using Newtonsoft.Json;
+using ZDMesModels;
+using System.Text;
+using System.Web.Http.Results;
+using System.Net.Http;
+using System.Net;
+using ZDMesServices;
+using Autofac.Integration.WebApi;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Web.Http;
+using Autofac;
 
 namespace MesAdmin.Filters
 {
     public class CheckDataAttribute : ActionFilterAttribute
     {
+        IFormCheck _formcheckservice;
+
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             try
             {
+                var requestScope = actionContext.Request.GetDependencyScope();
+                _formcheckservice = requestScope.GetService(typeof(IFormCheck)) as IFormCheck;
+                sys_result result = new sys_result();
                 var argdic = actionContext.ActionArguments;
                 foreach (var item in argdic.Keys)
                 {
@@ -27,17 +45,13 @@ namespace MesAdmin.Filters
                         switch (typename)
                         {
                             case "List`1":
-                                //var list = argvalue as IEnumerable<object>;
-                                //var n = list.First().GetType().FullName+ ",ZDMesModels";
-                                //Type t = Type.GetType("ZDMesInterfaces.LBJ.ICheckData,ZDMesInterfaces");
-                                //Type[] params_type = new Type[2];
-                                //params_type[0] = Type.GetType("System.String");
-                                //params_type[1] = Type.GetType("System.Object");
-                                //Object[] params_obj = new Object[2];
-                                //params_obj[0] = n;
-                                //params_obj[1] = list;
-                                //MethodInfo mi = t.GetMethod("Valid", params_type);
-                                //mi.MakeGenericMethod(new Type[] { Type.GetType(n) });
+                                var list = argvalue as IEnumerable<object>;
+                                var r = _formcheckservice.Check_Form_Data(list.ToList(), out result);
+                                if (!r)
+                                {
+                                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, new { code = result.code, result.msg }, "application/json");
+                                    break;
+                                }
                                 break;
                             default:
                                 break;

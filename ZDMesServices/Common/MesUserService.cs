@@ -470,17 +470,12 @@ namespace ZDMesServices.Common
                         using (var transaction = db.BeginTransaction())
                         {
                             var p = new { id = entitys.Select(t => t.id) };
+                            var usercode = entitys.Select(t => t.code).ToList();
                             var affectedRows1 = db.Execute("delete from mes_user_entity where id in :id", p, transaction: transaction);
                             var affectedRows2 = db.Execute("delete from mes_user_role where userid in :id", p, transaction: transaction);
+                            var affectedRows3 = db.Execute("delete from app_role_user where usercode in :usercode", new { usercode = usercode }, transaction: transaction);
                             transaction.Commit();
-                            if (affectedRows1 != -1 && affectedRows2 != -1)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
+                            return true;
                         }
                     }
                     finally
@@ -502,7 +497,7 @@ namespace ZDMesServices.Common
                 using (var db = new OracleConnection(ConString))
                 {
                     StringBuilder sql = new StringBuilder();
-                    sql.Append("select ta.id,ta.status, ta.code, ta.name, ta.pwd, ta.token, ta.headimg, ta.adduser,ta.addusername, ta.addtime, tb.id as roleid,tb.name as rolename");
+                    sql.Append("select ta.id,ta.status, ta.code,ta.tel, ta.name, ta.pwd, ta.token, ta.headimg, ta.adduser,ta.addusername, ta.addtime, tb.id as roleid,tb.name as rolename");
                     sql.Append(" from MES_USER_ENTITY ta, (select t2.id,t2.name,t1.userid from mes_user_role t1,mes_role_entity t2 where t1.roleid = t2.id) tb");
                     sql.Append(" where  ta.id = tb.userid(+) ");
                     //sql.Append(" and tb.roleid = tc.id ");

@@ -41,6 +41,7 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             {
                 int resultcount = 0;
                 var gwzdlist = _baseinfo.GetGwZd();
+                var ryxxlist = _baseinfo.RyxxList();
                 var list = _jcglservice.GetList(parm, out resultcount);
                 foreach (var item in list)
                 {
@@ -55,6 +56,13 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                         }
                     }
                     item.gwhoptions = options;
+                    var useroptions = new List<sys_column_options>();
+                    var ryq = ryxxlist.Where(t => t.scx == item.scx);
+                    foreach (var o in ryq)
+                    {
+                        useroptions.Add(new sys_column_options { label = o.username, value = o.usercode });
+                    }
+                    item.useroptions = useroptions;
                 }
                 return Json(new sys_search_result()
                 {
@@ -86,7 +94,7 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 }
                 else
                 {
-                    var q = entitys.Where(t => !_cks.Valid<zxjc_jcgl>("user_code", t.usercode)).ToList();
+                    var q = entitys.Where(t => !_cks.Valid<zxjc_ryxx>("user_code", t.usercode)).ToList();
                     if (q.Count > 0)
                     {
                         string codes = string.Empty;
@@ -170,7 +178,7 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 }
                 else
                 {
-                    var q = entitys.Where(t => !_cks.Valid<zxjc_jcgl>("user_code", t.usercode)).ToList();
+                    var q = entitys.Where(t => !_cks.Valid<zxjc_ryxx>("user_code", t.usercode)).ToList();
                     if (q.Count > 0)
                     {
                         string codes = string.Empty;

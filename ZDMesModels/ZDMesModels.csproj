@@ -63,7 +63,17 @@
   <ItemGroup>
     <Compile Include="base_ftpfilepath.cs" />
     <Compile Include="base_page_config.cs" />
+    <Compile Include="CDGC\zxjc_base_gtjc.cs" />
+    <Compile Include="CDGC\zxjc_djkjjb_bill.cs" />
+    <Compile Include="CDGC\zxjc_djkjjb_detail.cs" />
+    <Compile Include="CDGC\zxjc_djkjjb_hx_detail.cs" />
+    <Compile Include="CDGC\zxjc_gtjc_bill.cs" />
+    <Compile Include="CDGC\zxjc_gtjc_detail.cs" />
+    <Compile Include="CDGC\zxjc_ryxx.cs" />
     <Compile Include="LBJ\ad_bjxx.cs" />
+    <Compile Include="LBJ\App_Menu.cs" />
+    <Compile Include="LBJ\app_role.cs" />
+    <Compile Include="LBJ\app_user.cs" />
     <Compile Include="LBJ\base_bhdxx.cs" />
     <Compile Include="LBJ\base_cnc.cs" />
     <Compile Include="LBJ\base_dbrjzx.cs" />
@@ -81,6 +91,7 @@
     <Compile Include="LBJ\base_wlxx.cs" />
     <Compile Include="LBJ\dbrjlyform.cs" />
     <Compile Include="LBJ\dbrjly_form.cs" />
+    <Compile Include="LBJ\form_app_role_user.cs" />
     <Compile Include="LBJ\lbj_qms_4mbhd.cs" />
     <Compile Include="LBJ\pp_zpjh.cs" />
     <Compile Include="LBJ\sys_dbrjly.cs" />
@@ -118,6 +129,7 @@
     <Compile Include="sys_changpwd_form.cs" />
     <Compile Include="sys_column_options.cs" />
     <Compile Include="sys_field_info.cs" />
+    <Compile Include="sys_form_check.cs" />
     <Compile Include="sys_import_result.cs" />
     <Compile Include="sys_login_result.cs" />
     <Compile Include="mes_menu_entity.cs" />

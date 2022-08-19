@@ -111,13 +111,16 @@ namespace ZDMesServices.LBJ.ImportData
                 sys_import_result<T> ret = new sys_import_result<T>();
                 List<T> oklist = new List<T>();
                 List<T> dellist = new List<T>();
+                List<T> uplist = new List<T>();
                 string configpath = HttpContext.Current.Server.MapPath("~/Import_Config.json");
                 ConfigHelper confighelper = new ConfigHelper();
                 confighelper.SetConfigPath = configpath;
                 var configlist = confighelper.Read_Import_LogConfig();
                 string tbname = string.Empty;
                 tbname = typeof(T).Name;
+                var replacecnf = configlist.Where(t => t.tablename == tbname).FirstOrDefault();
                 var rules = configlist.Where(t => t.tablename == tbname).FirstOrDefault().replace;
+                var upcols = configlist.Where(t => t.tablename == tbname).FirstOrDefault().updatecol;
                 if (rules.Count > 0)
                 {
                     Type p = Type.GetType(typeof(T).FullName + ",ZDMesModels");
@@ -134,34 +137,95 @@ namespace ZDMesServices.LBJ.ImportData
                     {
                         delsql.Append($" and {item} =  :{item} ");
                     }
+                    StringBuilder updatesql = new StringBuilder();
+                    updatesql.Append($"update {tbname} set ");
+                    foreach (var item in upcols)
+                    {
+                        updatesql.Append($" {item} =  :{item},");
+                    }
+                    updatesql.Remove(sql.Length - 1, 1);
+                    updatesql.Append(" where 1=1 ");
+                    foreach (var item in rules)
+                    {
+                        sql.Append($" and {item} =  :{item} ");
+                    }
                     using (var db = new OracleConnection(ConString))
                     {
                         try
                         {
                             InitDB(db);
-                            //删除数据
-                            foreach (var item in data)
+                            //先删后加模式
+                            if (replacecnf.replacetype == 1)
                             {
-                                DynamicParameters dyp = new DynamicParameters();
-                                foreach (var col in rules)
+                                //删除数据
+                                foreach (var item in data)
                                 {
-                                    var cz = pi.Where(t => t.Name == col);
-                                    if (cz.Count() > 0)
+                                    DynamicParameters dyp = new DynamicParameters();
+                                    foreach (var col in rules)
                                     {
-                                        var colval = cz.First().GetValue(item);
-                                        dyp.Add($":{col}", colval);
+                                        var cz = pi.Where(t => t.Name == col);
+                                        if (cz.Count() > 0)
+                                        {
+                                            var colval = cz.First().GetValue(item);
+                                            dyp.Add($":{col}", colval);
+                                        }
+                                        else
+                                        {
+                                            dyp.Add($":{col}", null);
+                                        }
                                     }
-                                    else
+                                    dellist.AddRange(db.Query<T>(delsql.ToString(), dyp));
+                                    db.Execute(sql.ToString(), dyp);
+                                }
+                                Db.Insert<T>(data);
+                                ret.oklist = data;
+                                ret.dellist = dellist;
+                                return ret;
+                            }//更新模式
+                            else if (replacecnf.replacetype == 2)
+                            {
+                                //修改数据
+                                foreach (var item in data)
+                                {
+                                    DynamicParameters dyp = new DynamicParameters();
+                                    //更新字段
+                                    foreach (var col in upcols)
                                     {
-                                        dyp.Add($":{col}", null);
+                                        var cz = pi.Where(t => t.Name == col);
+                                        if (cz.Count() > 0)
+                                        {
+                                            var colval = cz.First().GetValue(item);
+                                            dyp.Add($":{col}", colval);
+                                        }
+                                        else
+                                        {
+                                            dyp.Add($":{col}", null);
+                                        }
+                                    }
+                                    //查询条件
+                                    foreach (var col in rules)
+                                    {
+                                        var cz = pi.Where(t => t.Name == col);
+                                        if (cz.Count() > 0)
+                                        {
+                                            var colval = cz.First().GetValue(item);
+                                            dyp.Add($":{col}", colval);
+                                        }
+                                        else
+                                        {
+                                            dyp.Add($":{col}", null);
+                                        }
+                                    }
+                                    var r = db.Execute(updatesql.ToString(), dyp);
+                                    //存在记录
+                                    if (r > 0)
+                                    {
+                                        uplist.Add(item);
                                     }
                                 }
-                                dellist.AddRange(db.Query<T>(delsql.ToString(), dyp));
-                                db.Execute(sql.ToString(), dyp);
+                                ret.oklist = data;
+                                ret.dellist = uplist;
                             }
-                            Db.Insert<T>(data);
-                            ret.oklist = data;
-                            ret.dellist = dellist;
                             return ret;
                         }
                         finally

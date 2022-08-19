@@ -129,12 +129,13 @@
       label: '生产线',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 100,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
+	  sortable:true,
       options: []
     }, {
       coltype: 'string',
@@ -143,6 +144,7 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
+	  sortable:true,
       overflowtooltip: true,
     }, {
       coltype: 'list',
@@ -156,11 +158,33 @@
         }, {
           label: '技改',
           value: '技改'
-        }, {
-          label: '作业要求',
-          value: '作业要求'
+        }, 		
+		{
+          label: '清单',
+          value: '清单'
+        },
+		{
+          label: '通知单',
+          value: '通知单'
+        },
+		{
+          label: '作业文件',
+          value: '作业文件'
+        },
+		{
+          label: '质量警示',
+          value: '质量警示'
+        },
+		{
+          label: '内控标准',
+          value: '内控标准'
+        },
+		{
+          label: '发放明细',
+          value: '发放明细'
         }
-      ]
+      ],
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'jcmc',
@@ -169,6 +193,7 @@
       align: 'center',
       width: 150,
       overflowtooltip: true,
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'jcms',
@@ -182,14 +207,16 @@
       label: '有效日期开始',
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 150,
+	  sortable:true,
     }, {
       coltype: 'date',
       prop: 'yxqx2',
       label: '有效日期结束',
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 150,
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'jwdx',
@@ -208,6 +235,8 @@
       label: '上传时间',
       headeralign: 'center',
       align: 'center',
+	  width:100,
+	  sortable:true,
       overflowtooltip: true,
     }, {
       coltype: 'bool',

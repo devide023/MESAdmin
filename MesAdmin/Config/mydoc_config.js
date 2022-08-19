@@ -74,9 +74,30 @@
         }, {
           label: '技改',
           value: '技改'
-        }, {
-          label: '作业要求',
-          value: '作业要求'
+        }, 		
+		{
+          label: '清单',
+          value: '清单'
+        },
+		{
+          label: '通知单',
+          value: '通知单'
+        },
+		{
+          label: '作业文件',
+          value: '作业文件'
+        },
+		{
+          label: '质量警示',
+          value: '质量警示'
+        },
+		{
+          label: '内控标准',
+          value: '内控标准'
+        },
+		{
+          label: '发放明细',
+          value: '发放明细'
         }
       ]
     }, {

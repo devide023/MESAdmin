@@ -115,10 +115,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZDMesInterceptor">
+    <Reference Include="ZDMesInterceptor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ZDMesInterceptor\bin\Debug\ZDMesInterceptor.dll</HintPath>
     </Reference>
-    <Reference Include="ZDMesInterfaces">
+    <Reference Include="ZDMesInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ZDMesInterfaces\bin\Debug\ZDMesInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="ZDMesModels">
@@ -130,10 +132,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDao.cs" />
+    <Compile Include="CDGC\GTJC\GTJCBasedataService.cs" />
+    <Compile Include="CDGC\GTJC\GTJCDataService.cs" />
+    <Compile Include="CDGC\JJBGL\DJKJJBService.cs" />
+    <Compile Include="CDGC\JJBGL\GTJJBService.cs" />
+    <Compile Include="CDGC\RYGL\RyxxService.cs" />
     <Compile Include="Common\MesMenuApiService.cs" />
     <Compile Include="Common\MesSeqService.cs" />
     <Compile Include="Common\OperateLogService.cs" />
     <Compile Include="Common\PageConfigService.cs" />
+    <Compile Include="LBJ\App\AppMenuService.cs" />
+    <Compile Include="LBJ\App\AppRoleService.cs" />
+    <Compile Include="LBJ\CheckData\Form_Check_Service.cs" />
     <Compile Include="LBJ\BaseInfo\BaseInfoService.cs" />
     <Compile Include="LBJ\BHDGL\BHDJLService.cs" />
     <Compile Include="LBJ\BHDGL\BHDXXService.cs" />

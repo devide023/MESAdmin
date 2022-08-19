@@ -31,9 +31,13 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string gwlx { get; set; }
         /// <summary>
+        /// 岗位子类型
+        /// </summary>
+         public string gwzlx { get; set; }
+        /// <summary>
         /// 岗位分类（人工、自动） 
         ///</summary>
-         public string gwfl { get; set; }
+        public string gwfl { get; set; }
         /// <summary>
         /// 管理该岗位的岗位号 
         ///</summary>

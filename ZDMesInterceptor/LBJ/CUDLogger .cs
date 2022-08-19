@@ -1,16 +1,12 @@
 ﻿using Castle.DynamicProxy;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using Dapper;
-using System.Data;
 using Newtonsoft.Json;
 using System.Configuration;
 using Oracle.ManagedDataAccess.Client;
-using ZDToolHelper;
-using ZDMesInterfaces.Common;
 using DapperExtensions;
 using DapperExtensions.Mapper;
 using System.Reflection;

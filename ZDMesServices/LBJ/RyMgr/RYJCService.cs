@@ -19,6 +19,55 @@ namespace ZDMesServices.LBJ.RyMgr
         {
 
         }
+        public override int Add(IEnumerable<zxjc_jcgl> entitys)
+        {
+            int index = 0;
+            StringBuilder sql = new StringBuilder();
+            sql.Append("insert into zxjc_jcgl ");
+            sql.Append(" (gcdm, user_code, scx, bzxx, gwh, jcxx, jcly, sl, jcje, fsrq, khr, khbm, lx, bz, lrr, lrsj) ");
+            sql.Append(" values ");
+            sql.Append(" (:gcdm, :usercode, :scx, :bzxx, :gwh, :jcxx, :jcly, :sl, :jcje, :fsrq, :khr, :khbm, :lx, :bz, :lrr, :lrsj) ");
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var item in entitys)
+                                {
+                                    int cnt = db.Execute(sql.ToString(), item, trans);
+                                    if (cnt > 0)
+                                    {
+                                        index++;
+                                    }
+                                }
+                                trans.Commit();
+                                return index;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public override IEnumerable<zxjc_jcgl> GetList(sys_page parm, out int resultcount)
         {
             try

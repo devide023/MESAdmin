@@ -30,9 +30,9 @@ namespace ZDMesServices.LBJ.DAOJU
             {
                 StringBuilder sql = new StringBuilder();
                 sql.Append(" insert into base_dbrjzx ");
-                sql.Append(" (gcdm, dbh, scx, sbbh, rjlx, rjbzsm, rjazsm, rjdqsm, rjazjgs, dqjgs, dblysj, dblyr, rjlysj, rjlyr, rjrmcs, rjid, cxz, gwh) ");
+                sql.Append(" (gcdm, dbh, scx, sbbh, rjlx, rjbzsm, rjazsm, rjdqsm, rjazjgs, dqjgs, dblysj, dblyr, rjlysj, rjlyr, rjrmcs, rjid, cxz, gwh,rjwz) ");
                 sql.Append(" values  ");
-                sql.Append(" (:gcdm, :dbh, :scx, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjid, :cxz, :gwh) ");
+                sql.Append(" (:gcdm, :dbh, :scx, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjid, :cxz, :gwh,(select bz FROM base_rjxx where id = :rjid and rownum <2)) ");
                 return sql;
             }
         }
@@ -60,7 +60,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 sql.Append(" insert into lbj_qms_4mbhd ");
                 sql.Append(" (id, scx, cjrmc, cjsj, jt, rwzt,djffrymc,gzxx,f,gcdm, gwh, trig_type, change_type)");
                 sql.Append(" values ");
-                sql.Append("(:id, :scx, :cjrmc, sysdate, :sbbh, '创建中',:djffr,:gzxx,:f,'9902', :gwh, 1, 2)");
+                sql.Append("(:id, :scx, :cjrmc, sysdate, :sbbh, '00',:djffr,:gzxx,:f,'9902', :gwh, 1, 2)");
                 return sql;
             }
         }
@@ -116,7 +116,7 @@ namespace ZDMesServices.LBJ.DAOJU
         public override IEnumerable<base_dbrjzx> GetList(sys_page parm, out int resultcount)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append("select ta.gcdm, ta.dbh, ta.scx, ta.sbbh, ta.rjlx, ta.rjbzsm, ta.rjazsm, ta.rjdqsm, ta.rjazjgs, ta.dqjgs, ta.dblysj, ta.dblyr, ta.rjlysj, ta.rjlyr, ta.rjrmcs, ta.rjzhrmsj, ta.id, ta.rjid, ta.cxz,round((ta.rjdqsm / ta.rjbzsm) * 100, 2) as rjzt,");
+            sql.Append("select ta.gcdm, ta.dbh, ta.scx, ta.sbbh, ta.rjlx, ta.rjbzsm, ta.rjazsm, ta.rjdqsm, ta.rjazjgs, ta.dqjgs, ta.dblysj, ta.dblyr, ta.rjlysj, ta.rjlyr, ta.rjrmcs, ta.rjzhrmsj, ta.id, ta.rjid, ta.cxz,round((ta.rjdqsm / ta.rjbzsm) * 100, 2) as rjzt,ta.rjwz,");
             sql.Append(" tb.dbh as basedbh,tb.dblx,tb.dbmc,tb.dbzt,tb.bz as dbxxbz, ");
             sql.Append(" tc.id as rjxxid,tc.rjmc,tc.bz as rjxxbz,");
             sql.Append(" td.sbbh as basesbbh,td.sbmc, td.gwh, td.sblx, td.ljlx, td.txfs, td.ip, td.port, td.sfky, td.sflj, td.bz as sbxxbz,td.glgwh ");
@@ -345,6 +345,16 @@ namespace ZDMesServices.LBJ.DAOJU
                                         bzsm = rjxxobj.rjbzsm;
                                         var ret = db.Execute(sql.ToString(), new { id = item, bzsm = bzsm, rjrmr = _u.name }, trans);
                                         db.Execute(update_ls_sql.ToString(),new { lsid = hisobj.id,rjrmr = _u.name }, trans);
+                                        db.Execute(Inser_BHD_Sql.ToString(), new {
+                                            id = Guid.NewGuid().ToString().Replace("-", ""),
+                                            scx = zxobj.scx,
+                                            cjrmc = zxobj.dblyr,
+                                            djffr = _u.name,
+                                            sbbh = zxobj.sbbh,
+                                            gzxx = $"刃具刃磨:{zxobj.rjlx}",
+                                            f = "0007",
+                                            gwh = zxobj.gwh
+                                        }, trans);
                                     }
                                 }
                                 trans.Commit();
@@ -815,8 +825,8 @@ namespace ZDMesServices.LBJ.DAOJU
                                                 cjrmc = obj.dblyr,
                                                 djffr = UserInfo.name,
                                                 sbbh = obj.sbbh,
-                                                gzxx="毛刺",
-                                                f="刀具更换",
+                                                gzxx=$"原刃具:{currentobj.rjlx}更换为:{obj.rjlx}",
+                                                f= "0006",
                                                 gwh = obj.gwh
                                             }, trans);
                                         }
@@ -987,8 +997,8 @@ namespace ZDMesServices.LBJ.DAOJU
                                         cjrmc = zxobj.dblyr,
                                         djffr = UserInfo.name,
                                         sbbh = zxobj.sbbh,
-                                        gzxx = "毛刺",
-                                        f = "刀具更换",
+                                        gzxx = $"领用刃具:{zxobj.rjlx}",
+                                        f = "0006",
                                         gwh = zxobj.gwh
                                     }, trans);
                                 }
@@ -1120,8 +1130,8 @@ namespace ZDMesServices.LBJ.DAOJU
                                         cjrmc = item.dblyr,
                                         djffr = UserInfo.name,
                                         sbbh = item.sbbh,
-                                        gzxx = "刃具损坏",
-                                        f = "刀具更换",
+                                        gzxx = $"以旧换新刃具类型:{item.rjlx}",
+                                        f = "0006",
                                         gwh = item.gwh
                                     }, trans);
                                 }

@@ -17,7 +17,8 @@ namespace MesAdmin.Tests.Controllers
         {
             try
             {
-                
+                var t = ZDToolHelper.Tool.CheckTelNumber("13272712304");
+                System.Console.WriteLine(t);
             }
             catch (System.Exception e)
             {

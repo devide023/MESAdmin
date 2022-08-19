@@ -32,6 +32,7 @@ namespace ZDMesServices.Common
                 sqlcol.Append("select count(id) FROM mes_menu_entity where pid=:pid and menutype = '04' and name = :name");
                 StringBuilder sqlbat = new StringBuilder();
                 sqlbat.Append("select count(id) FROM mes_menu_entity where pid = :pid and menutype = '05' and name = :name");
+                var root = entitys.Where(t => t.menutype == "01");
                 var pagelist = entitys.Where(t => t.menutype == "02");
                 var funlist = entitys.Where(t => t.menutype == "03");
                 var collist = entitys.Where(t => t.menutype == "04");
@@ -41,6 +42,15 @@ namespace ZDMesServices.Common
                     try
                     {
                         InitDB(db);
+                        foreach (var item in root)
+                        {
+                            var cnt = db.ExecuteScalar<int>("select count(id) FROM mes_menu_entity where menutype = '01' and routepath = :routepath ", new { routepath = item.routepath });
+                            if (cnt == 0)
+                            {
+                                Db.Insert<mes_menu_entity>(item);
+                                oklist.Add(item);
+                            }
+                        }
                         foreach (var item in pagelist)
                         {
                             var cnt = db.ExecuteScalar<int>(sql.ToString(), new { routepath = item.routepath });

@@ -3,6 +3,7 @@
     "tablename": "base_dbxx",
     "xinzeng": [ "dbh" ],
     "replace": [ "dbh" ],
+    "replacetype": 1,
     "zhonghe": [ "dbh" ],
     "updatecol": [ "dbmc", "dblx", "dbzt", "bz" ]
   },
@@ -10,6 +11,7 @@
     "tablename": "base_rjxx",
     "xinzeng": [ "rjlx" ],
     "replace": [ "rjlx" ],
+    "replacetype": 1,
     "zhonghe": [ "rjlx", "rjbzsm" ],
     "updatecol": [ "rjmc", "rjbzsm", "bz" ]
 
@@ -18,6 +20,7 @@
     "tablename": "base_dbrjgx",
     "xinzeng": [ "dbh", "cpzt", "djlx" ],
     "replace": [ "cpzt" ],
+    "replacetype": 1,
     "zhonghe": [ "dbh", "cpzt", "djlx" ],
     "updatecol": [ "dbh", "cpzt", "djlx" ]
   },
@@ -25,20 +28,23 @@
     "tablename": "base_dbrjzx",
     "xinzeng": [ "scx", "dbh", "sbbh", "rjlx" ],
     "replace": [ "scx" ],
+    "replacetype": 1,
     "zhonghe": [ "scx", "dbh", "sbbh", "rjlx" ],
     "updatecol": [ "rjlyr", "dblyr" ]
   },
   {
     "tablename": "base_rjsmxh",
     "xinzeng": [ "scx", "sbbh", "cpzt", "rjlx" ],
-    "replace": [ "scx","sbbh" ],
+    "replace": [ "scx", "sbbh" ],
+    "replacetype": 1,
     "zhonghe": [ "scx", "sbbh", "cpzt", "rjlx" ],
-    "updatecol": [ "mjxhsm", "scx","sbbh","cpzt","rjlx" ]
+    "updatecol": [ "mjxhsm", "scx", "sbbh", "cpzt", "rjlx" ]
   },
   {
     "tablename": "zxjc_ryxx",
     "xinzeng": [ "user_code" ],
     "replace": [ "user_code" ],
+    "replacetype": 2,
     "zhonghe": [ "user_code" ],
     "updatecol": [ "scx", "rylx", "gwh", "bzxx", "ryxb", "csrq", "rsrq" ]
   },
@@ -46,6 +52,7 @@
     "tablename": "zxjc_ryxx_jn",
     "xinzeng": [ "user_code", "scx", "gwh" ],
     "replace": [ "user_code" ],
+    "replacetype": 1,
     "zhonghe": [ "user_code", "scx", "gwh" ],
     "updatecol": [ "jnxx", "jnfl", "jnsj", "jnsld" ]
   },
@@ -60,6 +67,7 @@
     "tablename": "base_sbwb",
     "xinzeng": [ "scx", "sbbh", "wbxx" ],
     "replace": [ "scx", "sbbh" ],
+    "replacetype": 1,
     "zhonghe": [ "scx", "sbbh", "wbxx" ],
     "updatecol": [ "scx", "sbbh", "wbxx", "bz" ]
   },
@@ -67,7 +75,16 @@
     "tablename": "zxjc_djgw",
     "xinzeng": [ "scx", "gwh", "djxx" ],
     "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
     "zhonghe": [ "scx", "gwh", "djno" ],
     "updatecol": [ "scx", "gwh", "djno", "djxx", "status_no" ]
-  }
+  },
+  {
+    "tablename": "zxjc_base_gtjc",
+    "xinzeng": [ "cplx", "mh", "cpfw", "th", "kxmc","kjzsz","sdzsz" ],
+    "replace": [ "cplx"],
+    "replacetype": 1,
+    "zhonghe": [ "cplx", "mh", "cpfw", "th", "kxmc", "kjzsz", "sdzsz" ],
+    "updatecol": [ "cplx", "mh", "cpfw", "th", "kxmc", "kjcc", "kjzsz", "sdzsz" ]
+  },
 ]

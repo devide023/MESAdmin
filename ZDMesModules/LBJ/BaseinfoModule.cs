@@ -10,7 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ZDMesInterceptor;
 using ZDMesInterceptor.LBJ;
+using ZDMesInterfaces.LBJ;
 using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesServices.LBJ.CheckData;
 using ZDMesServices.LBJ.ImportData;
 
 namespace ZDMesModules.LBJ
@@ -25,7 +27,6 @@ namespace ZDMesModules.LBJ
             builder.RegisterAssemblyTypes(AssServices).Where(t=>t.FullName.StartsWith("ZDMesServices.LBJ")).WithParameter("constr", LBJConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
             builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces.LBJ"));
-
             builder.RegisterGeneric(typeof(ImportDataService<>)).As(typeof(IImportData<>)).WithParameter("constr", LBJConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
             //注册拦截器
             builder.Register(c => new CUDLogger(LBJConstr));

@@ -159,7 +159,8 @@
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
-      options: []
+      options: [],
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'gybh',
@@ -168,6 +169,7 @@
       align: 'center',
       width: 150,
 	  overflowtooltip: true,
+	  sortable:true,
     }, {
       coltype: 'list',
       prop: 'statusno',
@@ -176,6 +178,7 @@
       align: 'center',
       width: 150,
 	  multiple:false,
+	  sortable:true,
 	  remote:function(q,_this,row){
 		  if(q){
 			  _this.$request('get','/lbj/baseinfo/wlbm_by_key',{key:q}).then(function(res){
@@ -195,6 +198,7 @@
       align: 'left',
       width: 280,
       overflowtooltip: true,
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'gyms',
@@ -208,7 +212,8 @@
       label: '文件大小',
       headeralign: 'center',
       align: 'left',
-      width: 80,
+      width: 100,
+	  sortable:true,
     }, {
       coltype: 'list',
       prop: 'wjfl',
@@ -231,7 +236,8 @@
       label: '上传日期',
       headeralign: 'center',
       align: 'center',
-      width: 140
+      width: 140,
+	  sortable:true,
     }
   ],
   form: {

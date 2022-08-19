@@ -61,6 +61,75 @@
       ]
     }, {
       coltype: 'list',
+      prop: 'gwzlx',
+      label: '岗位子类型',
+      headeralign: 'center',
+      align: 'center',
+      options: [{
+          label: '刻字',
+          value: '00'
+        },{
+          label: '机加',
+          value: '01'
+        }, {
+          label: '清洗烘干',
+          value: '02'
+        }, {
+          label: '检漏',
+          value: '03'
+        }, {
+          label: 'SPC',
+          value: '04'
+        }, {
+          label: '全检',
+          value: '05'
+        }, {
+          label: 'GP12',
+          value: '06'
+        },
+		{
+          label: '扭力',
+          value: '07'
+        },
+		{
+          label: '对比仪',
+          value: '08'
+        },
+		{
+          label: 'MMET',
+          value: '09'
+        },
+		{
+          label: '检测',
+          value: '10'
+        },
+		{
+          label: '三坐标',
+          value: '11'
+        },
+		{
+          label: '二维码码评级',
+          value: '12'
+        },
+		{
+          label: '检测码打刻',
+          value: '13'
+        },
+		{
+          label: '螺套检测机',
+          value: '14'
+        },
+		{
+          label: '打标码',
+          value: '15'
+        },
+		{
+          label: '压装机-定位销',
+          value: '16'
+        }
+      ]
+    }, {
+      coltype: 'list',
       prop: 'gwfl',
       label: '岗位分类',
       headeralign: 'center',

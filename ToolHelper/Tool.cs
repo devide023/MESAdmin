@@ -290,6 +290,19 @@ namespace ZDToolHelper
                 throw;
             }
         }
+
+        public static bool CheckTelNumber(string tel)
+        {
+            try
+            {
+               return Regex.IsMatch(tel, @"^1(3\d{2}|4[14-9]\d|5([0-35689]\d|7[1-79])|66\d|7[2-35-8]\d|8\d{2}|9[13589]\d)\d{7}$");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         
     }
 }

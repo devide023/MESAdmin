@@ -199,7 +199,7 @@ namespace ZDMesServices.LBJ.BaseInfo
                     try
                     {
                         StringBuilder sql = new StringBuilder();
-                        sql.Append("select gcdm, scx, gwh, gwmc, gwlx, gwfl, glgwh, shbz, gzty, pcsip, bz, lrr, lrsj, shr, shsj, cjqxdl, dlsj, dlbbh from BASE_GWZD ");
+                        sql.Append("select gcdm, scx, gwh, gwmc, gwlx,gwzlx,gwfl, glgwh, shbz, gzty, pcsip, bz, lrr, lrsj, shr, shsj, cjqxdl, dlsj, dlbbh from BASE_GWZD ");
                         var list = db.Query<base_gwzd>(sql.ToString()).OrderBy(t => t.gwh);
                         return list;
                     }

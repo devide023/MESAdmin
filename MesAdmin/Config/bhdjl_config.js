@@ -27,6 +27,7 @@
       align: 'center',
       fixed: 'left',
       width: 150,
+	  sortable:true,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
@@ -170,6 +171,7 @@
       headeralign: 'center',
       align: 'center',
       width: 100,
+	  sortable:true,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -187,6 +189,7 @@
       align: 'center',
       width: 80,
       overflowtooltip: true,
+	  sortable:true,
     },
   ],
         form: {

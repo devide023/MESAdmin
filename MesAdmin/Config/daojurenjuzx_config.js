@@ -68,6 +68,7 @@
         this.$request('post', '/lbj/dbrjly/old2new', _this.selectlist).then(function (res) {
           if (res.code === 1) {
             _this.$message.success(res.msg);
+			_this.getlist(_this.queryform);
           } else if (res.code === 0) {
             _this.$message.error(res.msg);
           }
@@ -237,7 +238,16 @@
       subprop: 'rjmc',
       headeralign: 'center',
       align: 'left',
-    }, {
+    }, 
+	{
+      coltype: 'string',
+      label: '刃具位置',
+      prop: 'rjwz',
+      headeralign: 'center',
+      align: 'left',
+      width: 100,
+	  overflowtooltip: true,
+    },{
       coltype: 'string',
       label: '标准寿命',
       prop: 'rjbzsm',
@@ -262,7 +272,8 @@
       width: 100,
       sortable: true,
 	  searchable:false,
-    }, {
+    }, 
+	{
       coltype: 'string',
       label: '领用人',
       prop: 'rjlyr',

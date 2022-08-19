@@ -37,6 +37,10 @@ namespace ZDMesModels
         ///</summary>
         public string headimg { get; set; }
         /// <summary>
+        /// 手机号码
+        /// </summary>
+        public string tel { get; set; }
+        /// <summary>
         ///录入人
         ///</summary>
         public int adduser { get; set; }

@@ -108,6 +108,7 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
+	  sortable:true,
       overflowtooltip: true,
     }, {
       coltype: 'list',
@@ -121,6 +122,30 @@
         }, {
           label: '技改',
           value: '技改'
+        }, 		
+		{
+          label: '清单',
+          value: '清单'
+        },
+		{
+          label: '通知单',
+          value: '通知单'
+        },
+		{
+          label: '作业文件',
+          value: '作业文件'
+        },
+		{
+          label: '质量警示',
+          value: '质量警示'
+        },
+		{
+          label: '内控标准',
+          value: '内控标准'
+        },
+		{
+          label: '发放明细',
+          value: '发放明细'
         }
       ]
     }, {
@@ -129,6 +154,8 @@
       label: '技通名称',
       headeralign: 'center',
       align: 'center',
+	  width:150,
+	  sortable:true,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -143,14 +170,16 @@
       label: '有效日期开始',
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 150,
+	  sortable:true,
     }, {
       coltype: 'date',
       prop: 'yxqx2',
       label: '有效日期结束',
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 150,
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'jwdx',
@@ -169,6 +198,8 @@
       label: '上传时间',
       headeralign: 'center',
       align: 'center',
+	  sortable:true,
+	  width:100,
       overflowtooltip: true,
     }, {
       coltype: 'bool',
@@ -177,9 +208,10 @@
       label: '分配标识',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 100,
       activevalue: 'Y',
       inactivevalue: 'N',
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'fpmx',
@@ -195,9 +227,10 @@
       label: '审核标志',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 110,
       activevalue: 'Y',
       inactivevalue: 'N',
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'fpr',
@@ -212,6 +245,8 @@
       headeralign: 'center',
       align: 'center',
       overflowtooltip: true,
+	  width:150,
+	  sortable:true,
     }, {
       coltype: 'string',
       prop: 'shr',
