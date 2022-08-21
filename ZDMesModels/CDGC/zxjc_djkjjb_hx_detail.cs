@@ -45,7 +45,7 @@ namespace ZDMesModels.CDGC
         public int hgsl { get; set; }
 
     }
-
+    
     public class zxjc_djkjjb_hx_detail_mapper:ClassMapper<zxjc_djkjjb_hx_detail>
     {
         public zxjc_djkjjb_hx_detail_mapper()

@@ -69,6 +69,8 @@
     <Compile Include="CDGC\zxjc_djkjjb_hx_detail.cs" />
     <Compile Include="CDGC\zxjc_gtjc_bill.cs" />
     <Compile Include="CDGC\zxjc_gtjc_detail.cs" />
+    <Compile Include="CDGC\zxjc_gtjjb_bill.cs" />
+    <Compile Include="CDGC\zxjc_gtjjb_bill_detail.cs" />
     <Compile Include="CDGC\zxjc_ryxx.cs" />
     <Compile Include="LBJ\ad_bjxx.cs" />
     <Compile Include="LBJ\App_Menu.cs" />

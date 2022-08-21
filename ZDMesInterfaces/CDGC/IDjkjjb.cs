@@ -12,6 +12,13 @@ namespace ZDMesInterfaces.CDGC
     /// </summary>
     public interface IDjkjjb
     {
-        bool Save_Djkjjb(zxjc_djkjjb_bill bill);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bill">表单</param>
+        /// <param name="jjmx">机加明细</param>
+        /// <param name="hxmx">后序明细</param>
+        /// <returns></returns>
+        bool Save_Djkjjb(zxjc_djkjjb_bill bill,List<zxjc_djkjjb_detail> jjmx,List<zxjc_djkjjb_hx_detail> hxmx);
     }
 }

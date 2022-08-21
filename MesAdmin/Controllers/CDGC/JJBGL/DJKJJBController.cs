@@ -30,27 +30,48 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
 
         [HttpPost,Route("save_jjb")]
 
-        public IHttpActionResult Save_Djkjjb(zxjc_djkjjb_bill bill)
+        public IHttpActionResult Save_Djkjjb(zxjc_djkjjb_bill form)
         {
             try
             {
-               var ret = _djkservice.Save_Djkjjb(bill);
-                if (ret)
+                if (DateTime.Compare(DateTime.Now.Date,form.rq ) <= 0)
                 {
-                    return Json(new sys_result()
+                    zxjc_djkjjb_bill bill = new zxjc_djkjjb_bill();
+                    bill = form.Copy();
+                    bill.djkjjbdetail = null;
+                    bill.djkjjbdetailhx = null;
+                    List<zxjc_djkjjb_detail> jjmx = new List<zxjc_djkjjb_detail>();
+                    List<zxjc_djkjjb_hx_detail> hxmx = new List<zxjc_djkjjb_hx_detail>();
+                    jjmx = form.djkjjbdetail;
+                    hxmx = form.djkjjbdetailhx;
+                    var ret = _djkservice.Save_Djkjjb(bill, jjmx, hxmx);
+                    if (ret)
                     {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据保存失败"
+                        });
+                    }
+
                 }
                 else
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
-                        msg = "数据保存失败"
+                        msg = "日期应大于等于当前日期"
                     });
                 }
+
             }
             catch (Exception)
             {

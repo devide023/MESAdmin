@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 using DapperExtensions.Mapper;
 namespace ZDMesModels.CDGC
 {
-    /// <summary>
-    /// 机加明细
-    /// </summary>
-    public class zxjc_djkjjb_detail
+    public class zxjc_gtjjb_bill_detail
     {
         /// <summary>
         ///ID
         ///</summary>
         public int id { get; set; }
         /// <summary>
-        ///单据编号，zxjc_djkjjb_bill
+        ///单据id,zxjc_gtjjb_bill.id
         ///</summary>
         public int billid { get; set; }
         /// <summary>
@@ -24,13 +21,21 @@ namespace ZDMesModels.CDGC
         ///</summary>
         public string cpmc { get; set; }
         /// <summary>
-        ///库存数量
+        ///上班次毛坯余量
         ///</summary>
-        public int kcsl { get; set; }
+        public int sbcmpyl { get; set; }
         /// <summary>
-        ///加工数
+        ///当班毛坯数量
         ///</summary>
-        public int jgsl { get; set; }
+        public int dbmpsl { get; set; }
+        /// <summary>
+        ///换产数量
+        ///</summary>
+        public int hcsl { get; set; }
+        /// <summary>
+        ///投入加工数
+        ///</summary>
+        public int trjgs { get; set; }
         /// <summary>
         ///工废数
         ///</summary>
@@ -44,19 +49,17 @@ namespace ZDMesModels.CDGC
         ///</summary>
         public int hgsl { get; set; }
         /// <summary>
-        ///库存剩余数量
+        ///当班毛胚余量
         ///</summary>
-        public int kcsysl { get; set; }
-
+        public int dbmpyl { get; set; }
     }
-    
-    public class zxjc_djkjjb_detail_mapper : ClassMapper<zxjc_djkjjb_detail>
+
+    public class zxjc_gtjjb_bill_detail_mapper:ClassMapper<zxjc_gtjjb_bill_detail>
     {
-        public zxjc_djkjjb_detail_mapper()
+        public zxjc_gtjjb_bill_detail_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
             AutoMap();
         }
     }
-    
 }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DapperExtensions.Mapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DapperExtensions.Mapper;
 namespace ZDMesModels.CDGC
 {
     public class zxjc_djkjjb_bill
@@ -51,11 +51,11 @@ namespace ZDMesModels.CDGC
         /// <summary>
         /// 机加明细
         /// </summary>
-        public List<zxjc_djkjjb_detail> jjmx { get; set; }
+        public List<zxjc_djkjjb_detail> djkjjbdetail { get; set; }
         /// <summary>
         /// 后序明细
         /// </summary>
-        //public List<zxjc_djkjjb_hx_detail> hxmx { get; set; }
+        public List<zxjc_djkjjb_hx_detail> djkjjbdetailhx { get; set; }
 
     }
 
@@ -63,8 +63,8 @@ namespace ZDMesModels.CDGC
     {
         public zxjc_djkjjb_bill_mapper()
         {
-            Map(t => t.jjmx).Ignore();
-            //Map(t => t.hxmx).Ignore();
+            Map(t => t.djkjjbdetail).Ignore();
+            Map(t => t.djkjjbdetailhx).Ignore();
             Map(t => t.id).Key(KeyType.TriggerIdentity);
             AutoMap();
         }

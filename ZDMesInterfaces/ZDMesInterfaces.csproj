@@ -83,6 +83,7 @@
     <Compile Include="CDGC\IDjkjjb.cs" />
     <Compile Include="CDGC\IGtjc.cs" />
     <Compile Include="CDGC\IGtjc_Result.cs" />
+    <Compile Include="CDGC\IGtjjb.cs" />
     <Compile Include="Common\IDbOperate.cs" />
     <Compile Include="Common\IMenu.cs" />
     <Compile Include="Common\IMesMenuApi.cs" />
