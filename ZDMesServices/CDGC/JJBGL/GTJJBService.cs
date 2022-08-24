@@ -7,6 +7,8 @@ using ZDMesInterfaces.CDGC;
 using ZDMesModels.CDGC;
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
+using ZDMesModels;
+
 namespace ZDMesServices.CDGC.JJBGL
 {
     public class GTJJBService : BaseDao<zxjc_gtjjb_bill>, IGtjjb
@@ -14,6 +16,60 @@ namespace ZDMesServices.CDGC.JJBGL
         public GTJJBService(string constr) : base(constr)
         {
 
+        }
+
+        public override IEnumerable<zxjc_gtjjb_bill> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select id, rq, bc, jbr, dbzz, slry, mcry, jyry, zlqk, sbqk, qtqk, lrr, lrsj ");
+                sql.Append(" FROM   zxjc_gtjjb_bill ");
+                sql.Append(" where  1=1 ");
+
+                StringBuilder sql_detail = new StringBuilder();
+                sql_detail.Append("select id, billid, cpmc, sbcmpyl, dbmpsl,hcsl, trjgs, gfsl, lfsl, hgsl, dbmpyl  from zxjc_gtjjb_bill_detail where billid = :billid ");
+
+                StringBuilder sql_cnt = new StringBuilder();
+                sql_cnt.Append($"select count(id) from zxjc_gtjjb_bill where 1=1 ");
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                    else
+                    {
+                        sql.Append($" order by rq desc,bc asc ");
+                    }
+                }
+                var _dic = new Dictionary<int, zxjc_gtjjb_bill>();
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<zxjc_gtjjb_bill>(OraPager(sql.ToString()),parm.sqlparam);
+                    /*foreach (var item in q)
+                    {
+                        item.mxlist = db.Query<zxjc_gtjjb_bill_detail>(sql_detail.ToString(), new { billid = item.id }).ToList();
+                    }*/
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IEnumerable<dynamic> Get_CpList()
@@ -43,7 +99,7 @@ namespace ZDMesServices.CDGC.JJBGL
                 sql.Append("select ta.id, ta.rq, ta.bc, ta.jbr, ta.dbzz, ta.slry, ta.mcry, ta.jyry, ta.zlqk, ta.sbqk, ta.qtqk, ta.lrr, ta.lrsj, tb.billid, tb.cpmc, tb.sbcmpyl, tb.dbmpsl, tb.hcsl, tb.trjgs, tb.gfsl, tb.lfsl, tb.hgsl, tb.dbmpyl ");
                 sql.Append(" FROM   zxjc_gtjjb_bill ta, zxjc_gtjjb_bill_detail tb ");
                 sql.Append(" where  ta.id = tb.billid ");
-                sql.Append(" and    trunc(ta.rq) = trunc(to_date(:rq, 'yyyy-MM-dd')) ");
+                sql.Append(" and    trunc(ta.rq) = trunc(to_date(:rq, 'yyyy-MM-dd HH24:mi:ss')) ");
                 sql.Append(" and    ta.bc = :bc");
 
                 using (var db = new OracleConnection(ConString))

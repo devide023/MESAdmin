@@ -20,5 +20,12 @@ namespace ZDMesInterfaces.CDGC
         /// <param name="hxmx">后序明细</param>
         /// <returns></returns>
         bool Save_Djkjjb(zxjc_djkjjb_bill bill,List<zxjc_djkjjb_detail> jjmx,List<zxjc_djkjjb_hx_detail> hxmx);
+        /// <summary>
+        /// 电机壳交接班数据
+        /// </summary>
+        /// <param name="rq"></param>
+        /// <param name="bc"></param>
+        /// <returns></returns>
+        zxjc_djkjjb_bill Get_Djkjjb_Bill_ByBc(string rq, string bc);
     }
 }

@@ -18,12 +18,32 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
     [RoutePrefix("api/cdgc/gtjjb")]
     public class GTJJBController : BaseApiController<zxjc_gtjjb_bill>
     {
-        private IDbOperate<zxjc_gtjjb_bill> _baseservice;
+        private IDbOperate<zxjc_gtjjb_bill> _gtjjbbaseservice;
         private IGtjjb _gtjjbservice;
         public GTJJBController(IDbOperate<zxjc_gtjjb_bill> baseservice, IGtjjb gtjjbservice) : base(baseservice)
         {
-            _baseservice = baseservice;
+            _gtjjbbaseservice = baseservice;
             _gtjjbservice = gtjjbservice;
+        }
+        public override IHttpActionResult GetList(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                var list = _gtjjbbaseservice.GetList(parm, out resultcount);
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [HttpGet,Route("get_cplist")]
         public IHttpActionResult Get_CpList()

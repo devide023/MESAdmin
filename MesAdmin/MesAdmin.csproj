@@ -322,6 +322,7 @@
     <Compile Include="Controllers\CDGC\JJBGL\DJKJJBController.cs" />
     <Compile Include="Controllers\CDGC\JJBGL\GTJJBController.cs" />
     <Compile Include="Controllers\CDGC\RYGL\RYGLController.cs" />
+    <Compile Include="Controllers\CDGC\SBGL\SBGLController.cs" />
     <Compile Include="Controllers\Common\DownLoadController.cs" />
     <Compile Include="Controllers\Common\LogController.cs" />
     <Compile Include="Controllers\Common\MenuApiController.cs" />

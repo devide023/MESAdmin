@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="base_ftpfilepath.cs" />
     <Compile Include="base_page_config.cs" />
+    <Compile Include="CDGC\base_sbxx.cs" />
     <Compile Include="CDGC\zxjc_base_gtjc.cs" />
     <Compile Include="CDGC\zxjc_djkjjb_bill.cs" />
     <Compile Include="CDGC\zxjc_djkjjb_detail.cs" />

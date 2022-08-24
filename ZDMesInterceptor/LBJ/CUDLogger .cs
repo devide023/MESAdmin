@@ -259,8 +259,8 @@ namespace ZDMesInterceptor.LBJ
                                 Db.Insert<mes_oper_log>(new mes_oper_log()
                                 {
                                     name = tbname,
-                                    czr = userinfo.name,
-                                    czrid = userinfo.id,
+                                    czr = userinfo?.name,
+                                    czrid = userinfo==null?0:userinfo.id,
                                     lx = "add",
                                     czrq = DateTime.Now,
                                     path = url,

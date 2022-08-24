@@ -137,6 +137,7 @@
     <Compile Include="CDGC\JJBGL\DJKJJBService.cs" />
     <Compile Include="CDGC\JJBGL\GTJJBService.cs" />
     <Compile Include="CDGC\RYGL\RyxxService.cs" />
+    <Compile Include="CDGC\SBGL\SBGLService.cs" />
     <Compile Include="Common\MesMenuApiService.cs" />
     <Compile Include="Common\MesSeqService.cs" />
     <Compile Include="Common\OperateLogService.cs" />

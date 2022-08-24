@@ -1,74 +1,102 @@
 {
   isgradequery: true,
   isbatoperate: false,
-  isoperate: false,
+  isoperate: true,
   isfresh: true,
   isselect: false,
-  operate_fnlist: [],
-  pagefuns: {},
+  operate_fnlist: [{
+      label: '明细',
+      fnname: 'view_bill',
+      btntype: 'text'
+    }
+  ],
+  pagefuns: {
+	  view_bill: function (row) {
+      var _this = this;
+	  _this.dialog_title = '';
+	  _this.dialog_width = '50%';
+	  _this.dialogVisible = true;
+	  _this.dialog_viewpath = 'cdgc/jjbgl/djkjjb/component/djkjjb';
+	  _this.dialog_props = {isread:true,rq:row.rq,bc:row.bc};
+    },
+	dialog_save_handle:function(){
+		this.dialogVisible = false;
+	}
+  },
   fields: [{
-      coltype: 'string',
-      prop: 'sbbh',
-      label: '设备编号',
+      coltype: 'date',
+      prop: 'rq',
+      label: '日期',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-    },
-	{
+      width: 130,
+      fixed: 'left'
+    }, {
       coltype: 'string',
-      prop: 'sbmc',
-      label: '设备名称',
+      prop: 'bc',
+      label: '班次',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-    },
-	{
+      width: 100,
+      fixed: 'left'
+    }, {
       coltype: 'string',
-      prop: 'sblx',
-      label: '设备类型',
+      prop: 'jbr',
+      label: '交班人',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-    },
-	{
+      width: 100,
+    }, {
       coltype: 'string',
-      prop: 'ip',
-      label: '设备IP',
+      prop: 'hxry',
+      label: '后序人员',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-    },
-	{
+      width: 100,
+    }, {
       coltype: 'string',
-      prop: 'port',
-      label: '设备端口',
+      prop: 'zlqk',
+      label: '质量情况',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-    },
-	{
+      overflowtooltip: true,
+    }, {
       coltype: 'string',
-      prop: 'gwh',
-      label: '所在岗位',
+      prop: 'sbqk',
+      label: '设备情况',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-    },
-	{
+      overflowtooltip: true,
+    }, {
+      coltype: 'string',
+      prop: 'qtqk',
+      label: '其他情况',
+      headeralign: 'center',
+      align: 'center',
+      sortable: true,
+      overflowtooltip: true,
+    }, {
       coltype: 'string',
       prop: 'lrr',
-      label: '录入人',
+      label: '制单人',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-    },
-	{
+      width: 100
+    }, {
       coltype: 'datetime',
       prop: 'lrsj',
-      label: '录入时间',
+      label: '制单时间',
       headeralign: 'center',
       align: 'center',
       sortable: true,
+      width: 200,
     }
   ],
   form: {
@@ -91,7 +119,7 @@
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/cdgc/sbgl/list',
+    url: '/cdgc/djkjjb/list',
     method: 'post',
     callback: function (vm, res) {},
   },

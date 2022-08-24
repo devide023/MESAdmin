@@ -19,10 +19,10 @@ namespace ZDMesModules.TJ
         protected override void Load(ContainerBuilder builder)
         {
             var AssServices = Assembly.Load("ZDMesServices");
-            builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.TJ")).WithParameter("constr", TJConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
+            builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.TJ")).WithParameter("constr", TJConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors().PreserveExistingDefaults();
 
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
-            builder.RegisterAssemblyTypes(AssInterfaces).Where(t=>t.FullName.StartsWith("ZDMesInterfaces.TJ"));
+            builder.RegisterAssemblyTypes(AssInterfaces).Where(t=>t.FullName.StartsWith("ZDMesInterfaces.TJ")).PreserveExistingDefaults();
 
             var baseinfo_module_config = new ConfigurationBuilder();
             baseinfo_module_config.AddJsonFile("TJ_baseinfo_module_config.json");

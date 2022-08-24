@@ -28,6 +28,46 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
             _djkservice = djkservice;
         }
 
+        public override IHttpActionResult GetList(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                var list = _djk_base_service.GetList(parm, out resultcount);
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet,Route("load_bc_data")]
+        public IHttpActionResult Load_BC_Data(string rq,string bc)
+        {
+            try
+            {
+                var bill = _djkservice.Get_Djkjjb_Bill_ByBc(rq, bc);
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    bill = bill
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         [HttpPost,Route("save_jjb")]
 
         public IHttpActionResult Save_Djkjjb(zxjc_djkjjb_bill form)

@@ -26,10 +26,10 @@ namespace ZDMesModules.CD
         {
             var AssServices = Assembly.Load("ZDMesServices");
             builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.Common")).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
-            builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.CDGC")).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
+            builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.CDGC")).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors().PreserveExistingDefaults();
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
-            builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces.CDGC"));
-            builder.RegisterGeneric(typeof(ImportDataService<>)).As(typeof(IImportData<>)).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
+            builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces.CDGC")).PreserveExistingDefaults();
+            builder.RegisterGeneric(typeof(ImportDataService<>)).Named("cdgcimp", typeof(IImportData<>)).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
             //注册拦截器
             builder.Register(c => new CUDLogger(CDGCConstr));
             builder.Register(c => new ImportLog(CDGCConstr));

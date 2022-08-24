@@ -35,6 +35,40 @@ namespace ZDMesServices.CDGC.JJBGL
             }
         }
 
+        public zxjc_djkjjb_bill Get_Djkjjb_Bill_ByBc(string rq, string bc)
+        {
+            try
+            {
+                rq = rq.Replace("T", " ");
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select id, rq, bc, jbr, zlqk, sbqk, qtqk, lrr, lrsj, hxry from zxjc_djkjjb_bill where trunc(rq) = trunc(to_date(:rq,'yyyy-MM-dd HH24:mi:ss')) and bc = :bc ");
+                StringBuilder sqljj = new StringBuilder();
+                sqljj.Append("select id, billid, cpmc, kcsl, jgsl, gfsl, lfsl, hgsl, kcsysl FROM zxjc_djkjjb_detail where  billid = :billid ");
+                StringBuilder sqlhx = new StringBuilder();
+                sqlhx.Append("select id, billid, xmmc, trjgsl, dpssl, gfsl, lfsl, hgsl FROM   zxjc_djkjjb_hx_detail  where  billid = :billid ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    zxjc_djkjjb_bill bill = new zxjc_djkjjb_bill();
+                    var q = db.Query<zxjc_djkjjb_bill>(sql.ToString(), new { rq = rq, bc = bc });
+                    if (q.Count() > 0)
+                    {
+                        bill = q.First();
+                        bill.rq = bill.rq.Date;
+                        var jjmx = db.Query<zxjc_djkjjb_detail>(sqljj.ToString(), new { billid = bill.id });
+                        bill.djkjjbdetail = jjmx.ToList();
+                        var hxmx = db.Query<zxjc_djkjjb_hx_detail>(sqlhx.ToString(), new { billid = bill.id });
+                        bill.djkjjbdetailhx = hxmx.ToList();
+                    }
+                    return bill;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool Save_Djkjjb(zxjc_djkjjb_bill bill, List<zxjc_djkjjb_detail> jjmx, List<zxjc_djkjjb_hx_detail> hxmx)
         {
             try
