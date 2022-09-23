@@ -28,5 +28,11 @@ namespace ZDMesModels
         /// 是否选择列
         /// </summary>
         public bool isselect { get; set; }
+        /// <summary>
+        /// 批量操作配置
+        /// </summary>
+        /// 
+        [NoCnf]
+        public sys_import_cnf_item import_cnf { get; set; } = new sys_import_cnf_item();
     }
 }

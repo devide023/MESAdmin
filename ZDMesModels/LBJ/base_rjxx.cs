@@ -17,15 +17,19 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 刃具类型 
         ///</summary>
-         public string rjlx { get; set; }
+        public string rjlx { get; set; }
         /// <summary>
         /// 刃具名称 
         ///</summary>
-         public string rjmc { get; set; }
+        public string rjmc { get; set; }
         /// <summary>
         /// 标准寿命 
         ///</summary>
-         public int rjbzsm { get; set; }
+        public int rjbzsm { get; set; }
+        /// <summary>
+        /// 加工位置
+        /// </summary>
+        public string jgwz { get; set; }
         /// <summary>
         /// 备注
         /// </summary>

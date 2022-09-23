@@ -118,7 +118,16 @@
         url: '/lbj/baseinfo/gcxx'
       },
       options: [],
-    }, {
+    }, 
+	{
+      coltype: 'string',
+      label: '刃具类型编号',
+      width: 100,
+      prop: 'id',
+      headeralign: 'center',
+      align: 'center',
+    },
+	{
       coltype: 'string',
       label: '刃具类型',
       width: 200,
@@ -132,19 +141,40 @@
       headeralign: 'center',
       width: 200,
       align: 'center',
-    }, {
+    }, 
+	{
       coltype: 'string',
       label: '标准寿命',
       prop: 'rjbzsm',
       width: 150,
       headeralign: 'center',
       align: 'center',
-    }],
+    },
+	{
+      coltype: 'string',
+      label: '加工位置',
+      prop: 'jgwz',
+      headeralign: 'center',
+      align: 'left',
+	  overflowtooltip: true,
+	  width:180
+    },
+	{
+      coltype: 'string',
+      label: '备注',
+      prop: 'rjxxbz',
+      headeralign: 'center',
+      align: 'left',
+	  overflowtooltip: true,
+	  width:200
+    }
+	],
   form: {
     gcdm: '9902',
     rjlx: '',
     rjmc: '',
     rjbzsm: '',
+	jgwz:'',
     isdb: false,
     isedit: true
   },

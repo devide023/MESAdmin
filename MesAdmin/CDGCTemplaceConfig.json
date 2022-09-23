@@ -1,0 +1,43 @@
+[
+  {
+    "tablename": "zxjc_ryxx",
+    "conf": [
+      {
+        "dbcolname": "username",
+        "dbcoltype": "string",
+        "fieldindex": 0,
+        "fieldname": "姓名"
+      },
+      {
+        "dbcolname": "ryxb",
+        "dbcoltype": "string",
+        "fieldindex": 1,
+        "fieldname": "性别"
+      },
+      {
+        "dbcolname": "rylx",
+        "dbcoltype": "string",
+        "fieldindex": 2,
+        "fieldname": "员工类型"
+      },
+      {
+        "dbcolname": "bzxx",
+        "dbcoltype": "string",
+        "fieldindex": 3,
+        "fieldname": "班组"
+      },
+      {
+        "dbcolname": "csrq",
+        "dbcoltype": "date",
+        "fieldindex": 4,
+        "fieldname": "出生日期"
+      },
+      {
+        "dbcolname": "rsrq",
+        "dbcoltype": "date",
+        "fieldindex": 5,
+        "fieldname": "入司日期"
+      }
+    ]
+  }
+]

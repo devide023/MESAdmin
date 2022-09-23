@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=22.3.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Cells.22.3.0\lib\net40\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac, Version=6.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.6.3.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
@@ -132,16 +135,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDao.cs" />
+    <Compile Include="CDGC\BHDGL\BHDCFService.cs" />
+    <Compile Include="CDGC\BHDGL\BHDGLService.cs" />
     <Compile Include="CDGC\GTJC\GTJCBasedataService.cs" />
     <Compile Include="CDGC\GTJC\GTJCDataService.cs" />
+    <Compile Include="CDGC\JCXX\JCXXService.cs" />
     <Compile Include="CDGC\JJBGL\DJKJJBService.cs" />
     <Compile Include="CDGC\JJBGL\GTJJBService.cs" />
     <Compile Include="CDGC\RYGL\RyxxService.cs" />
     <Compile Include="CDGC\SBGL\SBGLService.cs" />
+    <Compile Include="CDGC\YCGL\YCGLLSService.cs" />
+    <Compile Include="CDGC\YCGL\YCGLService.cs" />
+    <Compile Include="Common\DbInfoService.cs" />
     <Compile Include="Common\MesMenuApiService.cs" />
     <Compile Include="Common\MesSeqService.cs" />
     <Compile Include="Common\OperateLogService.cs" />
     <Compile Include="Common\PageConfigService.cs" />
+    <Compile Include="Common\Template_ImportService.cs" />
     <Compile Include="LBJ\App\AppMenuService.cs" />
     <Compile Include="LBJ\App\AppRoleService.cs" />
     <Compile Include="LBJ\CheckData\Form_Check_Service.cs" />

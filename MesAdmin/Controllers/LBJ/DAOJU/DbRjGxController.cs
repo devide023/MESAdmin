@@ -294,7 +294,8 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                             gcdm = item[0].ToString(),
                             cpzt = item[1].ToString(),
                             dbh = item[2].ToString(),
-                            djlx = item[3].ToString()
+                            djlx = item[3].ToString(),
+                            rjid = Convert.ToInt32(item[4].ToString())
                         });
                     }
                     finfo.Delete();

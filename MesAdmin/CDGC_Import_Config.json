@@ -1,0 +1,10 @@
+[
+  {
+    "tablename": "zxjc_ryxx",
+    "xinzeng": [ "user_code" ],
+    "replace": [ "user_code" ],
+    "replacetype": 2,
+    "zhonghe": [ "user_code" ],
+    "updatecol": [ "scx", "rylx", "gwh", "bzxx", "ryxb", "csrq", "rsrq" ]
+  }
+]

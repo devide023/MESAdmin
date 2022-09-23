@@ -29,7 +29,35 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             _gxservice = gxservice;
             _impservice = impservice;
         }
+        [HttpPost, Route("edit")]
+        public IHttpActionResult EditBzsm(List<base_dbrjzx> entitys)
+        {
+            try
+            {
+                var ret = _gxservice.GxSm(entitys);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "操作成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "操作失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
         [HttpPost, SearchFilter, Route("list")]
         public IHttpActionResult GetList(sys_page parm)
         {
@@ -66,6 +94,39 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                     msg = "ok",
                     list = list
                 });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
+        /// 更新刀柄刃具在线标准寿命
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        [HttpPost, Route("gxsm")]
+        public IHttpActionResult Set_Dbrjzx_Bzsm(List<base_dbrjzx> entitys) {
+            try
+            {
+                var ret = _gxservice.GxSm(entitys);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "操作成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "操作失败"
+                    });
+                }
             }
             catch (Exception)
             {

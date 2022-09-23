@@ -317,16 +317,22 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CDGC\BHDGL\BHDGLsController.cs" />
+    <Compile Include="Controllers\CDGC\BHDGL\BHJCFController.cs" />
     <Compile Include="Controllers\CDGC\GTJC\GTJCBaseDataController.cs" />
     <Compile Include="Controllers\CDGC\GTJC\GTJCDataController.cs" />
+    <Compile Include="Controllers\CDGC\GTJC\GTJCHISController.cs" />
+    <Compile Include="Controllers\CDGC\JCXX\JCXXController.cs" />
     <Compile Include="Controllers\CDGC\JJBGL\DJKJJBController.cs" />
     <Compile Include="Controllers\CDGC\JJBGL\GTJJBController.cs" />
     <Compile Include="Controllers\CDGC\RYGL\RYGLController.cs" />
     <Compile Include="Controllers\CDGC\SBGL\SBGLController.cs" />
+    <Compile Include="Controllers\CDGC\YCGL\CDYCGLController.cs" />
+    <Compile Include="Controllers\Common\DBInfoController.cs" />
     <Compile Include="Controllers\Common\DownLoadController.cs" />
-    <Compile Include="Controllers\Common\LogController.cs" />
     <Compile Include="Controllers\Common\MenuApiController.cs" />
     <Compile Include="Controllers\Common\MenuController.cs" />
+    <Compile Include="Controllers\Common\OperateLogController.cs" />
     <Compile Include="Controllers\Common\UpLoadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
@@ -338,6 +344,7 @@
     <Compile Include="Controllers\LBJ\BaseInfo\BaseInfoController.cs" />
     <Compile Include="Controllers\LBJ\BHDGL\BHDJLController.cs" />
     <Compile Include="Controllers\LBJ\BHDGL\BHDXXController.cs" />
+    <Compile Include="Controllers\LBJ\CPGL\CPPSController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DaoBinController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjGxController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjLyController.cs" />
@@ -382,6 +389,21 @@
     <Content Include="Config\auditjt_config.js" />
     <Content Include="Config\bhdjl_config.js" />
     <Content Include="Config\bhdxx_config.js" />
+    <Content Include="Config\cdgc\bhdcf_config.js" />
+    <Content Include="Config\cdgc\bhdjcxx_config.js" />
+    <Content Include="Config\cdgc\djkjjb_config.js" />
+    <Content Include="Config\cdgc\djkjjb_list_config.js" />
+    <Content Include="Config\cdgc\gtjchis_config.js" />
+    <Content Include="Config\cdgc\gtjc_config.js" />
+    <Content Include="Config\cdgc\gtjc_jcsj_config.js" />
+    <Content Include="Config\cdgc\gtjjb_config.js" />
+    <Content Include="Config\cdgc\gtjjb_list_config.js" />
+    <Content Include="Config\cdgc\ryxx_config.js" />
+    <Content Include="Config\cdgc\sbsjcj_config.js" />
+    <Content Include="Config\cdgc\sbxx_config.js" />
+    <Content Include="Config\cdgc\scjh_config.js" />
+    <Content Include="Config\cdgc\ycck_config.js" />
+    <Content Include="Config\cdgc\ychis_config.js" />
     <Content Include="Config\daojurenjuzx_config.js" />
     <Content Include="Config\dbrjgx_config.js" />
     <Content Include="Config\dbrjly_config.js" />
@@ -459,6 +481,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="CDGC_module_config.json" />
+    <Content Include="Config\cdgc\sbxx_config.js.bak" />
+    <Content Include="Config\cdgc\ychis_config.js.bak" />
+    <Content Include="CDGC_Import_Config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CDGCVerfyConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -466,6 +496,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\export_excel.js" />
+    <Content Include="Scripts\import_by_add.js" />
+    <Content Include="Scripts\import_by_replace.js" />
+    <Content Include="Scripts\import_by_zh.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -497,6 +531,12 @@
     <Content Include="Template\LBJ\员工技能信息.xlsx" />
     <Content Include="Template\LBJ\奖惩数据.xlsx" />
     <Content Include="Template\LBJ\维保基础信息.xlsx" />
+    <Content Include="TemplaceConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CDGCTemplaceConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -537,6 +577,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

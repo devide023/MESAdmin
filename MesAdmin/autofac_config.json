@@ -1,6 +1,5 @@
 {
   "modules": [
-
     {
       "type": "ZDMesModules.MF.BaseinfoModule, ZDMesModules",
       "properties": {

@@ -17,6 +17,10 @@ namespace ZDMesModels
         /// </summary>
         public string subprop { get; set; }
         public string width { get; set; }
+        /// <summary>
+        /// 是否启用建议输入
+        /// </summary>
+        public string suggest { get; set; }
         public bool overflowtooltip { get; set; }
         /// <summary>
         /// 是否在下拉搜索中列出

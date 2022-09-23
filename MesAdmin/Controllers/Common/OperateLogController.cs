@@ -10,11 +10,12 @@ using ZDMesModels;
 
 namespace MesAdmin.Controllers.Common
 {
-    [RoutePrefix("api/log")]   
-    public class LogController : ApiController
+    [RoutePrefix("api/operatelog")]
+
+    public class OperateLogController : ApiController
     {
         private IDbOperate<mes_oper_log> _operatelogservice;
-        public LogController(IDbOperate<mes_oper_log> operatelogservice)
+        public OperateLogController(IDbOperate<mes_oper_log> operatelogservice)
         {
             _operatelogservice = operatelogservice;
         }

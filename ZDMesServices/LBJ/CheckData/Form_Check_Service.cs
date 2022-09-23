@@ -13,7 +13,7 @@ namespace ZDMesServices.LBJ.CheckData
 {
     public class Form_Check_Service : IFormCheck
     {
-        public bool Check_Form_Data(List<object> entitys, out sys_result result)
+        public bool Check_Form_Data<T>(List<T> entitys, out sys_result result)
         {
             try
             {
@@ -33,6 +33,7 @@ namespace ZDMesServices.LBJ.CheckData
                 {
                     result.msg = $"{model}表单数据检查未配置,联系管理员在Check_Form_Config文件中配置";
                     ret = false;
+                    return ret;
                 }
                 Type t = Type.GetType(model);
                 var pis = t.GetProperties();

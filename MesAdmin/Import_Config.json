@@ -9,28 +9,28 @@
   },
   {
     "tablename": "base_rjxx",
-    "xinzeng": [ "rjlx" ],
-    "replace": [ "rjlx" ],
+    "xinzeng": [ "rjlx","jgwz" ],
+    "replace": [ "rjlx","jgwz" ],
     "replacetype": 1,
-    "zhonghe": [ "rjlx", "rjbzsm" ],
-    "updatecol": [ "rjmc", "rjbzsm", "bz" ]
+    "zhonghe": [ "rjlx","jgwz" ],
+    "updatecol": [ "rjmc", "rjbzsm","bz"]
 
   },
   {
     "tablename": "base_dbrjgx",
-    "xinzeng": [ "dbh", "cpzt", "djlx" ],
+    "xinzeng": [ "dbh", "cpzt", "rjid"],
     "replace": [ "cpzt" ],
     "replacetype": 1,
-    "zhonghe": [ "dbh", "cpzt", "djlx" ],
-    "updatecol": [ "dbh", "cpzt", "djlx" ]
+    "zhonghe": [ "dbh", "cpzt", "rjid" ],
+    "updatecol": [ "dbh", "cpzt", "rjid" ]
   },
   {
     "tablename": "base_dbrjzx",
-    "xinzeng": [ "scx", "dbh", "sbbh", "rjlx" ],
-    "replace": [ "scx" ],
+    "xinzeng": [ "scx", "dbh", "sbbh", "rjlx","rjwz" ],
+    "replace": [ "scx","sbbh" ],
     "replacetype": 1,
-    "zhonghe": [ "scx", "dbh", "sbbh", "rjlx" ],
-    "updatecol": [ "rjlyr", "dblyr" ]
+    "zhonghe": [ "scx", "dbh", "sbbh", "rjlx","rjwz" ],
+    "updatecol": [ "rjlyr", "dblyr","rjbzsm" ]
   },
   {
     "tablename": "base_rjsmxh",

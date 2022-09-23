@@ -12,11 +12,13 @@ using System.Web;
 using ZDToolHelper;
 using System.Reflection;
 using Dapper;
+using DapperExtensions.Mapper;
 
 namespace ZDMesServices.LBJ.ImportData
 {
     public class ImportDataService<T> : OracleBaseFixture, IImportData<T> where T : class, new()
     {
+        public string Import_Config_File_Path { get; set; } = string.Empty;
         public ImportDataService(string constr) : base(constr)
         {
 
@@ -28,7 +30,15 @@ namespace ZDMesServices.LBJ.ImportData
                 sys_import_result<T> ret = new sys_import_result<T>();
                 List<T> oklist = new List<T>();
                 List<T> repeatlist = new List<T>();
-                string configpath = HttpContext.Current.Server.MapPath("~/Import_Config.json");
+                string configpath = string.Empty;
+                if (String.IsNullOrEmpty(Import_Config_File_Path))
+                {
+                    configpath = HttpContext.Current.Server.MapPath("~/Import_Config.json");
+                }
+                else
+                {
+                    configpath = HttpContext.Current.Server.MapPath(Import_Config_File_Path);
+                }
                 ConfigHelper confighelper = new ConfigHelper();
                 confighelper.SetConfigPath = configpath;
                 var configlist = confighelper.Read_Import_LogConfig();
@@ -112,7 +122,15 @@ namespace ZDMesServices.LBJ.ImportData
                 List<T> oklist = new List<T>();
                 List<T> dellist = new List<T>();
                 List<T> uplist = new List<T>();
-                string configpath = HttpContext.Current.Server.MapPath("~/Import_Config.json");
+                string configpath = string.Empty;
+                if (String.IsNullOrEmpty(Import_Config_File_Path))
+                {
+                    configpath = HttpContext.Current.Server.MapPath("~/Import_Config.json");
+                }
+                else
+                {
+                    configpath = HttpContext.Current.Server.MapPath(Import_Config_File_Path);
+                }
                 ConfigHelper confighelper = new ConfigHelper();
                 confighelper.SetConfigPath = configpath;
                 var configlist = confighelper.Read_Import_LogConfig();
@@ -143,11 +161,11 @@ namespace ZDMesServices.LBJ.ImportData
                     {
                         updatesql.Append($" {item} =  :{item},");
                     }
-                    updatesql.Remove(sql.Length - 1, 1);
+                    updatesql.Remove(updatesql.Length - 1, 1);
                     updatesql.Append(" where 1=1 ");
                     foreach (var item in rules)
                     {
-                        sql.Append($" and {item} =  :{item} ");
+                        updatesql.Append($" and {item} =  :{item} ");
                     }
                     using (var db = new OracleConnection(ConString))
                     {
@@ -255,7 +273,15 @@ namespace ZDMesServices.LBJ.ImportData
             try
             {
                 sys_import_result<T> ret = new sys_import_result<T>();
-                string configpath = HttpContext.Current.Server.MapPath("~/Import_Config.json");
+                string configpath = string.Empty;
+                if (String.IsNullOrEmpty(Import_Config_File_Path))
+                {
+                    configpath = HttpContext.Current.Server.MapPath("~/Import_Config.json");
+                }
+                else
+                {
+                    configpath = HttpContext.Current.Server.MapPath(Import_Config_File_Path);
+                }
                 ConfigHelper confighelper = new ConfigHelper();
                 confighelper.SetConfigPath = configpath;
                 var configlist = confighelper.Read_Import_LogConfig();
@@ -290,6 +316,7 @@ namespace ZDMesServices.LBJ.ImportData
                         try
                         {
                             InitDB(db);
+                            IClassMapper mapper = Db.GetMap<T>();
                             foreach (var item in data)
                             {
                                 DynamicParameters dyp = new DynamicParameters();
@@ -304,7 +331,21 @@ namespace ZDMesServices.LBJ.ImportData
                                     }
                                     else
                                     {
-                                        dyp.Add($":{col}", null);
+                                        var isczq = mapper.Properties.Where(t => t.ColumnName.ToLower() == col.ToLower());
+                                        if (isczq.Count() > 0)
+                                        {
+                                            var proname = isczq.First().Name.ToString();
+                                            var q = pi.Where(t => t.Name == proname);
+                                            if (q.Count() > 0)
+                                            {
+                                                var colval = q.First().GetValue(item);
+                                                dyp.Add($":{col}", colval);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            dyp.Add($":{col}", null);
+                                        }
                                     }
                                 }
                                 //查询条件
@@ -318,7 +359,21 @@ namespace ZDMesServices.LBJ.ImportData
                                     }
                                     else
                                     {
-                                        dyp.Add($":{col}", null);
+                                        var isczq = mapper.Properties.Where(t => t.ColumnName.ToLower() == col.ToLower());
+                                        if (isczq.Count() > 0)
+                                        {
+                                            var proname = isczq.First().Name.ToString();
+                                            var q = pi.Where(t => t.Name == proname);
+                                            if (q.Count() > 0)
+                                            {
+                                                var colval = q.First().GetValue(item);
+                                                dyp.Add($":{col}", colval);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            dyp.Add($":{col}", null);
+                                        }
                                     }
                                 }
                                 var sfcz = db.Query<T>(updatesql.ToString(), dyp);

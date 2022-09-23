@@ -43,11 +43,11 @@ namespace ZDMesServices.LBJ.SMJJK
                     {
                         if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
                         {
-                            sql.Append($" order by {parm.default_order_colname} desc ");
+                            sql.Append($" order by {parm.default_order_colname} desc nulls last,lrsj desc ");
                         }
                         else
                         {
-                            sql.Append($" order by lrsj desc ");
+                            sql.Append($" order by jcsj desc nulls last,lrsj desc ");
                         }
                     }
                     try

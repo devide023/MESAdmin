@@ -181,7 +181,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             {
                 List<base_rjxx> list = new List<base_rjxx>();
                 list = ReadData(fileid);
-                var ret = _impservice.NewImportData(list);
+                var ret = _impservice.ZhImportData(list);
                 if (ret.oklist.Count == list.Count)
                 {
                     return Json(new sys_result()
@@ -273,7 +273,8 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                             rjlx = item[1].ToString(),
                             rjmc = item[2].ToString(),
                             rjbzsm = Convert.ToInt32(item[3].ToString()),
-                            rjxxbz = item[4].ToString()
+                            jgwz = item[4].ToString(),
+                            rjxxbz = item[5].ToString()
                         });
                     }
                 }

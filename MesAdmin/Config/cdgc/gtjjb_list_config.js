@@ -3,25 +3,45 @@
   isbatoperate: false,
   isoperate: true,
   isfresh: true,
-  isselect: false,
+  isselect: true,
   operate_fnlist: [{
       label: '明细',
       fnname: 'view_bill',
-      btntype: 'text'
+      btntype: 'text',
+	  callback:'dialog_close_handle'
+    },
+	{
+      label: '编辑',
+      fnname: 'edit_bill',
+      btntype: 'text',
+	  callback:'dialog_save_handle'
     }
   ],
   batoperate: {},
   pagefuns: {
+	  edit_bill:function(row){
+		  var _this = this;
+	  _this.dialog_title = '';
+	  _this.dialog_width = '60%';
+	  _this.dialogVisible = true;
+	  _this.dialog_hidefooter = true;
+	  _this.dialog_viewpath = 'cdgc/jjbgl/gtjjb/component/gtjjb';
+	  _this.dialog_props = {isread:false,calcrq:row.rq,calcbc:row.bc};
+	  },
     view_bill: function (row) {
       var _this = this;
 	  _this.dialog_title = '';
 	  _this.dialog_width = '50%';
 	  _this.dialogVisible = true;
+	  _this.dialog_hidefooter = false;
 	  _this.dialog_viewpath = 'cdgc/jjbgl/gtjjb/component/gtjjb';
 	  _this.dialog_props = {isread:true,calcrq:row.rq,calcbc:row.bc};
     },
-	dialog_save_handle:function(){
+	dialog_close_handle:function(){
 		this.dialogVisible = false;
+	},
+	dialog_save_handle:function(){
+		
 	}
   },
   fields: [{
@@ -139,7 +159,7 @@
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '',
+    url: '/cdgc/gtjjb/del',
     method: 'post',
     callback: function (vm, res) {},
   },

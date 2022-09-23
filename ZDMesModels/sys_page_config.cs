@@ -36,5 +36,17 @@ namespace ZDMesModels
         /// 操作列功能项目
         /// </summary>
         public List<sys_operate_item> operate_fnlist { get; set; }
+        /// <summary>
+        /// 批量操作（新增导入，替换导入，综合导入）
+        /// </summary>
+        public object batoperate { get; set; }
+        /// <summary>
+        /// 批量操作扩展菜单
+        /// </summary>
+        public List<sys_bat_btn_info> bat_btnlist { get; set; }
+        /// <summary>
+        /// 操作列菜单展示方式，默认是下拉展开。可设置为text文本平铺方式
+        /// </summary>
+        public string operate_type { get; set; }
     }
 }

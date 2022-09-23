@@ -23,6 +23,22 @@ namespace ZDMesModels
         /// <summary>
         /// 列类型
         /// </summary>
-        public string coltype { get; set; }
+        public string coltype { get; set; } 
+        /// <summary>
+        /// 列头对齐方式
+        /// </summary>
+        public string headeralign { get; set; } = "center";
+        /// <summary>
+        /// 单元格对齐方式
+        /// </summary>
+        public string align { get; set; } = "center";
+        /// <summary>
+        /// 是否排序
+        /// </summary>
+        public bool sortable { get; set; } = true;
+        /// <summary>
+        /// 是否溢出显示提示
+        /// </summary>
+        public bool overflowtooltip { get; set; } = true;
     }
 }

@@ -177,6 +177,20 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        [HttpGet,Route("dbxxbykey")]
+        public IHttpActionResult DbInfo_By_Key(string key)
+        {
+            try
+            {
+                var list = _baseinfo.GetDbInfo_By_Key(key).OrderBy(t => t.dbh);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet,Route("unuse_dbxx")]
         public IHttpActionResult UnUse_DbInfo()
         {
@@ -225,6 +239,20 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
             try
             {
                 var list = _baseinfo.GetRjInfo();
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("rjlxbykey")]
+        public IHttpActionResult GetRjLxByKey(string key)
+        {
+            try
+            {
+                var list = _baseinfo.GetRjInfoByKey(key);
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)

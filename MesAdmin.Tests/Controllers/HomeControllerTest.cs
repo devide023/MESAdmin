@@ -5,8 +5,10 @@ using System.Web.Mvc;
 using Aspose.Cells;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using ZDMesModels;
-
+using ZDMesModels.LBJ;
+using ZDMesInterfaces.Common;
+using ZDMesServices.Common;
+using System;
 namespace MesAdmin.Tests.Controllers
 {
     [TestClass]
@@ -15,16 +17,13 @@ namespace MesAdmin.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            try
-            {
-                var t = ZDToolHelper.Tool.CheckTelNumber("13272712304");
-                System.Console.WriteLine(t);
-            }
-            catch (System.Exception e)
-            {
-                System.Console.WriteLine(e.Message);
-                throw;
-            }
+            DateTime d = DateTime.Now;
+            decimal a = 10m;
+            System.Console.WriteLine("a".GetType().Name);
+            System.Console.WriteLine(2.GetType().Name);
+            System.Console.WriteLine(2.2d.GetType().Name);
+            System.Console.WriteLine(a.GetType().Name);
+            System.Console.WriteLine(d.GetType().Name);
         }
     }
 }

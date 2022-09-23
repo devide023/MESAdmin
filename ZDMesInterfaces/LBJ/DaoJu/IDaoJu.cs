@@ -13,6 +13,18 @@ namespace ZDMesInterfaces.LBJ.DaoJu
     public interface IDaoJu
     {
         /// <summary>
+        /// 更新刃具在线标准寿命
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        bool GxSm(List<base_dbrjzx> entitys);
+        /// <summary>
+        /// 更新刃具在线标准寿命(基础表数据更新到在线表)
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        bool GxSmFromBase(List<base_dbrjzx> entitys);
+        /// <summary>
         /// 刀柄以旧换新，以坏换新,领用
         /// </summary>
         /// <param name="entitys"></param>

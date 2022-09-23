@@ -334,7 +334,7 @@ namespace ZDMesServices.Common
             }
             finally
             {
-                Db.Dispose();
+                Db?.Dispose();
             }
         }
 

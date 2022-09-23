@@ -27,7 +27,7 @@ namespace ZDMesModules.LBJ
             builder.RegisterAssemblyTypes(AssServices).Where(t=>t.FullName.StartsWith("ZDMesServices.LBJ")).WithParameter("constr", LBJConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors().PreserveExistingDefaults();
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
             builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces.LBJ")).PreserveExistingDefaults();
-            builder.RegisterGeneric(typeof(ImportDataService<>)).Named("lbjimp",typeof(IImportData<>)).WithParameter("constr", LBJConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
+            builder.RegisterGeneric(typeof(ImportDataService<>)).Named("lbjimp",typeof(IImportData<>)).WithParameter("constr", LBJConstr).PropertiesAutowired().WithProperty("Import_Config_File_Path", "~/Import_Config.json").AsImplementedInterfaces().EnableInterfaceInterceptors();
             //注册拦截器
             builder.Register(c => new CUDLogger(LBJConstr));
             builder.Register(c => new ImportLog(LBJConstr));

@@ -142,7 +142,7 @@ namespace ZDMesServices.LBJ.App
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append(" select t1.* ");
+                sql.Append(" select distinct t1.* ");
                 sql.Append(" FROM(select code, name, tel ");
                 sql.Append("          FROM   mes_user_entity ");
                 sql.Append("          union all ");

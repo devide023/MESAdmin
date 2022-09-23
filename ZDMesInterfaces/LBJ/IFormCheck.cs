@@ -9,6 +9,6 @@ namespace ZDMesInterfaces.LBJ
 {
     public interface IFormCheck
     {
-        bool Check_Form_Data(List<object> entitys, out sys_result msg);
+        bool Check_Form_Data<T>(List<T> entitys, out sys_result msg);
     }
 }

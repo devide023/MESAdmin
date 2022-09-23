@@ -62,6 +62,21 @@
 	},
   },
   pagefuns: {
+	  gxsm_handle:function(){
+		  var _this = this;
+		  if(_this.selectlist.length > 0){
+			 _this.$request('post','/lbj/dbrjly/gxsm',_this.selectlist).then(function(res){
+				if(res.code ===1){
+					_this.$message.success(res.msg);
+					_this.getlist(_this.queryform);
+				}else{
+				  _this.$message.error(res.msg);
+				}
+			 }); 
+		  }else{
+			_this.$message.warning('请选择要更新的刃具');  
+		  }
+	  },
 	old2new_handle:function(){
 		var _this = this;
       if (_this.selectlist.length > 0) {
@@ -197,6 +212,7 @@
 	  dbprop:'td.sbmc',
       headeralign: 'center',
       align: 'center',
+	  width:100,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -222,6 +238,8 @@
       subprop: 'dbmc',
       headeralign: 'center',
       align: 'center',
+	  width:100,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       label: '刃具类型',
@@ -238,10 +256,12 @@
       subprop: 'rjmc',
       headeralign: 'center',
       align: 'left',
+	  width:100,
+	  overflowtooltip: true,
     }, 
 	{
       coltype: 'string',
-      label: '刃具位置',
+      label: '加工位置',
       prop: 'rjwz',
       headeralign: 'center',
       align: 'left',

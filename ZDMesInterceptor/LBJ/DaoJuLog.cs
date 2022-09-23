@@ -27,6 +27,7 @@ namespace ZDMesInterceptor.LBJ
         private string _oracleconstr = string.Empty;
         private SqlGeneratorImpl sqlGenerator;
         private List<base_dbrjzx> olddata_list = new List<base_dbrjzx>();
+        private List<base_dbrjzx> olddata_rjzx_list = new List<base_dbrjzx>();
         public DaoJuLog(string constr)
         {
             _oracleconstr = ConfigurationManager.ConnectionStrings[constr]?.ToString();
@@ -40,6 +41,9 @@ namespace ZDMesInterceptor.LBJ
                 //刃具刃磨
                 case "setrjsm":
                     Before_Rjrm_Log(invocation);
+                    break;
+                case "gxsm":
+                    Before_GxSm(invocation);
                     break;
                 default:
                     break;
@@ -65,10 +69,77 @@ namespace ZDMesInterceptor.LBJ
                 case "setrjsm":
                     After_Rjrm_Log(invocation);
                     break;
+                case "gxsm":
+                    After_Gxsm(invocation);
+                    break;
                 default:
                     break;
             }
 
+        }
+
+        private void Before_GxSm(IInvocation invocation)
+        {
+            try
+            {
+                var parm = invocation.Arguments[0] as List<base_dbrjzx>;
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select * from base_dbrjzx where id in :id ");
+                using (var db = new OracleConnection(_oracleconstr))
+                {
+                    var ids = parm.Select(t => t.id).ToList();
+                    olddata_rjzx_list = db.Query<base_dbrjzx>(sql.ToString(), new { id = ids }).ToList();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void After_Gxsm(IInvocation invocation) {
+            try
+            {
+                string url = HttpContext.Current.Request.Path;
+                var parm = invocation.Arguments[0] as List<base_dbrjzx>;
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select * from base_dbrjzx where id in :id ");
+                using (var db = new OracleConnection(_oracleconstr))
+                {
+                    IDatabase Db = new Database(db, sqlGenerator);
+                    try
+                    {
+                        var ids = parm.Select(t => t.id).ToList();
+                        var newlist = db.Query<base_dbrjzx>(sql.ToString(), new { id = ids }).ToList();
+                        var userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
+                        if (Convert.ToBoolean(invocation.ReturnValue) && olddata_rjzx_list.Count > 0)
+                        {
+                            Db.Insert<mes_oper_log>(new mes_oper_log()
+                            {
+                                name = "base_dbrjzx",
+                                czr = userinfo.name,
+                                czrid = userinfo.id,
+                                lx = "刀具标准寿命更新",
+                                czrq = DateTime.Now,
+                                path = url,
+                                olddata = JsonConvert.SerializeObject(olddata_rjzx_list),
+                                newdata = JsonConvert.SerializeObject(newlist)
+                            });
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                        Db?.Dispose();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void After_Rjrm_Log(IInvocation invocation)

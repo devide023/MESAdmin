@@ -185,6 +185,25 @@ namespace ZDMesServices.Common
             }
         }
 
+        private string LoadJsScript(string path, params string[] par)
+        {
+            try
+            {
+                string fullpath = HttpContext.Current.Server.MapPath(path);
+                var script = File.ReadAllText(fullpath);
+                foreach (var item in par)
+                {
+                    script = script.Replace("@@",item);
+                }
+                return script;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool Save_Page_Config(sys_page_config config)
         {
             try
@@ -199,17 +218,39 @@ namespace ZDMesServices.Common
                     contents.Append("{");
                     foreach (PropertyInfo p in config.baseconfig.GetType().GetProperties())
                     {
-                        contents.Append($"{p.Name}:{p.GetValue(config.baseconfig).ToString().ToLower()},");
+                        var attrs = p.GetCustomAttributes().Where(t => t.TypeId.ToString().Contains("NoCnf"));
+                        if (attrs.Count() == 0)
+                        {
+                            contents.Append($"{p.Name}:{p.GetValue(config.baseconfig).ToString().ToLower()},");
+                        }
                     }
                     if (config.baseconfig.isbatoperate)
                     {
+                        contents.Append("batoperate:{");
+                        if (!string.IsNullOrEmpty(config.baseconfig.import_cnf.addurl))
+                        {
+                            contents.Append("import_by_add:function(_this, res){" + LoadJsScript("~/Scripts/import_by_add.js", config.baseconfig.import_cnf.addurl) + "},");
+                        }
+                        if (!string.IsNullOrEmpty(config.baseconfig.import_cnf.replaceurl))
+                        {
+                            contents.Append("import_by_replace:function(_this, res){" + LoadJsScript("~/Scripts/import_by_replace.js", config.baseconfig.import_cnf.replaceurl) + "},");
+                        }
+                        if (!string.IsNullOrEmpty(config.baseconfig.import_cnf.zongheurl))
+                        {
+                            contents.Append("import_by_zh:function(_this, res){" + LoadJsScript("~/Scripts/import_by_zh.js", config.baseconfig.import_cnf.zongheurl) + "},");
+                        }
+                        contents.Append("export_excel:function(_this){" + LoadJsScript("~/Scripts/export_excel.js") + "},");
+                        contents.Append("},");
+                    }
+                    if (config.baseconfig.isoperate)
+                    { 
                         contents.Append("operate_fnlist:[");
                         foreach (var item in config.operate_fnlist)
                         {
                             contents.Append("{");
                             foreach (PropertyInfo p in item.GetType().GetProperties())
                             {
-                                var val = p.GetValue(item).ToString();
+                                var val = p.GetValue(item)?.ToString();
                                 if (string.IsNullOrWhiteSpace(val))
                                 {
                                     continue;
@@ -240,7 +281,7 @@ namespace ZDMesServices.Common
                         contents.Append("{");
                         foreach (PropertyInfo p in item.GetType().GetProperties())
                         {
-                            var val = p.GetValue(item).ToString().ToLower();
+                            var val = p.GetValue(item)?.ToString().ToLower();
                             if (!string.IsNullOrWhiteSpace(val))
                             {
                                 if (p.Name == "url" || p.Name == "method")
@@ -257,10 +298,11 @@ namespace ZDMesServices.Common
                                 }
                             }
                         }
-                        if(item.coltype == "string" && !string.IsNullOrWhiteSpace(item.callback))
+                        if(item.coltype == "string" && !string.IsNullOrWhiteSpace(item.suggest))
                         {
-                            contents.Append($"suggest:{item.callback},");
-                            contents.Append($"select_handlename:'{item.function_name}',");
+                            contents.Append($"suggest:true,");
+                            contents.Append($"suggest_fn_name:'suggest_fn',");
+                            contents.Append($"select_fn_name:'select_fn',");
                         }
                         else if (item.coltype == "list" && !string.IsNullOrWhiteSpace(item.url)) {
                             contents.Append("inioptionapi:{");

@@ -1,0 +1,81 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="D:\workspace\MesWebApiPro\MesAdmin\packages\Oracle.ManagedDataAccess.21.6.1\lib\net462\Oracle.ManagedDataAccess.dll" #>
+<#@ assembly name="D:\workspace\MesWebApiPro\MesAdmin\packages\Dapper.2.0.123\lib\net461\Dapper.dll" #>
+<#@ assembly name="D:\workspace\MesWebApiPro\MesAdmin\ZDMesModels\bin\Debug\ZDMesModels.dll"#>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Oracle.ManagedDataAccess.Client" #>
+<#@ import namespace="Dapper" #>
+<#@ import namespace="ZDMesModels" #>
+
+<#@ output extension=".cs" #>
+
+<#
+    var tjconstr = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.200.200)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=zsdl)));User Id=rlm2s;Password=rlm2s998;";
+    var db = new OracleConnection(tjconstr);
+    StringBuilder sql_table = new StringBuilder();
+    sql_table.Append(" SELECT lower(ta.TABLE_NAME) as table_name,tb.COMMENTS ");
+    sql_table.Append(" FROM   user_tables ta, user_tab_comments tb");
+    sql_table.Append(" WHERE  ta.TABLE_NAME = tb.TABLE_NAME");
+    sql_table.Append(" and ta.table_name like :key ");
+    sql_table.Append(" ORDER  BY ta.TABLE_NAME");
+
+    StringBuilder sql_colinfo = new StringBuilder();
+    sql_colinfo.Append(" SELECT lower(replace(tb.COLUMN_NAME, '_', '')) as prop, decode(instr(tb.COLUMN_NAME, '_'), 0, '', lower(tb.COLUMN_NAME)) as dbprop, ta.COMMENTS as label,case ");
+    sql_colinfo.Append(" when instr(tb.DATA_TYPE, 'VARCHAR') > 0 then  ");
+    sql_colinfo.Append("  'string' ");
+    sql_colinfo.Append(" when instr(tb.DATA_TYPE, 'DATE') > 0 then ");
+    sql_colinfo.Append("  'date' ");
+    sql_colinfo.Append(" when instr(tb.DATA_TYPE, 'NUMBER') > 0 then ");
+    sql_colinfo.Append("  'int' ");
+    sql_colinfo.Append(" end as coltype ");
+    sql_colinfo.Append(" FROM   USER_TAB_COLUMNS tb, USER_COL_COMMENTS ta ");
+    sql_colinfo.Append(" WHERE  tb.TABLE_NAME = :tablename ");
+    sql_colinfo.Append(" AND    tb.TABLE_NAME = ta.TABLE_NAME ");
+    sql_colinfo.Append(" AND    tb.COLUMN_NAME = ta.COLUMN_NAME ");
+    sql_colinfo.Append(" order  by tb.column_id");
+
+    var list = db.Query<sys_field_info>(sql_colinfo.ToString(), new { tablename = "mes_menu_entity".ToUpper() });
+#>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DapperExtensions.Mapper;
+namespace ZDMesModels.TJ
+{
+    public class Tzxjc_gylx
+    {
+
+    <#
+        foreach(var item in list)
+        {
+     #>
+     
+        /// <summary>
+        /// <#=item.label#>
+        /// </summary>
+        public <#=item.coltype#> <#=item.prop#> { get; set; }
+        <#
+        }
+    #>
+    }
+	
+	public class Tzxjc_gylx_mapper : ClassMapper<Tzxjc_gylx>
+    {
+        public Tzxjc_gylx_mapper()
+        {
+            Map(t => t.workno).Column("work_no");
+            Map(t => t.workname).Column("work_name");
+            Map(t => t.statusno).Column("status_no");
+            Map(t => t.rid).Ignore();
+            AutoMap();
+        }
+    }
+}

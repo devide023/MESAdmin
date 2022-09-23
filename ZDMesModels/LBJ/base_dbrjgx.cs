@@ -41,6 +41,14 @@ namespace ZDMesModels.LBJ
         /// 刀柄类型
         /// </summary>
         public string dblx { get; set; }
+        /// <summary>
+        /// 刃具名称
+        /// </summary>
+        public string rjmc { get; set; }
+        /// <summary>
+        /// 加工位置
+        /// </summary>
+        public string jgwz { get; set; }
 
         public List<base_dbrjgx> children { get; set; }
         /// <summary>
@@ -57,6 +65,8 @@ namespace ZDMesModels.LBJ
             Map(t => t.children).Ignore();
             Map(t => t.baserjxx).Ignore();
             Map(t => t.wlmc).Ignore();
+            Map(t => t.rjmc).Ignore();
+            Map(t => t.jgwz).Ignore();
             AutoMap();
         }
     }

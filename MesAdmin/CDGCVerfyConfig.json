@@ -1,0 +1,23 @@
+[
+  {
+    "model": "ZDMesModels.CDGC.zxjc_ryxx,ZDMesModels",
+    "fields": [
+      {
+        "colname": "usercode",
+        "collabel": "账号"
+      },
+      {
+        "colname": "username",
+        "collabel": "姓名"
+      },
+      {
+        "colname": "rylx",
+        "collabel": "员工类型"
+      },
+      {
+        "colname": "bzxx",
+        "collabel": "班组"
+      }
+    ]
+  }
+]

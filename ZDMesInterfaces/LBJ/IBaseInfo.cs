@@ -47,6 +47,12 @@ namespace ZDMesInterfaces.LBJ
         /// <returns></returns>
         IEnumerable<base_rjxx> GetRjInfo();
         /// <summary>
+        /// 关键字过滤刃具信息
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<base_rjxx> GetRjInfoByKey(string key);
+        /// <summary>
         /// 未使用刃具信息
         /// </summary>
         /// <returns></returns>
@@ -56,6 +62,11 @@ namespace ZDMesInterfaces.LBJ
         /// </summary>
         /// <returns></returns>
         IEnumerable<base_dbxx> GetDbInfo();
+        /// <summary>
+        /// 关键字获取刀柄信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_dbxx> GetDbInfo_By_Key(string key);
         /// <summary>
         /// 未使用刀柄信息
         /// </summary>

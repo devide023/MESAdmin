@@ -1,0 +1,44 @@
+[
+  {
+    "tablename": "base_rjxx",
+    "conf": [
+      {
+        "dbcolname": "gcdm",
+        "dbcoltype": "string",
+        "fieldindex": 0,
+        "fieldname": "工厂"
+      },
+      {
+        "dbcolname": "rjlx",
+        "dbcoltype": "string",
+        "fieldindex": 1,
+        "fieldname": "刃具类型"
+      },
+      {
+        "dbcolname": "rjmc",
+        "dbcoltype": "string",
+        "fieldindex": 2,
+        "fieldname": "刃具名称"
+      },
+      {
+        "dbcolname": "rjbzsm",
+        "dbcoltype": "int",
+        "fieldindex": 3,
+        "fieldname": "刃具标准寿命"
+      },
+      {
+        "dbcolname": "jgwz",
+        "dbcoltype": "string",
+        "fieldindex": 4,
+        "fieldname": "加工位置"
+      },
+      {
+        "dbcolname": "rjxxbz",
+        "dbcoltype": "string",
+        "fieldindex": 5,
+        "fieldname": "备注"
+      }
+    ]
+  }
+
+]

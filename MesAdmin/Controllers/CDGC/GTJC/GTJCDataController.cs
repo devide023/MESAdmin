@@ -73,19 +73,48 @@ namespace MesAdmin.Controllers.CDGC.GTJC
         {
             try
             {
-                foreach (var bill in bills)
+                List<zxjc_gtjc_bill> error = new List<zxjc_gtjc_bill>();
+                foreach (var item in bills)
                 {
-                     _gtjc_jgservice.Save_Gtjc_CheckData(bill);
+                    foreach (var sitem in item.zxjcgtjcdetail)
+                    {
+                        if ((string.IsNullOrEmpty(sitem.kjval) && (sitem.kjtype=="radio" || sitem.kjtype =="text"))
+                            ||
+                            (string.IsNullOrEmpty(sitem.sdmjval) && sitem.sdtype == "text")
+                            )
+                        {
+                            error.Add(item);
+                            break;
+                        }
+                    }
                 }
-                return Json(new
+                if (error.Count() > 0)
                 {
-                    code = 1,
-                    msg = "ok",
-                });
+                    string tempmsg = string.Empty;
+                    string msg = string.Empty;
+                    error.Select(t => t.jth).ToList().ForEach(t => tempmsg = tempmsg + t + ",");
+                    msg = $"机台号：{tempmsg}孔径尺寸或深度面距尺寸有空项未填写 ";
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = msg,
+                    });
+                }
+                else
+                {
+                    foreach (var bill in bills)
+                    {
+                        _gtjc_jgservice.Save_Gtjc_CheckData(bill);
+                    }
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "ok",
+                    });
+                }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

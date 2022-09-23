@@ -32,7 +32,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 sql.Append(" insert into base_dbrjzx ");
                 sql.Append(" (gcdm, dbh, scx, sbbh, rjlx, rjbzsm, rjazsm, rjdqsm, rjazjgs, dqjgs, dblysj, dblyr, rjlysj, rjlyr, rjrmcs, rjid, cxz, gwh,rjwz) ");
                 sql.Append(" values  ");
-                sql.Append(" (:gcdm, :dbh, :scx, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjid, :cxz, :gwh,(select bz FROM base_rjxx where id = :rjid and rownum <2)) ");
+                sql.Append(" (:gcdm, :dbh, :scx, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjid, :cxz, :gwh,(select jgwz FROM base_rjxx where id = :rjid and rownum <2)) ");
                 return sql;
             }
         }
@@ -1034,7 +1034,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 sql.Append("select ta.gcdm, ta.dbh, ta.scx, (select scxmc ");
                 sql.Append(" FROM   base_scxxx ");
                 sql.Append(" where  scx = ta.scx ");
-                sql.Append(" and    rownum < 2) as scxmc, ta.rjlx, ta.rjbzsm, ta.rjazsm, ta.rjdqsm, ta.rjazjgs, ta.dqjgs, ta.dblysj, ta.dblyr, ta.rjlysj, ta.rjlyr, ta.rjrmcs, ta.rjzhrmsj, ta.id, ta.cxz, ta.gwh, ");
+                sql.Append(" and    rownum < 2) as scxmc, ta.rjlx, ta.rjbzsm, ta.rjazsm, ta.rjdqsm, ta.rjazjgs, ta.dqjgs, ta.dblysj, ta.dblyr, ta.rjlysj, ta.rjlyr, ta.rjrmcs, ta.rjzhrmsj, ta.id, ta.cxz, ta.gwh,ta.rjwz, ");
                 sql.Append(" ta.sbbh, tb.sbmc, tb.sblx, tb.ljlx, ");
                 sql.Append(" ta.dbh, tc.dbmc, tc.dblx, tc.bz ");
                 sql.Append(" FROM   base_dbrjzx ta, base_sbxx tb, base_dbxx tc ");
@@ -1081,7 +1081,7 @@ namespace ZDMesServices.LBJ.DAOJU
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("update base_dbrjzx set rjdqsm = 0,rjlysj=sysdate,rjrmcs=0,rjzhrmsj=null,cxz=0 where id in :id");
+                sql.Append("update base_dbrjzx set rjbzsm=(select rjbzsm FROM base_rjxx where id = base_dbrjzx.rjid),rjdqsm = 0,rjlysj=sysdate,rjrmcs=0,rjzhrmsj=null,cxz=0 where id in :id");
                 //原记录
                 StringBuilder oldsql = new StringBuilder();
                 oldsql.Append("select * from base_dbrjzx where id in :id");
@@ -1157,5 +1157,102 @@ namespace ZDMesServices.LBJ.DAOJU
                 throw;
             }
         }
+
+        public bool GxSmFromBase(List<base_dbrjzx> entitys)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("update base_dbrjzx set rjbzsm = (select rjbzsm FROM base_rjxx where id = base_dbrjzx.rjid),");
+            sql.Append(" rjwz = (select jgwz FROM base_rjxx where id = base_dbrjzx.rjid),");
+            sql.Append(" cxz = case when rjdqsm/(select rjbzsm FROM base_rjxx where id = base_dbrjzxr.jid) < 0.95 then 0 ");
+            sql.Append(" when rjdqsm/(select rjbzsm FROM base_rjxx where id = base_dbrjzx.rjid) >=0.95 and rjdqsm/(select rjbzsm FROM base_rjxx where id = base_dbrjzx.rjid) <= 1 then 1 ");
+            sql.Append(" when rjdqsm/(select rjbzsm FROM base_rjxx where id = base_dbrjzx.rjid) >1 then 2 end ");
+            sql.Append(" where id = :id ");
+            StringBuilder sqlls = new StringBuilder();
+            sqlls.Append("update base_dbrjzx_ls set djbzsm = (select rjbzsm FROM base_rjxx where id = base_dbrjzx_ls.rjid)");
+            sqlls.Append(" where id = (select max(id) from base_dbrjzx_ls where rjid = :rjid) ");
+            using (var db = new OracleConnection(ConString))
+            {
+                try
+                {
+                    db.Open();
+                    using (var trans = db.BeginTransaction())
+                    {
+                        try
+                        {
+                            foreach (var item in entitys)
+                            {
+                                db.Execute(sql.ToString(), item, trans);
+
+                                db.Execute(sqlls.ToString(), item, trans);
+                            }
+                            trans.Commit();
+                            return true;
+                        }
+                        catch (Exception)
+                        {
+                            trans.Rollback();
+                            throw;
+                        }
+                    }
+                }
+                finally
+                {
+                    db.Close();
+                }
+            }
+        }
+        
+        public bool GxSm(List<base_dbrjzx> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update base_dbrjzx set rjbzsm = :rjbzsm, ");
+                sql.Append(" cxz = case when rjdqsm/:rjbzsm < 0.95 then 0 ");
+                sql.Append(" when rjdqsm/:rjbzsm >=0.95 and rjdqsm/:rjbzsm <= 1 then 1 ");
+                sql.Append(" when rjdqsm/:rjbzsm >1 then 2 end ");
+                sql.Append(" where id = :id ");
+                //更新流水表
+                StringBuilder sqlls = new StringBuilder();
+                sqlls.Append("update base_dbrjzx_ls set djbzsm = :rjbzsm where id = ");
+                sqlls.Append("(select max(id) FROM base_dbrjzx_ls where scx = :scx and sbbh = :sbbh and dbh = :dbh and rjid = :rjid)");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var item in entitys)
+                                {
+                                    db.Execute(sql.ToString(), item, trans);
+                                    db.Execute(sqlls.ToString(), item, trans);
+                                }
+                                trans.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

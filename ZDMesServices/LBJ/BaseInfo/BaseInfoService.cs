@@ -105,12 +105,22 @@ namespace ZDMesServices.LBJ.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
+                /*
                 sql.Append("select t1.*, t2.id, t2.rjid, t2.djlx ");
                 sql.Append(" FROM(select ta.dbmc, ta.dbh, ta.dblx, ta.dbzt, ta.bz");
                 sql.Append("          from(select t.*, (select count(*) from BASE_DBRJZX where dbh = t.dbh) qty");
                 sql.Append("                   FROM   base_dbxx t) ta");
                 sql.Append("          where  ta.qty = 0) t1, base_dbrjgx t2");
                 sql.Append(" where  t1.dbh = t2.dbh");
+                */
+                sql.Append("select bb.dbmc, bb.dbh, bb.dblx, aa.id, aa.rjid, aa.djlx  ");
+                sql.Append(" FROM(select t1.id, t1.djlx, t1.rjid, t1.dbh ");
+                sql.Append("          FROM(select ta.*, tb.id as gc ");
+                sql.Append("                   FROM   base_dbrjgx ta, base_dbrjzx tb ");
+                sql.Append("                   where  ta.dbh = tb.dbh(+) ");
+                sql.Append("                   and    ta.rjid = tb.rjid(+)) t1 ");
+                sql.Append("          where  t1.gc is null) aa, base_dbxx bb ");
+                sql.Append(" where  aa.dbh = bb.dbh");
                 using (var db = new OracleConnection(ConString))
                 {
                     Dictionary<string, base_dbxx> dic = new Dictionary<string, base_dbxx>();
@@ -447,7 +457,7 @@ namespace ZDMesServices.LBJ.BaseInfo
                     StringBuilder sql = new StringBuilder();
                     sql.Append("select wlbm, wlmc ");
                     sql.Append(" FROM   base_wlxx ");
-                    sql.Append(" where  wlmc like  :key ");
+                    sql.Append(" where  wlmc like  :key or wlbm like :key ");
                     sql.Append(" order  by wlbm asc");
                     var list = db.Query<base_wlxx>(sql.ToString(), new { key = "%" + key + "%" });
                     return list;
@@ -488,6 +498,62 @@ namespace ZDMesServices.LBJ.BaseInfo
                 {
                     var list = db.Query<zxjc_ryxx>(sql.ToString());
                     return list;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_dbxx> GetDbInfo_By_Key(string key)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select dbmc, dblx, dbh ");
+                sql.Append("FROM   base_dbxx ");
+                sql.Append("where  dbh like :key ");
+                sql.Append("or     dblx like :key ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        return db.Query<base_dbxx>(sql.ToString(), new { key = "%" + key + "%" }).OrderBy(t => t.dbh);
+                    }
+                    else
+                    {
+                        return new List<base_dbxx>();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_rjxx> GetRjInfoByKey(string key)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select id,rjlx, rjmc, jgwz ");
+                sql.Append(" FROM   base_rjxx");
+                sql.Append(" where  rjlx like :key ");
+                sql.Append(" or     jgwz like :key ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        return db.Query<base_rjxx>(sql.ToString(), new { key = "%" + key + "%" });
+                    }
+                    else
+                    {
+                        return new List<base_rjxx>();
+                    }
                 }
             }
             catch (Exception)

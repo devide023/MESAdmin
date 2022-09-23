@@ -21,11 +21,57 @@ namespace ZDMesServices.CDGC.JJBGL
         {
 
         }
+        public override bool Del(IEnumerable<zxjc_djkjjb_bill> entitys)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("delete from zxjc_djkjjb_bill where id = :id");
+            StringBuilder sql1 = new StringBuilder();
+            sql1.Append("delete from zxjc_djkjjb_detail where billid = :id");
+            StringBuilder sql2 = new StringBuilder();
+            sql2.Append("delete from zxjc_djkjjb_hx_detail where billid = :id");
+
+            using (var db = new OracleConnection(ConString))
+            {
+                try
+                {
+                    db.Open();
+                    using (var trans = db.BeginTransaction())
+                    {
+                        try
+                        {
+                            foreach (var item in entitys)
+                            {
+                                db.Execute(sql.ToString(), new { id = item.id }, trans);
+                                db.Execute(sql1.ToString(), new { id = item.id }, trans);
+                                db.Execute(sql2.ToString(), new { id = item.id }, trans);
+                            }
+                            trans.Commit();
+                            return true;
+                        }
+                        catch (Exception)
+                        {
+                            trans.Rollback();
+                            return false;
+                            throw;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    db.Close();
+                }
+            }
+        }
 
         public override IEnumerable<zxjc_djkjjb_bill> GetList(sys_page parm, out int resultcount)
         {
             try
             {
+                parm.default_order_colname = "rq";
               return base.GetList(parm,out resultcount);
             }
             catch (Exception)
@@ -101,28 +147,28 @@ namespace ZDMesServices.CDGC.JJBGL
                                 }
                                 sql.Clear();
                                 sql.Append("select count(id) FROM ZXJC_DJKJJB_DETAIL where billid=:billid");
-                                var qjjmx = db.ExecuteScalar<int>(sql.ToString(), new { billid = billid });
+                                var qjjmx = db.ExecuteScalar<int>(sql.ToString(), new { billid = bill.id });
                                 if(qjjmx > 0)
                                 {
-                                    db.Execute("delete from zxjc_djkjjb_detail where billid= :billid", new { billid = billid }, trans);
+                                    db.Execute("delete from zxjc_djkjjb_detail where billid= :billid", new { billid = bill.id }, trans);
                                 }
                                 //机加明细
                                 foreach (var item in jjmx)
                                 {
-                                    item.billid = billid;
+                                    item.billid = bill.id;
                                     Db.Insert<zxjc_djkjjb_detail>(item, trans);
                                 }
                                 sql.Clear();
                                 sql.Append("select count(id) FROM zxjc_djkjjb_hx_detail where billid=:billid");
-                                var qhxmx = db.ExecuteScalar<int>(sql.ToString(), new { billid = billid });
+                                var qhxmx = db.ExecuteScalar<int>(sql.ToString(), new { billid = bill.id });
                                 if (qhxmx > 0)
                                 {
-                                    db.Execute("delete from zxjc_djkjjb_hx_detail where billid= :billid", new { billid = billid }, trans);
+                                    db.Execute("delete from zxjc_djkjjb_hx_detail where billid= :billid", new { billid = bill.id }, trans);
                                 }
                                 //后序明细
                                 foreach (var item in hxmx)
                                 {
-                                    item.billid = billid;
+                                    item.billid = bill.id;
                                     Db.Insert<zxjc_djkjjb_hx_detail>(item, trans);
                                 }
                                 trans.Commit(); 

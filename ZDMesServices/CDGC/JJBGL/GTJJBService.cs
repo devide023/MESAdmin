@@ -18,6 +18,48 @@ namespace ZDMesServices.CDGC.JJBGL
 
         }
 
+        public override bool Del(IEnumerable<zxjc_gtjjb_bill> entitys)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("delete from zxjc_gtjjb_bill where id = :id");
+            StringBuilder sql1 = new StringBuilder();
+            sql1.Append("delete FROM zxjc_gtjjb_bill_detail where billid = :id");
+            using (var db = new OracleConnection(ConString))
+            {
+                try
+                {
+                    db.Open();
+                    using (var trans = db.BeginTransaction())
+                    {
+                        try
+                        {
+                            foreach (var item in entitys)
+                            {
+                                db.Execute(sql.ToString(), new { id = item.id }, trans);
+                                db.Execute(sql1.ToString(), new { id = item.id }, trans);
+                            }
+                            trans.Commit();
+                            return true;
+                        }
+                        catch (Exception)
+                        {
+                            trans.Rollback();
+                            return false;
+                            throw;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    db.Close();
+                }
+            }
+        }
+
         public override IEnumerable<zxjc_gtjjb_bill> GetList(sys_page parm, out int resultcount)
         {
             try

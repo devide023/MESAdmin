@@ -12,7 +12,7 @@ using DapperExtensions;
 
 namespace ZDMesServices.CDGC.GTJC
 {
-    public class GTJCDataService:BaseDao<zxjc_gtjc_bill>, IGtjc_Result
+    public class GTJCDataService:BaseDao<zxjc_gtjc_bill>, IGtjc_Result,IGtjcHis
     {
         public GTJCDataService(string constr) : base(constr)
         {
@@ -139,22 +139,36 @@ namespace ZDMesServices.CDGC.GTJC
                                     bill.lrsj = entity_bill.lrsj;
                                     bill.rq = Convert.ToDateTime(entity_bill.rq.ToString("yyyy-MM-dd"));
                                     bill.zxjcgtjcdetail.ForEach(t => t.billid = entity_bill.id);
+                                    Db.Update<zxjc_gtjc_bill>(bill, trans);
                                 }
                                 else
                                 {
                                     bill.rq = Convert.ToDateTime(bill.rq.ToString("yyyy-MM-dd"));
-                                    if (bill.lrsj == Convert.ToDateTime(null))
+                                    var billid = Db.Insert<zxjc_gtjc_bill>(new zxjc_gtjc_bill()
                                     {
-                                        bill.lrsj = DateTime.Now;
-                                    }
+                                        jth = bill.jth,
+                                        rq = bill.rq,
+                                        lrsj = DateTime.Now,
+                                        th = bill.th,
+                                        vin = bill.vin,
+                                        cplx = bill.cplx,
+                                        jylb = bill.jylb,
+                                        mh = bill.mh,
+                                        lrr = bill.lrr,
+                                        jyry = bill.jyry,
+                                    }, trans);
+                                    bill.id = billid;
                                 }
-                                Db.Update<zxjc_gtjc_bill>(bill, trans);
                                 PredicateGroup pg = new PredicateGroup();
                                 pg.Operator = GroupOperator.And;
                                 pg.Predicates = new List<IPredicate>();
                                 foreach (var item in bill.zxjcgtjcdetail)
                                 {
                                     item.billid = bill.id;
+                                    if (item.sdtype == "T")
+                                    {
+                                        item.sdmjval = "T";
+                                    }
                                     pg.Predicates.Clear();
                                     pg.Predicates.Add(Predicates.Field<zxjc_gtjc_detail>(t => t.jcid, Operator.Eq, item.jcid));
                                     pg.Predicates.Add(Predicates.Field<zxjc_gtjc_detail>(t => t.billid, Operator.Eq, item.billid));
@@ -170,13 +184,13 @@ namespace ZDMesServices.CDGC.GTJC
                                     }
                                 }
                                 trans.Commit();
+                                return true;
                             }
                             catch (Exception)
                             {
                                 trans.Rollback();
+                                throw;
                             }
-
-                            return true;
                         }
                     }
                     finally
@@ -240,6 +254,29 @@ namespace ZDMesServices.CDGC.GTJC
             finally
             {
                 Db?.Dispose();
+            }
+        }
+
+        public zxjc_gtjc_bill Get_GtjcInfo(int billid)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select id, cplx, rq, jyry, jylb, jth, vin, mh, pdjg, cljl, clr, clsj, lrr, lrsj, th FROM  zxjc_gtjc_bill where  id = :billid ");
+                StringBuilder sqlmx = new StringBuilder();
+                sqlmx.Append("select id, billid, jcid, cpfw, kxmc, kxcc, sdmj, kjval, sdmjval, jcjg FROM zxjc_gtjc_detail where  billid = :billid ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    var entity = db.Query<zxjc_gtjc_bill>(sql.ToString(), new { billid = billid }).FirstOrDefault();
+                    var mxlist = db.Query<zxjc_gtjc_detail>(sqlmx.ToString(), new { billid = billid });
+                    entity.zxjcgtjcdetail = mxlist.ToList();
+                    return entity;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

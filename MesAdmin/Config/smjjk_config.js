@@ -51,6 +51,7 @@
     }, {
       coltype: 'string',
       prop: 'engineno',
+	  dbprop:'engine_no',
       label: '产品件号',
       headeralign: 'center',
       align: 'left',
@@ -59,6 +60,7 @@
     }, {
       coltype: 'string',
       prop: 'orderno',
+	  dbprop:'order_no',
       label: '订单号',
       headeralign: 'center',
       align: 'left',

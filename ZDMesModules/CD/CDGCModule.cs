@@ -13,6 +13,10 @@ using ZDMesInterceptor.LBJ;
 using ZDMesInterceptor;
 using ZDMesServices.LBJ.ImportData;
 using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesServices.LBJ.CheckData;
+using ZDMesInterfaces.LBJ;
+using ZDMesServices.Common;
+using ZDMesInterfaces.Common;
 
 namespace ZDMesModules.CD
 {
@@ -26,10 +30,15 @@ namespace ZDMesModules.CD
         {
             var AssServices = Assembly.Load("ZDMesServices");
             builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.Common")).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
-            builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.CDGC")).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors().PreserveExistingDefaults();
+            builder.RegisterAssemblyTypes(AssServices).Where(t => t.FullName.StartsWith("ZDMesServices.CDGC")).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
-            builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces.CDGC")).PreserveExistingDefaults();
-            builder.RegisterGeneric(typeof(ImportDataService<>)).Named("cdgcimp", typeof(IImportData<>)).WithParameter("constr", CDGCConstr).PropertiesAutowired().AsImplementedInterfaces().EnableInterfaceInterceptors();
+            builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces")).PreserveExistingDefaults();
+            builder.RegisterGeneric(typeof(ImportDataService<>)).Named("cdgcimp", typeof(IImportData<>)).WithParameter("constr", CDGCConstr).PropertiesAutowired().WithProperty("Import_Config_File_Path", "~/CDGC_Import_Config.json").AsImplementedInterfaces().EnableInterfaceInterceptors();
+            builder.RegisterType<Form_Check_Service>().Named("cdgcformcheck",typeof(IFormCheck));
+            builder.RegisterType<Template_ImportService>().As<ITemplate_Import>().As<IVerifyData>()
+                .PropertiesAutowired().WithProperty("TemplateConfig", "~/CDGCTemplaceConfig.json")
+                .WithProperty("VerifyConfigpath", "~/CDGCVerfyConfig.json")
+                .AsImplementedInterfaces().EnableInterfaceInterceptors();
             //注册拦截器
             builder.Register(c => new CUDLogger(CDGCConstr));
             builder.Register(c => new ImportLog(CDGCConstr));

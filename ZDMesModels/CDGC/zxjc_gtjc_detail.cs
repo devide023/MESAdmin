@@ -48,6 +48,14 @@ namespace ZDMesModels.CDGC
         ///检测结果
         ///</summary>
         public string jcjg { get; set; }
+        /// <summary>
+        /// 孔径类型，radio\input
+        /// </summary>
+        public string kjtype { get; set; }
+        /// <summary>
+        /// 深度类型，input\none\T
+        /// </summary>
+        public string sdtype { get; set; }
 
     }
 
@@ -56,6 +64,8 @@ namespace ZDMesModels.CDGC
         public zxjc_gtjc_detail_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.kjtype).Ignore();
+            Map(t => t.sdtype).Ignore();
             AutoMap();
         }
     }

@@ -167,7 +167,12 @@
 	  {
 		  label:'不填',
 		  value:'none'
-	  }]
+	  },
+	  {
+		  label:'T',
+		  value:'T'
+	  },
+	  ]
     },
 	{
       coltype: 'string',

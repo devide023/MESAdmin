@@ -15,6 +15,62 @@
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     },
+    suggest_fn: function (vm, key, cb, row, col) {
+      if (col.prop === 'cpzt') {
+        row.wlmc = '';
+        this.$request('get', '/lbj/baseinfo/wlbm_by_key', {
+          key: key
+        }).then(function (res) {
+          if (res.code === 1) {
+            cb(res.list);
+          }
+        });
+      } else if (col.prop === 'dbh') {
+        row.dblx = '';
+        this.$request('get', '/lbj/baseinfo/dbxxbykey', {
+          key: key
+        }).then(function (res) {
+          if (res.code === 1) {
+            cb(res.list.map(function (i) {
+                return {
+                  label: i.dblx,
+                  value: i.dbh,
+                  dblx: i.dblx,
+                  dbmc: i.dbmc
+                };
+              }));
+          }
+        });
+      } else if (col.prop === 'djlx') {
+        row.jgwz = '';
+        this.$request('get', '/lbj/baseinfo/rjlxbykey', {
+          key: key
+        }).then(function (res) {
+          if (res.code === 1) {
+            cb(res.list.map(function (i) {
+                return {
+                  label: i.jgwz,
+                  value: i.rjlx,
+                  rjid: i.id,
+                  rjmc: i.rjmc
+                };
+              }));
+          }
+        })
+      }
+    },
+    select_fn: function (vm, item, row, col) {
+      console.log(item);
+      if (col.prop === 'cpzt') {
+        row.wlmc = item.label;
+      } else if (col.prop === 'dbh') {
+        row.dblx = item.label;
+      } else if (col.prop === 'djlx') {
+        row.rjmc = item.rjmc;
+        row.jgwz = item.label;
+		row.rjid = item.rjid;
+      }
+    },
     download_template_file() {
       window.open('http://172.16.201.125:7002/template/lbj/刀柄刃具关系.xlsx');
     }
@@ -59,7 +115,7 @@
       });
     },
     import_by_replace(_this, res) {
-		if (res.files.length > 0) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/dbrjgx/readxls_by_zh', {
@@ -81,9 +137,9 @@
       } else {
         _this.$loading().close();
       }
-	},
+    },
     import_by_zh(_this, res) {
-		if (res.files.length > 0) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/dbrjgx/readxls_by_zh', {
@@ -105,7 +161,7 @@
       } else {
         _this.$loading().close();
       }
-	},
+    },
   },
   fields: [{
       coltype: 'list',
@@ -122,48 +178,74 @@
     }, {
       coltype: 'string',
       label: '产品编号',
+      suggest: true,
       prop: 'cpzt',
       headeralign: 'center',
       width: 300,
       align: 'center',
-    },
-{
+      suggest_fn_name: 'suggest_fn',
+      select_fn_name: 'select_fn'
+    }, {
       coltype: 'string',
       label: '产品名称',
       prop: 'wlmc',
       headeralign: 'center',
       width: 300,
       align: 'center',
-	  overflowtooltip: true,
-	  searchable:false,
-    },
-	{
+      overflowtooltip: true,
+      searchable: false,
+    }, {
       coltype: 'string',
+      suggest: true,
       label: '刀柄号',
       prop: 'dbh',
       headeralign: 'center',
-      width: 300,
+      width: 100,
       align: 'center',
+      suggest_fn_name: 'suggest_fn',
+      select_fn_name: 'select_fn'
     }, {
       coltype: 'string',
       label: '刀柄类型',
       prop: 'dblx',
       headeralign: 'center',
-      width: 300,
-      align: 'center'
+      width: 200,
+      align: 'left'
     }, {
       coltype: 'string',
+      suggest: true,
       label: '刃具类型',
       prop: 'djlx',
       headeralign: 'center',
+      width: 150,
+      align: 'left',
+      suggest_fn_name: 'suggest_fn',
+      select_fn_name: 'select_fn'
+    }, {
+      coltype: 'string',
+      label: '刃具名称',
+      prop: 'rjmc',
+      headeralign: 'center',
       width: 200,
-      align: 'center',
-    }],
+      align: 'left',
+      overflowtooltip: true,
+    }, {
+      coltype: 'string',
+      label: '加工位置',
+      prop: 'jgwz',
+      headeralign: 'center',
+      align: 'left',
+      overflowtooltip: true,
+    }
+  ],
   form: {
     gcdm: '9902',
     dbh: '',
     cpzt: '',
     djlx: '',
+    rjmc: '',
+    jgwz: '',
+	rjid:0,
     isdb: false,
     isedit: true
   },
