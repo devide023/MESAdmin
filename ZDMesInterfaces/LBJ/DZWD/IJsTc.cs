@@ -35,5 +35,11 @@ namespace ZDMesInterfaces.LBJ.DZWD
         /// <param name="jtid"></param>
         /// <returns></returns>
         string Fp_Detail(string jtid);
+        /// <summary>
+        /// 获取技通编号版本号
+        /// </summary>
+        /// <param name="wjbh"></param>
+        /// <returns></returns>
+        int GetVer(string wjbh);
     }
 }

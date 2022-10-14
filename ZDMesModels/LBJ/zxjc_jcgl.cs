@@ -49,7 +49,7 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 奖惩金额 
         ///</summary>
-         public string jcje { get; set; }
+         public decimal jcje { get; set; }
         /// <summary>
         /// 发生日期 
         ///</summary>
@@ -71,9 +71,13 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public string bz { get; set; }
         /// <summary>
+        /// 身份证编号
+        /// </summary>
+        public string sfz { get; set; }
+        /// <summary>
         /// 录入人 
         ///</summary>
-         public string lrr { get; set; }
+        public string lrr { get; set; }
         /// <summary>
         /// 录入时间 
         ///</summary>
@@ -86,6 +90,8 @@ namespace ZDMesModels.LBJ
         /// 生产线人员选项
         /// </summary>
         public List<sys_column_options> useroptions { get; set; }
+
+
     }
 
     public class zxjc_jcgl_maper : ClassMapper<zxjc_jcgl>

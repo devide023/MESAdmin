@@ -185,11 +185,19 @@
       ]
     }, {
       coltype: 'string',
+      prop: 'sfz',
+      label: '身份证号',
+      headeralign: 'center',
+      align: 'center',
+      width: 150,
+      overflowtooltip: true,
+    }, {
+      coltype: 'string',
       prop: 'tel',
       label: '手机号码',
       headeralign: 'center',
       align: 'center',
-	  width:150,
+      width: 150,
     }, {
       coltype: 'list',
       prop: 'rylx',
@@ -314,7 +322,7 @@
     password: '123456',
     ryxb: '男',
     rylx: '操作工',
-	tel:'',
+    tel: '',
     gwh: '',
     bzxx: '白班',
     hgsg: 'Y',

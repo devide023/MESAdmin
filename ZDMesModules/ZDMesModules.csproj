@@ -169,6 +169,7 @@
     <Compile Include="LBJ\BaseinfoModule.cs" />
     <Compile Include="MF\BaseinfoModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TJ\A1Module.cs" />
     <Compile Include="TJ\BaseinfoModule.cs" />
   </ItemGroup>
   <ItemGroup>

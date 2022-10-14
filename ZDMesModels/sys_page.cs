@@ -14,6 +14,10 @@ namespace ZDMesModels
         /// </summary>
         public string default_order_colname { get; set; } = string.Empty;
         /// <summary>
+        /// sql查询语句配置
+        /// </summary>
+        public sys_search_config sqlconfig { get; set; }
+        /// <summary>
         /// sql表达式
         /// </summary>
         public string sqlexp { get; set; } = string.Empty;

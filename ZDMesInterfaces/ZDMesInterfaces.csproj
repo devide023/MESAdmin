@@ -85,6 +85,8 @@
     <Compile Include="CDGC\IGtjcHis.cs" />
     <Compile Include="CDGC\IGtjc_Result.cs" />
     <Compile Include="CDGC\IGtjjb.cs" />
+    <Compile Include="Common\IRequireVerify.cs" />
+    <Compile Include="Common\ITemplateVerify.cs" />
     <Compile Include="Common\ITemplate_Import.cs" />
     <Compile Include="Common\IDbInfo.cs" />
     <Compile Include="Common\IDbOperate.cs" />
@@ -114,6 +116,9 @@
     <Compile Include="LBJ\SBWB\ISBGW.cs" />
     <Compile Include="LBJ\SBWB\ISbWbZq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TJ\IA1BaseInfo.cs" />
+    <Compile Include="TJ\IRYGL.cs" />
+    <Compile Include="TJ\IRYJN.cs" />
     <Compile Include="TJ\ITJBaseInfo.cs" />
   </ItemGroup>
   <ItemGroup>

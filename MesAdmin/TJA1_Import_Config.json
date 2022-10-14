@@ -1,0 +1,66 @@
+[
+  {
+    "tablename": "zxjc_ryxx",
+    "xinzeng": [ "user_code" ],
+    "replace": [ "user_code" ],
+    "replacetype": 2,
+    "zhonghe": [ "user_code" ],
+    "updatecol": [ "user_name", "rylx", "gwh", "bzxx", "ryxb", "tel", "csrq", "rsrq" ]
+  },
+  {
+    "tablename": "zxjc_ryxx_jn",
+    "xinzeng": [ "user_code", "scx", "gwh" ],
+    "replace": [ "user_code" ],
+    "replacetype": 1,
+    "zhonghe": [ "user_code", "scx", "gwh" ],
+    "updatecol": [ "jnxx", "jnfl", "gwh", "jnsld" ]
+  },
+  {
+    "tablename": "zxjc_jcgl",
+    "xinzeng": [ "user_code", "scx", "gwh", "fsrq", "lx", "sl", "jcje" ],
+    "replace": [ "user_code", "scx", "gwh", "fsrq", "lx", "sl", "jcje" ],
+    "replacetype": 1,
+    "zhonghe": [ "user_code", "scx", "gwh", "fsrq", "lx", "sl", "fsje" ],
+    "updatecol": [ "gwh", "lx", "sl", "fsje","fsrq","bzxx","jclr","jcxx" ]
+  },
+  {
+    "tablename": "base_gwzd",
+    "xinzeng": [ "gwh", "scx", "gcdm" ],
+    "replace": [ "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "gwh", "scx", "gcdm" ],
+    "updatecol": [ "gwmc", "gwfl", "gwlx", "workflow" ]
+  },
+  {
+    "tablename": "zxjc_gylx",
+    "xinzeng": [ "jx_no", "status_no", "gwh" ],
+    "replace": [ "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "jx_no", "status_no", "gwh" ],
+    "updatecol": [ "jx_no", "status_no", "gwh", "zpsx", "mj", "fsbz", "sfzp", "bz" ]
+  },
+  {
+    "tablename": "base_gycs",
+    "xinzeng": [ "jx_no", "sbbh", "gwh","sbcxh" ],
+    "replace": [ "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "jx_no", "sbbh", "gwh","sbcxh" ],
+    "updatecol": [ "jx_no", "status_no", "sbbh","gwh", "gy_min", "gy_max", "gy_bz", "sbcxh","parm1", "bz" ]
+  },
+  {
+    "tablename": "zxjc_t_dzgy",
+    "xinzeng": [ "jx_no", "gwh" ],
+    "replace": [ "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "jx_no", "gwh" ],
+    "updatecol": [ "jx_no", "status_no", "gybh","gymc","gyms" ]
+  },
+  {
+    "tablename": "base_gwzx_jx",
+    "xinzeng": [ "cpjx", "gwh" ],
+    "replace": [ "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "cpjx", "gwh" ],
+    "updatecol": [ "cpjx", "gwmc", "bz"]
+  }
+]

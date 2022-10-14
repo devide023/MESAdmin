@@ -107,6 +107,13 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                     }
                     else
                     {
+                        foreach (var item in entitys)
+                        {
+                            if (item.lx == "惩罚")
+                            {
+                                item.jcje = -1 * Math.Abs(item.jcje);
+                            }
+                        }
                         var ret = _jcglservice.Add(entitys);
                         if (ret > 0)
                         {
@@ -230,28 +237,57 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                     var uifno = _userservice.GetUserByToken(token);
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
-                    DataTable dataTable = cells.ExportDataTableAsString(1, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    DataTable dataTable = cells.ExportDataTableAsString(3, 0, cells.MaxDataRow, cells.MaxColumn + 1);
+                    var ryxxlist = _baseinfo.RyxxList();
+                    string lx = string.Empty;
+                    decimal je = 0;
                     foreach (DataRow item in dataTable.Rows)
                     {
-                        list.Add(new zxjc_jcgl()
+                        var sfz = item[5].ToString();
+                        if (string.IsNullOrEmpty(sfz))
                         {
-                            gcdm = item[0].ToString(),
-                            scx = item[1].ToString(),
-                            usercode = item[2].ToString(),
-                            bzxx = item[3].ToString(),
-                            gwh = item[4].ToString(),
-                            lx = item[5].ToString(),
-                            sl = item[6].ToString(),
-                            jcje = item[7].ToString(),
-                            jcxx = item[8].ToString(),
-                            jcly = item[9].ToString(),
-                            fsrq = Convert.ToDateTime(item[10].ToString()),
-                            khr = item[11].ToString(),
-                            khbm = item[12].ToString(),
-                            bz = item[13].ToString(),
-                            lrr = uifno.name,
-                            lrsj=DateTime.Now
-                        });
+                            continue;
+                        }
+                        var jiaje = item[6].ToString();
+                        var jianje = item[7].ToString();
+                        if (!string.IsNullOrEmpty(jiaje))
+                        {
+                            lx = "奖励";
+                            je = Math.Abs(Convert.ToDecimal(jiaje));
+                        }
+                        if (!string.IsNullOrEmpty(jianje))
+                        {
+                            lx = "惩罚";
+                            je = -1 * Math.Abs(Convert.ToDecimal(jianje));
+                        }
+                        var findryxx = ryxxlist.Where(t => t.sfz == sfz);
+                        if (findryxx.Count() > 0)
+                        {
+                            list.Add(new zxjc_jcgl()
+                            {
+                                gcdm = "9902",
+                                scx = findryxx.First().scx,//item[3].ToString(),
+                                usercode = findryxx.First().usercode,//item[2].ToString(),
+                                sfz = sfz,
+                                bzxx = "白班",//item[3].ToString(),
+                                gwh = findryxx.First().gwh,//item[4].ToString(),
+                                lx = lx,//item[5].ToString(),
+                                sl = "1",//item[6].ToString(),
+                                jcje = je,
+                                jcxx = item[9].ToString(),
+                                jcly = item[8].ToString(),
+                                fsrq = DateTime.Now,//Convert.ToDateTime(item[10].ToString()),
+                                khr = item[2].ToString(),
+                                khbm = item[2].ToString(),
+                                bz = item[10].ToString(),
+                                lrr = uifno.name,
+                                lrsj = DateTime.Now
+                            });
+                        }
+                        else
+                        {
+                            throw new Exception($"身份证编号:{sfz}未找到人员信息,请维护人员身份证信息！");
+                        }
                     }
                     FileInfo finfo = new FileInfo(filepath);
                     finfo.Delete();
@@ -293,5 +329,5 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                 throw;
             }
         }
-        }
+    }
 }

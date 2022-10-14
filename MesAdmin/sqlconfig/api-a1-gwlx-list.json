@@ -1,0 +1,5 @@
+{
+  "sql": "select rowid as rid, gcdm, scx, jx_no as jxno, status_no as statusno, gwh, gwmc, bz, lrr, lrsj from base_gwzx_gwlx where 1=1 ",
+  "sql_cnt": "select count(gcdm) FROM base_gwzx_gwlx where 1=1",
+  "sql_orderby": " order by lrsj desc "
+}

@@ -37,13 +37,13 @@ namespace ZDMesServices.Common
                     {
                         fieldcol.Add(new config_item()
                         {
-                            fieldindex = i,
-                            fieldname = dr[i].ToString()
+                            colindex = i,
+                            coltxt = dr[i].ToString()
                         });
                     }
                     foreach (var item in config)
                     {
-                        var q = fieldcol.Where(t => item.fieldname == t.fieldname && item.fieldindex == t.fieldindex);
+                        var q = fieldcol.Where(t => item.colname == t.colname && item.colindex == t.colindex);
                         if (q.Count() == 0)
                         {
                             nofield.Add(item);
@@ -84,8 +84,8 @@ namespace ZDMesServices.Common
                 {
                     string configpath = HttpContext.Current.Server.MapPath(TemplateConfig);
                     string conf = File.ReadAllText(configpath, Encoding.UTF8);
-                    List<sys_template_config> allconfig = JsonConvert.DeserializeObject<List<sys_template_config>>(conf);
-                    List<config_item> config = allconfig.Where(t => t.tablename == typeof(T).Name.ToLower()).SelectMany(t => t.conf).ToList();
+                    List<sys_verify_config> allconfig = JsonConvert.DeserializeObject<List<sys_verify_config>>(conf);
+                    List<config_item> config = allconfig.Where(t => t.model == typeof(T).Name.ToLower()).SelectMany(t => t.templateconf).ToList();
 
                     Workbook wk = new Workbook(filepath);
                     Cells cells = wk.Worksheets[0].Cells;
@@ -95,60 +95,59 @@ namespace ZDMesServices.Common
                     if (isok)
                     {
                         string objname = typeof(T).FullName + ",ZDMesModels";
-                        var obj = Activator.CreateInstance<T>();
                         var pi = Type.GetType(objname).GetProperties();
                         for (int i = 1; i < dataTable.Rows.Count; i++)
                         {
+                            var obj = Activator.CreateInstance<T>();
                             for (int j = 0; j < dataTable.Columns.Count; j++)
                             {
-                                var q = config.Where(t => t.fieldindex == j);
+                                var q = config.Where(t => t.colindex == j);
                                 if (q.Count() > 0)
                                 {
-                                    var name = q.First().dbcolname;
+                                    var name = q.First().colname;
                                     var val = dataTable.Rows[i][j].ToString();
                                     var pq = pi.Where(t => t.Name == name);
                                     if (pq.Count() > 0) {
-                                       string sxlx = pq.First().PropertyType.Name.ToLower();
-                                        switch (sxlx)
+                                       var sxlx = pq.First().PropertyType;
+                                        if(sxlx == typeof(Int32) || sxlx == typeof(Int32?))
                                         {
-                                            case "int32":
-                                                if (pq.Count() > 0)
-                                                {
-                                                    pq.First().SetValue(obj, Convert.ToInt32(val));
-                                                }
-                                                break;
-                                            case "decimal":
-                                                if (pq.Count() > 0)
-                                                {
-                                                    pq.First().SetValue(obj, Convert.ToDecimal(val));
-                                                }
-                                                break;
-                                            case "double":
-                                                if (pq.Count() > 0)
-                                                {
-                                                    pq.First().SetValue(obj, Convert.ToDouble(val));
-                                                }
-                                                break;
-                                            case "datetime":
-                                                if (pq.Count() > 0 && !string.IsNullOrEmpty(val))
-                                                {
-                                                    pq.First().SetValue(obj, Convert.ToDateTime(val));
-                                                }
-                                                break;
-                                            case "string":
-                                                if (pq.Count() > 0)
-                                                {
-                                                    pq.First().SetValue(obj, val.ToString());
-                                                }
-                                                break;
-
-                                            default:
-                                                if (pq.Count() > 0)
-                                                {
-                                                    pq.First().SetValue(obj, val);
-                                                }
-                                                break;
+                                            pq.First().SetValue(obj, Convert.ToInt32(val));
+                                        }else if(sxlx == typeof(Decimal) || sxlx == typeof(Decimal?))
+                                        {
+                                            pq.First().SetValue(obj, Convert.ToDecimal(val));
                                         }
+                                        else if (sxlx == typeof(Double) || sxlx == typeof(Double?))
+                                        {
+                                            pq.First().SetValue(obj, Convert.ToDouble(val));
+                                        }
+                                        else if (sxlx == typeof(DateTime) || sxlx == typeof(DateTime?))
+                                        {
+                                            pq.First().SetValue(obj, Convert.ToDateTime(val));
+                                        }
+                                        else if (sxlx == typeof(String))
+                                        {
+                                            pq.First().SetValue(obj, val.ToString());
+                                        }
+                                        //switch (sxlx)
+                                        //{
+                                        //    case "int32":
+                                        //        pq.First().SetValue(obj, Convert.ToInt32(val));
+                                        //        break;
+                                        //    case "decimal":
+                                        //        pq.First().SetValue(obj, Convert.ToDecimal(val));
+                                        //        break;
+                                        //    case "double":
+                                        //        pq.First().SetValue(obj, Convert.ToDouble(val));
+                                        //        break;
+                                        //    case "datetime":
+                                        //        pq.First().SetValue(obj, Convert.ToDateTime(val));
+                                        //        break;
+                                        //    case "string":
+                                        //        pq.First().SetValue(obj, val.ToString());
+                                        //        break;
+                                        //    default:
+                                        //        break;
+                                        //}
                                     }
                                 }
                             }
@@ -163,7 +162,7 @@ namespace ZDMesServices.Common
                         string qszd = string.Empty;
                         foreach (var item in nofields)
                         {
-                            qszd = qszd + $"第{item.fieldindex + 1}列({item.fieldname}),";
+                            qszd = qszd + $"第{item.colindex + 1}列({item.coltxt}),";
                         }
                         qszd = qszd.Length > 0 ? qszd.Remove(qszd.Length - 1) : string.Empty;
                         throw new Exception($"模板格式不匹配：{qszd}");
@@ -192,9 +191,8 @@ namespace ZDMesServices.Common
                     var config_json = File.ReadAllText(config_path, Encoding.UTF8);
                     var config_list = JsonConvert.DeserializeObject<List<sys_form_check>>(config_json);
                     var model = entitys.First().GetType().FullName + ",ZDMesModels";
-                    var modelshortname = entitys.First().GetType().Name;
-                    Type t = Type.GetType(model);
-                    var pis = t.GetProperties();
+                    var modelshortname = typeof(T).Name;
+                    var pis = typeof(T).GetProperties();
                     var sfczpz = config_list.Where(i => i.model == model);
                     sys_form_check configobj = null;
                     if (sfczpz.Count() > 0)

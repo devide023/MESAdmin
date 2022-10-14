@@ -27,7 +27,8 @@ namespace ZDMesServices.LBJ.SMJJK
                     StringBuilder sql_cnt = new StringBuilder();
                     sql_cnt.Append("select count(*) from ZXJC_SMLS t where 1=1 ");
                     StringBuilder sql = new StringBuilder();
-                    sql.Append("SELECT rowid as rid ,gcdm, scx, status_no as statusno,(select wlmc from base_wlxx where wlbm = ZXJC_SMLS.status_no and rownum < 2) as wlmc, engine_no as engineno, order_no as orderno, bc,smjbs, cpzt, jczpdz, zpjcjg, jcr, jcsj, szbjg, szbry, szbjcsj, lrsj, wcsj, scbz,'N' as sfbh");
+                    sql.Append("SELECT rowid as rid ,gcdm, scx, status_no as statusno,(select wlmc from base_wlxx where wlbm = ZXJC_SMLS.status_no and rownum < 2) as wlmc, engine_no as engineno, order_no as orderno, bc,smjbs, cpzt, jczpdz, zpjcjg, ");
+                    sql.Append(" (select user_name from zxjc_ryxx where tel = ZXJC_SMLS.jcr and rownum < 2) jcr, jcsj, szbjg, szbry, szbjcsj, lrsj, wcsj, scbz,'N' as sfbh");
                     sql.Append(" FROM ZXJC_SMLS where 1=1 ");
                   
                     if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))

@@ -11,6 +11,7 @@ using ZDMesModels;
 using System.Web;
 using ZDMesInterfaces.LBJ;
 using ZDMesInterfaces.LBJ.ImportData;
+using MesAdmin.Filters;
 
 namespace MesAdmin.Controllers.CDGC.RYGL
 {
@@ -18,17 +19,14 @@ namespace MesAdmin.Controllers.CDGC.RYGL
     public class RYGLController : BaseApiController<zxjc_ryxx>
     {
         private IDbOperate<zxjc_ryxx> _ryxxservice;
-        private ITemplate_Import _templateservice;
-        private IImportData<zxjc_ryxx> _importservice;
-        private IVerifyData _ckformdata;
-        public RYGLController(IDbOperate<zxjc_ryxx> ryxxservice,ITemplate_Import templateservice, IImportData<zxjc_ryxx> importservice, IVerifyData ckformdata) : base(ryxxservice)
+        private IRequireVerify _requireverify;
+        public RYGLController(IDbOperate<zxjc_ryxx> ryxxservice,IImportData<zxjc_ryxx> importservice, IRequireVerify requireverify) : base(ryxxservice)
         {
             _ryxxservice = ryxxservice;
             _importservice = importservice;
-            _templateservice = templateservice;
-            _ckformdata = ckformdata;
+            _requireverify = requireverify;
         }
-        [HttpPost,Route("add_bycode")]
+        [HttpPost,RequireVerify,Route("add_bycode")]
         public override IHttpActionResult Add(List<zxjc_ryxx> entitys)
         {
             try
@@ -58,51 +56,50 @@ namespace MesAdmin.Controllers.CDGC.RYGL
             }
         }
 
-        [HttpGet, Route("readxls")]
-        public IHttpActionResult ReadTempFile(string fileid)
+        [TemplateVerify("ZDMesModels.CDGC.zxjc_ryxx,ZDMesModels")]
+        public override IHttpActionResult ReadTempFile(string fileid)
         {
             try
             {
                 string error = string.Empty;
                 sys_result msg = new sys_result();
-                string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
-                var list = _templateservice.ReadData<zxjc_ryxx>(filepath).ToList();
-                if (list.Count > 0 )
+                //string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
+                //var list = _templateservice.ReadData<zxjc_ryxx>(filepath).ToList();
+                object template_data = null;
+                List<zxjc_ryxx> list = new List<zxjc_ryxx>();
+                var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
+                if (isok)
                 {
-                    _ckformdata.IsVerify = true;
-                    var ckdata = _ckformdata.Verify_Data<zxjc_ryxx>(list, out msg);
-                    if (!ckdata)
+                    list = (template_data as List<object>).ConvertAll(t => (zxjc_ryxx)t);
+                }
+                if (list.Count > 0)
+                {
+                    _requireverify.VerifyRequire<zxjc_ryxx>(list);
+
+                    var ret = _importservice.NewImportData(list);
+                    if (ret.oklist.Count == list.Count)
                     {
-                        return Json(msg);
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = $"成功导入数据{list.Count()}条"
+                        });
+                    }
+                    else if (ret.repeatlist.Count > 0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 2,
+                            msg = $"文件数据{list.Count()}条，重复{ret.repeatlist.Count}条"
+                        });
                     }
                     else
                     {
-                        var ret = _importservice.NewImportData(list);
-                        if (ret.oklist.Count == list.Count)
+                        return Json(new sys_result()
                         {
-                            return Json(new sys_result()
-                            {
-                                code = 1,
-                                msg = $"成功导入数据{list.Count()}条"
-                            });
-                        }
-                        else if (ret.repeatlist.Count > 0)
-                        {
-                            return Json(new sys_result()
-                            {
-                                code = 2,
-                                msg = $"文件数据{list.Count()}条，重复{ret.repeatlist.Count}条"
-                            });
-                        }
-                        else
-                        {
-                            return Json(new sys_result()
-                            {
-                                code = 0,
-                                msg = $"数据导入失败"
-                            });
-                        }
-
+                            code = 0,
+                            msg = $"数据导入失败"
+                        });
                     }
                 }
                 else

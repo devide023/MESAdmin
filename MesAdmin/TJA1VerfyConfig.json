@@ -1,0 +1,403 @@
+[{
+    "model": "ZDMesModels.TJ.A1.base_gwzd,ZDMesModels",
+    "requireconf": [{
+        "colname": "gwh",
+        "coltxt": "岗位编号"
+      }, {
+        "colname": "gwmc",
+        "coltxt": "岗位名称"
+      }
+    ],
+    "templateconf": [{
+        "colname": "gwh",
+        "colindex": 0,
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "gwmc",
+        "colindex": 1,
+        "coltxt": "岗位名称"
+      }, {
+        "colname": "gwlx",
+        "colindex": 2,
+        "coltxt": "岗位类型"
+      }, {
+        "colname": "gwfl",
+        "colindex": 3,
+        "coltxt": "岗位分类"
+      }, {
+        "colname": "workflow",
+        "colindex": 4,
+        "coltxt": "工序号"
+      }, {
+        "colname": "pcsip",
+        "colindex": 5,
+        "coltxt": "PCSIP"
+      }, {
+        "colname": "bz",
+        "colindex": 6,
+        "coltxt": "备注"
+      }
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.zxjc_ryxx,ZDMesModels",
+    "requireconf": [{
+        "colname": "usercode",
+        "coltxt": "账号"
+      }, {
+        "colname": "username",
+        "coltxt": "姓名"
+      }, {
+        "colname": "rylx",
+        "coltxt": "员工类型"
+      }, {
+        "colname": "bzxx",
+        "coltxt": "班组"
+      }
+    ],
+    "templateconf": [{
+        "colname": "username",
+        "colindex": 0,
+        "coltxt": "姓名"
+      }, {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "默认岗位"
+      }, {
+        "colname": "ryxb",
+        "colindex": 2,
+        "coltxt": "性别"
+      }, {
+        "colname": "rylx",
+        "colindex": 3,
+        "coltxt": "类型"
+      }, {
+        "colname": "tel",
+        "colindex": 4,
+        "coltxt": "手机号"
+      }, {
+        "colname": "bzxx",
+        "colindex": 5,
+        "coltxt": "班组"
+      }, {
+        "colname": "rsrq",
+        "colindex": 6,
+        "coltxt": "入司日期"
+      }, {
+        "colname": "csrq",
+        "colindex": 7,
+        "coltxt": "出生日期"
+      }
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.zxjc_ryxx_jn,ZDMesModels",
+    "requireconf": [{
+        "colname": "usercode",
+        "coltxt": "账号"
+      }, {
+        "colname": "gwh",
+        "coltxt": "岗位号"
+      }
+    ],
+    "templateconf": [{
+        "colname": "usercode",
+        "colindex": 0,
+        "coltxt": "账号"
+      }, {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "适应岗位"
+      }, {
+        "colname": "jnfl",
+        "colindex": 2,
+        "coltxt": "技能分类"
+      }, {
+        "colname": "jnsld",
+        "colindex": 3,
+        "coltxt": "熟练度"
+      }, {
+        "colname": "jnxx",
+        "colindex": 4,
+        "coltxt": "技能描述"
+      }
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.zxjc_jcgl,ZDMesModels",
+    "requireconf": [{
+        "colname": "usercode",
+        "coltxt": "账号"
+      }, {
+        "colname": "gwh",
+        "coltxt": "岗位号"
+      }, {
+        "colname": "bzxx",
+        "coltxt": "班组"
+      }, {
+        "colname": "bzxx",
+        "coltxt": "班组"
+      }, {
+        "colname": "jcje",
+        "coltxt": "金额"
+      }, {
+        "colname": "fsrq",
+        "coltxt": "发生日期"
+      }, {
+        "colname": "lx",
+        "coltxt": "类型"
+      }, {
+        "colname": "jcxx",
+        "coltxt": "奖惩描述"
+      }
+    ],
+    "templateconf": [{
+        "colname": "usercode",
+        "colindex": 0,
+        "coltxt": "员工账号"
+      }, {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位号"
+      }, {
+        "colname": "bzxx",
+        "colindex": 2,
+        "coltxt": "班组"
+      }, {
+        "colname": "lx",
+        "colindex": 3,
+        "coltxt": "类型"
+      }, {
+        "colname": "sl",
+        "colindex": 4,
+        "coltxt": "数量"
+      }, {
+        "colname": "jcje",
+        "colindex": 5,
+        "coltxt": "金额"
+      }, {
+        "colname": "jcxx",
+        "colindex": 6,
+        "coltxt": "奖惩描述"
+      }, {
+        "colname": "jclr",
+        "colindex": 7,
+        "coltxt": "来源"
+      }, {
+        "colname": "bz",
+        "colindex": 8,
+        "coltxt": "备注"
+      }, {
+        "colname": "fsrq",
+        "colindex": 9,
+        "coltxt": "发生日期"
+      }, {
+        "colname": "khr",
+        "colindex": 10,
+        "coltxt": "考核人"
+      }, {
+        "colname": "khbm",
+        "colindex": 11,
+        "coltxt": "考核部门"
+      }
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.zxjc_gylx,ZDMesModels",
+    "requireconf": [{
+        "colname": "jxno",
+        "coltxt": "机型编码"
+      }, {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "zpsx",
+        "coltxt": "装配顺序"
+      }
+    ],
+    "templateconf": [{
+        "colname": "jxno",
+        "colindex": 0,
+        "coltxt": "机型"
+      }, {
+        "colname": "statusno",
+        "colindex": 1,
+        "coltxt": "状态码"
+      }, {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "zpsx",
+        "colindex": 3,
+        "coltxt": "装配顺序"
+      }, {
+        "colname": "mj",
+        "colindex": 4,
+        "coltxt": "是否免检"
+      }, {
+        "colname": "fsbz",
+        "colindex": 5,
+        "coltxt": "互锁标志"
+      }, {
+        "colname": "sfzp",
+        "colindex": 6,
+        "coltxt": "是否装配"
+      }, {
+        "colname": "bz",
+        "colindex": 7,
+        "coltxt": "备注"
+      },
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.base_gycs,ZDMesModels",
+    "requireconf": [{
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "jxno",
+        "coltxt": "机型编码"
+      }, {
+        "colname": "sbbh",
+        "coltxt": "设备编码"
+      }, {
+        "colname": "sbcxh",
+        "coltxt": "程序号"
+      }, {
+        "colname": "gymin",
+        "coltxt": "最小值"
+      }, {
+        "colname": "gymax",
+        "coltxt": "最大值"
+      },
+    ],
+    "templateconf": [{
+        "colname": "gwh",
+        "colindex": 0,
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "jxno",
+        "colindex": 1,
+        "coltxt": "机型"
+      }, {
+        "colname": "statusno",
+        "colindex": 2,
+        "coltxt": "状态码"
+      }, {
+        "colname": "sbbh",
+        "colindex": 3,
+        "coltxt": "设备编号"
+      }, {
+        "colname": "sbcxh",
+        "colindex": 4,
+        "coltxt": "程序号"
+      }, {
+        "colname": "gymin",
+        "colindex": 5,
+        "coltxt": "最小值"
+      }, {
+        "colname": "gymax",
+        "colindex": 6,
+        "coltxt": "最大值"
+      }, {
+        "colname": "gybz",
+        "colindex": 7,
+        "coltxt": "标准值"
+      }, {
+        "colname": "parm1",
+        "colindex": 8,
+        "coltxt": "螺钉数"
+      },
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.zxjc_t_dzgy,ZDMesModels",
+    "requireconf": [{
+        "colname": "gybh",
+        "coltxt": "工艺编号"
+      }, {
+        "colname": "gylx",
+        "coltxt": "文件分类"
+      }, {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "jxno",
+        "coltxt": "机型"
+      }, {
+        "colname": "gymc",
+        "coltxt": "文件名称"
+      },
+    ],
+    "templateconf": [
+	{
+        "colname": "gybh",
+        "colindex": 0,
+        "coltxt": "工艺编号"
+      },
+	  {
+        "colname": "gylx",
+        "colindex": 1,
+        "coltxt": "文件分类"
+      },
+	  {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      },
+	  {
+        "colname": "jxno",
+        "colindex": 3,
+        "coltxt": "机型"
+      },
+	  {
+        "colname": "statusno",
+        "colindex": 4,
+        "coltxt": "状态码"
+      },
+	  {
+        "colname": "gymc",
+        "colindex": 5,
+        "coltxt": "文件名称"
+      },
+	  {
+        "colname": "gyms",
+        "colindex": 6,
+        "coltxt": "工艺描述"
+      },
+	  ]
+  },
+  {
+	 "model": "ZDMesModels.TJ.A1.base_gwzx_jx,ZDMesModels",
+	 "requireconf":[{
+		 "colname": "cpjx",
+        "coltxt": "产品机型"
+	 },
+	 {
+		 "colname": "gwh",
+        "coltxt": "岗位编码"
+	 },
+	 {
+		 "colname": "gwmc",
+        "coltxt": "岗位名称"
+	 },
+	 ],
+	 "templateconf":[
+	 {
+        "colname": "cpjx",
+        "colindex": 0,
+        "coltxt": "产品机型"
+      },
+	  {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      },
+	  {
+        "colname": "gwmc",
+        "colindex": 2,
+        "coltxt": "岗位名称"
+      },
+	  {
+        "colname": "bz",
+        "colindex": 3,
+        "coltxt": "备注"
+      }
+	 ]
+  }
+]

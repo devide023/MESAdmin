@@ -1,22 +1,69 @@
 [
   {
     "model": "ZDMesModels.CDGC.zxjc_ryxx,ZDMesModels",
-    "fields": [
+    "requireconf": [
       {
         "colname": "usercode",
-        "collabel": "账号"
+        "coltxt": "账号"
       },
       {
         "colname": "username",
-        "collabel": "姓名"
+        "coltxt": "姓名"
       },
       {
         "colname": "rylx",
-        "collabel": "员工类型"
+        "coltxt": "员工类型"
       },
       {
         "colname": "bzxx",
-        "collabel": "班组"
+        "coltxt": "班组"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "gcdm",
+        "colindex": 0,
+        "coltxt": "工厂"
+      },
+      {
+        "colname": "scx",
+        "colindex": 1,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "username",
+        "colindex": 3,
+        "coltxt": "姓名"
+      },
+      {
+        "colname": "ryxb",
+        "colindex": 4,
+        "coltxt": "性别"
+      },
+      {
+        "colname": "rylx",
+        "colindex": 5,
+        "coltxt": "类型"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 6,
+        "coltxt": "默认岗位"
+      },
+      {
+        "colname": "bzxx",
+        "colindex": 7,
+        "coltxt": "班组"
+      },
+      {
+        "colname": "csrq",
+        "colindex": 10,
+        "coltxt": "出生日期"
+      },
+      {
+        "colname": "rsrq",
+        "colindex": 11,
+        "coltxt": "入司日期"
       }
     ]
   }

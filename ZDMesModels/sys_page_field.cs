@@ -25,7 +25,7 @@ namespace ZDMesModels
         /// <summary>
         /// 是否在下拉搜索中列出
         /// </summary>
-        public bool searchable { get; set; }
+        public bool searchable { get; set; } = true;
         /// <summary>
         /// 是否排序
         /// </summary>

@@ -97,6 +97,10 @@ namespace ZDMesModels.LBJ
         /// 分配明细
         /// </summary>
         public string fpmx { get; set; }
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public int ver { get; set; } = 1;
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>

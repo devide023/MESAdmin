@@ -12,7 +12,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///工厂
         ///</summary>
-        public string gcdm { get; set; }
+        public string gcdm { get; set; } = "9902";
         /// <summary>
         ///课线信息
         ///</summary>
@@ -28,31 +28,35 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///密码
         ///</summary>
-        public string password { get; set; }
+        public string password { get; set; } = "123456";
         /// <summary>
         ///员工类型
         ///</summary>
-        public string rylx { get; set; }
+        public string rylx { get; set; } = "操作工";
+        /// <summary>
+        /// 默认岗位
+        /// </summary>
+        public string gwh { get; set; }
         /// <summary>
         ///班组信息
         ///</summary>
-        public string bzxx { get; set; }
+        public string bzxx { get; set; } = "白班";
         /// <summary>
         ///合格上岗
         ///</summary>
-        public string hgsg { get; set; }
+        public string hgsg { get; set; } = "Y";
         /// <summary>
         ///出生日期
         ///</summary>
-        public DateTime csrq { get; set; }
+        public DateTime? csrq { get; set; }
         /// <summary>
         ///入司日期
         ///</summary>
-        public DateTime rsrq { get; set; }
+        public DateTime? rsrq { get; set; }
         /// <summary>
         ///人员性别
         ///</summary>
-        public string ryxb { get; set; }
+        public string ryxb { get; set; } = "男";
         /// <summary>
         ///相片名称
         ///</summary>
@@ -60,7 +64,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///离入职信息
         ///</summary>
-        public string scbz { get; set; }
+        public string scbz { get; set; } = "N";
     }
 
     public class zxjc_ryxx_mapper : ClassMapper<zxjc_ryxx>

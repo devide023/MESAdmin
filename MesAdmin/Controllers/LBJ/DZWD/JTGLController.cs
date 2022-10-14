@@ -190,6 +190,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
                             jcms = item[5].ToString(),
                             yxqx1 = Convert.ToDateTime(item[6].ToString()),
                             yxqx2 = Convert.ToDateTime(item[7].ToString()),
+                            ver = _jts.GetVer(item[2].ToString())
                         });
                     }
                     var ret = _jtglservice.Add(list);

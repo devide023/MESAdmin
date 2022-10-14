@@ -34,10 +34,9 @@ namespace ZDMesModules.CD
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
             builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces")).PreserveExistingDefaults();
             builder.RegisterGeneric(typeof(ImportDataService<>)).Named("cdgcimp", typeof(IImportData<>)).WithParameter("constr", CDGCConstr).PropertiesAutowired().WithProperty("Import_Config_File_Path", "~/CDGC_Import_Config.json").AsImplementedInterfaces().EnableInterfaceInterceptors();
-            builder.RegisterType<Form_Check_Service>().Named("cdgcformcheck",typeof(IFormCheck));
-            builder.RegisterType<Template_ImportService>().As<ITemplate_Import>().As<IVerifyData>()
-                .PropertiesAutowired().WithProperty("TemplateConfig", "~/CDGCTemplaceConfig.json")
-                .WithProperty("VerifyConfigpath", "~/CDGCVerfyConfig.json")
+            //builder.RegisterType<Form_Check_Service>().Named("cdgcformcheck",typeof(IFormCheck));
+            builder.RegisterType<VerifyService>().As<ITemplateVerify>().As<IRequireVerify>()
+                .PropertiesAutowired().WithProperty("VerifyConfigPath", "~/CDGCVerfyConfig.json")
                 .AsImplementedInterfaces().EnableInterfaceInterceptors();
             //注册拦截器
             builder.Register(c => new CUDLogger(CDGCConstr));

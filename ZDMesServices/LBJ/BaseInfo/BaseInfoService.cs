@@ -493,7 +493,7 @@ namespace ZDMesServices.LBJ.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select user_code as usercode, user_name as username, scx, gwh FROM zxjc_ryxx ");
+                sql.Append("select user_code as usercode, user_name as username, scx, gwh,sfz FROM zxjc_ryxx ");
                 using (var db = new OracleConnection(ConString))
                 {
                     var list = db.Query<zxjc_ryxx>(sql.ToString());

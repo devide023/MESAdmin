@@ -21,6 +21,64 @@ namespace ZDMesServices.LBJ.DZWD
         {
             _user = user;
         }
+        public override IEnumerable<zxjc_t_jstc> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append($"select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl, scx, shbz, shr, shsj, ver from zxjc_t_jstc where 1=1 ");
+                StringBuilder sql_cnt = new StringBuilder();
+                sql_cnt.Append($"select count(*) from zxjc_t_jstc where 1=1 ");
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                    else
+                    {
+                        sql.Append(" order by yxqx1 desc nulls last,jcbh desc,ver desc");
+                    }
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<zxjc_t_jstc>(OraPager(sql.ToString()), parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q; 
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public int GetVer(string wjbh)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select nvl(max(ver),0)+1 as ver FROM zxjc_t_jstc where jcbh = :jcbh");
+            using (var db = new OracleConnection(ConString))
+            {
+               return db.ExecuteScalar<int>(sql.ToString(), new { jcbh = wjbh });
+            }
+        }
+        public override int Add(IEnumerable<zxjc_t_jstc> entitys)
+        {
+            foreach (var item in entitys)
+            {
+                item.ver = GetVer(item.jcbh.Trim());
+            }
+            return base.Add(entitys);
+        }
         public bool CanDel(string jtid)
         {
             try

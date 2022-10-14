@@ -209,6 +209,7 @@ namespace ZDMesServices.Common
             try
             {
                 StringBuilder contents = new StringBuilder();
+                StringBuilder fieldcontent = new StringBuilder();
                 var js_filename = config.menu.configpath;
                 if (!string.IsNullOrEmpty(js_filename))
                 {
@@ -278,7 +279,7 @@ namespace ZDMesServices.Common
                     contents.Append("fields:[");
                     foreach (var item in config.fields)
                     {
-                        contents.Append("{");
+                        fieldcontent.Append("{");
                         foreach (PropertyInfo p in item.GetType().GetProperties())
                         {
                             var val = p.GetValue(item)?.ToString().ToLower();
@@ -294,33 +295,45 @@ namespace ZDMesServices.Common
                                 }
                                 else
                                 {
-                                    contents.Append($"{p.Name}:'{val}',");
+                                    if (p.PropertyType == typeof(bool))
+                                    {
+                                        fieldcontent.Append($"{p.Name}:{val},");
+                                    }
+                                    else
+                                    {
+                                        fieldcontent.Append($"{p.Name}:'{val}',");
+                                    }
                                 }
                             }
                         }
-                        if(item.coltype == "string" && !string.IsNullOrWhiteSpace(item.suggest))
+                        if(!string.IsNullOrWhiteSpace(item.suggest))
                         {
-                            contents.Append($"suggest:true,");
-                            contents.Append($"suggest_fn_name:'suggest_fn',");
-                            contents.Append($"select_fn_name:'select_fn',");
+                            fieldcontent.Append($"suggest:true,");
+                            fieldcontent.Append($"suggest_fn_name:'suggest_fn',");
+                            fieldcontent.Append($"select_fn_name:'select_fn',");
                         }
                         else if (item.coltype == "list" && !string.IsNullOrWhiteSpace(item.url)) {
-                            contents.Append("inioptionapi:{");
-                            contents.Append($"method:'{item.method}',");
-                            contents.Append($"url:'{item.url}',");
-                            contents.Append("},");
-                            contents.Append($"options:[],");
+                            fieldcontent.Append("inioptionapi:{");
+                            fieldcontent.Append($"method:'{item.method}',");
+                            fieldcontent.Append($"url:'{item.url}',");
+                            fieldcontent.Append("},");
+                            fieldcontent.Append($"options:[],");
                         }
                         else if (item.coltype == "list" && string.IsNullOrWhiteSpace(item.url))
                         {
-                            contents.Append($"options:[],");
+                            fieldcontent.Append($"options:[],");
                         }
                         else if(item.coltype == "bool")
                         {
-                            contents.Append($"activevalue:'Y',");
-                            contents.Append($"inactivevalue:'N',");
+                            fieldcontent.Append($"activevalue:'Y',");
+                            fieldcontent.Append($"inactivevalue:'N',");
                         }
-                        contents.Append("},");
+                        fieldcontent.Append("},");
+                    }
+                    if (fieldcontent.Length > 0)
+                    {
+                        fieldcontent = fieldcontent.Remove(fieldcontent.Length - 1, 1);
+                        contents.Append(fieldcontent);
                     }
                     contents.Append("],");
                     contents.Append("form:{");

@@ -16,7 +16,7 @@ namespace ZDMesServices
 {
     public class BaseDao<T> : OracleBaseFixture, IDbOperate<T> where T : class, new()
     {
-        public BaseDao(string constr):base(constr)
+        public BaseDao(string constr) : base(constr)
         {
 
         }
@@ -174,55 +174,87 @@ namespace ZDMesServices
                     {
                         InitDB(db);
                         resultcount = 0;
-                        var colnames = string.Empty;
-                        IClassMapper mapper = Db.GetMap<T>();
-                        var tablename = mapper.TableName;
-                        var cols = mapper.Properties;
-                        foreach (var item in cols)
+                        StringBuilder sql = new StringBuilder();
+                        StringBuilder sql_cnt = new StringBuilder();
+                        //读取配置文件
+                        if (parm.sqlconfig != null)
                         {
-                            if (!item.Ignored)
+                            sql.Append(parm.sqlconfig.sql);
+                            sql_cnt.Append(parm.sqlconfig.sql_cnt);
+                            if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                             {
-                                if (item.ColumnName == item.Name)
+                                sql.Append(" and " + parm.sqlexp);
+                                sql_cnt.Append(" and " + parm.sqlexp);
+                            }
+                            //前端排序
+                            if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                            {
+                                sql.Append(parm.orderbyexp);
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrWhiteSpace(parm.sqlconfig.sql_orderby))
                                 {
-                                    colnames += item.ColumnName + ",";
-                                }
-                                else
-                                {
-                                    colnames += item.ColumnName + $" as {item.Name},";
+                                    sql.Append(parm.sqlconfig.sql_orderby);
                                 }
                             }
                         }
-                        if (!string.IsNullOrEmpty(colnames))
-                        {
-                            colnames = colnames.Remove(colnames.Length - 1);
-                        }
                         else
                         {
-                            colnames = "*";
-                        }
-                        StringBuilder sql = new StringBuilder();
-                        sql.Append($"select {colnames} from {tablename} where 1=1 ");
-                        StringBuilder sql_cnt = new StringBuilder();
-                        sql_cnt.Append($"select count(*) from {tablename} where 1=1 ");
-                        if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
-                        {
-                            sql.Append(" and " + parm.sqlexp);
-                            sql_cnt.Append(" and " + parm.sqlexp);
-                        }
-                        if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
-                        {
-                            sql.Append(parm.orderbyexp);
-                        }
-                        else
-                        {
-                            if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                            var colnames = string.Empty;
+                            IClassMapper mapper = Db.GetMap<T>();
+                            var tablename = mapper.TableName;
+                            var cols = mapper.Properties;
+                            foreach (var item in cols)
                             {
-                                sql.Append($" order by {parm.default_order_colname} desc ");
+                                if (!item.Ignored)
+                                {
+                                    if (item.ColumnName == item.Name)
+                                    {
+                                        colnames += item.ColumnName + ",";
+                                    }
+                                    else
+                                    {
+                                        colnames += item.ColumnName + $" as {item.Name},";
+                                    }
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(colnames))
+                            {
+                                colnames = colnames.Remove(colnames.Length - 1);
+                            }
+                            else
+                            {
+                                colnames = "*";
+                            }
+                            sql.Append($"select {colnames} from {tablename} where 1=1 ");
+                            sql_cnt.Append($"select count(*) from {tablename} where 1=1 ");
+
+                            if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                            {
+                                sql.Append(" and " + parm.sqlexp);
+                                sql_cnt.Append(" and " + parm.sqlexp);
+                            }
+                            //前端排序
+                            if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                            {
+                                sql.Append(parm.orderbyexp);
+                            }
+                            else
+                            {
+                                if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                                {
+                                    sql.Append($" order by {parm.default_order_colname} desc ");
+                                }
                             }
                         }
                         var q = db.Query<T>(OraPager(sql.ToString()), parm.sqlparam);
                         resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                         return q;
+                    }
+                    catch(Exception)
+                    {
+                        throw;
                     }
                     finally
                     {

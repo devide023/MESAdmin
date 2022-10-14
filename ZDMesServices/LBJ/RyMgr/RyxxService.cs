@@ -27,7 +27,7 @@ namespace ZDMesServices.LBJ.RyMgr
             {
                 List<bool> result = new List<bool>();
                 StringBuilder sql = new StringBuilder();
-                sql.Append("update zxjc_ryxx set user_name = :username,rylx = :rylx,");
+                sql.Append("update zxjc_ryxx set scx=:scx,user_name = :username,rylx = :rylx,");
                 sql.Append(" gwh = :gwh,");
                 sql.Append(" bzxx = :bzxx,");
                 sql.Append(" hgsg = :hgsg,");
@@ -35,6 +35,7 @@ namespace ZDMesServices.LBJ.RyMgr
                 sql.Append(" rsrq = :rsrq,");
                 sql.Append(" ryxb = :ryxb,");
                 sql.Append(" xpmc = :xpmc,");
+                sql.Append(" sfz = :sfz,");
                 sql.Append(" tel = :tel");
                 sql.Append(" where  user_code = :usercode");
                 using (var db = new OracleConnection(ConString))

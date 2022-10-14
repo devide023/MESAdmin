@@ -100,7 +100,7 @@ namespace ZDMesServices.LBJ.ImportData
                 }
                 else
                 {
-                    return ret;
+                    throw new Exception("未找到导入配置项");
                 }
             }
             catch (Exception)
@@ -254,7 +254,7 @@ namespace ZDMesServices.LBJ.ImportData
                 }
                 else
                 {
-                    return ret;
+                    throw new Exception("未找到导入配置项");
                 }
             }
             catch (Exception)
@@ -403,7 +403,7 @@ namespace ZDMesServices.LBJ.ImportData
                 }
                 else
                 {
-                    return ret;
+                    throw new Exception("未找到导入配置项");
                 }
             }
             catch (Exception)

@@ -49,7 +49,7 @@ namespace ZDMesServices.LBJ.CheckData
                             switch (sxlx)
                             {
                                 case "String":
-                                    var v = pi.GetValue(obj).ToString();
+                                    var v = pi.GetValue(obj)?.ToString();
                                     if (string.IsNullOrEmpty(v))
                                     {
                                         tipmsg = tipmsg + q.First().collabel + "、";

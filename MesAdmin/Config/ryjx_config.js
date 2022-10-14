@@ -19,7 +19,7 @@
     }, {
       coltype: 'string',
       prop: 'JCRY',
-      label: '员工姓名',
+      label: '员工编号',
       headeralign: 'center',
       align: 'center',
       width: 100,

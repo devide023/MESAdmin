@@ -6,7 +6,8 @@ using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using ZDMesModels;
-
+using System.IO;
+using Newtonsoft.Json;
 namespace MesAdmin.Filters
 {
     public class SearchFilterAttribute : ActionFilterAttribute
@@ -26,6 +27,13 @@ namespace MesAdmin.Filters
                     return;
                 }
                 sys_page condition = obj as sys_page;
+                string routetemplate = actionContext.ControllerContext.RouteData.Route.RouteTemplate;
+                var sqlconfigpath = HttpContext.Current.Server.MapPath($"~/sqlconfig/{routetemplate.Replace("/", "-")}.json");
+                FileInfo fi = new FileInfo(sqlconfigpath);
+                if (fi.Exists)
+                {
+                    condition.sqlconfig = JsonConvert.DeserializeObject<sys_search_config>(File.ReadAllText(sqlconfigpath));
+                }
                 foreach (var item in condition.search_condition)
                 {
                     switch (item.coltype.ToLower())

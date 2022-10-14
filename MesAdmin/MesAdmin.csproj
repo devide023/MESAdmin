@@ -316,6 +316,19 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\A1\BaseInfo\A1BaseInfoController.cs" />
+    <Compile Include="Controllers\A1\GWZD\A1GWZDController.cs" />
+    <Compile Include="Controllers\A1\GYGL\A1DZGYController.cs" />
+    <Compile Include="Controllers\A1\GYGL\A1GWJXController.cs" />
+    <Compile Include="Controllers\A1\GYGL\A1GWLXController.cs" />
+    <Compile Include="Controllers\A1\GYGL\A1GYCSController.cs" />
+    <Compile Include="Controllers\A1\GYGL\A1GYLXController.cs" />
+    <Compile Include="Controllers\A1\JCGL\A1JCGLController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1JTFPController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1JTGLController.cs" />
+    <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
+    <Compile Include="Controllers\A1\RYGL\A1RYXXController.cs" />
+    <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CDGC\BHDGL\BHDGLsController.cs" />
     <Compile Include="Controllers\CDGC\BHDGL\BHJCFController.cs" />
@@ -376,7 +389,9 @@
     <Compile Include="Filters\ApiExceptionAttribute.cs" />
     <Compile Include="Filters\CheckData.cs" />
     <Compile Include="Filters\CheckLoginAttribute.cs" />
+    <Compile Include="Filters\RequireVerifyAttribute.cs" />
     <Compile Include="Filters\SearchFilter.cs" />
+    <Compile Include="Filters\TemplateVerifyAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -384,6 +399,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Config\a1\dzgy_config.js" />
+    <Content Include="Config\a1\gwjxgx_config.js" />
+    <Content Include="Config\a1\gwlxjx_config.js" />
+    <Content Include="Config\a1\gwzd_config.js" />
+    <Content Include="Config\a1\gycs_config.js" />
+    <Content Include="Config\a1\gylx_config.js" />
+    <Content Include="Config\a1\jcxx_config.js" />
+    <Content Include="Config\a1\jtfp_config.js" />
+    <Content Include="Config\a1\ryjn_config.js" />
+    <Content Include="Config\a1\ryxx_config.js" />
     <Content Include="Config\appmenu_config.js" />
     <Content Include="Config\approle_config.js" />
     <Content Include="Config\auditjt_config.js" />
@@ -404,6 +429,7 @@
     <Content Include="Config\cdgc\scjh_config.js" />
     <Content Include="Config\cdgc\ycck_config.js" />
     <Content Include="Config\cdgc\ychis_config.js" />
+    <Content Include="Config\cpps_config.js" />
     <Content Include="Config\daojurenjuzx_config.js" />
     <Content Include="Config\dbrjgx_config.js" />
     <Content Include="Config\dbrjly_config.js" />
@@ -411,6 +437,7 @@
     <Content Include="Config\djgw_config.js" />
     <Content Include="Config\djreport_config.js" />
     <Content Include="Config\djxx_config.js" />
+    <Content Include="Config\dzgysp_config.js" />
     <Content Include="Config\dzgy_config.js" />
     <Content Include="Config\gwxx_config.js" />
     <Content Include="Config\gylx_config.js" />
@@ -418,6 +445,7 @@
     <Content Include="Config\jtfp_config.js" />
     <Content Include="Config\jtgl_config.js" />
     <Content Include="Config\menu_config.js" />
+    <Content Include="Config\mydoc_config.js" />
     <Content Include="Config\rjsmxh_config.js" />
     <Content Include="Config\rjxx_config.js" />
     <Content Include="Config\role_config.js" />
@@ -537,6 +565,17 @@
     <Content Include="CDGCTemplaceConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Template\A1\人员技能.xlsx" />
+    <Content Include="Template\A1\员工基础信息.xlsx" />
+    <Content Include="Template\A1\奖惩信息.xlsx" />
+    <Content Include="Template\A1\岗位站点.xlsx" />
+    <Content Include="Template\A1\工艺路线.xlsx" />
+    <Content Include="TJA1VerfyConfig.json" />
+    <Content Include="TJA1_Import_Config.json" />
+    <Content Include="TJA1_module_config.json" />
+    <Content Include="sqlconfig\api-a1-gwjx-list.json" />
+    <Content Include="sqlconfig\api-a1-dzgy-list.json" />
+    <Content Include="sqlconfig\api-a1-gwlx-list.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

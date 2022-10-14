@@ -159,36 +159,48 @@
     <Compile Include="sys_role_user_form.cs" />
     <Compile Include="sys_route_component.cs" />
     <Compile Include="sys_search.cs" />
+    <Compile Include="sys_search_config.cs" />
     <Compile Include="sys_search_result.cs" />
     <Compile Include="sys_sort.cs" />
-    <Compile Include="sys_template_config.cs" />
+    <Compile Include="sys_verify_config.cs" />
     <Compile Include="sys_user.cs" />
     <Compile Include="mes_user_entity.cs" />
-    <Compile Include="TJ\base_gwbj.cs">
-      <DependentUpon>EntityTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TJ\EntityTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityTemplate.tt</DependentUpon>
-    </Compile>
+    <Compile Include="TJ\A1\base_ftpfilepath.cs" />
+    <Compile Include="TJ\A1\base_gwbj.cs" />
+    <Compile Include="TJ\A1\base_gwzd.cs" />
+    <Compile Include="TJ\A1\base_gwzx_gwlx.cs" />
+    <Compile Include="TJ\A1\base_gwzx_jx.cs" />
+    <Compile Include="TJ\A1\base_gycs.cs" />
+    <Compile Include="TJ\A1\base_sbxx.cs" />
+    <Compile Include="TJ\A1\tj_base_scxxx.cs" />
+    <Compile Include="TJ\A1\ztbm_new.cs" />
+    <Compile Include="TJ\A1\zxjc_curvedata.cs" />
+    <Compile Include="TJ\A1\zxjc_data_detail.cs" />
+    <Compile Include="TJ\A1\zxjc_data_detail_mx.cs" />
+    <Compile Include="TJ\A1\zxjc_data_list8.cs" />
+    <Compile Include="TJ\A1\zxjc_djgw.cs" />
+    <Compile Include="TJ\A1\zxjc_djxx.cs" />
+    <Compile Include="TJ\A1\zxjc_fault.cs" />
+    <Compile Include="TJ\A1\zxjc_fault_clfs.cs" />
+    <Compile Include="TJ\A1\zxjc_gj_csyq.cs" />
+    <Compile Include="TJ\A1\zxjc_gwzd_fxmx.cs" />
+    <Compile Include="TJ\A1\zxjc_gwzd_wljl.cs" />
+    <Compile Include="TJ\A1\zxjc_gxzd.cs" />
+    <Compile Include="TJ\A1\zxjc_gylx.cs" />
+    <Compile Include="TJ\A1\zxjc_jcgl.cs" />
+    <Compile Include="TJ\A1\zxjc_jrgy.cs" />
+    <Compile Include="TJ\A1\zxjc_ryxx.cs" />
+    <Compile Include="TJ\A1\zxjc_ryxx_jn.cs" />
+    <Compile Include="TJ\A1\zxjc_scx_tz.cs" />
+    <Compile Include="TJ\A1\zxjc_t_dzgy.cs" />
+    <Compile Include="TJ\A1\zxjc_t_dzgy_sp.cs" />
+    <Compile Include="TJ\A1\zxjc_t_jstc.cs" />
+    <Compile Include="TJ\A1\zxjc_t_jstcfp.cs" />
+    <Compile Include="TJ\A1\zxjc_t_tstc.cs" />
     <Compile Include="TJ\tj_base_scxxx.cs" />
-    <Compile Include="TJ\zxjc_djgw.cs">
-      <DependentUpon>EntityTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TJ\zxjc_djxx.cs">
-      <DependentUpon>EntityTemplate.tt</DependentUpon>
-    </Compile>
     <Compile Include="TJ\zxjc_gj_csyq.cs" />
     <Compile Include="TJ\zxjc_gxzd.cs" />
-    <Compile Include="TJ\zxjc_gylx.cs" />
     <Compile Include="TJ\zxjc_jrgy.cs" />
-    <Compile Include="TJ\zxjc_scx_tz.cs">
-      <DependentUpon>EntityTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TJ\zxjc_t_dzgy.cs">
-      <DependentUpon>EntityTemplate.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MF\" />
