@@ -9,7 +9,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/a1/gwlx/readxls', {
+          _this.$request('get', '/a1/djxx/readxls', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -33,7 +33,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/a1/gwlx/readxls_by_replace', {
+          _this.$request('get', '/a1/djxx/readxls_by_replace', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -57,7 +57,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/a1/gwlx/readxls_by_zh', {
+          _this.$request('get', '/a1/djxx/readxls_by_zh', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -93,14 +93,15 @@
     },
   },
   pagefuns: {
-    add_handle: function(){
-		var row = this.$deepClone(this.pageconfig.form);
+	  add_handle: function () {
+      var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
-	},
-	suggest_fn: function (vm, key, cb, row, col) {
+    },
+	  suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
+        row.username = '';
         this.$request('get', '/a1/baseinfo/jxno_by_code', {
           key: key
         }).then(function (res) {
@@ -109,17 +110,8 @@
           }
         });
       }
-	  if(col.prop === 'gwh'){
-		  this.$request('get', '/a1/baseinfo/gwh_by_key', {
-          key: key
-        }).then(function (res) {
-          if (res.code === 1) {
-            cb(res.list);
-          }
-        });
-	  }
-	},
-	select_fn: function (vm, item, row, col) {
+    },
+    select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
         this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
           jxno: item.value
@@ -133,116 +125,135 @@
       }
     }
   },
-  fields: [ {
+  fields: [{
       coltype: 'string',
-	  suggest:true,
-      label: '产品机型',
-      prop: 'jxno',
-      dbprop: 'jx_no',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-	  suggest_fn_name: 'suggest_fn',
-      select_fn_name: 'select_fn',
-    }, {
-      coltype: 'list',
-      label: '状态码',
-      prop: 'statusno',
-      dbprop: 'status_no',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-	  options:[],
-	  hideoptionval:true,
-	  relation:'statusno_list',
-    }, {
-      coltype: 'string',
-	  suggest:true,
-      label: '岗位编码',
-      prop: 'gwh',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-	  suggest_fn_name: 'suggest_fn',
-      select_fn_name: 'select_fn',
-    },
-	{
-      coltype: 'string',
-      label: '岗位类型',
-      prop: 'gwmc',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '备注',
-      prop: 'bz',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '录入人',
-      prop: 'lrr',
-      overflowtooltip: true,
-      searchable: true,
+      label: '点检编号',
+      prop: 'djno',
+      overflowtooltip: true,      
       sortable: true,
       headeralign: 'center',
       align: 'center',
 	  width:100
     }, {
-      coltype: 'date',
-      label: '录入时间',
-      prop: 'lrsj',
-      overflowtooltip: true,
-      searchable: true,
+      coltype: 'list',
+      label: '点检类型',
+      prop: 'djlx',
+      overflowtooltip: true,      
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  options:[],
+	  width:150
+    }, {
+      coltype: 'list',
+      label: '岗位编码',
+      prop: 'gwh',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      options: [],
+	  inioptionapi: {
+        method: 'get',
+        url: '/a1/baseinfo/gwzd'
+      },
+	  width:150
+    }, {
+      coltype: 'string',
+	  suggest:true,
+      label: '机型',
+      prop: 'jxno',
+      dbprop: 'jx_no',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  suggest_fn_name: 'suggest_fn',
+      select_fn_name: 'select_fn',
 	  width:150,
+    }, {
+      coltype: 'list',
+      label: '状态码',
+      prop: 'statusno',
+      dbprop: 'status_no',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  hideoptionval:true,
+	  options:[],
+	  relation:'statusno_list',
+	  width:150
+    }, {
+      coltype: 'string',
+      label: '点检内容',
+      prop: 'djxx',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'bool',
+      label: '删除标志',
+      prop: 'scbz',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  activevalue: 'Y',
+      inactivevalue: 'N',
+	  width:100
+    }, {
+      coltype: 'string',
+      label: '录入人',
+      prop: 'lrr',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:100,
+    }, {
+      coltype: 'datetime',
+      label: '录入时间',
+      prop: 'lrsj',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:150
     }
   ],
   form: {
-    gcdm: '',
-    scx: '',
+    gwh: '',
     jxno: '',
     statusno: '',
-    gwh: '',
-    gwmc: '',
-    bz: '',
+    djno: '',
+    djxx: '',
+    scbz: 'N',
     lrr: '',
     lrsj: '',
+    djlx: '',
 	statusno_list:[],
     isdb: false,
     isedit: true
   },
   addapi: {
-    url: '/a1/gwlx/add',
+    url: '/a1/djxx/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '/a1/gwlx/edit',
+    url: '/a1/djxx/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '/a1/gwlx/del',
+    url: '/a1/djxx/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/a1/gwlx/list',
+    url: '/a1/djxx/list',
     method: 'post',
     callback: function (vm, res) {},
   },

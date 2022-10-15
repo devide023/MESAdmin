@@ -8,18 +8,23 @@ namespace ZDMesModels.TJ.A1
 {
     public class zxjc_fault
     {
+        public string rid { get; set; }
         /// <summary>
         /// 工厂
         /// </summary>
-        public string gcdm { get; set; }
+        public string gcdm { get; set; } = "9100";
         /// <summary>
         /// 生产线
         /// </summary>
-        public string scx { get; set; }
+        public string scx { get; set; } = "1";
         /// <summary>
         /// 岗位编码
         /// </summary>
         public string gwh { get; set; }
+        /// <summary>
+        /// 岗位名称
+        /// </summary>
+        public string gwmc { get; set; }
         /// <summary>
         /// 故障代码
         /// </summary>
@@ -55,7 +60,7 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 录入时间
         /// </summary>
-        public DateTime lrsj { get; set; }
+        public DateTime lrsj { get; set; }= DateTime.Now;
         /// <summary>
         /// 返修图片
         /// </summary>
@@ -72,6 +77,8 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.jxno).Column("jx_no");
             Map(t => t.statusno).Column("status_no");
             Map(t => t.gwhbz).Column("gwh_bz");
+            Map(t => t.rid).Ignore();
+            Map(t => t.gwmc).Ignore();
             AutoMap();
         }
     }

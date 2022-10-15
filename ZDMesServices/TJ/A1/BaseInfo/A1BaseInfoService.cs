@@ -33,15 +33,15 @@ namespace ZDMesServices.TJ.A1.BaseInfo
             }
         }
 
-        public IEnumerable<ztbm_new> GetJxNoByKey(string key)
+        public IEnumerable<dynamic> GetJxNoByKey(string key)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select distinct jx,ztbm from ztbm_new where jx like :key ");
+                sql.Append("select distinct ccbm as \"ccbm\",ccmc as \"ccmc\" from V_JXXX where ccbm like :key ");
                 using (var db = new OracleConnection(ConString))
                 {
-                    return db.Query<ztbm_new>(sql.ToString(), new { key = "%" + key.Trim().ToUpper() + "%" });
+                    return db.Query<dynamic>(sql.ToString(), new { key = "%" + key.Trim().ToUpper() + "%" });
                 }
             }
             catch (Exception)

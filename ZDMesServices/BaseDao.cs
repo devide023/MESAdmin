@@ -164,6 +164,8 @@ namespace ZDMesServices
                 Db.Dispose();
             }
         }
+
+
         public virtual IEnumerable<T> GetList(sys_page parm, out int resultcount)
         {
             try
@@ -339,5 +341,6 @@ namespace ZDMesServices
                 Db.Dispose();
             }
         }
+
     }
 }

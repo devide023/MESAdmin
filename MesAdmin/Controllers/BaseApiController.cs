@@ -1,14 +1,17 @@
 ﻿using MesAdmin.Filters;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Controllers;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
-
+using Newtonsoft.Json;
 namespace MesAdmin.Controllers
 {
     public class BaseApiController<T> : ApiController where T : class, new()
@@ -105,6 +108,16 @@ namespace MesAdmin.Controllers
         {
             try
             {
+                var routepath = RequestContext.RouteData.Route.RouteTemplate;
+                var filename = HttpContext.Current.Server.MapPath($"~/sqlconfig/{ routepath.Replace("/", "-")}.json");
+                FileInfo fi = new FileInfo(filename);
+                if (fi.Exists)
+                {
+                   var config = JsonConvert.DeserializeObject<ZDMesModels.sys_search_config>(File.ReadAllText(filename));
+                    if (config != null) {
+                     
+                    }
+                }
                 var ret = _baseservice.Del(entitys);
                 if (ret)
                 {

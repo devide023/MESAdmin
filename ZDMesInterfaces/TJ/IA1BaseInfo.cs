@@ -24,7 +24,7 @@ namespace ZDMesInterfaces.TJ
         /// <returns></returns>
         IEnumerable<zxjc_ryxx> GetRyXxList();
 
-        IEnumerable<ztbm_new> GetJxNoByKey(string key);
+        IEnumerable<dynamic> GetJxNoByKey(string key);
         /// <summary>
         /// 机型编码获取状态编码
         /// </summary>

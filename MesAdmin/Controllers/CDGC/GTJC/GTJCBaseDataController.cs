@@ -22,12 +22,9 @@ namespace MesAdmin.Controllers.CDGC.GTJC
     [RoutePrefix("api/cdgc/gtjc/jcsj")]
     public class GTJCBaseDataController : BaseApiController<zxjc_base_gtjc>
     {
-        private IImportData<zxjc_base_gtjc> _importservice;
-        private IDbOperate<zxjc_base_gtjc> _gtbasedataservice;
         private IGtjc _gtjc;
         public GTJCBaseDataController(IDbOperate<zxjc_base_gtjc> gtjcbaseservice, IImportData<zxjc_base_gtjc> importservice, IGtjc gtjc) : base(gtjcbaseservice)
         {
-            _gtbasedataservice = gtjcbaseservice;
             _importservice = importservice;
             _gtjc = gtjc;
         }
@@ -71,7 +68,7 @@ namespace MesAdmin.Controllers.CDGC.GTJC
             }
         }
         [HttpGet, Route("readxls")]
-        public IHttpActionResult ReadTempFile(string fileid)
+        public override IHttpActionResult ReadTempFile(string fileid)
         {
             string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");
             FileInfo finfo = new FileInfo(filepath);

@@ -37,7 +37,7 @@ namespace ZDToolHelper
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }

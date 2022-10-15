@@ -103,7 +103,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 if (!string.IsNullOrEmpty(key))
                 {
                     var list = _a1baseinfo.GetJxNoByKey(key);
-                    return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.jx, value = t.jx }) });
+                    return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.ccmc, value = t.ccbm }) });
                 }
                 else
                 {

@@ -53,7 +53,7 @@ namespace ZDMesInterfaces.Common
         /// </summary>
         /// <param name="entitys"></param>
         /// <returns></returns>
-        bool Del(IEnumerable<T> entitys);
+        bool Del(IEnumerable<T> entitys);        
         /// <summary>
         /// 修改记录
         /// </summary>
@@ -66,6 +66,7 @@ namespace ZDMesInterfaces.Common
         /// <param name="entitys"></param>
         /// <returns></returns>
         bool Modify(IEnumerable<T> entitys);
+     
 
     }
 }

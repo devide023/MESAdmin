@@ -324,80 +324,142 @@
         "coltxt": "文件名称"
       },
     ],
-    "templateconf": [
-	{
+    "templateconf": [{
         "colname": "gybh",
         "colindex": 0,
         "coltxt": "工艺编号"
-      },
-	  {
+      }, {
         "colname": "gylx",
         "colindex": 1,
         "coltxt": "文件分类"
-      },
-	  {
+      }, {
         "colname": "gwh",
         "colindex": 2,
         "coltxt": "岗位编码"
-      },
-	  {
+      }, {
         "colname": "jxno",
         "colindex": 3,
         "coltxt": "机型"
-      },
-	  {
+      }, {
         "colname": "statusno",
         "colindex": 4,
         "coltxt": "状态码"
-      },
-	  {
+      }, {
         "colname": "gymc",
         "colindex": 5,
         "coltxt": "文件名称"
-      },
-	  {
+      }, {
         "colname": "gyms",
         "colindex": 6,
         "coltxt": "工艺描述"
       },
-	  ]
-  },
-  {
-	 "model": "ZDMesModels.TJ.A1.base_gwzx_jx,ZDMesModels",
-	 "requireconf":[{
-		 "colname": "cpjx",
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.base_gwzx_jx,ZDMesModels",
+    "requireconf": [{
+        "colname": "cpjx",
         "coltxt": "产品机型"
-	 },
-	 {
-		 "colname": "gwh",
+      }, {
+        "colname": "gwh",
         "coltxt": "岗位编码"
-	 },
-	 {
-		 "colname": "gwmc",
+      }, {
+        "colname": "gwmc",
         "coltxt": "岗位名称"
-	 },
-	 ],
-	 "templateconf":[
-	 {
+      },
+    ],
+    "templateconf": [{
         "colname": "cpjx",
         "colindex": 0,
         "coltxt": "产品机型"
-      },
-	  {
+      }, {
         "colname": "gwh",
         "colindex": 1,
         "coltxt": "岗位编码"
-      },
-	  {
+      }, {
         "colname": "gwmc",
         "colindex": 2,
         "coltxt": "岗位名称"
-      },
-	  {
+      }, {
         "colname": "bz",
         "colindex": 3,
         "coltxt": "备注"
       }
-	 ]
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.base_gwzx_gwlx,ZDMesModels",
+    "requireconf": [{
+        "colname": "jxno",
+        "coltxt": "产品机型"
+      }, {
+        "colname": "gwh",
+        "coltxt": "岗位编号"
+      }, {
+        "colname": "gwmc",
+        "coltxt": "岗位类型"
+      },
+    ],
+    "templateconf": [{
+        "colname": "jxno",
+        "colindex": 0,
+        "coltxt": "产品机型"
+      }, {
+        "colname": "statusno",
+        "colindex": 1,
+        "coltxt": "状态码"
+      }, {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "gwmc",
+        "colindex": 3,
+        "coltxt": "岗位类型"
+      }, {
+        "colname": "bz",
+        "colindex": 4,
+        "coltxt": "备注"
+      },
+    ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.zxjc_djgw,ZDMesModels",
+    "requireconf": [{
+        "colname": "djno",
+        "coltxt": "点检编号"
+      },{
+        "colname": "djlx",
+        "coltxt": "点检类型"
+      }, {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "jxno",
+        "coltxt": "机型"
+      }, {
+        "colname": "djxx",
+        "coltxt": "点检内容"
+      },
+    ],
+    "templateconf": [{
+        "colname": "djlx",
+        "colindex": 0,
+        "coltxt": "点检类型"
+      }, {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "jxno",
+        "colindex": 2,
+        "coltxt": "机型"
+      }, {
+        "colname": "statusno",
+        "colindex": 3,
+        "coltxt": "状态码"
+      }, {
+        "colname": "djxx",
+        "colindex": 4,
+        "coltxt": "点检内容"
+      },
+    ]
   }
 ]
