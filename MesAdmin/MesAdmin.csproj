@@ -331,6 +331,9 @@
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJJLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJXXController.cs" />
+    <Compile Include="Controllers\A1\ZLGL\A1FXMXController.cs" />
+    <Compile Include="Controllers\A1\ZLGL\A1GZCLFSController.cs" />
+    <Compile Include="Controllers\A1\ZLGL\A1GZJCXXController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CDGC\BHDGL\BHDGLsController.cs" />
     <Compile Include="Controllers\CDGC\BHDGL\BHJCFController.cs" />
@@ -389,6 +392,7 @@
     <Compile Include="Controllers\TJ\BaseInfo\TJJCXXController.cs" />
     <Compile Include="Controllers\TJ\GYGL\JRGYController.cs" />
     <Compile Include="Filters\ApiExceptionAttribute.cs" />
+    <Compile Include="Filters\AtachValueAttribute.cs" />
     <Compile Include="Filters\CheckData.cs" />
     <Compile Include="Filters\CheckLoginAttribute.cs" />
     <Compile Include="Filters\RequireVerifyAttribute.cs" />
@@ -578,6 +582,9 @@
     <Content Include="sqlconfig\api-a1-gwjx-list.json" />
     <Content Include="sqlconfig\api-a1-dzgy-list.json" />
     <Content Include="sqlconfig\api-a1-gwlx-list.json" />
+    <Content Include="sqlconfig\api-a1-fault-list.json" />
+    <Content Include="sqlconfig\api-a1-clfs-list.json" />
+    <Content Include="sqlconfig\api-a1-jtgl-list.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

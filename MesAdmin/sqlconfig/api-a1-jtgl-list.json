@@ -1,0 +1,5 @@
+{
+  "sql": "select * from (select '技术通知' as wjfl,t.no as jcbh, t.name as jcmc, t.url as wjlj, t.creator as scry, t.cjsj as scsj,expire_date as yxqx2,(select lrr1 from ZXJC_T_JSTCFP where jtid = t.no and rownum < 2) as fpr,(select lrsj1 from ZXJC_T_JSTCFP where jtid = t.no and rownum < 2) as fpsj,decode((select count(jtid) from ZXJC_T_JSTCFP where jtid = t.no),0,'N','Y') as fpflg from ZSDL_JSTZ@ln_pdm98 t where t.status = '已发布' and t.release_dept like '通机%' and t.lx = 'JSTZ' and to_date(t.expire_date,'yyyy-mm-dd') >= trunc(sysdate)) m where 1=1 ",
+  "sql_cnt": "select count(m.jcbh) from (select t.no as jcbh, t.name as jcmc, t.url as wjlj, t.creator as scry, t.cjsj as scsj,expire_date as yxqx2,(select lrr1 from ZXJC_T_JSTCFP where jtid = t.no and rownum < 2) as fpr,(select lrsj1 from ZXJC_T_JSTCFP where jtid = t.no and rownum < 2) as fpsj,decode((select count(jtid) from ZXJC_T_JSTCFP where jtid = t.no),0,'N','Y') as fpflg from ZSDL_JSTZ@ln_pdm98 t where t.status = '已发布' and t.release_dept like '通机%' and t.lx = 'JSTZ' and to_date(t.expire_date,'yyyy-mm-dd') >= trunc(sysdate)) m where 1=1  ",
+  "sql_orderby": " order by m.scsj desc nulls last "
+}

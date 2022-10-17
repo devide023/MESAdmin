@@ -214,8 +214,11 @@
     <Compile Include="TJ\A1\RYGL\A1RyJnService.cs" />
     <Compile Include="TJ\A1\RYGL\A1RyxxService.cs" />
     <Compile Include="TJ\A1\SBGL\A1SbXxService.cs" />
+    <Compile Include="TJ\A1\ZLGL\A1ClFsService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1DjJlService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1DjXxService.cs" />
+    <Compile Include="TJ\A1\ZLGL\A1FaultService.cs" />
+    <Compile Include="TJ\A1\ZLGL\A1FxMxService.cs" />
     <Compile Include="TJ\BaseInfo\BaseInfoService.cs" />
     <Compile Include="TJ\Common\ConfigServicecs.cs" />
     <Compile Include="TJ\Common\MenuApiService.cs" />

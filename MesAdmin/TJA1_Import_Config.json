@@ -78,5 +78,21 @@
     "replacetype": 1,
     "zhonghe": [ "jx_no", "gwh" ],
     "updatecol": [ "djno","jx_no","status_no","gwh", "djlx", "djxx"]
+  },
+  {
+    "tablename": "zxjc_fault",
+    "xinzeng": [ "jx_no", "gwh" ],
+    "replace": [ "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "jx_no", "gwh" ],
+    "updatecol": [ "fault_fl","jx_no","status_no","gwh", "gwh_bz", "fault_no","fault_name","bz"]
+  },
+  {
+    "tablename": "zxjc_fault_clfs",
+    "xinzeng": [ "fault_no", "gwh" ],
+    "replace": [ "fault_no" ],
+    "replacetype": 1,
+    "zhonghe": [ "fault_no", "gwh" ],
+    "updatecol": [ "fault_no","gwh","hand_no","hand_name", "remark"]
   }
 ]

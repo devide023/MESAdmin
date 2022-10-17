@@ -30,6 +30,10 @@ namespace ZDMesModels.TJ.A1
         /// </summary>
         public string faultno { get; set; }
         /// <summary>
+        /// 故障代码名称
+        /// </summary>
+        public string faultname { get; set; }
+        /// <summary>
         /// 处理方式代码
         /// </summary>
         public string handno { get; set; }
@@ -60,6 +64,7 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.handname).Column("hand_name");
             Map(t => t.rid).Ignore();
             Map(t => t.gwmc).Ignore();
+            Map(t => t.faultname).Ignore();
             AutoMap();
         }
     }

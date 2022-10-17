@@ -10,7 +10,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.125:7002/template/lbj/奖惩数据.xlsx');
+      window.open('http://172.16.201.125:7002/template/lbj/奖惩数据(新).xlsx?number='+Math.random());
     },
     select_usercode_handle: function () {},
     scx_field_change_handle(collist, item, row) {

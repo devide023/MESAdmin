@@ -31,6 +31,12 @@ namespace ZDMesInterfaces.TJ
         /// <param name="jxno"></param>
         /// <returns></returns>
         IEnumerable<string> GetZtBMByJxNo(string jxno);
+        /// <summary>
+        /// 关键字获取故障信息
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<zxjc_fault> GetFaultNoByKey(string key);
 
     }
 }

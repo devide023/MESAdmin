@@ -15,6 +15,25 @@ namespace ZDMesServices.TJ.A1.BaseInfo
         {
 
         }
+
+        public IEnumerable<zxjc_fault> GetFaultNoByKey(string key)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select distinct fault_no as faultno, fault_name as faultname FROM zxjc_fault where fault_no like :key or fault_name like :key");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<zxjc_fault>(sql.ToString(), new { key = "%" + key + "%" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<base_gwzd> GetGWList()
         {
             try

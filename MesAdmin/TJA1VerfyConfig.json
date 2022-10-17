@@ -425,7 +425,7 @@
     "requireconf": [{
         "colname": "djno",
         "coltxt": "点检编号"
-      },{
+      }, {
         "colname": "djlx",
         "coltxt": "点检类型"
       }, {
@@ -461,5 +461,89 @@
         "coltxt": "点检内容"
       },
     ]
+  }, {
+    "model": "ZDMesModels.TJ.A1.zxjc_fault,ZDMesModels",
+    "requireconf": [{
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "faultname",
+        "coltxt": "故障名称"
+      }, {
+        "colname": "jxno",
+        "coltxt": "机型"
+      }, {
+        "colname": "faultfl",
+        "coltxt": "故障分类"
+      }, {
+        "colname": "gwhbz",
+        "coltxt": "默认处理岗位"
+      }
+    ],
+    "templateconf": [{
+        "colname": "gwh",
+        "colindex": 0,
+        "coltxt": "岗位编码"
+      }, {
+        "colname": "faultname",
+        "colindex": 1,
+        "coltxt": "故障名称"
+      }, {
+        "colname": "faultfl",
+        "colindex": 2,
+        "coltxt": "故障分类"
+      }, {
+        "colname": "jxno",
+        "colindex": 3,
+        "coltxt": "机型"
+      }, {
+        "colname": "statusno",
+        "colindex": 4,
+        "coltxt": "状态码"
+      }, {
+        "colname": "gwhbz",
+        "colindex": 5,
+        "coltxt": "默认处理岗位"
+      }, {
+        "colname": "bz",
+        "colindex": 6,
+        "coltxt": "备注"
+      },
+    ]
+  },
+  {
+	  "model": "ZDMesModels.TJ.A1.zxjc_fault_clfs,ZDMesModels",
+	  "requireconf":[
+	  {
+        "colname": "faultno",
+        "coltxt": "故障代码"
+      },
+	  {
+        "colname": "handname",
+        "coltxt": "处理方式名称"
+      },
+	  ],
+	  "templateconf":[
+	  {
+        "colname": "faultno",
+        "colindex": 0,
+        "coltxt": "故障代码"
+      },
+	  {
+        "colname": "handname",
+        "colindex": 1,
+        "coltxt": "处理方式名称"
+      },
+	  {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      },
+	  {
+        "colname": "bz",
+        "colindex": 3,
+        "coltxt": "备注"
+      },
+	  ]
   }
 ]

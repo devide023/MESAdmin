@@ -1,0 +1,5 @@
+{
+  "sql": "select rowid as rid,gcdm,scx,gwh,fault_no as faultno,(select fault_name from zxjc_fault where fault_no = zxjc_fault_clfs.fault_no and rownum < 2) as faultname,hand_no as handno, hand_name as handname, remark, lrr, lrsj from zxjc_fault_clfs where 1=1 ",
+  "sql_cnt": "select count(gcdm) from zxjc_fault_clfs where 1=1 ",
+  "sql_orderby": " order by lrsj desc nulls last "
+}

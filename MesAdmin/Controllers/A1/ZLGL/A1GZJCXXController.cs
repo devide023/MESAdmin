@@ -13,34 +13,31 @@ using ZDMesInterfaces.TJ;
 namespace MesAdmin.Controllers.A1.ZLGL
 {
     /// <summary>
-    /// 点检基础信息
+    /// 故障基础信息
     /// </summary>
-    [RoutePrefix("api/a1/djxx")]
-    public class A1DJXXController : BaseApiController<zxjc_djgw>
+    [RoutePrefix("api/a1/fault")]
+    public class A1GZJCXXController : BaseApiController<zxjc_fault>
     {
-        private IDJGL _djgl;
-        public A1DJXXController(IDbOperate<zxjc_djgw> djservice, IRequireVerify requireverfify, IImportData<zxjc_djgw> importservice,IDJGL djgl) :base(djservice)
+        private IFault _fault;
+        public A1GZJCXXController(IDbOperate<zxjc_fault> faultservice, IRequireVerify requireverfify, IImportData<zxjc_fault> importservice,IFault fault) :base(faultservice)
         {
-            this._requireverfify = requireverfify;
-            this._importservice = importservice;
-            _djgl = djgl;
+            _requireverfify= requireverfify;
+            _importservice=importservice;
+            _fault = fault;
         }
-        [TemplateVerify("ZDMesModels.TJ.A1.zxjc_djgw,ZDMesModels")]
+        [TemplateVerify("ZDMesModels.TJ.A1.zxjc_fault,ZDMesModels")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
             try
             {
-                List<zxjc_djgw> list = new List<zxjc_djgw>();
+                List<zxjc_fault> list = new List<zxjc_fault>();
                 object template_data = null;
                 var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
                 if (isok)
                 {
-                    list = (template_data as List<object>).ConvertAll(t => (zxjc_djgw)t);
-                    foreach (var item in list)
-                    {
-                        item.djno = _djgl.Create_DjNo();
-                    }
-                    _requireverfify.VerifyRequire<zxjc_djgw>(list);
+                    list = (template_data as List<object>).ConvertAll(t => (zxjc_fault)t);
+                    list = _fault.Create_FaultNo_List(list);
+                    _requireverfify.VerifyRequire<zxjc_fault>(list);
                 }
                 var ret = _importservice.NewImportData(list);
                 if (ret.oklist.Count == list.Count)
@@ -74,22 +71,19 @@ namespace MesAdmin.Controllers.A1.ZLGL
                 throw;
             }
         }
-        [TemplateVerify("ZDMesModels.TJ.A1.zxjc_djgw,ZDMesModels")]
+        [TemplateVerify("ZDMesModels.TJ.A1.zxjc_fault,ZDMesModels")]
         public override IHttpActionResult ReadTempFile_By_Replace(string fileid)
         {
             try
             {
-                List<zxjc_djgw> list = new List<zxjc_djgw>();
+                List<zxjc_fault> list = new List<zxjc_fault>();
                 object template_data = null;
                 var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
                 if (isok)
                 {
-                    list = (template_data as List<object>).ConvertAll(t => (zxjc_djgw)t);
-                    foreach (var item in list)
-                    {
-                        item.djno = _djgl.Create_DjNo();
-                    }
-                    _requireverfify.VerifyRequire<zxjc_djgw>(list);
+                    list = (template_data as List<object>).ConvertAll(t => (zxjc_fault)t);
+                    list = _fault.Create_FaultNo_List(list);
+                    _requireverfify.VerifyRequire<zxjc_fault>(list);
                 }
                 var ret = _importservice.ReaplaceImportData(list);
                 if (ret.oklist.Count == list.Count)
@@ -123,22 +117,19 @@ namespace MesAdmin.Controllers.A1.ZLGL
                 throw;
             }
         }
-        [TemplateVerify("ZDMesModels.TJ.A1.zxjc_djgw,ZDMesModels")]
+        [TemplateVerify("ZDMesModels.TJ.A1.zxjc_fault,ZDMesModels")]
         public override IHttpActionResult ReadTempFile_By_Zh(string fileid)
         {
             try
             {
-                List<zxjc_djgw> list = new List<zxjc_djgw>();
+                List<zxjc_fault> list = new List<zxjc_fault>();
                 object template_data = null;
                 var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
                 if (isok)
                 {
-                    list = (template_data as List<object>).ConvertAll(t => (zxjc_djgw)t);
-                    foreach (var item in list)
-                    {
-                        item.djno = _djgl.Create_DjNo();
-                    }
-                    _requireverfify.VerifyRequire<zxjc_djgw>(list);
+                    list = (template_data as List<object>).ConvertAll(t => (zxjc_fault)t);
+                    list = _fault.Create_FaultNo_List(list);
+                    _requireverfify.VerifyRequire<zxjc_fault>(list);
                 }
                 var ret = _importservice.ZhImportData(list);
                 if (ret.oklist.Count == list.Count)

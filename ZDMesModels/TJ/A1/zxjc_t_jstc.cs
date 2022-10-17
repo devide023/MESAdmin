@@ -9,9 +9,17 @@ namespace ZDMesModels.TJ.A1
     public class zxjc_t_jstc
     {
         /// <summary>
+        /// 工厂
+        /// </summary>
+        public string gcdm { get; set; } = "9100";
+        /// <summary>
+        /// 生产线
+        /// </summary>
+        public string scx { get; set; } = "1";
+        /// <summary>
         /// 技通ID(GUID)
         /// </summary>
-        public string jtid { get; set; }
+        public string jtid { get; set; } = Guid.NewGuid().ToString();
         /// <summary>
         /// 技术通知编号（调用服务获取）
         /// </summary>
@@ -43,27 +51,24 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 上传日期
         /// </summary>
-        public DateTime scsj { get; set; }
+        public DateTime? scsj { get; set; }
         /// <summary>
         /// 有效期限-开始
         /// </summary>
-        public DateTime yxqx1 { get; set; }
+        public DateTime? yxqx1 { get; set; }
         /// <summary>
         /// 有效期限-结束
         /// </summary>
-        public DateTime yxqx2 { get; set; }
-        /// <summary>
-        /// 工厂
-        /// </summary>
-        public string gcdm { get; set; }
+        public DateTime? yxqx2 { get; set; }
+
         /// <summary>
         /// 分配标志
         /// </summary>
-        public string fpflg { get; set; }
+        public string fpflg { get; set; } = "N";
         /// <summary>
         /// 分配时间
         /// </summary>
-        public DateTime fpsj { get; set; }
+        public DateTime? fpsj { get; set; }
         /// <summary>
         /// 分配人
         /// </summary>
@@ -71,11 +76,7 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 文件分类：技术通知、变更文件、质量事故、安全事故、标准作业培训视频文件、各岗位注意事项
         /// </summary>
-        public string wjfl { get; set; }
-        /// <summary>
-        /// 生产线
-        /// </summary>
-        public string scx { get; set; }
+        public string wjfl { get; set; } = "技术通知";
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>

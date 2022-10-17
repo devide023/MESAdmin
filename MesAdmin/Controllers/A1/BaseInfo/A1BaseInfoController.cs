@@ -139,5 +139,27 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
+        [HttpGet,Route("faultno_by_key")]
+        public IHttpActionResult GetFaultNoByKey(string key)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    var list = _a1baseinfo.GetFaultNoByKey(key);
+                    return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.faultname, value = t.faultno }) });
+                }
+                else
+                {
+                    List<dynamic> list = new List<dynamic>();
+                    return Json(new { code = 1, msg = "ok", list = list });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
