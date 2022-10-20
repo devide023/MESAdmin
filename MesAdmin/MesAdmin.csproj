@@ -595,6 +595,13 @@
     <Content Include="sqlconfig\api-a1-rygl-list.json" />
     <Content Include="sqlconfig\api-a1-jtgl-toscxlist.json" />
     <Content Include="sqlconfig\api-a1-jtfpscx-list.json" />
+    <Content Include="Template\A1\处理方式基础信息.xlsx" />
+    <Content Include="Template\A1\岗位名称机型关系.xlsx" />
+    <Content Include="Template\A1\岗位类型机型关系.xlsx" />
+    <Content Include="Template\A1\工艺参数.xlsx" />
+    <Content Include="Template\A1\故障基础信息.xlsx" />
+    <Content Include="Template\A1\点检基础信息.xlsx" />
+    <Content Include="Template\A1\电子工艺.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
