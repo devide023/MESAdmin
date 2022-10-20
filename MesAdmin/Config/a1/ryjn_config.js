@@ -189,6 +189,7 @@
         }
       ],
       width: 150,
+	  hideoptionval:true,
     }, {
       coltype: 'rate',
       label: '熟练度',

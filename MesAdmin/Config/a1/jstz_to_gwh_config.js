@@ -1,14 +1,19 @@
 {
   isgradequery: true,
-  isbatoperate: true,
+  isbatoperate: false,
   isoperate: true,
   isfresh: true,
-  isselect: true,
+  isselect: false,
   operate_fnlist: [{
       label: '查看Pdf',
       fnname: 'download_jstcpdf',
       btntype: 'text'
-    }
+    }, {
+      label: '技通分配',
+      fnname: 'jstz_fp',
+      btntype: 'text',
+      callback: 'dialog_save_handle'
+    },
   ],
   batoperate: {
     export_excel: function (_this) {
@@ -31,109 +36,97 @@
       var _this = this;
       window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
     },
-    suggest_fn: function (vm, key, cb, row, col) {
-      if (col.prop === 'jxno') {
-        row.username = '';
-        this.$request('get', '/a1/baseinfo/jxno_by_code', {
-          key: key
-        }).then(function (res) {
-          if (res.code === 1) {
-            cb(res.list);
-          }
-        });
-      }
+    jstz_fp: function (row, item) {
+      var _this = this;
+      _this.dialog_title = row.jcbh + '分配';
+      _this.dialog_width = '30%';
+      _this.dialogVisible = true;
+      _this.dialog_hidefooter = true;
+      _this.dialog_viewpath = 'tja1/jstz/jtfp';
+      _this.dialog_fnitem = item;
+      _this.dialog_props = {
+        row: row
+      };
     },
-    select_fn: function (vm, item, row, col) {
-      row.statusno = '';
-      if (col.prop === 'jxno') {
-        this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
-          jxno: item.value
-        }).then(function (res) {
-          if (res.code === 1) {
-            row.statusno_list = res.list.map(function (i) {
-              return {
-                label: i,
-                value: i
-              };
-            });
-          }
-        });
-      }
+    dialog_save_handle: function (vm) {
+      console.log(vm)
     }
   },
   fields: [{
       coltype: 'string',
       label: '技通编号',
       prop: 'jcbh',
+      dbprop: 'm.jcbh',
       overflowtooltip: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 130
-    }, {
-      coltype: 'string',
-      label: '文件描述',
-      prop: 'jcmc',
-      overflowtooltip: true,
-      headeralign: 'center',
-      align: 'left',
-    }, {
-      coltype: 'list',
-      label: '岗位号',
-      prop: 'gwh',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'left',
-      options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      width: 150
-    }, {
-      coltype: 'string',
-      suggest: true,
-      label: '机型',
-      prop: 'jxno',
-      dbprop: 'jx_no',
-      overflowtooltip: true,
-      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      suggest_fn_name: 'suggest_fn',
-      select_fn_name: 'select_fn',
       width: 150
     }, {
       coltype: 'list',
-      label: '状态码',
-      prop: 'statusno',
-      dbprop: 'status_no',
+      label: '文件分类',
+      prop: 'wjfl',
+      searchable: false,
       overflowtooltip: true,
-      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [],
+      options: [{
+          label: '技通',
+          value: '技术通知'
+        }, {
+          label: '变更',
+          value: '变更通知'
+        }, {
+          label: '质量',
+          value: '质量通知'
+        }, ],
       hideoptionval: true,
-      relation: 'statusno_list',
-      width: 150
+      width: 100
     }, {
       coltype: 'string',
-      label: '备注',
-      prop: 'bz',
+      label: '技通名称',
+      prop: 'jcmc',
+      dbprop: 'm.jcmc',
       overflowtooltip: true,
-      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'left'
+    }, {
+      coltype: 'date',
+      label: '有效期限开始',
+      prop: 'yxqx1',
+      overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
+      width: 150
+    }, {
+      coltype: 'date',
+      label: '有效期限结束',
+      prop: 'yxqx2',
+      dbprop: 'm.yxqx2',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 150
+    }, {
+      coltype: 'string',
+      label: '分配标志',
+      prop: 'fpflg',
+      dbprop: 'm.fpflg',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
     }, {
       coltype: 'string',
       label: '分配人',
-      prop: 'lrr2',
+      prop: 'fpr',
+      dbprop: 'm.fpr',
       overflowtooltip: true,
-      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -141,29 +134,29 @@
     }, {
       coltype: 'datetime',
       label: '分配时间',
-      prop: 'lrsj2',
+      prop: 'fpsj',
+      dbprop: 'm.fpsj',
       overflowtooltip: true,
-      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
       width: 150
     }, {
       coltype: 'string',
-      label: '录入人',
-      prop: 'lrr1',
+      label: '创建者',
+      prop: 'scry',
+      dbprop: 'm.scry',
       overflowtooltip: true,
-      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
       width: 100
     }, {
       coltype: 'datetime',
-      label: '录入时间',
-      prop: 'lrsj1',
+      label: '创建时间',
+      prop: 'scsj',
+      dbprop: 'm.scsj',
       overflowtooltip: true,
-      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -171,18 +164,20 @@
     }
   ],
   form: {
-    jtid: '',
-    gcdm: '',
-    scx: '',
-    gwh: '',
-    jxno: '',
-    statusno: '',
-    bz: '',
-    lrr1: '',
-    lrsj1: '',
-    lrr2: '',
-    lrsj2: '',
-    statusno_list: [],
+    jcbh: '',
+    jcmc: '',
+    jcms: '',
+    wjlj: '',
+    jwdx: '',
+    scry: '',
+    scpc: '',
+    scsj: '',
+    yxqx1: '',
+    yxqx2: '',
+    fpflg: '',
+    fpsj: '',
+    fpr: '',
+    wjfl: '',
     isdb: false,
     isedit: true
   },
@@ -192,17 +187,17 @@
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '/a1/jtfp/edit',
+    url: '',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '/a1/jtfp/del',
+    url: '',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/a1/jtfp/list',
+    url: '/a1/jtgl/list',
     method: 'post',
     callback: function (vm, res) {},
   },

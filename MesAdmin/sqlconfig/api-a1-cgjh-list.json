@@ -1,0 +1,5 @@
+{
+  "sql": "select cgjhh, xh, bjbm,wlmc,csbm, jhrq, cgsl, sjdhsj, dhsl, zpjhh, order_no, bjsx, zplx, cjrq, (select csmc from base_csxx where csbm = tj_mm_cgjh.csbm and rownum = 1) as csmc from tj_mm_cgjh where 1=1 ",
+  "sql_cnt": "select count(zpjhh) from tj_mm_cgjh where 1 = 1  ",
+  "sql_orderby": ""
+}

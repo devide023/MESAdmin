@@ -11,11 +11,11 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// id号，自动生成
         /// </summary>
-        public string id { get; set; }
+        public string id { get; set; }=Guid.NewGuid().ToString();
         /// <summary>
         /// 生产线
         /// </summary>
-        public string scx { get; set; }
+        public string scx { get; set; } = "1";
         /// <summary>
         /// 通知信息
         /// </summary>
@@ -35,7 +35,7 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 发出日期
         /// </summary>
-        public DateTime lrsj { get; set; }
+        public DateTime lrsj { get; set; }= DateTime.Now;
         /// <summary>
         /// 下班时间 不用
         /// </summary>

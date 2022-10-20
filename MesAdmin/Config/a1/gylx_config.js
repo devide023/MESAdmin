@@ -236,7 +236,7 @@
       headeralign: 'center',
       align: 'center',
     }, {
-      coltype: 'date',
+      coltype: 'datetime',
       label: '录入时间',
       prop: 'lrsj',
       overflowtooltip: true,

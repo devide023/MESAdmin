@@ -1,0 +1,5 @@
+{
+  "sql": "select user_code as usercode, user_name as username, pass_word as password, gcdm, scx, gwh, bzxx, hgsg, rsrq, csrq, jmh, ryxb, rylx, tel, xpmc, scbz, lzrq from zxjc_ryxx where 1=1 ",
+  "sql_cnt": "select count(*) from zxjc_ryxx where 1=1  ",
+  "sql_orderby": " order by scbz asc,user_code asc nulls last "
+}

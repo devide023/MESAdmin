@@ -37,6 +37,12 @@ namespace ZDMesInterfaces.TJ
         /// <param name="key"></param>
         /// <returns></returns>
         IEnumerable<zxjc_fault> GetFaultNoByKey(string key);
+        /// <summary>
+        /// 获取装配类型
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetZPLXList();
 
     }
 }

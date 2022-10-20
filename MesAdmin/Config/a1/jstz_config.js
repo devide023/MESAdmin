@@ -4,11 +4,17 @@
   isoperate: true,
   isfresh: true,
   isselect: false,
-  operate_fnlist:[{
-	  label: '下载Pdf',
+  operate_fnlist: [{
+      label: '查看Pdf',
       fnname: 'download_jstcpdf',
       btntype: 'text'
-  }],
+    }, {
+      label: '技通分配',
+      fnname: 'jstz_fp',
+      btntype: 'text',
+      callback: 'dialog_save_handle'
+    },
+  ],
   batoperate: {
     export_excel: function (_this) {
       _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
@@ -26,16 +32,31 @@
     },
   },
   pagefuns: {
-	  download_jstcpdf: function (row) {
+    download_jstcpdf: function (row) {
       var _this = this;
       window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
+    },
+    jstz_fp: function (row, item) {
+      var _this = this;
+      _this.dialog_title = row.jcbh + '分配';
+      _this.dialog_width = '30%';
+      _this.dialogVisible = true;
+      _this.dialog_hidefooter = true;
+      _this.dialog_viewpath = 'tja1/jstz/jtfp_to_ry';
+      _this.dialog_fnitem = item;
+      _this.dialog_props = {
+        row: row
+      };
+    },
+    dialog_save_handle: function (vm) {
+      console.log(vm)
     }
   },
   fields: [{
       coltype: 'string',
       label: '技通编号',
       prop: 'jcbh',
-	  dbprop:'m.no',
+      dbprop: 'm.jcbh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -45,7 +66,7 @@
       coltype: 'list',
       label: '文件分类',
       prop: 'wjfl',
-	  searchable:false,
+      searchable: false,
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -66,7 +87,7 @@
       coltype: 'string',
       label: '技通名称',
       prop: 'jcmc',
-	  dbprop: 'm.name',
+      dbprop: 'm.jcmc',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -84,7 +105,7 @@
       coltype: 'date',
       label: '有效期限结束',
       prop: 'yxqx2',
-	  dbprop:'m.yxqx2',
+      dbprop: 'm.yxqx2',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -94,7 +115,7 @@
       coltype: 'string',
       label: '分配标志',
       prop: 'fpflg',
-      dbprop:'m.fpflg',
+      dbprop: 'm.fpflg',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -104,14 +125,14 @@
       coltype: 'string',
       label: '分配人',
       prop: 'fpr',
-	  dbprop:'m.fpr',
+      dbprop: 'm.fpr',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
       width: 100
     }, {
-      coltype: 'date',
+      coltype: 'datetime',
       label: '分配时间',
       prop: 'fpsj',
       dbprop: 'm.fpsj',
@@ -124,7 +145,7 @@
       coltype: 'string',
       label: '创建者',
       prop: 'scry',
-	  dbprop: 'm.scry',
+      dbprop: 'm.scry',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -134,7 +155,7 @@
       coltype: 'datetime',
       label: '创建时间',
       prop: 'scsj',
-	  dbprop: 'm.scsj',
+      dbprop: 'm.scsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -176,7 +197,7 @@
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/a1/jtgl/list',
+    url: '/a1/jtgl/toscxlist',
     method: 'post',
     callback: function (vm, res) {},
   },

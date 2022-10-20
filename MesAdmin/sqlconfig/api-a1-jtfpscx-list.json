@@ -1,0 +1,5 @@
+{
+  "sql": "select id,(select url from ZSDL_JSTZ@ln_pdm98 where no = zxjc_t_jstc_scx.jcbh) as wjlj,(select no from ZSDL_JSTZ@ln_pdm98 where no = zxjc_t_jstc_scx.jcbh) as jcbh,(select name from ZSDL_JSTZ@ln_pdm98 where no = zxjc_t_jstc_scx.jcbh) as jcmc, scx,lrr,lrsj from zxjc_t_jstc_scx where 1=1 ",
+  "sql_cnt": "select count(id) from zxjc_t_jstc_scx where 1=1  ",
+  "sql_orderby": " order by lrsj desc "
+}

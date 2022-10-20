@@ -31,11 +31,11 @@
     },
     import_by_replace: function (_this, res) {
       _this.$message.error('暂不支持该操作');
-	  _this.$loading().close();
+      _this.$loading().close();
     },
     import_by_zh: function (_this, res) {
       _this.$message.error('暂不支持该操作');
-	  _this.$loading().close();
+      _this.$loading().close();
     },
     export_excel: function (_this) {
       _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
@@ -45,7 +45,9 @@
       }).then(function (res) {
         if (res.code === 1) {
           let expdatalist = res.list;
-          _this.export_handle(_this.pageconfig.fields.filter(function(i){return ['password','xpmc'].indexOf(i.prop) === -1;}), expdatalist);
+          _this.export_handle(_this.pageconfig.fields.filter(function (i) {
+              return ['password', 'xpmc'].indexOf(i.prop) === -1;
+            }), expdatalist);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -59,10 +61,17 @@
   ],
   pagefuns: {
     add_handle: function () {
-      var row = this.$deepClone(this.pageconfig.form);
-      this.list.unshift(row);
+		let _this = this;
+      this.$request('get', '/a1/rygl/usercode', {}).then(function (res) {
+        if (res.code === 1) {
+          var row = _this.$deepClone(_this.pageconfig.form);
+          row.usercode = res.usercode;
+          _this.list.unshift(row);
+        }
+      });
+
     },
-	download_template_file: function () {
+    download_template_file: function () {
       window.open('http://localhost:52655/template/A1/员工基础信息.xlsx');
     }
   },
@@ -75,7 +84,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width:80
+      width: 80
     }, {
       coltype: 'string',
       label: '姓名',
@@ -93,8 +102,8 @@
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
-      align: 'center',	  
-	  width:100
+      align: 'center',
+      width: 100
     }, {
       coltype: 'list',
       label: '岗位号',
@@ -103,11 +112,11 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  inioptionapi: {
+      inioptionapi: {
         method: 'get',
         url: '/a1/baseinfo/gwzd'
       },
-	  options:[]
+      options: []
     }, {
       coltype: 'list',
       label: '性别',
@@ -116,8 +125,16 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  options:[{label:'男',value:'男'},{label:'女',value:'女'}],
-	  width:80
+      options: [{
+          label: '男',
+          value: '男'
+        }, {
+          label: '女',
+          value: '女'
+        }
+      ],
+	  hideoptionval:true,
+      width: 80
     }, {
       coltype: 'list',
       label: '类型',
@@ -126,7 +143,15 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  options:[{label:'装配',value:'装配'},{label:'机动',value:'机动'}]
+      options: [{
+          label: '装配',
+          value: '装配'
+        }, {
+          label: '机动',
+          value: '机动'
+        }
+      ],
+	  hideoptionval:true,
     }, {
       coltype: 'string',
       label: '手机号',
@@ -143,12 +168,20 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  options:[{label:'白班',value:'白班'},{label:'晚班',value:'晚班'}]
+      options: [{
+          label: '白班',
+          value: '白班'
+        }, {
+          label: '晚班',
+          value: '晚班'
+        }
+      ],
+	  hideoptionval:true,
     }, {
       coltype: 'date',
       label: '入司日期',
       prop: 'rsrq',
-	  width:150,
+      width: 150,
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -156,14 +189,14 @@
       coltype: 'date',
       label: '出生日期',
       prop: 'csrq',
-      width:150,
+      width: 150,
       sortable: true,
       headeralign: 'center',
       align: 'center',
     }, {
       coltype: 'image',
       prop: 'xpmc',
-      label: '照片',	  
+      label: '照片',
       searchable: false,
       headeralign: 'center',
       align: 'center',
@@ -201,7 +234,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  activevalue: 'Y',
+      activevalue: 'Y',
       inactivevalue: 'N',
       width: 100
     }

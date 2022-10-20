@@ -172,7 +172,11 @@
     <Compile Include="TJ\A1\base_gwzx_jx.cs" />
     <Compile Include="TJ\A1\base_gycs.cs" />
     <Compile Include="TJ\A1\base_sbxx.cs" />
+    <Compile Include="TJ\A1\sys_jstz_to_scx_form.cs" />
+    <Compile Include="TJ\A1\sys_jtfp_form.cs" />
     <Compile Include="TJ\A1\tj_base_scxxx.cs" />
+    <Compile Include="TJ\A1\tj_mm_cgjh.cs" />
+    <Compile Include="TJ\A1\tj_pp_sc_zpjh.cs" />
     <Compile Include="TJ\A1\ztbm_new.cs" />
     <Compile Include="TJ\A1\zxjc_curvedata.cs" />
     <Compile Include="TJ\A1\zxjc_data_detail.cs" />
@@ -196,6 +200,7 @@
     <Compile Include="TJ\A1\zxjc_t_dzgy_sp.cs" />
     <Compile Include="TJ\A1\zxjc_t_jstc.cs" />
     <Compile Include="TJ\A1\zxjc_t_jstcfp.cs" />
+    <Compile Include="TJ\A1\zxjc_t_jstc_scx.cs" />
     <Compile Include="TJ\A1\zxjc_t_tstc.cs" />
     <Compile Include="TJ\tj_base_scxxx.cs" />
     <Compile Include="TJ\zxjc_gj_csyq.cs" />

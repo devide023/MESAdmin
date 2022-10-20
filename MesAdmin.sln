@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MesAdmin", "MesAdmin\MesAdmin.csproj", "{6BD74703-11AD-4471-8D4D-A08B2E83AA63}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -70,7 +70,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C9F0436D-5651-4075-8285-F4E6563F8D4F}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {C9F0436D-5651-4075-8285-F4E6563F8D4F}
 	EndGlobalSection
 EndGlobal

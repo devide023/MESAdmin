@@ -25,6 +25,19 @@ namespace MesAdmin.Controllers.A1.RYGL
             _requireverfify = requireverfify;
             _importservice = importservice;
         }
+        [HttpGet,Route("usercode")]
+        public IHttpActionResult CreateUserCode()
+        {
+            try
+            {
+                return Json(new { code = 1, msg = "ok", usercode = _rygl.CreateUserCode() });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_ryxx,ZDMesModels")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {

@@ -1,0 +1,5 @@
+{
+  "sql": "select zpjhh, order_no, scx, xh, zpx, scxh, scbc, scsl, scsj, zpsl, zpsj, sxsl, hgsl, fxsl, wxssl, bz, ztbm, jx, status_flag,sap_zt, csbm, (select name1 FROM T_TJ_SD_KHDAXX where kunnr = tj_pp_sc_zpjh.csbm and rownum=1) as khmc, xsbz, jtdh, jssj, jhh, cqyy from tj_pp_sc_zpjh where zpx = 1 ",
+  "sql_cnt": "select count(zpjhh) from tj_pp_sc_zpjh where zpx = 1  ",
+  "sql_orderby": " order by zpsj desc nulls last "
+}

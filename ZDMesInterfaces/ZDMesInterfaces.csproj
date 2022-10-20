@@ -119,6 +119,8 @@
     <Compile Include="TJ\IA1BaseInfo.cs" />
     <Compile Include="TJ\IDJGL.cs" />
     <Compile Include="TJ\IFault.cs" />
+    <Compile Include="TJ\IJTFP.cs" />
+    <Compile Include="TJ\IJTFPSCX.cs" />
     <Compile Include="TJ\IRYGL.cs" />
     <Compile Include="TJ\IRYJN.cs" />
     <Compile Include="TJ\ITJBaseInfo.cs" />

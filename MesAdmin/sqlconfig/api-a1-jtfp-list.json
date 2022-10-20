@@ -1,0 +1,5 @@
+{
+  "sql": "select id, jtid,(select url from ZSDL_JSTZ@ln_pdm98 where no = zxjc_t_jstcfp.jtid) as wjlj,(select no from ZSDL_JSTZ@ln_pdm98 where no = zxjc_t_jstcfp.jtid) as jcbh,(select name from ZSDL_JSTZ@ln_pdm98 where no = zxjc_t_jstcfp.jtid) as jcmc,gcdm, scx, gwh, jx_no as jxno, status_no as statusno, bz, lrr1, lrsj1, (select lrr from zxjc_t_jstc_scx where jcbh = zxjc_t_jstcfp.jtid and rownum = 1) as lrr2, (select lrsj from zxjc_t_jstc_scx where jcbh = zxjc_t_jstcfp.jtid and rownum = 1)as lrsj2 from zxjc_t_jstcfp where 1=1 ",
+  "sql_cnt": "select count(id) from zxjc_t_jstcfp where 1=1  ",
+  "sql_orderby": " order by lrsj1 desc,gwh asc,jx_no asc,status_no asc "
+}

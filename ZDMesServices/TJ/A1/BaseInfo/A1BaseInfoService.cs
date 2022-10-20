@@ -106,6 +106,24 @@ namespace ZDMesServices.TJ.A1.BaseInfo
             }
         }
 
+        public IEnumerable<dynamic> GetZPLXList()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select lx as \"lx\",mc as \"mc\" FROM bom_zplx ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<dynamic>(sql.ToString());
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<string> GetZtBMByJxNo(string jxno)
         {
             try

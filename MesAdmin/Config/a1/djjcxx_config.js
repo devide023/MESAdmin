@@ -142,7 +142,8 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  options:[],
+	  options:[{label:'点检',value:'点检'},{label:'互检',value:'互检'}],
+	  hideoptionval:true,
 	  width:150
     }, {
       coltype: 'list',
@@ -191,7 +192,7 @@
       overflowtooltip: true,      
       sortable: true,
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
     }, {
       coltype: 'bool',
       label: '删除标志',
@@ -232,7 +233,7 @@
     scbz: 'N',
     lrr: '',
     lrsj: '',
-    djlx: '',
+    djlx: '点检',
 	statusno_list:[],
     isdb: false,
     isedit: true

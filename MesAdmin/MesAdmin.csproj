@@ -324,8 +324,12 @@
     <Compile Include="Controllers\A1\GYGL\A1GYCSController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1GYLXController.cs" />
     <Compile Include="Controllers\A1\JCGL\A1JCGLController.cs" />
+    <Compile Include="Controllers\A1\JHGL\A1CGJHController.cs" />
+    <Compile Include="Controllers\A1\JHGL\A1SCJHController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1JTFPController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1JTFPSCXController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1JTGLController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1SCXTZController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYXXController.cs" />
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
@@ -585,6 +589,12 @@
     <Content Include="sqlconfig\api-a1-fault-list.json" />
     <Content Include="sqlconfig\api-a1-clfs-list.json" />
     <Content Include="sqlconfig\api-a1-jtgl-list.json" />
+    <Content Include="sqlconfig\api-a1-jtfp-list.json" />
+    <Content Include="sqlconfig\api-a1-scjh-list.json" />
+    <Content Include="sqlconfig\api-a1-cgjh-list.json" />
+    <Content Include="sqlconfig\api-a1-rygl-list.json" />
+    <Content Include="sqlconfig\api-a1-jtgl-toscxlist.json" />
+    <Content Include="sqlconfig\api-a1-jtfpscx-list.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

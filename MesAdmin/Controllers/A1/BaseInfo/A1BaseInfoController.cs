@@ -17,6 +17,21 @@ namespace MesAdmin.Controllers.A1.BaseInfo
         {
             _a1baseinfo = a1baseinfo;
         }
+        [HttpGet,Route("scx")]
+        public IHttpActionResult GetScxList()
+        {
+            try
+            {
+                List<dynamic> list = new List<dynamic>();
+                list.Add(new { label = "A1", value = "1" });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet, Route("gwzd")]
         public IHttpActionResult GetGwZd()
         {
@@ -154,6 +169,20 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                     List<dynamic> list = new List<dynamic>();
                     return Json(new { code = 1, msg = "ok", list = list });
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet,Route("zplx")]
+        public IHttpActionResult GetZPLX()
+        {
+            try
+            {
+                var list = _a1baseinfo.GetZPLXList();
+                return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.mc, value = t.lx }) });
             }
             catch (Exception)
             {
