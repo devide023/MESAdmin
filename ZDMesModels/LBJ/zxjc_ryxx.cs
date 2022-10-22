@@ -47,11 +47,11 @@ namespace ZDMesModels.LBJ
         /// <summary>
         ///出生日期
         ///</summary>
-        public DateTime csrq { get; set; }
+        public DateTime? csrq { get; set; }
         /// <summary>
         ///入司日期
         ///</summary>
-        public DateTime rsrq { get; set; }
+        public DateTime? rsrq { get; set; }
         /// <summary>
         ///加密号
         ///</summary>

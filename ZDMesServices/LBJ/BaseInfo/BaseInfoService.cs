@@ -457,7 +457,7 @@ namespace ZDMesServices.LBJ.BaseInfo
                     StringBuilder sql = new StringBuilder();
                     sql.Append("select wlbm, wlmc ");
                     sql.Append(" FROM   base_wlxx ");
-                    sql.Append(" where  wlmc like  :key or wlbm like :key ");
+                    sql.Append(" where  wlmc like  :key and rownum < 10");
                     sql.Append(" order  by wlbm asc");
                     var list = db.Query<base_wlxx>(sql.ToString(), new { key = "%" + key + "%" });
                     return list;

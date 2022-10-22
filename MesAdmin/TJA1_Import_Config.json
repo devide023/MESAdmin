@@ -32,7 +32,7 @@
     "updatecol": [ "gwmc", "gwfl", "gwlx", "workflow" ]
   },
   {
-    "tablename": "zxjc_gylx",
+    "tablename": "mes_zxjc_gylx",
     "xinzeng": [ "jx_no", "status_no", "gwh" ],
     "replace": [ "gwh" ],
     "replacetype": 1,

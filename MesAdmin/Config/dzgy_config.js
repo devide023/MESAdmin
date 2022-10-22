@@ -7,7 +7,7 @@
       action: 'http://172.16.201.125:7002/api/upload/dzgy_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
-			this.$loading().close();
+          this.$loading().close();
           this.$message.success(response.msg);
           let rowid = response.extdata.rowkey;
           let finditem = this.$basepage.list.find(function (i) {
@@ -35,7 +35,7 @@
       action: 'http://172.16.201.125:7002/api/upload/video',
       callback: function (response, file) {
         if (response.code === 1) {
-			this.$loading().close();
+          this.$loading().close();
           this.$message.success(response.msg);
           let rowid = response.extdata.rowkey;
           let finditem = this.$basepage.list.find(function (i) {
@@ -52,8 +52,7 @@
           this.$message.error(response.msg);
         }
       }
-    },
-	{
+    }, {
       label: '下载视频',
       fnname: 'download_dzgyMp4',
       btntype: 'text'
@@ -81,8 +80,8 @@
         }
       });
     },
-	download_dzgyMp4:function(row){
-		var _this = this;
+    download_dzgyMp4: function (row) {
+      var _this = this;
       this.$request('get', "download/ftp2web", {
         wjlx: '视频',
         wjlj: row.wjlj
@@ -93,7 +92,7 @@
           _this.$message.error(res.msg);
         }
       });
-	}
+    }
   },
   batoperate: {
     import_by_add: function (vm, res) {
@@ -160,7 +159,7 @@
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
       options: [],
-	  sortable:true,
+      sortable: true,
     }, {
       coltype: 'string',
       prop: 'gybh',
@@ -168,8 +167,8 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
-	  overflowtooltip: true,
-	  sortable:true,
+      overflowtooltip: true,
+      sortable: true,
     }, {
       coltype: 'list',
       prop: 'statusno',
@@ -177,19 +176,25 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
-	  multiple:false,
-	  sortable:true,
-	  remote:function(q,_this,row){
-		  if(q){
-			  _this.$request('get','/lbj/baseinfo/wlbm_by_key',{key:q}).then(function(res){
-				 if(res.code === 1){
-					 row.remotelist = res.list;
-				 } else{
-					 return [];
-				 }
-			  });
-		  }
-	  }
+      multiple: false,
+      sortable: true,
+	  allowcreate:true,
+	  filterable:true,
+      remote: function (q, _this, row) {
+        if (q) {
+          if (q.length >= 3) {
+            _this.$request('get', '/lbj/baseinfo/wlbm_by_key', {
+              key: q
+            }).then(function (res) {
+              if (res.code === 1) {
+                row.remotelist = res.list;
+              } else {
+                return [];
+              }
+            });
+          }
+        }
+      }
     }, {
       coltype: 'string',
       prop: 'gymc',
@@ -198,7 +203,7 @@
       align: 'left',
       width: 280,
       overflowtooltip: true,
-	  sortable:true,
+      sortable: true,
     }, {
       coltype: 'string',
       prop: 'gyms',
@@ -209,11 +214,11 @@
     }, {
       coltype: 'string',
       prop: 'jwdx',
-      label: '文件大小',
+      label: '文件大小(M)',
       headeralign: 'center',
-      align: 'left',
-      width: 100,
-	  sortable:true,
+      align: 'center',
+      width: 150,
+      sortable: true,
     }, {
       coltype: 'list',
       prop: 'wjfl',
@@ -224,12 +229,12 @@
       options: [{
           label: '工艺',
           value: '工艺'
-        },
-		{
+        }, {
           label: '视频',
           value: '视频'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'datetime',
       prop: 'scsj',
@@ -237,7 +242,7 @@
       headeralign: 'center',
       align: 'center',
       width: 140,
-	  sortable:true,
+      sortable: true,
     }
   ],
   form: {
@@ -250,7 +255,7 @@
     wjfl: '工艺',
     scsj: '',
     wjlj: '',
-	remotelist:[],
+    remotelist: [],
     isdb: false,
     isedit: true,
   },

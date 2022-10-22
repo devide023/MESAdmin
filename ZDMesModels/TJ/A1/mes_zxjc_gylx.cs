@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DapperExtensions.Mapper;
 namespace ZDMesModels.TJ.A1
 {
-    public class zxjc_gylx
+    public class mes_zxjc_gylx
     {
         public string rid { get; set; }
         /// <summary>
@@ -67,7 +67,7 @@ namespace ZDMesModels.TJ.A1
         public DateTime lrsj { get; set; } = DateTime.Now;
     }
 
-    public class zxjc_gylx_mapper : ClassMapper<zxjc_gylx>
+    public class zxjc_gylx_mapper : ClassMapper<mes_zxjc_gylx>
     {
         public zxjc_gylx_mapper()
         {

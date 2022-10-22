@@ -199,7 +199,7 @@
       }
     ]
   }, {
-    "model": "ZDMesModels.TJ.A1.zxjc_gylx,ZDMesModels",
+    "model": "ZDMesModels.TJ.A1.mes_zxjc_gylx,ZDMesModels",
     "requireconf": [{
         "colname": "jxno",
         "coltxt": "机型编码"

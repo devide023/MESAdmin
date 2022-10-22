@@ -602,6 +602,8 @@
     <Content Include="Template\A1\故障基础信息.xlsx" />
     <Content Include="Template\A1\点检基础信息.xlsx" />
     <Content Include="Template\A1\电子工艺.xlsx" />
+    <Content Include="sqlconfig\api-lbj-dzgy-list.json" />
+    <Content Include="sqlconfig\api-a1-gylx-list.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

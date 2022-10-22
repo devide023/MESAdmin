@@ -27,7 +27,7 @@
     {
       "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
       "properties": {
-        "TJConstr": "tja1mes"
+        "TJConstr": "tjmes"
       }
     }
   ]

@@ -26,7 +26,7 @@ namespace ZDMesServices.LBJ.DZWD
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append($"select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl, scx, shbz, shr, shsj, ver from zxjc_t_jstc where 1=1 ");
+                sql.Append($"select jtid, jcbh, jcmc, jcms, wjlj, round(to_number(jwdx)/1024/1024,2) as jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl, scx, shbz, shr, shsj, ver from zxjc_t_jstc where 1=1 ");
                 StringBuilder sql_cnt = new StringBuilder();
                 sql_cnt.Append($"select count(*) from zxjc_t_jstc where 1=1 ");
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))

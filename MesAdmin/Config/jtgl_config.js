@@ -185,6 +185,7 @@
           value: '发放明细'
         }
       ],
+	  hideoptionval:true,
       sortable: true,
     }, {
       coltype: 'string',
@@ -221,9 +222,10 @@
     }, {
       coltype: 'string',
       prop: 'jwdx',
-      label: '文件大小',
+      label: '文件大小(M)',
       headeralign: 'center',
       align: 'center',
+	  width:150
     }, {
       coltype: 'string',
       prop: 'scry',

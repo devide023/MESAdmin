@@ -182,7 +182,8 @@
           label: '女',
           value: '女'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'string',
       prop: 'sfz',
@@ -218,7 +219,8 @@
           label: '组长',
           value: '组长'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'list',
       prop: 'gwh',
@@ -247,6 +249,7 @@
           value: '夜班'
         }
       ],
+	  hideoptionval:true,
       width: 80
     }, {
       coltype: 'bool',
