@@ -153,7 +153,7 @@ namespace MesAdmin.Controllers
                 var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
                 if (isok)
                 {
-                    list = (template_data as List<object>).ConvertAll(t => (T)t);
+                    list = (template_data as IEnumerable<object>).ToList().ConvertAll(t => (T)t);
                     _requireverfify.VerifyRequire<T>(list);
                 }
                 var ret = _importservice.NewImportData(list);
@@ -198,7 +198,7 @@ namespace MesAdmin.Controllers
                 var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
                 if (isok)
                 {
-                    list = (template_data as List<object>).ConvertAll(t => (T)t);
+                    list = (template_data as IEnumerable<object>).ToList().ConvertAll(t => (T)t);
                     _requireverfify.VerifyRequire<T>(list);
                 }
                 var ret = _importservice.ReaplaceImportData(list);
@@ -243,7 +243,7 @@ namespace MesAdmin.Controllers
                 var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
                 if (isok)
                 {
-                    list = (template_data as List<object>).ConvertAll(t => (T)t);
+                    list = (template_data as IEnumerable<object>).ToList().ConvertAll(t => (T)t);
                     _requireverfify.VerifyRequire<T>(list);
                 }
                 var ret = _importservice.ZhImportData(list);

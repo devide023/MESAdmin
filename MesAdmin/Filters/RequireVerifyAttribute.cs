@@ -21,26 +21,35 @@ namespace MesAdmin.Filters
             {
                 var requestScope = actionContext.Request.GetDependencyScope();
                 _requireverify = requestScope.GetService(typeof(IRequireVerify)) as IRequireVerify;
-                var parm = actionContext.ActionArguments.FirstOrDefault();
-                var parmval = parm.Value;
-                if (parmval != null)
+                var isdata = actionContext.Request.Properties.ContainsKey("template_datalist");
+                if (isdata)
                 {
-                    var parmtype = parmval.GetType().Name;
-                    switch (parmtype)
+                    object datalist = null;
+                    var  isok = actionContext.Request.Properties.TryGetValue("template_datalist", out datalist);
+                    if(isok && datalist != null)
                     {
-                        case "List`1":
+                        var parmtype = datalist.GetType();
+                        if (parmtype.IsConstructedGenericType)
+                        {
+                            var list = datalist as IEnumerable<object>;
+                            var type = Type.GetType(parmtype.GenericTypeArguments[0].FullName + ",ZDMesModels");
+                            _requireverify.VerifyRequire(type, list.ToList());
+                        }
+                    }
+                }
+                else
+                {
+                    var parm = actionContext.ActionArguments.FirstOrDefault();
+                    var parmval = parm.Value;
+                    if (parmval != null)
+                    {
+                        var partype = parmval.GetType();
+                        if (partype.IsConstructedGenericType)
+                        {
                             var list = parmval as IEnumerable<object>;
-                            if (list.Count() > 0)
-                            {
-                                var type = list.First().GetType();
-                                _requireverify.VerifyRequire(type, list.ToList());
-                            }
-                            break;
-                        default:
-                            List<object> p = new List<object>();
-                            p.Add(parmval);
-                            _requireverify.VerifyRequire(parmval.GetType(), p);
-                            break;
+                            var type = Type.GetType(partype.GenericTypeArguments[0].FullName + ",ZDMesModels");
+                            _requireverify.VerifyRequire(type, list.ToList());
+                        }
                     }
                 }
             }

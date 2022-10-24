@@ -10,6 +10,7 @@ using ZDMesInterfaces.TJ;
 using MesAdmin.Filters;
 using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
+using ZDMesServices.TJ.A1.RYGL;
 
 namespace MesAdmin.Controllers.A1.RYGL
 {
@@ -25,6 +26,11 @@ namespace MesAdmin.Controllers.A1.RYGL
             _requireverfify = requireverfify;
             _importservice = importservice;
         }
+        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx>), "BatSetValue")]
+        public override IHttpActionResult Add(List<zxjc_ryxx> entitys)
+        {
+            return base.Add(entitys);
+        }
         [HttpGet,Route("usercode")]
         public IHttpActionResult CreateUserCode()
         {
@@ -39,50 +45,11 @@ namespace MesAdmin.Controllers.A1.RYGL
             }
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_ryxx,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx>), "BatSetValue")]
+        [RequireVerify]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
-            try
-            {
-                List<zxjc_ryxx> list = new List<zxjc_ryxx>();
-                object template_data = null;
-                var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
-                if (isok)
-                {
-                    list = (template_data as List<object>).ConvertAll(t => (zxjc_ryxx)t);
-                    list.ForEach(t => t.usercode = _rygl.CreateUserCode());
-                    _requireverfify.VerifyRequire<zxjc_ryxx>(list);
-                }
-                var ret = _importservice.NewImportData(list);
-                if (ret.oklist.Count == list.Count)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = $"成功导入数据{list.Count()}条"
-                    });
-                }
-                else if (ret.repeatlist.Count > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 2,
-                        msg = $"文件数据{list.Count()}条，重复{ret.repeatlist.Count}条"
-                    });
-                }
-                else
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 0,
-                        msg = $"数据导入失败"
-                    });
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+           return base.ReadTempFile(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_ryxx,ZDMesModels")]
         public override IHttpActionResult ReadTempFile_By_Replace(string fileid)

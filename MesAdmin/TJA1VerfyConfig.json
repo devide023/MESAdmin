@@ -40,18 +40,22 @@
     ]
   }, {
     "model": "ZDMesModels.TJ.A1.zxjc_ryxx,ZDMesModels",
-    "requireconf": [{
-        "colname": "usercode",
-        "coltxt": "账号"
-      }, {
+    "requireconf": [
+      {
         "colname": "username",
         "coltxt": "姓名"
-      }, {
+      },
+      {
         "colname": "rylx",
         "coltxt": "员工类型"
-      }, {
+      },
+      {
         "colname": "bzxx",
         "coltxt": "班组"
+      },
+      {
+        "colname": "usercode",
+        "coltxt": "账号"
       }
     ],
     "templateconf": [{

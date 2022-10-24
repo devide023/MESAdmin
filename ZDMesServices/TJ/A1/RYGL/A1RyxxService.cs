@@ -7,16 +7,38 @@ using ZDMesInterfaces.TJ;
 using ZDMesModels.TJ.A1;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
-using ZDMesModels;
 namespace ZDMesServices.TJ.A1.RYGL
 {
-    public class A1RyxxService:BaseDao<zxjc_ryxx>, IRYGL
+    public class A1RyxxService:BaseDao<zxjc_ryxx>, IRYGL, IBatAtachValue<zxjc_ryxx>
     {
         public A1RyxxService(string constr):base(constr)
         {
 
         }
 
+        public List<zxjc_ryxx> BatSetValue(List<zxjc_ryxx> list)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select seq_mes_rybh.nextval FROM dual");
+                using (var db = new OracleConnection(ConString))
+                {
+                    foreach (var item in list)
+                    {
+                        var no = db.ExecuteScalar<int>(sql.ToString());
+                        var ucode = "01" + no.ToString().PadLeft(4, '0');
+                        item.usercode = ucode;
+                    }
+                }
+                return list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         //public override IEnumerable<zxjc_ryxx> GetList(sys_page parm, out int resultcount)
         //{
         //    try

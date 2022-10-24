@@ -34,7 +34,8 @@ namespace MesAdmin.Filters
                 {
                     List<object> outlist = new List<object>();
                     _template_verify.ImportTemplateVerify(ModelName, template_filename.ToString(), out outlist);
-                    actionContext.Request.Properties["template_datalist"] = outlist;
+                    actionContext.Request.Properties.Remove("template_datalist");
+                    actionContext.Request.Properties.Add("template_datalist", outlist);
                 }
             }
             catch (Exception)

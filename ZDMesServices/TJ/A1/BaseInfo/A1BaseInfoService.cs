@@ -39,7 +39,7 @@ namespace ZDMesServices.TJ.A1.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select gwh,gwmc FROM base_gwzd");
+                sql.Append("select gwh,gwmc FROM base_gwzd order by to_number(gwh) asc");
                 using (var db = new OracleConnection(ConString))
                 {
                     return db.Query<base_gwzd>(sql.ToString());

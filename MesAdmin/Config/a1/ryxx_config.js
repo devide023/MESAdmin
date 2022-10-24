@@ -61,15 +61,9 @@
   ],
   pagefuns: {
     add_handle: function () {
-		let _this = this;
-      this.$request('get', '/a1/rygl/usercode', {}).then(function (res) {
-        if (res.code === 1) {
-          var row = _this.$deepClone(_this.pageconfig.form);
-          row.usercode = res.usercode;
-          _this.list.unshift(row);
-        }
-      });
-
+      let _this = this;
+      var row = _this.$deepClone(_this.pageconfig.form);
+      _this.list.unshift(row);
     },
     download_template_file: function () {
       window.open('http://localhost:52655/template/A1/员工基础信息.xlsx');
@@ -133,7 +127,7 @@
           value: '女'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
       width: 80
     }, {
       coltype: 'list',
@@ -151,7 +145,7 @@
           value: '机动'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
     }, {
       coltype: 'string',
       label: '手机号',
@@ -176,7 +170,7 @@
           value: '晚班'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
     }, {
       coltype: 'date',
       label: '入司日期',
