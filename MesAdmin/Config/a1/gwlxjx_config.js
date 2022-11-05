@@ -173,14 +173,16 @@
       select_fn_name: 'select_fn',
     },
 	{
-      coltype: 'string',
+      coltype: 'list',
       label: '岗位类型',
-      prop: 'gwmc',
+      prop: 'gwlx',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  options:[{label:'部装',value:'部装'},{label:'装配',value:'装配'}],
+	  hideoptionval:true
     }, {
       coltype: 'string',
       label: '备注',
@@ -213,12 +215,12 @@
     }
   ],
   form: {
-    gcdm: '',
-    scx: '',
+    gcdm: '9100',
+    scx: '1',
     jxno: '',
     statusno: '',
     gwh: '',
-    gwmc: '',
+    gwlx: '装配',
     bz: '',
     lrr: '',
     lrsj: '',

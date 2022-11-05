@@ -15,8 +15,8 @@ namespace MesAdmin.Controllers.A1.GYGL
     {
         public A1DZGYController(IDbOperate<zxjc_t_dzgy> dzgyservice, IRequireVerify requireverfify, IImportData<zxjc_t_dzgy> importservice):base(dzgyservice)
         {
-            this._requireverfify = requireverfify;
-            this._importservice = importservice;
+            _requireverfify = requireverfify;
+            _importservice = importservice;
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_t_dzgy,ZDMesModels")]
         public override IHttpActionResult ReadTempFile(string fileid)

@@ -24,34 +24,6 @@ namespace ZDMesServices.LBJ.BaseInfo
 
         }
 
-        public IEnumerable<base_ftpfilepath> FtpConfig()
-        {
-            try
-            {
-                using (var db = new OracleConnection(ConString))
-                {
-                    try
-                    {
-                        InitDB(db);
-                        return Db.GetList<base_ftpfilepath>();
-                    }
-                    finally
-                    {
-                        db.Close();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            finally
-            {
-                Db.Dispose();
-            }
-        }
-
         public IEnumerable<base_dbxx> GetDbInfo()
         {
             try
@@ -105,22 +77,28 @@ namespace ZDMesServices.LBJ.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                /*
-                sql.Append("select t1.*, t2.id, t2.rjid, t2.djlx ");
-                sql.Append(" FROM(select ta.dbmc, ta.dbh, ta.dblx, ta.dbzt, ta.bz");
-                sql.Append("          from(select t.*, (select count(*) from BASE_DBRJZX where dbh = t.dbh) qty");
-                sql.Append("                   FROM   base_dbxx t) ta");
-                sql.Append("          where  ta.qty = 0) t1, base_dbrjgx t2");
-                sql.Append(" where  t1.dbh = t2.dbh");
-                */
-                sql.Append("select bb.dbmc, bb.dbh, bb.dblx, aa.id, aa.rjid, aa.djlx  ");
-                sql.Append(" FROM(select t1.id, t1.djlx, t1.rjid, t1.dbh ");
-                sql.Append("          FROM(select ta.*, tb.id as gc ");
-                sql.Append("                   FROM   base_dbrjgx ta, base_dbrjzx tb ");
-                sql.Append("                   where  ta.dbh = tb.dbh(+) ");
-                sql.Append("                   and    ta.rjid = tb.rjid(+)) t1 ");
-                sql.Append("          where  t1.gc is null) aa, base_dbxx bb ");
-                sql.Append(" where  aa.dbh = bb.dbh");
+                
+                //sql.Append("select t1.*, t2.id, t2.rjid, t2.djlx ");
+                //sql.Append(" FROM(select ta.dbmc, ta.dbh, ta.dblx, ta.dbzt, ta.bz");
+                //sql.Append("          from(select t.*, (select count(*) from BASE_DBRJZX where dbh = t.dbh) qty");
+                //sql.Append("                   FROM   base_dbxx t) ta");
+                //sql.Append("          where  ta.qty = 0) t1, base_dbrjgx t2");
+                //sql.Append(" where  t1.dbh = t2.dbh");
+                
+                
+                sql.Append("select bb.dbmc, bb.dbh, bb.dblx, aa.id, aa.rjid, aa.djlx ");
+                sql.Append(" FROM(select t1.id, t1.djlx, t1.rjid, t1.dbh FROM base_dbrjgx t1) aa, base_dbxx bb ");
+                sql.Append(" where aa.dbh = bb.dbh ");
+
+                //sql.Append("select bb.dbmc, bb.dbh, bb.dblx, aa.id, aa.rjid, aa.djlx  ");
+                //sql.Append(" FROM(select t1.id, t1.djlx, t1.rjid, t1.dbh ");
+                //sql.Append("          FROM(select ta.*, tb.id as gc ");
+                //sql.Append("                   FROM   base_dbrjgx ta, base_dbrjzx tb ");
+                //sql.Append("                   where  ta.dbh = tb.dbh(+) ");
+                //sql.Append("                   and    ta.rjid = tb.rjid(+)) t1 ");
+                //sql.Append("          where  t1.gc is null) aa, base_dbxx bb ");
+                //sql.Append(" where  aa.dbh = bb.dbh");
+
                 using (var db = new OracleConnection(ConString))
                 {
                     Dictionary<string, base_dbxx> dic = new Dictionary<string, base_dbxx>();

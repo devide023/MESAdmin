@@ -330,9 +330,11 @@
     <Compile Include="Controllers\A1\JTGL\A1JTFPSCXController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1JTGLController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1SCXTZController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1TsZtTzController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYXXController.cs" />
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
+    <Compile Include="Controllers\A1\WLGL\A1WLGLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJJLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJXXController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1FXMXController.cs" />
@@ -349,6 +351,7 @@
     <Compile Include="Controllers\CDGC\JJBGL\GTJJBController.cs" />
     <Compile Include="Controllers\CDGC\RYGL\RYGLController.cs" />
     <Compile Include="Controllers\CDGC\SBGL\SBGLController.cs" />
+    <Compile Include="Controllers\CDGC\SJCJGL\CDGCCNCSJController.cs" />
     <Compile Include="Controllers\CDGC\YCGL\CDYCGLController.cs" />
     <Compile Include="Controllers\Common\DBInfoController.cs" />
     <Compile Include="Controllers\Common\DownLoadController.cs" />
@@ -371,6 +374,7 @@
     <Compile Include="Controllers\LBJ\DAOJU\DbRjGxController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjLyController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DjReportController.cs" />
+    <Compile Include="Controllers\LBJ\DAOJU\LbjRjRmLsController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\RenJuController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\RenJuSmXhController.cs" />
     <Compile Include="Controllers\LBJ\DJGL\DJGWController.cs" />
@@ -604,6 +608,13 @@
     <Content Include="Template\A1\电子工艺.xlsx" />
     <Content Include="sqlconfig\api-lbj-dzgy-list.json" />
     <Content Include="sqlconfig\api-a1-gylx-list.json" />
+    <Content Include="sqlconfig\api-a1-ryjn-list.json" />
+    <Content Include="sqlconfig\api-a1-jcgl-list.json" />
+    <Content Include="sqlconfig\api-a1-gwzd-list.json" />
+    <Content Include="sqlconfig\api-a1-scxtz-list.json" />
+    <Content Include="sqlconfig\api-a1-gwwl-list.json" />
+    <Content Include="sqlconfig\api-a1-gycs-list.json" />
+    <Content Include="sqlconfig\api-lbj-rjrmls-list.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

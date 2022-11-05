@@ -1,0 +1,5 @@
+{
+  "sql": "select id, rjid, rjlx, rmsj, rmr, rmrid, dbh,(select dblx from base_dbxx where dbh = zxjc_rjrm_ls.dbh and rownum =1) as dblx,sbbh, scx, dqsm, rjzxid, bzsm from zxjc_rjrm_ls where 1=1 ",
+  "sql_cnt": "select count(*) from zxjc_rjrm_ls where 1=1  ",
+  "sql_orderby": " order by rmsj desc "
+}

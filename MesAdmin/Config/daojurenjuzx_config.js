@@ -1,7 +1,7 @@
 {
   isgradequery: true,
   isbatoperate: true,
-  isoperate: false,
+  isoperate: true,
   isfresh: true,
   isselect: true,
   bat_btnlist: [{
@@ -10,8 +10,8 @@
     }
   ],
   operate_fnlist: [{
-      label: '卸载',
-      fnname: 'uninstall_rjlx_handle',
+      label: '刃磨记录',
+      fnname: 'view_rjrmjl_handle',
       btntype: 'text'
     },
   ],
@@ -114,6 +114,10 @@
         this.$message.warning('请选择要卸载的刀柄刃具');
       }
     },
+	view_rjrmjl_handle(row){
+		this.dialog_rmmx_Visible = true;
+		this.rmmx_rjid = row.rjid;
+	},
     uninstall_rjlx_handle: function (row) {
       console.log(row);
       var _this = this;
@@ -171,31 +175,19 @@
   },
   fields: [{
       coltype: 'list',
-      label: '工厂',
-      prop: 'gcdm',
-      dbprop: 'ta.gcdm',
-      headeralign: 'center',
-      align: 'center',
-      width: 80,
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx',
-      },
-      options: [],
-    }, {
-      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       dbprop: 'ta.scx',
       headeralign: 'center',
       align: 'center',
-      width: 180,
+      width: 100,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902',
       },
       options: [],
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       label: '设备编号',
@@ -204,6 +196,8 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
+	  overflowtooltip: true,
+	  width:100,
     }, {
       coltype: 'string',
       label: '设备名称',
@@ -222,6 +216,8 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
+	  width:100,
+	  overflowtooltip:true,
     }, {
       coltype: 'string',
       label: '刀柄类型',
@@ -247,7 +243,7 @@
       dbprop: 'ta.rjlx',
       headeralign: 'center',
       align: 'left',
-      width: 150,
+      width: 100,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -275,6 +271,7 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
+	  width:100,
     }, {
       coltype: 'string',
       label: '当前寿命',
@@ -283,6 +280,7 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
+	  width:100,
     }, {
       coltype: 'progress',
       label: '刃具状态',
@@ -292,7 +290,31 @@
       width: 100,
       sortable: true,
 	  searchable:false,
-    }, 
+    },
+	{
+      coltype: 'string',
+      label: '刃磨次数',
+      prop: 'rjrmcs',
+      headeralign: 'center',
+      align: 'center',
+	  overflowtooltip: true,
+    },
+	{
+      coltype: 'string',
+      label: '刃磨人',
+      prop: 'rjrmr',
+      headeralign: 'center',
+      align: 'center',
+	  overflowtooltip: true,
+    }, {
+      coltype: 'datetime',
+      label: '最后刃磨时间',
+      prop: 'rjzhrmsj',
+      headeralign: 'center',
+      align: 'center',
+      overflowtooltip: true,
+	  width:100
+    },
 	{
       coltype: 'string',
       label: '领用人',

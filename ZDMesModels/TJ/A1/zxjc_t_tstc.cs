@@ -11,7 +11,15 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 通知ID
         /// </summary>
-        public string tcid { get; set; }
+        public string tcid { get; set; }=Guid.NewGuid().ToString();
+        /// <summary>
+        /// 工厂
+        /// </summary>
+        public string gcdm { get; set; } = "9100";
+        /// <summary>
+        /// 生产线
+        /// </summary>
+        public string scx { get; set; } = "1";
         /// <summary>
         /// 通知编号
         /// </summary>
@@ -19,15 +27,7 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 通知内容
         /// </summary>
-        public string tcms { get; set; }
-        /// <summary>
-        /// 工厂
-        /// </summary>
-        public string gcdm { get; set; }
-        /// <summary>
-        /// 生产线
-        /// </summary>
-        public string scx { get; set; }
+        public string tcms { get; set; }        
         /// <summary>
         /// 岗位编码
         /// </summary>
@@ -51,13 +51,14 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 录入时间
         /// </summary>
-        public DateTime lrsj { get; set; }
+        public DateTime lrsj { get; set; }=DateTime.Now;
     }
 
     public class zxjc_t_tstc_mapper : ClassMapper<zxjc_t_tstc>
     {
         public zxjc_t_tstc_mapper()
         {
+            Map(t => t.tcid).Key(KeyType.Assigned);
             Map(t => t.jxno).Column("jx_no");
             Map(t => t.statusno).Column("status_no");
             AutoMap();

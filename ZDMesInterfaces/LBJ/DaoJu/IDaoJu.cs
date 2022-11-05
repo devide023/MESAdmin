@@ -132,5 +132,9 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <param name="from"></param>
         /// <returns></returns>
         bool Save_DbRjZx_Change(sys_dbrj_bgly_form form);
+        /// <summary>
+        /// 刃具刃磨流水
+        /// </summary>
+        IEnumerable<zxjc_rjrm_ls> View_RmMx(int id);
     }
 }

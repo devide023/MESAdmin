@@ -99,7 +99,7 @@ namespace ZDMesServices.CDGC.JJBGL
                     if (q.Count() > 0)
                     {
                         bill = q.First();
-                        bill.rq = bill.rq.Date;
+                        bill.rq = bill.rq?.Date;
                         var jjmx = db.Query<zxjc_djkjjb_detail>(sqljj.ToString(), new { billid = bill.id });
                         bill.djkjjbdetail = jjmx.ToList();
                         var hxmx = db.Query<zxjc_djkjjb_hx_detail>(sqlhx.ToString(), new { billid = bill.id });
@@ -136,7 +136,7 @@ namespace ZDMesServices.CDGC.JJBGL
                                 int billid = 0;
                                 if (q.Count() == 0)
                                 {
-                                    bill.rq = bill.rq.Date;
+                                    bill.rq = bill.rq?.Date;
                                     billid = Db.Insert<zxjc_djkjjb_bill>(bill, trans);
                                 }
                                 else

@@ -71,7 +71,7 @@
       overflowtooltip: true,      
       sortable: true,
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
     }, {
       coltype: 'string',
       label: '点检结果',
@@ -80,6 +80,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  width:100
     }, {
       coltype: 'string',
       label: '备注',

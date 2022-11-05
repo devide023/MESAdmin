@@ -9,7 +9,7 @@ using Oracle.ManagedDataAccess.Client;
 using Dapper;
 namespace ZDMesServices.TJ.A1.ZLGL
 {
-    public class A1DjXxService:BaseDao<zxjc_djgw>,IDJGL
+    public class A1DjXxService:BaseDao<zxjc_djgw>,IDJGL, IBatAtachValue<zxjc_djgw>
     {
         public A1DjXxService(string constr):base(constr)
         {
@@ -42,6 +42,30 @@ namespace ZDMesServices.TJ.A1.ZLGL
                 item.djno = Create_DjNo();
             }
             return base.Add(entitys);
+        }
+
+        public List<zxjc_djgw> BatSetValue(List<zxjc_djgw> list)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select seq_mes_djno.nextval from dual");
+                using (var db = new OracleConnection(ConString))
+                {
+                    foreach (var item in list)
+                    {
+                        var id = db.ExecuteScalar<int>(sql.ToString());
+                        var djno = "DJ" + id.ToString().PadLeft(5, '0');
+                        item.djno = djno;
+                    }
+                    return list; 
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

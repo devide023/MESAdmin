@@ -188,7 +188,7 @@ namespace ZDMesServices.CDGC.JJBGL
                         {
                             try
                             {
-                                bill.rq = bill.rq.Date;
+                                bill.rq = bill.rq?.Date;
                                 int size = bill.mxlist.Count();
                                 zxjc_gtjjb_bill_detail[] mx = new zxjc_gtjjb_bill_detail[size];
                                 bill.mxlist.CopyTo(mx);

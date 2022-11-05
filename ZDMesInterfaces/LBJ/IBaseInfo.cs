@@ -89,11 +89,6 @@ namespace ZDMesInterfaces.LBJ
         IEnumerable<base_sbxx> Get_SBXX_List();
         
         /// <summary>
-        /// ftp配置信息
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<base_ftpfilepath> FtpConfig();
-        /// <summary>
         /// 获取物料编码
         /// </summary>
         /// <param name="key"></param>

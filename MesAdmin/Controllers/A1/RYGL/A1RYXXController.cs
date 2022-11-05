@@ -46,7 +46,6 @@ namespace MesAdmin.Controllers.A1.RYGL
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_ryxx,ZDMesModels")]
         [AtachValue(typeof(IBatAtachValue<zxjc_ryxx>), "BatSetValue")]
-        [RequireVerify]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
            return base.ReadTempFile(fileid);

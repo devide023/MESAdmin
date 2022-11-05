@@ -143,7 +143,7 @@ namespace MesAdmin.Controllers
             }
         }
 
-        [HttpGet, Route("readxls")]
+        [HttpGet, RequireVerify, Route("readxls")]
         public virtual IHttpActionResult ReadTempFile(string fileid)
         {
             try
@@ -154,7 +154,6 @@ namespace MesAdmin.Controllers
                 if (isok)
                 {
                     list = (template_data as IEnumerable<object>).ToList().ConvertAll(t => (T)t);
-                    _requireverfify.VerifyRequire<T>(list);
                 }
                 var ret = _importservice.NewImportData(list);
                 if (ret.oklist.Count == list.Count)
@@ -188,7 +187,7 @@ namespace MesAdmin.Controllers
                 throw;
             }
         }
-        [HttpGet, Route("readxls_by_replace")]
+        [HttpGet, RequireVerify, Route("readxls_by_replace")]
         public virtual IHttpActionResult ReadTempFile_By_Replace(string fileid)
         {
             try
@@ -199,7 +198,6 @@ namespace MesAdmin.Controllers
                 if (isok)
                 {
                     list = (template_data as IEnumerable<object>).ToList().ConvertAll(t => (T)t);
-                    _requireverfify.VerifyRequire<T>(list);
                 }
                 var ret = _importservice.ReaplaceImportData(list);
                 if (ret.oklist.Count == list.Count)
@@ -233,7 +231,7 @@ namespace MesAdmin.Controllers
                 throw;
             }
         }
-        [HttpGet, Route("readxls_by_zh")]
+        [HttpGet,RequireVerify, Route("readxls_by_zh")]
         public virtual IHttpActionResult ReadTempFile_By_Zh(string fileid)
         {
             try
@@ -244,7 +242,6 @@ namespace MesAdmin.Controllers
                 if (isok)
                 {
                     list = (template_data as IEnumerable<object>).ToList().ConvertAll(t => (T)t);
-                    _requireverfify.VerifyRequire<T>(list);
                 }
                 var ret = _importservice.ZhImportData(list);
                 if (ret.oklist.Count == list.Count)

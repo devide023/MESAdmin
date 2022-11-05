@@ -15,8 +15,8 @@ namespace MesAdmin.Controllers.A1
     {
         public A1GWZDController(IDbOperate<base_gwzd> gwzdservice, IRequireVerify requireverfify, IImportData<base_gwzd> importservice) :base(gwzdservice)
         {
-            this._requireverfify = requireverfify;
-            this._importservice = importservice;
+            _requireverfify = requireverfify;
+            _importservice = importservice;
         }
         [TemplateVerify("ZDMesModels.TJ.A1.base_gwzd,ZDMesModels")]
         public override IHttpActionResult ReadTempFile(string fileid)

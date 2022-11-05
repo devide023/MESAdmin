@@ -453,5 +453,27 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                 
             }
         }
+        /// <summary>
+        /// 刃磨明细
+        /// </summary>
+        [HttpGet,Route("viewrmmx")]
+        public IHttpActionResult View_RmMx(int id)
+        {
+            try
+            {
+                var list = _gxservice.View_RmMx(id);
+                return Json(new sys_search_result()
+                {
+                    code = 1,
+                    msg = "ok",
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

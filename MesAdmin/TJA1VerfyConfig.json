@@ -516,38 +516,90 @@
     ]
   },
   {
-	  "model": "ZDMesModels.TJ.A1.zxjc_fault_clfs,ZDMesModels",
-	  "requireconf":[
-	  {
+    "model": "ZDMesModels.TJ.A1.zxjc_fault_clfs,ZDMesModels",
+    "requireconf": [
+      {
         "colname": "faultno",
         "coltxt": "故障代码"
       },
-	  {
+      {
         "colname": "handname",
         "coltxt": "处理方式名称"
       },
-	  ],
-	  "templateconf":[
-	  {
+    ],
+    "templateconf": [
+      {
         "colname": "faultno",
         "colindex": 0,
         "coltxt": "故障代码"
       },
-	  {
+      {
         "colname": "handname",
         "colindex": 1,
         "coltxt": "处理方式名称"
       },
-	  {
+      {
         "colname": "gwh",
         "colindex": 2,
         "coltxt": "岗位编码"
       },
-	  {
+      {
         "colname": "bz",
         "colindex": 3,
         "coltxt": "备注"
       },
-	  ]
+    ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.zxjc_t_tstc,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "tcbh",
+        "coltxt": "通知编号"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "tcmc",
+        "coltxt": "通知内容"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "tcbh",
+        "colindex": 0,
+        "coltxt": "通知编号"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编号"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 2,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 3,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "tcmc",
+        "colindex": 4,
+        "coltxt": "通知内容"
+      }
+    ]
   }
 ]

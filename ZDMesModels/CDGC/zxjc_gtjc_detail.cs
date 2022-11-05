@@ -56,6 +56,19 @@ namespace ZDMesModels.CDGC
         /// 深度类型，input\none\T
         /// </summary>
         public string sdtype { get; set; }
+        /// <summary>
+        /// 缸体检测基础信息
+        /// </summary>
+        public zxjc_base_gtjc basegtjc { get; set; }
+        /// <summary>
+        /// 孔径值是否合格
+        /// </summary>
+        public bool kjzsfhg { get; set; } = true;
+        /// <summary>
+        /// 深度值是否合格
+        /// </summary>
+
+        public bool sdzsfhg { get; set; } = true;
 
     }
 
@@ -66,6 +79,9 @@ namespace ZDMesModels.CDGC
             Map(t => t.id).Key(KeyType.TriggerIdentity);
             Map(t => t.kjtype).Ignore();
             Map(t => t.sdtype).Ignore();
+            Map(t => t.basegtjc).Ignore();
+            Map(t=>t.kjzsfhg).Ignore();
+            Map(t=>t.sdzsfhg).Ignore();
             AutoMap();
         }
     }

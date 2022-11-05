@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ;
 using ZDMesModels;
 using ZDToolHelper;
@@ -25,16 +26,16 @@ namespace MesAdmin.Controllers.Common
             excel=3,
             video=4,
         }
-        private IBaseInfo _baseinfo;
-        public UpLoadController(IBaseInfo baseinfo)
+        private IFtpConfig _ftpservice;
+        public UpLoadController(IFtpConfig ftpservice)
         {
-            _baseinfo = baseinfo;
+            _ftpservice = ftpservice;
         }
         private List<dynamic> File2Ftp(string wjlx, UploadWjLx lx, out Dictionary<string, object> kv)
         {
             try
             {
-                var qftpconfig = _baseinfo.FtpConfig().Where(t=>t.filetype == wjlx);
+                var qftpconfig = _ftpservice.FtpConfig().Where(t=>t.filetype == wjlx);
                 var extdata = HttpContext.Current.Request.Form;
                 kv = new Dictionary<string, object>();
                 if (extdata != null)

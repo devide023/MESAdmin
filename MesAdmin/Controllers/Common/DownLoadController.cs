@@ -8,16 +8,18 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.LBJ;
-
+using ZDMesInterfaces.Common;
 namespace MesAdmin.Controllers.Common
 {
     [RoutePrefix("api/download")]
     public class DownLoadController : ApiController
     {
         private IBaseInfo _baseinfo;
-        public DownLoadController(IBaseInfo baseinfo)
+        private IFtpConfig _ftpconfig;
+        public DownLoadController(IBaseInfo baseinfo, IFtpConfig ftpconfig)
         {
             _baseinfo = baseinfo;
+            _ftpconfig = ftpconfig;
         }
         /// <summary>
         /// 从ftp下载文件暂存到web服务器
@@ -28,7 +30,7 @@ namespace MesAdmin.Controllers.Common
         {
             try
             {
-                var q = _baseinfo.FtpConfig().Where(t => t.filetype == wjlx);
+                var q = _ftpconfig.FtpConfig().Where(t => t.filetype == wjlx);
                 if (q.Count() > 0)
                 {
                     var ftpconf = q.First();

@@ -1,0 +1,5 @@
+{
+  "sql": "select id, scx, tzxx, tzfl, fcbm, (select user_name from SEC_USERS where user_code =zxjc_scx_tz.lrr and rownum = 1 ) as lrr, lrsj, xbsj FROM zxjc_scx_tz where scx=1 ",
+  "sql_cnt": "select count(*) from zxjc_scx_tz where 1=1  ",
+  "sql_orderby": ""
+}

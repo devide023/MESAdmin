@@ -1,0 +1,5 @@
+{
+  "sql": "select gcdm, user_code as usercode,(select user_name from zxjc_ryxx where user_code =zxjc_ryxx_jn.user_code and rownum < 2 ) as username, jnbh, jnxx, scx, gwh, sfhg, lrr, lrsj, jnfl, jnsj, jnsld from zxjc_ryxx_jn where 1=1 ",
+  "sql_cnt": "select count(*) from zxjc_ryxx_jn where 1=1  ",
+  "sql_orderby": " order by gwh asc,user_code asc "
+}

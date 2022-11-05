@@ -238,7 +238,7 @@
     sfhg: 'Y',
     lrr: '',
     lrsj: '',
-    jnfl: '',
+    jnfl: '装配',
     jnsld: 3,
     isdb: false,
     isedit: true
