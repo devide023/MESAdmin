@@ -1,0 +1,5 @@
+{
+  "sql": "select id, gcdm, user_code as usercode,(select user_name from zxjc_ryxx where user_code =zxjc_jcgl.user_code and rownum < 2 ) as username, scx, bzxx, gwh, jcxx, jclr, sl, jcje, fsrq, khr, khbm, lx, bz, lrr, lrsj, scbz from zxjc_jcgl where scbz='N' ",
+  "sql_cnt": "select count(*) from zxjc_jcgl where 1=1  ",
+  "sql_orderby": " order by lrsj desc,user_code asc nulls last "
+}

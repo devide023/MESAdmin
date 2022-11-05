@@ -18,6 +18,36 @@ namespace MesAdmin.Filters
             _injecttype = injecttype;
             _methodname = methodname;
         }
+        private void SetVal(HttpActionContext actionContext,IEnumerable<object> list,object obj)
+        {
+            var mquery = _injecttype.GetMethods().Where(t => t.Name.ToLower() == _methodname.ToLower());
+            if (mquery.Count() > 0)
+            {
+                int parindex = 0;
+                var mi = mquery.First();
+                var parlist = mi.GetParameters();
+                object[] mpars = new object[parlist.Length];
+                foreach (var par in parlist)
+                {
+                    var ptype = par.ParameterType;
+                    if (ptype.IsConstructedGenericType)
+                    {
+                        var cslx = Type.GetType(ptype.GenericTypeArguments[0].FullName + ",ZDMesModels");
+                        var specificType = typeof(List<>).MakeGenericType(new Type[] { cslx });
+                        IList vlist = Activator.CreateInstance(specificType) as IList;
+                        foreach (var item in list)
+                        {
+                            vlist.Add(item);
+                        }
+                        mpars[parindex] = vlist;
+                    }
+                    parindex++;
+                }
+                var result = mi.Invoke(obj, mpars);
+                actionContext.Request.Properties.Remove("template_datalist");
+                actionContext.Request.Properties.Add("template_datalist", result);
+            }
+        }
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             var requestScope = actionContext.Request.GetDependencyScope();
@@ -26,37 +56,15 @@ namespace MesAdmin.Filters
             //模板数据，数据处理
             if (istemplate)
             {
-                object objlist = null;
+                object objlist;
                 var ok = actionContext.Request.Properties.TryGetValue("template_datalist", out objlist);
-                if (ok)
+                if (ok && objlist !=null)
                 {
-                    var list = objlist as List<object>;
-                    var mquery = _injecttype.GetMethods().Where(t => t.Name.ToLower() == _methodname.ToLower());
-                    if (mquery.Count() > 0)
+                    var partype = objlist.GetType();
+                    if (partype.IsConstructedGenericType)
                     {
-                        int parindex = 0;
-                        var mi = mquery.First();
-                        var parlist = mi.GetParameters();
-                        object[] mpars = new object[parlist.Length];
-                        foreach (var par in parlist)
-                        {
-                            var ptype = par.ParameterType;
-                            if (ptype.IsConstructedGenericType)
-                            {
-                                var cslx = Type.GetType(ptype.GenericTypeArguments[0].FullName + ",ZDMesModels");
-                                var specificType = typeof(List<>).MakeGenericType(new Type[] { cslx });
-                                IList vlist = Activator.CreateInstance(specificType) as IList;
-                                foreach (var item in list)
-                                {
-                                    vlist.Add(item);
-                                }
-                                mpars[parindex] = vlist;
-                            }
-                            parindex++;
-                        }
-                        var result = mi.Invoke(obj, mpars);
-                        actionContext.Request.Properties.Remove("template_datalist");
-                        actionContext.Request.Properties.Add("template_datalist", result);
+                        var list = objlist as IEnumerable<object>;
+                        SetVal(actionContext, list, obj);
                     }
                 }
             }
@@ -70,33 +78,7 @@ namespace MesAdmin.Filters
                     if (partype.IsConstructedGenericType)
                     {
                         var list = parmval as IEnumerable<object>;
-                        var mquery = _injecttype.GetMethods().Where(t => t.Name.ToLower() == _methodname.ToLower());
-                        if (mquery.Count() > 0)
-                        {
-                            int parindex = 0;
-                            var mi = mquery.First();
-                            var parlist = mi.GetParameters();
-                            object[] mpars = new object[parlist.Length];
-                            foreach (var par in parlist)
-                            {
-                                var ptype = par.ParameterType;
-                                if (ptype.IsConstructedGenericType)
-                                {
-                                    var cslx = Type.GetType(ptype.GenericTypeArguments[0].FullName + ",ZDMesModels");
-                                    var specificType = typeof(List<>).MakeGenericType(new Type[] { cslx });
-                                    IList vlist = Activator.CreateInstance(specificType) as IList;
-                                    foreach (var item in list)
-                                    {
-                                        vlist.Add(item);
-                                    }
-                                    mpars[parindex] = vlist;
-                                }
-                                parindex++;
-                            }
-                            var result = mi.Invoke(obj, mpars);
-                            actionContext.Request.Properties.Remove("template_datalist");
-                            actionContext.Request.Properties.Add("template_datalist", result);
-                        }
+                        SetVal(actionContext, list, obj);
                     }
                 }
             }

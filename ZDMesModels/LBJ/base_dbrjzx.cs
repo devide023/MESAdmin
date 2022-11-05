@@ -90,6 +90,10 @@ namespace ZDMesModels.LBJ
         ///</summary>
          public DateTime? rjzhrmsj { get; set; }
         /// <summary>
+        /// 刃磨人
+        /// </summary>
+        public string rjrmr { get; set; }
+        /// <summary>
         /// 超限值
         /// </summary>
         public int cxz { get; set; }
@@ -100,7 +104,6 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 刃具刃磨人
         /// </summary>
-        public string rjrmr { get; set; }
         public decimal rjzt { get; set; }
         /// <summary>
         /// 刃具使用位置

@@ -1,0 +1,5 @@
+{
+  "sql": "select gcdm, scx, gwh, gwmc, gwlx, shbz, bz, lrr, lrsj, shr, shsj, ip, work_flow as workflow, gwfl,gzty, pcsip, khgw, dlsj, dlbbh, cachevin,iscache,plcip, plcport, plcip2 from base_gwzd where 1=1 ",
+  "sql_cnt": "select count(*) from base_gwzd where 1=1  ",
+  "sql_orderby": " order by to_number(gwh) asc "
+}

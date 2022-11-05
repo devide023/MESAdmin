@@ -20,10 +20,12 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
     {
         private IDbOperate<zxjc_gtjjb_bill> _gtjjbbaseservice;
         private IGtjjb _gtjjbservice;
-        public GTJJBController(IDbOperate<zxjc_gtjjb_bill> baseservice, IGtjjb gtjjbservice) : base(baseservice)
+        private IUser _userservice;
+        public GTJJBController(IDbOperate<zxjc_gtjjb_bill> baseservice, IGtjjb gtjjbservice, IUser userservice) : base(baseservice)
         {
             _gtjjbbaseservice = baseservice;
             _gtjjbservice = gtjjbservice;
+            _userservice = userservice;
         }
         public override IHttpActionResult GetList(sys_page parm)
         {
@@ -69,6 +71,7 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
         {
             try
             {
+                form.lrr = _userservice.CurrentUser().name;
                 var ret = _gtjjbservice.Save_Gtjjb(form);
                 if (ret)
                 {

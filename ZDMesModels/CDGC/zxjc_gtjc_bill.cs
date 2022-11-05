@@ -23,7 +23,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///检验日期
         ///</summary>
-        public DateTime rq { get; set; }
+        public DateTime? rq { get; set; }
         /// <summary>
         ///检测人员
         ///</summary>
@@ -59,7 +59,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///处理时间
         ///</summary>
-        public DateTime clsj { get; set; }
+        public DateTime? clsj { get; set; }
         /// <summary>
         ///录入人
         ///</summary>
@@ -67,7 +67,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///录入时间
         ///</summary>
-        public DateTime lrsj { get; set; }
+        public DateTime? lrsj { get; set; }
         /// <summary>
         /// 检测明细
         /// </summary>

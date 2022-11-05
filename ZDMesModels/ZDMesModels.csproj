@@ -77,6 +77,7 @@
     <Compile Include="CDGC\zxjc_gtjjb_bill.cs" />
     <Compile Include="CDGC\zxjc_gtjjb_bill_detail.cs" />
     <Compile Include="CDGC\zxjc_ryxx.cs" />
+    <Compile Include="CDGC\zxjc_sbxx_ls_cnc.cs" />
     <Compile Include="LBJ\ad_bjxx.cs" />
     <Compile Include="LBJ\App_Menu.cs" />
     <Compile Include="LBJ\app_role.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="LBJ\sys_ryjx.cs" />
     <Compile Include="LBJ\sys_wbzq_form.cs" />
     <Compile Include="LBJ\sys_wbzq_gl_form.cs" />
+    <Compile Include="LBJ\zxjc_rjrm_ls.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_cnc.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_jly.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_hg.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="TJ\A1\tj_base_scxxx.cs" />
     <Compile Include="TJ\A1\tj_mm_cgjh.cs" />
     <Compile Include="TJ\A1\tj_pp_sc_zpjh.cs" />
+    <Compile Include="TJ\A1\v_base_gwbj.cs" />
     <Compile Include="TJ\A1\ztbm_new.cs" />
     <Compile Include="TJ\A1\zxjc_curvedata.cs" />
     <Compile Include="TJ\A1\zxjc_data_detail.cs" />

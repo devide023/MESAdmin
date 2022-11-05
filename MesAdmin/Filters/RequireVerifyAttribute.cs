@@ -32,8 +32,11 @@ namespace MesAdmin.Filters
                         if (parmtype.IsConstructedGenericType)
                         {
                             var list = datalist as IEnumerable<object>;
-                            var type = Type.GetType(parmtype.GenericTypeArguments[0].FullName + ",ZDMesModels");
-                            _requireverify.VerifyRequire(type, list.ToList());
+                            if (list.Count() > 0)
+                            {
+                                var type = Type.GetType(list.First().GetType().FullName + ",ZDMesModels");
+                                _requireverify.VerifyRequire(type, list.ToList());
+                            }
                         }
                     }
                 }

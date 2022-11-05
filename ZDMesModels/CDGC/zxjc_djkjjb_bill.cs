@@ -15,7 +15,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///日期
         ///</summary>
-        public DateTime rq { get; set; }
+        public DateTime? rq { get; set; }
         /// <summary>
         ///班次
         ///</summary>
@@ -47,7 +47,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         ///录入时间
         ///</summary>
-        public DateTime lrsj { get; set; }
+        public DateTime? lrsj { get; set; }
         /// <summary>
         /// 机加明细
         /// </summary>

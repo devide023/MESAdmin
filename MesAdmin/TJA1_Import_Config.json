@@ -93,6 +93,14 @@
     "replace": [ "fault_no" ],
     "replacetype": 1,
     "zhonghe": [ "fault_no", "gwh" ],
-    "updatecol": [ "fault_no","gwh","hand_no","hand_name", "remark"]
+    "updatecol": [ "fault_no", "gwh", "hand_no", "hand_name", "remark" ]
+  },
+  {
+    "tablename": "zxjc_t_tstc",
+    "xinzeng": [ "jx_no", "status_no", "gwh" ],
+    "replace": [ "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "jx_no", "status_no", "gwh" ],
+    "updatecol": [ "jx_no", "gwh", "status_no", "tcbh", "tcmc" ]
   }
 ]

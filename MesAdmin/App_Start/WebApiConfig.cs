@@ -24,7 +24,7 @@ namespace MesAdmin
             );
 
             //添加全局Filter
-            //config.Filters.Add(new CheckLoginAttribute());
+            config.Filters.Add(new CheckLoginAttribute());
             config.Filters.Add(new ApiExceptionAttribute());
         }
     }

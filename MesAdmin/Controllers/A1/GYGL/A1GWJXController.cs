@@ -18,8 +18,8 @@ namespace MesAdmin.Controllers.A1.GYGL
     {
         public A1GWJXController(IDbOperate<base_gwzx_jx> gwjxservice, IRequireVerify requireverfify, IImportData<base_gwzx_jx> importservice):base(gwjxservice)
         {
-            this._requireverfify = requireverfify;
-            this._importservice = importservice;
+            _requireverfify = requireverfify;
+            _importservice = importservice;
         }
 
         [TemplateVerify("ZDMesModels.TJ.A1.base_gwzx_jx,ZDMesModels")]

@@ -23,143 +23,28 @@ namespace MesAdmin.Controllers.A1.RYGL
             this._importservice = importservice;
             _ryjn = ryjn;
         }
+        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx_jn>), "BatSetValue")]
+        public override IHttpActionResult Add(List<zxjc_ryxx_jn> entitys)
+        {
+            return base.Add(entitys);
+        }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_ryxx_jn,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx_jn>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
-            try
-            {
-                List<zxjc_ryxx_jn> list = new List<zxjc_ryxx_jn>();
-                object template_data = null;
-                var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
-                if (isok)
-                {
-                    list = (template_data as List<object>).ConvertAll(t => (zxjc_ryxx_jn)t);
-                    list.ForEach(t =>  t.jnbh = _ryjn.CreateJnCode());
-                    _requireverfify.VerifyRequire<zxjc_ryxx_jn>(list);
-                }
-                var ret = _importservice.NewImportData(list);
-                if (ret.oklist.Count == list.Count)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = $"成功导入数据{list.Count()}条"
-                    });
-                }
-                else if (ret.repeatlist.Count > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 2,
-                        msg = $"文件数据{list.Count()}条，重复{ret.repeatlist.Count}条"
-                    });
-                }
-                else
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 0,
-                        msg = $"数据导入失败"
-                    });
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return  base.ReadTempFile(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_ryxx_jn,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx_jn>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Replace(string fileid)
         {
-            try
-            {
-                List<zxjc_ryxx_jn> list = new List<zxjc_ryxx_jn>();
-                object template_data = null;
-                var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
-                if (isok)
-                {
-                    list = (template_data as List<object>).ConvertAll(t => (zxjc_ryxx_jn)t);
-                    list.ForEach(t =>  t.jnbh = _ryjn.CreateJnCode());
-                    _requireverfify.VerifyRequire<zxjc_ryxx_jn>(list);
-                }
-                var ret = _importservice.ReaplaceImportData(list);
-                if (ret.oklist.Count == list.Count)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = $"成功导入数据{list.Count()}条"
-                    });
-                }
-                else if (ret.repeatlist.Count > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 2,
-                        msg = $"文件数据{list.Count()}条，重复{ret.repeatlist.Count}条"
-                    });
-                }
-                else
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 0,
-                        msg = $"数据导入失败"
-                    });
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return base.ReadTempFile_By_Replace(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_ryxx_jn,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx_jn>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Zh(string fileid)
         {
-            try
-            {
-                List<zxjc_ryxx_jn> list = new List<zxjc_ryxx_jn>();
-                object template_data = null;
-                var isok = Request.Properties.TryGetValue("template_datalist", out template_data);
-                if (isok)
-                {
-                    list = (template_data as List<object>).ConvertAll(t => (zxjc_ryxx_jn)t);
-                    list.ForEach(t => t.jnbh = _ryjn.CreateJnCode());
-                    _requireverfify.VerifyRequire<zxjc_ryxx_jn>(list);
-                }
-                var ret = _importservice.ZhImportData(list);
-                if (ret.oklist.Count == list.Count)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 1,
-                        msg = $"成功导入数据{list.Count()}条"
-                    });
-                }
-                else if (ret.repeatlist.Count > 0)
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 2,
-                        msg = $"文件数据{list.Count()}条，重复{ret.repeatlist.Count}条"
-                    });
-                }
-                else
-                {
-                    return Json(new sys_result()
-                    {
-                        code = 0,
-                        msg = $"数据导入失败"
-                    });
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return base.ReadTempFile_By_Zh(fileid);
         }
     }
 }

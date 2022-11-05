@@ -58,7 +58,7 @@
       btntype: 'text'
     }
   ],
-  isbatoperate: false,
+  isbatoperate: true,
   isfresh: true,
   pagefuns: {
     add_handle: function () {

@@ -19,6 +19,57 @@ namespace ZDMesServices.CDGC.GTJC
 
         }
 
+        public override bool Del(IEnumerable<zxjc_gtjc_bill> entitys)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select count(*) FROM zxjc_gtjc_bill where vim = :vin and cplx=:cplx and rq = :rq");
+            StringBuilder delsql = new StringBuilder();
+            delsql.Append("delete from zxjc_gtjc_bill where id = :id ");
+            StringBuilder delmxsql = new StringBuilder();
+            delmxsql.Append("delete from zxjc_gtjc_detail where billid = :id");
+            try
+            {
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var item in entitys)
+                                {
+                                    var sfcz = db.ExecuteScalar<int>(sql.ToString(), item);
+                                    if (sfcz > 0)
+                                    {
+                                        db.Execute(delsql.ToString(), item, trans);
+                                        db.Execute(delmxsql.ToString(), item, trans);
+                                    }
+                                }
+                                trans.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<int> Create_Bill_Ids(string cplx, DateTime rq)
         {
             try
@@ -130,20 +181,20 @@ namespace ZDMesServices.CDGC.GTJC
                                 pgbill.Predicates = new List<IPredicate>();
                                 pgbill.Predicates.Add(Predicates.Field<zxjc_gtjc_bill>(t => t.vin, Operator.Eq, bill.vin));
                                 pgbill.Predicates.Add(Predicates.Field<zxjc_gtjc_bill>(t => t.cplx, Operator.Eq, bill.cplx));
-                                pgbill.Predicates.Add(Predicates.Field<zxjc_gtjc_bill>(t => t.rq, Operator.Eq, bill.rq));
-                                var bill_q = Db.GetList<zxjc_gtjc_bill>(pgbill).OrderBy(t => t.rq);
+                                pgbill.Predicates.Add(Predicates.Field<zxjc_gtjc_bill>(t => t.rq, Operator.Eq, Convert.ToDateTime(bill.rq?.ToString("yyyy-MM-dd"))));
+                                var bill_q = Db.GetList<zxjc_gtjc_bill>(pgbill).OrderByDescending(t => t.rq);
                                 if (bill_q.Count() > 0)
                                 {
                                     zxjc_gtjc_bill entity_bill = bill_q.First();
                                     bill.id = entity_bill.id;
                                     bill.lrsj = entity_bill.lrsj;
-                                    bill.rq = Convert.ToDateTime(entity_bill.rq.ToString("yyyy-MM-dd"));
+                                    bill.rq = Convert.ToDateTime(entity_bill.rq?.ToString("yyyy-MM-dd"));
                                     bill.zxjcgtjcdetail.ForEach(t => t.billid = entity_bill.id);
                                     Db.Update<zxjc_gtjc_bill>(bill, trans);
                                 }
                                 else
                                 {
-                                    bill.rq = Convert.ToDateTime(bill.rq.ToString("yyyy-MM-dd"));
+                                    bill.rq = Convert.ToDateTime(bill.rq?.ToString("yyyy-MM-dd"));
                                     var billid = Db.Insert<zxjc_gtjc_bill>(new zxjc_gtjc_bill()
                                     {
                                         jth = bill.jth,
@@ -265,10 +316,19 @@ namespace ZDMesServices.CDGC.GTJC
                 sql.Append("select id, cplx, rq, jyry, jylb, jth, vin, mh, pdjg, cljl, clr, clsj, lrr, lrsj, th FROM  zxjc_gtjc_bill where  id = :billid ");
                 StringBuilder sqlmx = new StringBuilder();
                 sqlmx.Append("select id, billid, jcid, cpfw, kxmc, kxcc, sdmj, kjval, sdmjval, jcjg FROM zxjc_gtjc_detail where  billid = :billid ");
+                //缸体检测基础数据
+                StringBuilder gtjcsql = new StringBuilder();
+                gtjcsql.Append("select id, cplx, mh, cpfw, th, kxmc, kjcc, kjcc_sx as kjccsx, kjcc_xx as kjccxx, sdmj, sdmj_sx as sdmjsx, sdmj_xx as sdmjxx, lrr, lrsj, kjtype, sdtype, kjzsz, sdzsz, seq ");
+                gtjcsql.Append(" from zxjc_base_gtjc");
+                gtjcsql.Append(" where id = :jcid ");
                 using (var db = new OracleConnection(ConString))
                 {
                     var entity = db.Query<zxjc_gtjc_bill>(sql.ToString(), new { billid = billid }).FirstOrDefault();
                     var mxlist = db.Query<zxjc_gtjc_detail>(sqlmx.ToString(), new { billid = billid });
+                    //foreach (var item in mxlist)
+                    //{
+                    //   item.base_gtjc = db.Query<zxjc_base_gtjc>(gtjcsql.ToString(), new { jcid = item.jcid }).FirstOrDefault();
+                    //}
                     entity.zxjcgtjcdetail = mxlist.ToList();
                     return entity;
                 }

@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ZDMesInterfaces.CDGC;
 using ZDMesModels.CDGC;
-
+using ZDMesInterfaces.Common;
 namespace MesAdmin.Controllers.CDGC.GTJC
 {
     /// <summary>
@@ -16,9 +16,13 @@ namespace MesAdmin.Controllers.CDGC.GTJC
     public class GTJCDataController : ApiController
     {
         private IGtjc_Result _gtjc_jgservice;
-        public GTJCDataController(IGtjc_Result gtjc_jgservice)
+        private IDbOperate<zxjc_gtjc_bill> _gtjcbaseservice;
+        private IUser _userservice;
+        public GTJCDataController(IDbOperate<zxjc_gtjc_bill> gtjcbaseservice,IGtjc_Result gtjc_jgservice,IUser userservice)
         {
+            _gtjcbaseservice = gtjcbaseservice;
             _gtjc_jgservice = gtjc_jgservice;
+            _userservice = userservice; 
         }
         [HttpGet, Route("get_check_data")]
         public IHttpActionResult Get_CheckData_By_Vin(string rq,string ewm,string cplx)
@@ -104,6 +108,12 @@ namespace MesAdmin.Controllers.CDGC.GTJC
                 {
                     foreach (var bill in bills)
                     {
+                        bill.lrr = _userservice.CurrentUser().name;
+                        var sfczjg = bill.zxjcgtjcdetail.Where(t => t.cpfw == "结果" && t.kxmc == "评定结果");
+                        if (sfczjg.Count() > 0)
+                        {
+                            bill.pdjg = sfczjg.First().jcjg;
+                        }
                         _gtjc_jgservice.Save_Gtjc_CheckData(bill);
                     }
                     return Json(new

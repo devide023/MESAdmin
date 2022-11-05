@@ -74,7 +74,7 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
         {
             try
             {
-                if (DateTime.Compare(DateTime.Now.Date,form.rq ) <= 0)
+                if (DateTime.Compare(DateTime.Now.Date,Convert.ToDateTime(form.rq) ) <= 0)
                 {
                     zxjc_djkjjb_bill bill = new zxjc_djkjjb_bill();
                     bill = form.Copy();

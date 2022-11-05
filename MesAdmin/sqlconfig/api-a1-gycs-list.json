@@ -1,0 +1,5 @@
+{
+  "sql": "select gcdm, scx, gwh, jx_no as jxno, status_no as statusno, sbbh, sbcxh, gy_min as gymin, gy_max as gymax, gy_bz as gybz, shbz, lrr, lrsj, parm1 from v_base_gycs where 1=1 ",
+  "sql_cnt": "select count(*) from v_base_gycs where 1=1  ",
+  "sql_orderby": " order by gwh,jx_no,status_no asc "
+}

@@ -34,6 +34,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'cplx',
@@ -42,6 +43,7 @@
       align: 'center',
       sortable: true,
       width: 100,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'jth',
@@ -50,6 +52,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'jyry',
@@ -58,6 +61,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'jylb',
@@ -66,6 +70,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'th',
@@ -74,6 +79,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'vin',
@@ -82,6 +88,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'mh',
@@ -98,6 +105,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'cljl',
@@ -106,6 +114,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'datetime',
       prop: 'clsj',
@@ -114,6 +123,7 @@
       align: 'center',
       sortable: true,
       width: 150,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'clr',
@@ -122,6 +132,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'lrr',
@@ -130,6 +141,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+	  overflowtooltip: true,
     }, {
       coltype: 'datetime',
       prop: 'lrsj',
@@ -138,6 +150,7 @@
       align: 'center',
       sortable: true,
       width: 150,
+	  overflowtooltip: true,
     }
   ],
   form: {

@@ -9,16 +9,11 @@ using Oracle.ManagedDataAccess.Client;
 using Dapper;
 namespace ZDMesServices.TJ.A1.ZLGL
 {
-    public class A1FaultService : BaseDao<zxjc_fault>, IFault
+    public class A1FaultService : BaseDao<zxjc_fault>, IFault,IBatAtachValue<zxjc_fault>
     {
         public A1FaultService(string constr) : base(constr)
         {
 
-        }
-        public override int Add(IEnumerable<zxjc_fault> entitys)
-        {
-            var list = Create_FaultNo_List(entitys.ToList());
-            return base.Add(list);
         }
         public override bool Modify(IEnumerable<zxjc_fault> entitys)
         {
@@ -120,6 +115,19 @@ namespace ZDMesServices.TJ.A1.ZLGL
                     list.Where(t => t.faultname == item).ToList().ForEach(t => t.faultno = defaultno);
                 }
                 return list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<zxjc_fault> BatSetValue(List<zxjc_fault> list)
+        {
+            try
+            {
+               return Create_FaultNo_List(list);
             }
             catch (Exception)
             {
