@@ -334,6 +334,7 @@
     <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYXXController.cs" />
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
+    <Compile Include="Controllers\A1\UpLoad\A1UpLoadController.cs" />
     <Compile Include="Controllers\A1\WLGL\A1WLGLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJJLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJXXController.cs" />

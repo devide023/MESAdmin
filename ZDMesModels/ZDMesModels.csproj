@@ -139,6 +139,7 @@
     <Compile Include="sys_bat_btn_info.cs" />
     <Compile Include="sys_changpwd_form.cs" />
     <Compile Include="sys_column_options.cs" />
+    <Compile Include="sys_enums.cs" />
     <Compile Include="sys_field_info.cs" />
     <Compile Include="sys_form_check.cs" />
     <Compile Include="sys_import_cnf_item.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="sys_search_config.cs" />
     <Compile Include="sys_search_result.cs" />
     <Compile Include="sys_sort.cs" />
+    <Compile Include="sys_upload_file_info.cs" />
     <Compile Include="sys_verify_config.cs" />
     <Compile Include="sys_user.cs" />
     <Compile Include="mes_user_entity.cs" />

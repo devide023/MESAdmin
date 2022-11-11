@@ -91,13 +91,21 @@
         }
       });
     },
-  },
+  },    
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
+    },		
+    download_template_file: function () {
+      window.open('http://172.16.201.216:7002/template/A1/处理方式基础信息.xlsx');
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'faultno') {

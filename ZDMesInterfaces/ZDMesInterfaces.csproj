@@ -85,6 +85,7 @@
     <Compile Include="CDGC\IGtjcHis.cs" />
     <Compile Include="CDGC\IGtjc_Result.cs" />
     <Compile Include="CDGC\IGtjjb.cs" />
+    <Compile Include="Common\IEntityDetail.cs" />
     <Compile Include="Common\IFtpConfig.cs" />
     <Compile Include="Common\IRequireVerify.cs" />
     <Compile Include="Common\ITemplateVerify.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Common\IMesMenuApi.cs" />
     <Compile Include="Common\IPageConfig.cs" />
     <Compile Include="Common\IRole.cs" />
+    <Compile Include="Common\IUpLoad.cs" />
     <Compile Include="Common\IUser.cs" />
     <Compile Include="Common\IVerifyData.cs" />
     <Compile Include="LBJ\App\IApp.cs" />

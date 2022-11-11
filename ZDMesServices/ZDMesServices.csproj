@@ -154,6 +154,7 @@
     <Compile Include="Common\OperateLogService.cs" />
     <Compile Include="Common\PageConfigService.cs" />
     <Compile Include="Common\Template_ImportService.cs" />
+    <Compile Include="Common\UpLoadService.cs" />
     <Compile Include="Common\UserUtilService.cs" />
     <Compile Include="Common\VerifyService.cs" />
     <Compile Include="LBJ\App\AppMenuService.cs" />

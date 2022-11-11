@@ -80,6 +80,10 @@ namespace ZDMesModels.TJ.A1
         /// 录入时间
         /// </summary>
         public DateTime? lrsj { get; set; } = DateTime.Now;
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public List<dynamic> statusno_list { get; set; }
     }
 
     public class zxjc_t_dzgy_mapper : ClassMapper<zxjc_t_dzgy>
@@ -89,6 +93,7 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.gyid).Key(KeyType.Assigned);
             Map(t => t.jxno).Column("jx_no");
             Map(t => t.statusno).Column("status_no");
+            Map(t => t.statusno_list).Ignore();
             AutoMap();
         }
     }

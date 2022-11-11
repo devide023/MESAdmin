@@ -65,6 +65,7 @@ namespace ZDMesModels.TJ.A1
         /// 录入时间
         /// </summary>
         public DateTime lrsj { get; set; } = DateTime.Now;
+        public IEnumerable<dynamic> statusno_list { get; set; }
     }
 
     public class zxjc_gylx_mapper : ClassMapper<mes_zxjc_gylx>
@@ -74,6 +75,7 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.jxno).Column("jx_no");
             Map(t => t.statusno).Column("status_no");
             Map(t => t.rid).Ignore();
+            Map(t => t.statusno_list).Ignore();
             AutoMap();
         }
     }

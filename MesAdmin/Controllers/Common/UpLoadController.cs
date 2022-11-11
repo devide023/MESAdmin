@@ -19,93 +19,86 @@ namespace MesAdmin.Controllers.Common
     [RoutePrefix("api/upload")]
     public class UpLoadController : ApiController
     {
-        private enum UploadWjLx
+        private IUpLoad _uploadservice;
+        public UpLoadController(IUpLoad uploadservice)
         {
-            pdf=1,
-            image=2,
-            excel=3,
-            video=4,
+            _uploadservice = uploadservice;
         }
-        private IFtpConfig _ftpservice;
-        public UpLoadController(IFtpConfig ftpservice)
-        {
-            _ftpservice = ftpservice;
-        }
-        private List<dynamic> File2Ftp(string wjlx, UploadWjLx lx, out Dictionary<string, object> kv)
-        {
-            try
-            {
-                var qftpconfig = _ftpservice.FtpConfig().Where(t=>t.filetype == wjlx);
-                var extdata = HttpContext.Current.Request.Form;
-                kv = new Dictionary<string, object>();
-                if (extdata != null)
-                {
-                    if (extdata != null)
-                    {
-                        foreach (var item in extdata.AllKeys)
-                        {
-                            kv.Add(item, extdata.Get(item));
-                        }
-                    }
-                }
-                if (qftpconfig.Count() > 0)
-                {
-                  base_ftpfilepath ftpconfig =  qftpconfig.First();
-                    string spath = string.Empty;
-                    switch (lx)
-                    {
-                        case UploadWjLx.pdf:
-                            spath = "~/Upload/PDF/";
-                            break;
-                        case UploadWjLx.image:
-                            spath = "~/Upload/Image/";
-                            break;
-                        case UploadWjLx.excel:
-                            spath = "~/Upload/Excel/";
-                            break;
-                        case UploadWjLx.video:
-                            spath = "~/Upload/Video/";
-                            break;
-                        default:
-                            spath = "~/Upload/";
-                            break;
-                    }
-                    string serverpath = HttpContext.Current.Server.MapPath(spath);
-                    HttpFileCollection files = HttpContext.Current.Request.Files;
-                    List<dynamic> list = new List<dynamic>();
-                    FtpHelper ftphelper = new FtpHelper();
-                    for (int i = 0; i < files.Count; i++)
-                    {
-                        HttpPostedFile file = HttpContext.Current.Request.Files[i];
-                        string client_filename = file.FileName;
-                        int fileszie = file.ContentLength;
-                        int pos = client_filename.LastIndexOf(".");
-                        string filetype = client_filename.Substring(pos, client_filename.Length - pos);
-                        string guid = Guid.NewGuid().ToString() + filetype;
-                        file.SaveAs(serverpath + guid);
-                        ftphelper.UploadFile(file.InputStream, ftpconfig.ftpurl + ":" + ftpconfig.ftpport + ftpconfig.filepath, guid, ftpconfig.ftpuser, ftpconfig.ftppassword);
-                        list.Add(new { fileid = guid, filename = client_filename, filesize = fileszie });
-                    }
-                    return list;
-                }
-                else
-                {
-                    return new List<dynamic>();
-                }                
-            }
-            catch (Exception)
-            {
+        //private List<dynamic> File2Ftp(string wjlx, UploadWjLx lx, out Dictionary<string, object> kv)
+        //{
+        //    try
+        //    {
+        //        var qftpconfig = _ftpservice.FtpConfig().Where(t=>t.filetype == wjlx);
+        //        var extdata = HttpContext.Current.Request.Form;
+        //        kv = new Dictionary<string, object>();
+        //        if (extdata != null)
+        //        {
+        //            if (extdata != null)
+        //            {
+        //                foreach (var item in extdata.AllKeys)
+        //                {
+        //                    kv.Add(item, extdata.Get(item));
+        //                }
+        //            }
+        //        }
+        //        if (qftpconfig.Count() > 0)
+        //        {
+        //          base_ftpfilepath ftpconfig =  qftpconfig.First();
+        //            string spath = string.Empty;
+        //            switch (lx)
+        //            {
+        //                case UploadWjLx.pdf:
+        //                    spath = "~/Upload/PDF/";
+        //                    break;
+        //                case UploadWjLx.image:
+        //                    spath = "~/Upload/Image/";
+        //                    break;
+        //                case UploadWjLx.excel:
+        //                    spath = "~/Upload/Excel/";
+        //                    break;
+        //                case UploadWjLx.video:
+        //                    spath = "~/Upload/Video/";
+        //                    break;
+        //                default:
+        //                    spath = "~/Upload/";
+        //                    break;
+        //            }
+        //            string serverpath = HttpContext.Current.Server.MapPath(spath);
+        //            HttpFileCollection files = HttpContext.Current.Request.Files;
+        //            List<dynamic> list = new List<dynamic>();
+        //            FtpHelper ftphelper = new FtpHelper();
+        //            for (int i = 0; i < files.Count; i++)
+        //            {
+        //                HttpPostedFile file = HttpContext.Current.Request.Files[i];
+        //                string client_filename = file.FileName;
+        //                int fileszie = file.ContentLength;
+        //                int pos = client_filename.LastIndexOf(".");
+        //                string filetype = client_filename.Substring(pos, client_filename.Length - pos);
+        //                string guid = Guid.NewGuid().ToString() + filetype;
+        //                file.SaveAs(serverpath + guid);
+        //                ftphelper.UploadFile(file.InputStream, ftpconfig.ftpurl + ":" + ftpconfig.ftpport + ftpconfig.filepath, guid, ftpconfig.ftpuser, ftpconfig.ftppassword);
+        //                list.Add(new { fileid = guid, filename = client_filename, filesize = fileszie });
+        //            }
+        //            return list;
+        //        }
+        //        else
+        //        {
+        //            return new List<dynamic>();
+        //        }                
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
         [HttpPost, Route("video")]
         public IHttpActionResult Uplad_DzGy_Mp4()
         {
             try
             {
                 Dictionary<string, object> kv = new Dictionary<string, object>();
-                var list = File2Ftp("视频", UploadWjLx.video, out kv);
+                var list = _uploadservice.File2Ftp("视频", UploadWjLx.video, out kv);
                 if (list.Count() > 0)
                 {
                     return Json(new { code = 1, msg = "上传成功", files = list, extdata = kv });
@@ -131,7 +124,7 @@ namespace MesAdmin.Controllers.Common
             try
             {
                 Dictionary<string, object> kv = new Dictionary<string, object>();
-                var list = File2Ftp("电子工艺", UploadWjLx.pdf,out kv);
+                var list = _uploadservice.File2Ftp("电子工艺", UploadWjLx.pdf,out kv);
                 if (list.Count() > 0)
                 {
                     return Json(new { code = 1, msg = "上传成功", files = list, extdata = kv });
@@ -158,7 +151,7 @@ namespace MesAdmin.Controllers.Common
             try
             {
                 Dictionary<string, object> kv = new Dictionary<string, object>();
-                var list = File2Ftp("技术通知", UploadWjLx.pdf, out kv);
+                var list = _uploadservice.File2Ftp("技术通知", UploadWjLx.pdf, out kv);
                 if (list.Count() > 0)
                 {
                     return Json(new { code = 1, msg = "上传成功", files = list, extdata = kv });
@@ -220,7 +213,7 @@ namespace MesAdmin.Controllers.Common
             {
                 List<dynamic> result_list = new List<dynamic>();
                 Dictionary<string, object> kv = new Dictionary<string, object>();
-                var list = File2Ftp("头像", UploadWjLx.image, out kv);
+                var list = _uploadservice.File2Ftp("头像", UploadWjLx.image, out kv);
                 if (list.Count() > 0)
                 {
                     foreach (var item in list)
@@ -253,21 +246,22 @@ namespace MesAdmin.Controllers.Common
         {
             try
             {
-                HttpFileCollection files = HttpContext.Current.Request.Files;
-                string savepath = HttpContext.Current.Server.MapPath("~/Upload/Excel/");
-                List<dynamic> list = new List<dynamic>();
-                for (int i = 0; i < files.Count; i++)
-                {
-                    HttpPostedFile file = HttpContext.Current.Request.Files[i];
-                    string client_filename = file.FileName;
-                    int fileszie = file.ContentLength;
-                    int pos = client_filename.LastIndexOf(".");
-                    string filetype = client_filename.Substring(pos, client_filename.Length - pos);
-                    string newfilename = Guid.NewGuid().ToString() + filetype;
-                    string fullfilename = savepath + newfilename;
-                    file.SaveAs(fullfilename);
-                    list.Add(new { fileid = newfilename, filename = client_filename, filesize = fileszie });
-                }
+                var list = _uploadservice.UpLoadFile("~/Upload/Excel/");
+                //HttpFileCollection files = HttpContext.Current.Request.Files;
+                //string savepath = HttpContext.Current.Server.MapPath("~/Upload/Excel/");
+                //List<dynamic> list = new List<dynamic>();
+                //for (int i = 0; i < files.Count; i++)
+                //{
+                //    HttpPostedFile file = HttpContext.Current.Request.Files[i];
+                //    string client_filename = file.FileName;
+                //    int fileszie = file.ContentLength;
+                //    int pos = client_filename.LastIndexOf(".");
+                //    string filetype = client_filename.Substring(pos, client_filename.Length - pos);
+                //    string newfilename = Guid.NewGuid().ToString() + filetype;
+                //    string fullfilename = savepath + newfilename;
+                //    file.SaveAs(fullfilename);
+                //    list.Add(new { fileid = newfilename, filename = client_filename, filesize = fileszie });
+                //}
                 return Json(new { code = 1, msg = "上传成功", files = list });
             }
             catch (Exception)

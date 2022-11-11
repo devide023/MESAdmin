@@ -7,7 +7,7 @@
   operate_fnlist: [{
       label: '上传Pdf',
       btntype: 'upload',
-      action: 'http://localhost:52655/api/upload/dzgy_pdf',
+      action: 'http://172.16.201.216:7002/api/a1/upload/dzgy_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
           this.$loading().close();
@@ -34,7 +34,7 @@
     }, {
       label: '上传视频',
       btntype: 'uploadvideo',
-      action: 'http://localhost:52655/api/upload/video',
+      action: 'http://172.16.201.216:7002/api/upload/video',
       callback: function (response, file) {
         if (response.code === 1) {
           this.$loading().close();
@@ -161,7 +161,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://localhost:52655/template/A1/电子工艺.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/电子工艺.xlsx');
     },
 	download_dzgypdf: function (row) {
       var _this = this;
@@ -170,7 +170,7 @@
         wjlj: row.wjlj
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://localhost:52655/api/download/downloadpdf?wjlj=" + row.wjlj);
+          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -183,7 +183,7 @@
         wjlj: row.wjlj
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://localhost:52655/api/download/downloadpdf?wjlj=" + row.wjlj);
+          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -203,6 +203,7 @@
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
+		row.statusno='';
         this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {
@@ -275,7 +276,6 @@
       coltype: 'list',
       label: '状态码',
       prop: 'statusno',
-      dbprop: 'status_no',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',

@@ -8,15 +8,45 @@ using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels.TJ.A1;
 using MesAdmin.Filters;
+using ZDMesModels;
+
 namespace MesAdmin.Controllers.A1.GYGL
 {
     [RoutePrefix("api/a1/gylx")]
     public class A1GYLXController : BaseApiController<mes_zxjc_gylx>
     {
-        public A1GYLXController(IDbOperate<mes_zxjc_gylx> gylxservice, IRequireVerify requireverfify, IImportData<mes_zxjc_gylx> importservice) :base(gylxservice)
+        private IDbOperate<mes_zxjc_gylx> _gylxservice;
+        private IEntityDetail<string> _detailservice;
+        public A1GYLXController(IDbOperate<mes_zxjc_gylx> gylxservice, IRequireVerify requireverfify, IImportData<mes_zxjc_gylx> importservice, IEntityDetail<string> detailservice) :base(gylxservice)
         {
+            _gylxservice = gylxservice;
             this._requireverfify = requireverfify;
             this._importservice = importservice;
+            _detailservice = detailservice;
+        }
+        public override IHttpActionResult GetList(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                var list = _gylxservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    item.statusno_list = _detailservice.Details(item.jxno).ToList().Select(t => new { label = t, value = t });
+                }
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [TemplateVerify("ZDMesModels.TJ.A1.mes_zxjc_gylx,ZDMesModels")]
         public override IHttpActionResult ReadTempFile(string fileid)

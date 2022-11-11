@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://localhost:52655/template/A1/工艺路线.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/工艺路线.xlsx');
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -121,6 +121,7 @@
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
+		  row.statusno='';
         this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {

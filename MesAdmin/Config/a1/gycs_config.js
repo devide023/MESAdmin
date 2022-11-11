@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://localhost:52655/template/A1/工艺参数.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/工艺参数.xlsx');
     },
 	gwh_change_handle:function(collist,val, row){
 		row.sbbh_list=[];

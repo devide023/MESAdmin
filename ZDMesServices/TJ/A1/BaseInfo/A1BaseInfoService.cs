@@ -7,13 +7,39 @@ using ZDMesInterfaces.TJ;
 using ZDMesModels.TJ.A1;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
+using ZDMesInterfaces.Common;
+
 namespace ZDMesServices.TJ.A1.BaseInfo
 {
-    public class A1BaseInfoService : OracleBaseFixture, IA1BaseInfo
+    public class A1BaseInfoService : OracleBaseFixture, IA1BaseInfo, IEntityDetail<string>
     {
         public A1BaseInfoService(string constr):base(constr)
         {
 
+        }
+        public IEnumerable<string> Details(params object[] parm)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select distinct cpbm from ztbm_new where jx = :jxno ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    if (parm.Length > 0)
+                    {
+                        return db.Query<string>(sql.ToString(), new { jxno = parm[0].ToString() });
+                    }
+                    else
+                    {
+                        return new List<string>();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IEnumerable<zxjc_fault> GetFaultNoByKey(string key)
@@ -129,7 +155,7 @@ namespace ZDMesServices.TJ.A1.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select distinct ztbm from ztbm_new where jx = :jxno ");
+                sql.Append("select distinct cpbm from ztbm_new where jx = :jxno ");
                 using (var db = new OracleConnection(ConString))
                 {
                     return db.Query<string>(sql.ToString(),new { jxno=jxno});

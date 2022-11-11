@@ -92,13 +92,21 @@
       });
     },
   },
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   pagefuns: {
     add_handle: function(){
 		var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
-	},
+	},	
+    download_template_file: function () {
+      window.open('http://172.16.201.216:7002/template/A1/岗位类型机型关系.xlsx');
+    },
 	suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
         this.$request('get', '/a1/baseinfo/jxno_by_code', {
