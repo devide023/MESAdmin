@@ -213,7 +213,9 @@ namespace ZDMesServices.CDGC.JJBGL
                                 }
                                 foreach (var item in mx.ToList<zxjc_gtjjb_bill_detail>())
                                 {
-                                    item.billid = billid;
+                                    item.billid = billid;                                    
+                                    item.trjgs = item.sbcmpyl + item.dbmpsl + item.hcsl - item.dbmpyl;
+                                    item.hgsl = item.trjgs - item.gfsl - item.lfsl;
                                     Db.Insert<zxjc_gtjjb_bill_detail>(item, trans);
                                 }
                                 trans.Commit();

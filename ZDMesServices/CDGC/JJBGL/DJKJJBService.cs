@@ -156,6 +156,8 @@ namespace ZDMesServices.CDGC.JJBGL
                                 foreach (var item in jjmx)
                                 {
                                     item.billid = bill.id;
+                                    item.hgsl = item.jgsl - item.gfsl - item.lfsl;
+                                    item.kcsysl = item.kcsl - item.jgsl;
                                     Db.Insert<zxjc_djkjjb_detail>(item, trans);
                                 }
                                 sql.Clear();
@@ -169,6 +171,7 @@ namespace ZDMesServices.CDGC.JJBGL
                                 foreach (var item in hxmx)
                                 {
                                     item.billid = bill.id;
+                                    item.hgsl = item.trjgsl - item.dpssl - item.gfsl - item.lfsl;
                                     Db.Insert<zxjc_djkjjb_hx_detail>(item, trans);
                                 }
                                 trans.Commit(); 
