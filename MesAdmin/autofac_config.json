@@ -25,9 +25,9 @@
       }
     },
     {
-      "type": "ZDMesModules.CD.CDGCModule, ZDMesModules",
+      "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
       "properties": {
-        "CDGCConstr": "cdgcmes"
+        "TJConstr": "tjmes"
       }
     }
   ]
