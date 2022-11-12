@@ -125,12 +125,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MesAdmin\MesAdmin.csproj">
-      <Project>{6BD74703-11AD-4471-8D4D-A08B2E83AA63}</Project>
-      <Name>MesAdmin</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
