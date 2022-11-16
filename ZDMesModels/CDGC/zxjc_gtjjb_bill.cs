@@ -65,6 +65,8 @@ namespace ZDMesModels.CDGC
         /// </summary>
         public List<zxjc_gtjjb_bill_detail> mxlist { get; set; }
 
+        public bool isadmin { get; set; } = false;
+
     }
 
     public class zxjc_gtjjb_bill_mapper : ClassMapper<zxjc_gtjjb_bill>
@@ -72,6 +74,7 @@ namespace ZDMesModels.CDGC
         public zxjc_gtjjb_bill_mapper()
         {
             Map(t => t.mxlist).Ignore();
+            Map(t => t.isadmin).Ignore();
             Map(t => t.id).Key(KeyType.TriggerIdentity);
             AutoMap();
         }

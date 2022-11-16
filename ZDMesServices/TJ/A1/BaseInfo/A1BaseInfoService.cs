@@ -17,7 +17,7 @@ namespace ZDMesServices.TJ.A1.BaseInfo
         {
 
         }
-        public IEnumerable<string> Details(params object[] parm)
+        public virtual IEnumerable<string> Details(params object[] parm)
         {
             try
             {

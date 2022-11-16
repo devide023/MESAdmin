@@ -18,7 +18,9 @@
   ],
   pagefuns: {
     edit_bill: function (row,fnitem) {
+	  var _uid = this.$store.getters.userinfo.id;
       var _this = this;
+	  var _isadmin = _uid === 1?true:false;
       _this.dialog_title = '';
 	  _this.dialog_fnitem = fnitem;
       _this.dialog_width = '60%';
@@ -28,7 +30,8 @@
       _this.dialog_props = {
         isread: false,
         rq: row.rq,
-        bc: row.bc
+        bc: row.bc,
+		isadmin:_isadmin
       };
     },
     view_bill: function (row,fnitem) {
@@ -60,7 +63,6 @@
       align: 'center',
       sortable: true,
       width: 130,
-      fixed: 'left'
     }, {
       coltype: 'string',
       prop: 'bc',
@@ -69,7 +71,6 @@
       align: 'center',
       sortable: true,
       width: 100,
-      fixed: 'left'
     }, {
       coltype: 'string',
       prop: 'jbr',

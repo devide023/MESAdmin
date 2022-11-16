@@ -334,6 +334,8 @@
     <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYXXController.cs" />
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
+    <Compile Include="Controllers\A1\UpLoad\A1UpLoadController.cs" />
+    <Compile Include="Controllers\A1\WLGL\A1WLGLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJJLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJXXController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1FXMXController.cs" />
@@ -412,16 +414,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Config\a1\cgjh_config.js" />
+    <Content Include="Config\a1\ddzs_config.js" />
+    <Content Include="Config\a1\djjcxx_config.js" />
+    <Content Include="Config\a1\djls_config.js" />
+    <Content Include="Config\a1\dtzs_config.js" />
     <Content Include="Config\a1\dzgy_config.js" />
+    <Content Include="Config\a1\fxmx_config.js" />
     <Content Include="Config\a1\gwjxgx_config.js" />
     <Content Include="Config\a1\gwlxjx_config.js" />
+    <Content Include="Config\a1\gwwl_config.js" />
     <Content Include="Config\a1\gwzd_config.js" />
     <Content Include="Config\a1\gycs_config.js" />
     <Content Include="Config\a1\gylx_config.js" />
+    <Content Include="Config\a1\gzclfs_config.js" />
+    <Content Include="Config\a1\gzjcxx_config.js" />
     <Content Include="Config\a1\jcxx_config.js" />
+    <Content Include="Config\a1\jstz_config.js" />
+    <Content Include="Config\a1\jstz_to_gwh_config.js" />
     <Content Include="Config\a1\jtfp_config.js" />
     <Content Include="Config\a1\ryjn_config.js" />
     <Content Include="Config\a1\ryxx_config.js" />
+    <Content Include="Config\a1\sbxx_config.js" />
+    <Content Include="Config\a1\scjh_config.js" />
+    <Content Include="Config\a1\scxfpjl_config.js" />
+    <Content Include="Config\a1\scxtz_config.js" />
+    <Content Include="Config\a1\tstztz_config.js" />
     <Content Include="Config\appmenu_config.js" />
     <Content Include="Config\approle_config.js" />
     <Content Include="Config\auditjt_config.js" />
@@ -459,6 +477,7 @@
     <Content Include="Config\jtgl_config.js" />
     <Content Include="Config\menu_config.js" />
     <Content Include="Config\mydoc_config.js" />
+    <Content Include="Config\rjrmls_config.js" />
     <Content Include="Config\rjsmxh_config.js" />
     <Content Include="Config\rjxx_config.js" />
     <Content Include="Config\role_config.js" />
@@ -530,6 +549,7 @@
     <Content Include="CDGCVerfyConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Config\a1\jtfp_config.js.bak" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>

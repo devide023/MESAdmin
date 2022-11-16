@@ -74,7 +74,7 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
         {
             try
             {
-                if (DateTime.Compare(DateTime.Now.Date,Convert.ToDateTime(form.rq) ) <= 0)
+                if (form.isadmin)
                 {
                     zxjc_djkjjb_bill bill = new zxjc_djkjjb_bill();
                     bill = form.Copy();
@@ -101,17 +101,57 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
                             msg = "数据保存失败"
                         });
                     }
-
                 }
                 else
                 {
-                    return Json(new sys_result()
-                    {
-                        code = 0,
-                        msg = "日期应大于等于当前日期"
-                    });
-                }
 
+                    if (DateTime.Compare(Convert.ToDateTime(form.rq).Date, DateTime.Now.Date) == 0 || DateTime.Compare(Convert.ToDateTime(form.rq).Date, DateTime.Now.Date.AddDays(-1)) == 0)
+                    {
+
+                        if (DateTime.Compare(Convert.ToDateTime(form.rq).Date, DateTime.Now.Date.AddDays(-1)) == 0 && form.bc != "晚班")
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 0,
+                                msg = "日期为昨天时,班次应为晚班"
+                            });
+                        }
+                        zxjc_djkjjb_bill bill = new zxjc_djkjjb_bill();
+                        bill = form.Copy();
+                        bill.djkjjbdetail = null;
+                        bill.djkjjbdetailhx = null;
+                        List<zxjc_djkjjb_detail> jjmx = new List<zxjc_djkjjb_detail>();
+                        List<zxjc_djkjjb_hx_detail> hxmx = new List<zxjc_djkjjb_hx_detail>();
+                        jjmx = form.djkjjbdetail;
+                        hxmx = form.djkjjbdetailhx;
+                        var ret = _djkservice.Save_Djkjjb(bill, jjmx, hxmx);
+                        if (ret)
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 1,
+                                msg = "数据保存成功"
+                            });
+                        }
+                        else
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 0,
+                                msg = "数据保存失败"
+                            });
+                        }
+
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "日期应为当天或昨天晚班"
+                        });
+                    }
+                }
             }
             catch (Exception)
             {

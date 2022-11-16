@@ -71,23 +71,66 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
         {
             try
             {
-                form.lrr = _userservice.CurrentUser().name;
-                var ret = _gtjjbservice.Save_Gtjjb(form);
-                if (ret)
+                if (form.isadmin)
                 {
-                    return Json(new sys_result()
+                    form.lrr = _userservice.CurrentUser().name;
+                    var ret = _gtjjbservice.Save_Gtjjb(form);
+                    if (ret)
                     {
-                        code = 1,
-                        msg = "数据保存成功"
-                    });
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据保存失败"
+                        });
+                    }
                 }
                 else
                 {
-                    return Json(new sys_result()
+                    if (DateTime.Compare(Convert.ToDateTime(form.rq).Date, DateTime.Now.Date) == 0 || DateTime.Compare(Convert.ToDateTime(form.rq).Date, DateTime.Now.Date.AddDays(-1)) == 0)
                     {
-                        code = 0,
-                        msg = "数据保存失败"
-                    });
+                        if (DateTime.Compare(Convert.ToDateTime(form.rq).Date, DateTime.Now.Date.AddDays(-1)) == 0 && form.bc != "晚班")
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 0,
+                                msg = "日期为昨天时,班次应为晚班"
+                            });
+                        }
+                        form.lrr = _userservice.CurrentUser().name;
+                        var ret = _gtjjbservice.Save_Gtjjb(form);
+                        if (ret)
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 1,
+                                msg = "数据保存成功"
+                            });
+                        }
+                        else
+                        {
+                            return Json(new sys_result()
+                            {
+                                code = 0,
+                                msg = "数据保存失败"
+                            });
+                        }
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "日期应为当天或昨天晚班"
+                        });
+                    }
                 }
             }
             catch (Exception)

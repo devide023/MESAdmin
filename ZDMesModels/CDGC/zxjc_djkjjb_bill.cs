@@ -56,6 +56,10 @@ namespace ZDMesModels.CDGC
         /// 后序明细
         /// </summary>
         public List<zxjc_djkjjb_hx_detail> djkjjbdetailhx { get; set; }
+        /// <summary>
+        /// 是否可以编辑历史数据
+        /// </summary>
+        public bool isadmin { get; set; } = false;
 
     }
 
@@ -65,6 +69,7 @@ namespace ZDMesModels.CDGC
         {
             Map(t => t.djkjjbdetail).Ignore();
             Map(t => t.djkjjbdetailhx).Ignore();
+            Map(t => t.isadmin).Ignore();
             Map(t => t.id).Key(KeyType.TriggerIdentity);
             AutoMap();
         }

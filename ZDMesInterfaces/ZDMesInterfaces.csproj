@@ -85,6 +85,8 @@
     <Compile Include="CDGC\IGtjcHis.cs" />
     <Compile Include="CDGC\IGtjc_Result.cs" />
     <Compile Include="CDGC\IGtjjb.cs" />
+    <Compile Include="Common\IEntityDetail.cs" />
+    <Compile Include="Common\IFtpConfig.cs" />
     <Compile Include="Common\IRequireVerify.cs" />
     <Compile Include="Common\ITemplateVerify.cs" />
     <Compile Include="Common\ITemplate_Import.cs" />

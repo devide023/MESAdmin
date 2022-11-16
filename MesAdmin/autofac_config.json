@@ -13,21 +13,21 @@
       }
     },
     {
+      "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
+      "properties": {
+        "TJConstr": "tjmes"
+      }
+    },
+    {
       "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
       "properties": {
         "LBJConstr": "lbjmes"
       }
     },
     {
-      "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
+      "type": "ZDMesModules.CD.CDGCModule, ZDMesModules",
       "properties": {
-        "TJConstr": "tjmes"
-      }
-    },
-    {
-      "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
-      "properties": {
-        "TJConstr": "tjmes"
+        "CDGCConstr": "cdgcmes"
       }
     }
   ]

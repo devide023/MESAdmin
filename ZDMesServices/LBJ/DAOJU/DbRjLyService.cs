@@ -357,8 +357,9 @@ namespace ZDMesServices.LBJ.DAOJU
                                         var iscntquery = db.Query<string>(qbhdzt.ToString(), new { sbbh = zxobj.sbbh });
                                         if (iscntquery.Count() == 0)
                                         {
+                                            //var bhdid = db.Query<string>("select f_base_getno('BHD', 'MES', 8) from dual").First();
                                             db.Execute(Inser_BHD_Sql.ToString(), new {
-                                                id = Guid.NewGuid().ToString().Replace("-", ""),
+                                                id = Guid.NewGuid().ToString().Replace("-",""),
                                                 scx = zxobj.scx,
                                                 cjrmc = _u.name,
                                                 djffr = _u.name,

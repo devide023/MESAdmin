@@ -1,5 +1,5 @@
 {
-  "sql": "select gcdm, scx, wlbm, bjmc, gwh, wlsx, lxpd, lxlx, dxsl, gwpb, qwwbm, psfs, jx_no, ztbm, sl, zplx, lrr, lrsj from v_base_gwbj where 1=1 ",
-  "sql_cnt": "select count(*) from v_base_gwbj where 1=1  ",
+  "sql": "select gcdm, scx, wlbm, bjmc, gwh, wlsx, lxpd, lxlx, dxsl, gwpb, qwwbm, psfs, jx_no, ztbm, sl, zplx, lrr, lrsj from v_base_gwbj where scx=1 ",
+  "sql_cnt": "select count(*) from v_base_gwbj where scx=1  ",
   "sql_orderby": " order by gwh asc "
 }
