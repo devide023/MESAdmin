@@ -52,6 +52,10 @@ namespace ZDMesModels.CDGC
         ///当班毛胚余量
         ///</summary>
         public int dbmpyl { get; set; }
+        /// <summary>
+        /// 工废明细
+        /// </summary>
+        public List<zxjc_gtjjb_gfmx> gfmxlist { get; set; }
     }
 
     public class zxjc_gtjjb_bill_detail_mapper:ClassMapper<zxjc_gtjjb_bill_detail>
@@ -59,6 +63,7 @@ namespace ZDMesModels.CDGC
         public zxjc_gtjjb_bill_detail_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.gfmxlist).Ignore();
             AutoMap();
         }
     }

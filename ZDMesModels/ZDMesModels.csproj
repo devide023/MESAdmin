@@ -71,13 +71,17 @@
     <Compile Include="CDGC\zxjc_base_gtjc.cs" />
     <Compile Include="CDGC\zxjc_djkjjb_bill.cs" />
     <Compile Include="CDGC\zxjc_djkjjb_detail.cs" />
+    <Compile Include="CDGC\zxjc_djkjjb_gfmx.cs" />
     <Compile Include="CDGC\zxjc_djkjjb_hx_detail.cs" />
     <Compile Include="CDGC\zxjc_gtjc_bill.cs" />
     <Compile Include="CDGC\zxjc_gtjc_detail.cs" />
     <Compile Include="CDGC\zxjc_gtjjb_bill.cs" />
     <Compile Include="CDGC\zxjc_gtjjb_bill_detail.cs" />
+    <Compile Include="CDGC\zxjc_gtjjb_gfmx.cs" />
+    <Compile Include="CDGC\zxjc_nok_mark.cs" />
     <Compile Include="CDGC\zxjc_ryxx.cs" />
     <Compile Include="CDGC\zxjc_sbxx_ls_cnc.cs" />
+    <Compile Include="CDGC\zxjc_scjh.cs" />
     <Compile Include="LBJ\ad_bjxx.cs" />
     <Compile Include="LBJ\App_Menu.cs" />
     <Compile Include="LBJ\app_role.cs" />

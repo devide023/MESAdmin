@@ -10,6 +10,8 @@ using ZDMesModels;
 using Dapper;
 using DapperExtensions;
 using DapperExtensions.Predicate;
+using System.Data;
+
 namespace ZDMesServices.CDGC.JJBGL
 {
     /// <summary>
@@ -29,7 +31,8 @@ namespace ZDMesServices.CDGC.JJBGL
             sql1.Append("delete from zxjc_djkjjb_detail where billid = :id");
             StringBuilder sql2 = new StringBuilder();
             sql2.Append("delete from zxjc_djkjjb_hx_detail where billid = :id");
-
+            StringBuilder sql3 = new StringBuilder();
+            sql3.Append("delete from zxjc_djkjjb_gfmx where detailid in (select id from zxjc_djkjjb_detail where billid = :id)");
             using (var db = new OracleConnection(ConString))
             {
                 try
@@ -44,6 +47,7 @@ namespace ZDMesServices.CDGC.JJBGL
                                 db.Execute(sql.ToString(), new { id = item.id }, trans);
                                 db.Execute(sql1.ToString(), new { id = item.id }, trans);
                                 db.Execute(sql2.ToString(), new { id = item.id }, trans);
+                                db.Execute(sql3.ToString(), new { id = item.id }, trans);
                             }
                             trans.Commit();
                             return true;
@@ -64,6 +68,24 @@ namespace ZDMesServices.CDGC.JJBGL
                 {
                     db.Close();
                 }
+            }
+        }
+
+        public IEnumerable<string> GetCpList()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select cpmc from zxjc_cpb where cpfl = '电机壳'");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<string>(sql.ToString());
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -92,6 +114,8 @@ namespace ZDMesServices.CDGC.JJBGL
                 sqljj.Append("select id, billid, cpmc, kcsl, jgsl, gfsl, lfsl, hgsl, kcsysl FROM zxjc_djkjjb_detail where  billid = :billid ");
                 StringBuilder sqlhx = new StringBuilder();
                 sqlhx.Append("select id, billid, xmmc, trjgsl, dpssl, gfsl, lfsl, hgsl FROM   zxjc_djkjjb_hx_detail  where  billid = :billid ");
+                StringBuilder gfmxsql = new StringBuilder();
+                gfmxsql.Append("select * from zxjc_djkjjb_gfmx where detailid = :mxid");
                 using (var db = new OracleConnection(ConString))
                 {
                     zxjc_djkjjb_bill bill = new zxjc_djkjjb_bill();
@@ -102,6 +126,10 @@ namespace ZDMesServices.CDGC.JJBGL
                         bill.rq = bill.rq?.Date;
                         var jjmx = db.Query<zxjc_djkjjb_detail>(sqljj.ToString(), new { billid = bill.id });
                         bill.djkjjbdetail = jjmx.ToList();
+                        foreach (var item in jjmx)
+                        {
+                            item.gfmxlist = db.Query<zxjc_djkjjb_gfmx>(gfmxsql.ToString(), new { mxid = item.id }).ToList();
+                        }
                         var hxmx = db.Query<zxjc_djkjjb_hx_detail>(sqlhx.ToString(), new { billid = bill.id });
                         bill.djkjjbdetailhx = hxmx.ToList();
                     }
@@ -124,6 +152,11 @@ namespace ZDMesServices.CDGC.JJBGL
                     InitDB(db);
                     try
                     {
+                        StringBuilder mxsql = new StringBuilder();
+                        mxsql.Append(" insert into zxjc_djkjjb_detail");
+                        mxsql.Append(" (billid, cpmc, kcsl, jgsl, gfsl, lfsl, hgsl, kcsysl) ");
+                        mxsql.Append(" values ");
+                        mxsql.Append(" (:billid, :cpmc, :kcsl, :jgsl, :gfsl, :lfsl, :hgsl, :kcsysl) returning id into :id");
                         using (var trans = db.BeginTransaction())
                         {
                             try
@@ -148,9 +181,14 @@ namespace ZDMesServices.CDGC.JJBGL
                                 sql.Clear();
                                 sql.Append("select count(id) FROM ZXJC_DJKJJB_DETAIL where billid=:billid");
                                 var qjjmx = db.ExecuteScalar<int>(sql.ToString(), new { billid = bill.id });
+                                List<int> mxids = new List<int>();
+                                List<zxjc_djkjjb_gfmx> gfmxlist = new List<zxjc_djkjjb_gfmx>();
                                 if(qjjmx > 0)
                                 {
+                                    mxids = db.Query<int>("select id from zxjc_djkjjb_detail where billid=:billid", new { billid = bill.id }).ToList();
+                                    gfmxlist = db.Query<zxjc_djkjjb_gfmx>("select * from zxjc_djkjjb_gfmx where detailid in :mxids", new { mxids = mxids.ToList() }).ToList();
                                     db.Execute("delete from zxjc_djkjjb_detail where billid= :billid", new { billid = bill.id }, trans);
+                                    db.Execute("delete from zxjc_djkjjb_gfmx where detailid in :mxids", new { mxids = mxids.ToList() }, trans);
                                 }
                                 //机加明细
                                 foreach (var item in jjmx)
@@ -158,7 +196,23 @@ namespace ZDMesServices.CDGC.JJBGL
                                     item.billid = bill.id;
                                     item.hgsl = item.jgsl - item.gfsl - item.lfsl;
                                     item.kcsysl = item.kcsl - item.jgsl;
-                                    Db.Insert<zxjc_djkjjb_detail>(item, trans);
+                                    DynamicParameters dyp = new DynamicParameters();
+                                    dyp.Add(":billid", item.billid, DbType.Int32, ParameterDirection.Input);
+                                    dyp.Add(":cpmc", item.cpmc, DbType.String, ParameterDirection.Input);
+                                    dyp.Add(":kcsl", item.kcsl, DbType.Int32, ParameterDirection.Input);
+                                    dyp.Add(":jgsl", item.jgsl, DbType.Int32, ParameterDirection.Input);
+                                    dyp.Add(":gfsl", item.gfsl, DbType.Int32, ParameterDirection.Input);
+                                    dyp.Add(":lfsl", item.lfsl, DbType.Int32, ParameterDirection.Input);
+                                    dyp.Add(":hgsl", item.hgsl, DbType.Int32, ParameterDirection.Input);
+                                    dyp.Add(":kcsysl", item.kcsysl, DbType.Int32, ParameterDirection.Input);
+                                    dyp.Add(":id", null, DbType.Int32, ParameterDirection.Output);
+                                    db.Execute(mxsql.ToString(),dyp, trans);
+                                    var newmxid = dyp.Get<int>(":id");
+                                    foreach (var sitem in item.gfmxlist)
+                                    {
+                                        sitem.detailid = newmxid;
+                                        Db.Insert<zxjc_djkjjb_gfmx>(sitem,trans);
+                                    }
                                 }
                                 sql.Clear();
                                 sql.Append("select count(id) FROM zxjc_djkjjb_hx_detail where billid=:billid");

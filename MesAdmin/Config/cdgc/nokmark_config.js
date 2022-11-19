@@ -1,6 +1,6 @@
 {
   isgradequery: true,
-  isbatoperate: true,
+  isbatoperate: false,
   isoperate: false,
   isfresh: true,
   isselect: true,
@@ -21,7 +21,7 @@
     },
   },
   pagefuns: {
-    add_handle: function () {
+	  add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
@@ -30,88 +30,28 @@
   },
   fields: [{
       coltype: 'string',
-      label: '订单号',
-      prop: 'orderno',
+      label: '机号',
+      prop: 'vin',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 120
-    }, {
-      coltype: 'string',
-      label: '序号',
-      prop: 'xh',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 80
     }, {
       coltype: 'list',
-      label: '生产班次',
-      prop: 'scbc',
+      label: '检测结果',
+      prop: 'lx',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [{
-          label: '白班',
-          value: '白班'
-        }, {
-          label: '中班',
-          value: '中班'
-        }, {
-          label: '夜班',
-          value: '夜班'
-        }
-      ],
-      hideoptionval: true,
-      width: 120
+	  options:[{label:'修复后合格',value:'合格'},{label:'修复后不合格',value:'不合格'}],
+	  hideoptionval:true
     }, {
       coltype: 'string',
-      label: '生产数量',
-      prop: 'scsl',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'date',
-      label: '生产时间',
-      prop: 'scsj',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 150
-    }, {
-      coltype: 'string',
-      label: '排产数量',
-      prop: 'zpsl',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'date',
-      label: '排产时间',
-      prop: 'zpsj',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 150
-    }, {
-      coltype: 'string',
-      label: '机型',
-      prop: 'jx',
+      label: '故障信息',
+      prop: 'gzxx',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -119,17 +59,8 @@
       align: 'center',
     }, {
       coltype: 'string',
-      label: '状态编码',
-      prop: 'ztbm',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '备注',
-      prop: 'bz',
+      label: '原因',
+      prop: 'yxxx',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -145,7 +76,7 @@
       headeralign: 'center',
       align: 'center',
     }, {
-      coltype: 'date',
+      coltype: 'datetime',
       label: '录入时间',
       prop: 'lrsj',
       overflowtooltip: true,
@@ -156,40 +87,32 @@
     }
   ],
   form: {
-    orderno: '',
-    scx: '',
-    xh: '',
-    scbc: '',
-    scsl: '',
-    scsj: '',
-    zpsl: '',
-    zpsj: '',
-    jx: '',
-    ztbm: '',
-    bz: '',
-    scbz: '',
+    vin: '',
+    lx: '',
+    gzxx: '',
+    yxxx: '',
     lrr: '',
     lrsj: '',
     isdb: false,
     isedit: true
   },
   addapi: {
-    url: '/cdgc/scjh/add',
+    url: '/cdgc/nokmark/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '/cdgc/scjh/edit',
+    url: '/cdgc/nokmark/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '/cdgc/scjh/del',
+    url: '/cdgc/nokmark/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/cdgc/scjh/list',
+    url: '/cdgc/nokmark/list',
     method: 'post',
     callback: function (vm, res) {},
   },

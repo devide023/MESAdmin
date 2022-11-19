@@ -8,6 +8,7 @@ using ZDMesModels.CDGC;
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using ZDMesModels;
+using System.Data;
 
 namespace ZDMesServices.CDGC.JJBGL
 {
@@ -24,6 +25,8 @@ namespace ZDMesServices.CDGC.JJBGL
             sql.Append("delete from zxjc_gtjjb_bill where id = :id");
             StringBuilder sql1 = new StringBuilder();
             sql1.Append("delete FROM zxjc_gtjjb_bill_detail where billid = :id");
+            StringBuilder sql2 = new StringBuilder();
+            sql2.Append("delete FROM zxjc_gtjjb_gfmx where detailid in (selecc id from zxjc_gtjjb_bill_detail where billid = :id )");
             using (var db = new OracleConnection(ConString))
             {
                 try
@@ -37,6 +40,7 @@ namespace ZDMesServices.CDGC.JJBGL
                             {
                                 db.Execute(sql.ToString(), new { id = item.id }, trans);
                                 db.Execute(sql1.ToString(), new { id = item.id }, trans);
+                                db.Execute(sql2.ToString(), new { id = item.id }, trans);
                             }
                             trans.Commit();
                             return true;
@@ -118,13 +122,12 @@ namespace ZDMesServices.CDGC.JJBGL
         {
             try
             {
-                List<dynamic> list = new List<dynamic>();
-                list.Add("1.4T CC");
-                list.Add("1.5L DC");
-                list.Add("1.5T AA");
-                list.Add("1.2T EL");
-
-                return list;
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select cpmc from zxjc_cpb where cpfl = '缸体'");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<string>(sql.ToString());
+                }
             }
             catch (Exception)
             {
@@ -138,12 +141,13 @@ namespace ZDMesServices.CDGC.JJBGL
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select ta.id, ta.rq, ta.bc, ta.jbr, ta.dbzz, ta.slry, ta.mcry, ta.jyry, ta.zlqk, ta.sbqk, ta.qtqk, ta.lrr, ta.lrsj, tb.billid, tb.cpmc, tb.sbcmpyl, tb.dbmpsl, tb.hcsl, tb.trjgs, tb.gfsl, tb.lfsl, tb.hgsl, tb.dbmpyl ");
+                sql.Append("select ta.rq, ta.bc, ta.jbr, ta.dbzz, ta.slry, ta.mcry, ta.jyry, ta.zlqk, ta.sbqk, ta.qtqk, ta.lrr, ta.lrsj, tb.billid,tb.id, tb.cpmc, tb.sbcmpyl, tb.dbmpsl, tb.hcsl, tb.trjgs, tb.gfsl, tb.lfsl, tb.hgsl, tb.dbmpyl ");
                 sql.Append(" FROM   zxjc_gtjjb_bill ta, zxjc_gtjjb_bill_detail tb ");
                 sql.Append(" where  ta.id = tb.billid ");
                 sql.Append(" and    trunc(ta.rq) = trunc(to_date(:rq, 'yyyy-MM-dd HH24:mi:ss')) ");
                 sql.Append(" and    ta.bc = :bc");
-
+                StringBuilder sqlgfmx = new StringBuilder();
+                sqlgfmx.Append("select id,detailid,vin,yx from zxjc_gtjjb_gfmx where detailid = :mxid ");
                 using (var db = new OracleConnection(ConString))
                 {
                     var _dic = new Dictionary<int, zxjc_gtjjb_bill>();
@@ -161,7 +165,15 @@ namespace ZDMesServices.CDGC.JJBGL
                         return entity;
                     }, new { rq = rq, bc = bc }, splitOn: "billid");
 
-                    return q.OrderBy(t=>t.id);
+                    var retlist = q.OrderBy(t=>t.id);
+                    foreach (var item in retlist)
+                    {
+                        foreach (var sitem in item.mxlist)
+                        {   
+                            sitem.gfmxlist = db.Query<zxjc_gtjjb_gfmx>(sqlgfmx.ToString(), new { mxid = sitem.id }).ToList();
+                        }
+                    }
+                    return retlist;
                 }
             }
             catch (Exception)
@@ -179,6 +191,11 @@ namespace ZDMesServices.CDGC.JJBGL
                 sql.Append("select id, rq, bc, jbr, dbzz, slry, mcry, jyry, zlqk, sbqk, qtqk, lrr, lrsj ");
                 sql.Append(" from ZXJC_GTJJB_BILL ");
                 sql.Append(" where trunc(rq) = trunc(:rq) and bc = :bc");
+                StringBuilder sqlmx = new StringBuilder();
+                sqlmx.Append(" insert into zxjc_gtjjb_bill_detail ");
+                sqlmx.Append(" (billid, cpmc, sbcmpyl, dbmpsl, hcsl, trjgs, gfsl, lfsl, hgsl, dbmpyl)");
+                sqlmx.Append(" values");
+                sqlmx.Append(" (:billid, :cpmc, :sbcmpyl, :dbmpsl, :hcsl, :trjgs, :gfsl, :lfsl, :hgsl, :dbmpyl) returning id into :id");
                 using (var db = new OracleConnection(ConString))
                 {
                     try
@@ -209,14 +226,35 @@ namespace ZDMesServices.CDGC.JJBGL
                                 int sfmx = db.ExecuteScalar<int>("select count(id) FROM zxjc_gtjjb_bill_detail where billid =:billid ", new { billid = billid });
                                 if (sfmx > 0)
                                 {
+                                    var mxids = db.Query<string>("select id from zxjc_gtjjb_bill_detail where billid =:billid", new { billid = billid });
                                     db.Execute("delete FROM zxjc_gtjjb_bill_detail where billid =:billid", new { billid = billid },trans);
+                                    db.Execute("delete FROM zxjc_gtjjb_gfmx where detailid in :mxids", new { mxids = mxids.ToList() }, trans);
                                 }
                                 foreach (var item in mx.ToList<zxjc_gtjjb_bill_detail>())
                                 {
                                     item.billid = billid;                                    
                                     item.trjgs = item.sbcmpyl + item.dbmpsl + item.hcsl - item.dbmpyl;
                                     item.hgsl = item.trjgs - item.gfsl - item.lfsl;
-                                    Db.Insert<zxjc_gtjjb_bill_detail>(item, trans);
+                                    DynamicParameters p = new DynamicParameters();
+                                    p.Add(":billid", item.billid, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":cpmc", item.cpmc, DbType.String, ParameterDirection.Input);
+                                    p.Add(":sbcmpyl", item.sbcmpyl, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":dbmpsl", item.dbmpsl, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":hcsl", item.hcsl, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":trjgs", item.trjgs, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":gfsl", item.gfsl, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":lfsl", item.lfsl, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":hgsl", item.hgsl, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":dbmpyl", item.dbmpyl, DbType.Int32, ParameterDirection.Input);
+                                    p.Add(":id", null, DbType.Int32, ParameterDirection.Output);
+                                    db.Execute(sqlmx.ToString(), p, trans);
+                                    int mxid = p.Get<int>(":id");
+                                    //var mxid = Db.Insert<zxjc_gtjjb_bill_detail>(item, trans);
+                                    foreach (var sitem in item.gfmxlist)
+                                    {
+                                        sitem.detailid = mxid;
+                                        Db.Insert<zxjc_gtjjb_gfmx>(sitem, trans);
+                                    }
                                 }
                                 trans.Commit();
                                 return true;

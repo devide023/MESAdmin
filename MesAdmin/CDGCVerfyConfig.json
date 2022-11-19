@@ -66,5 +66,23 @@
         "coltxt": "入司日期"
       }
     ]
+  },
+  {
+    "model": "ZDMesModels.CDGC.zxjc_nok_mark,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "vin",
+        "coltxt": "机号"
+      },
+      {
+        "colname": "lx",
+        "coltxt": "结果"
+      },
+      {
+        "colname": "gzxx",
+        "coltxt": "故障信息"
+      }
+    ],
+    "templateconf": []
   }
 ]

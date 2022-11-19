@@ -9,7 +9,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', a, {
+          _this.$request('get', 'a', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -33,7 +33,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', b, {
+          _this.$request('get', 'b', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -57,7 +57,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', c, {
+          _this.$request('get', 'c', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();

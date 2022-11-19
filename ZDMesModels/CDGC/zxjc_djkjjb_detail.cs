@@ -47,6 +47,10 @@ namespace ZDMesModels.CDGC
         ///库存剩余数量
         ///</summary>
         public int kcsysl { get; set; }
+        /// <summary>
+        /// 电机壳交接班工废明细
+        /// </summary>
+        public List<zxjc_djkjjb_gfmx> gfmxlist { get; set; }
 
     }
     
@@ -55,6 +59,7 @@ namespace ZDMesModels.CDGC
         public zxjc_djkjjb_detail_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.gfmxlist).Ignore();
             AutoMap();
         }
     }

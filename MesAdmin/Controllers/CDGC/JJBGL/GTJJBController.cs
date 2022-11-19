@@ -202,7 +202,7 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
                     code = 1,
                     msg = "ok",
                     list = list
-                });
+                }); ;
             }
             catch (Exception)
             {

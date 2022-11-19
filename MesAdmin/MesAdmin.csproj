@@ -344,6 +344,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CDGC\BHDGL\BHDGLsController.cs" />
     <Compile Include="Controllers\CDGC\BHDGL\BHJCFController.cs" />
+    <Compile Include="Controllers\CDGC\GTJC\CDGCNOKMarkController.cs" />
     <Compile Include="Controllers\CDGC\GTJC\GTJCBaseDataController.cs" />
     <Compile Include="Controllers\CDGC\GTJC\GTJCDataController.cs" />
     <Compile Include="Controllers\CDGC\GTJC\GTJCHISController.cs" />
@@ -352,6 +353,7 @@
     <Compile Include="Controllers\CDGC\JJBGL\GTJJBController.cs" />
     <Compile Include="Controllers\CDGC\RYGL\RYGLController.cs" />
     <Compile Include="Controllers\CDGC\SBGL\SBGLController.cs" />
+    <Compile Include="Controllers\CDGC\SCJH\CdgcScjhController.cs" />
     <Compile Include="Controllers\CDGC\SJCJGL\CDGCCNCSJController.cs" />
     <Compile Include="Controllers\CDGC\YCGL\CDYCGLController.cs" />
     <Compile Include="Controllers\Common\DBInfoController.cs" />

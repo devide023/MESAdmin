@@ -94,7 +94,8 @@
           value: '结果'
         },
       ],
-	  fixed:'left'
+	  fixed:'left',
+	  hideoptionval:true,
     }, {
       coltype: 'string',
       prop: 'th',
@@ -150,7 +151,8 @@
 		  label:'输入',
 		  value:'text'
 	  }
-	  ]
+	  ],
+	  hideoptionval:true
     },
 	{
       coltype: 'list',
@@ -172,7 +174,8 @@
 		  label:'T',
 		  value:'T'
 	  },
-	  ]
+	  ],
+	  hideoptionval:true
     },
 	{
       coltype: 'string',

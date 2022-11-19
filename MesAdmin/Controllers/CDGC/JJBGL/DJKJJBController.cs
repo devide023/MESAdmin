@@ -48,6 +48,25 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
                 throw;
             }
         }
+        [HttpGet,Route("get_cplist")]
+        public IHttpActionResult GetCpList()
+        {
+            try
+            {
+               var list =_djkservice.GetCpList().Select(t => new { label = t, value = t });
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }    
+        }
         [HttpGet,Route("load_bc_data")]
         public IHttpActionResult Load_BC_Data(string rq,string bc)
         {

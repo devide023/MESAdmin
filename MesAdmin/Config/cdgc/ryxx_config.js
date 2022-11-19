@@ -148,7 +148,8 @@
           label: '女',
           value: '女'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'list',
       prop: 'rylx',
@@ -157,19 +158,26 @@
       align: 'center',
       width: 150,
       options: [{
-          label: '操作工',
-          value: '操作工'
+          label: '生产主管',
+          value: '生产主管'
         }, {
-          label: '巡检',
-          value: '巡检'
+          label: '生产大班长',
+          value: '生产大班长'
         }, {
-          label: '大班长',
-          value: '大班长'
+          label: '生产小组长',
+          value: '生产小组长'
         }, {
-          label: '组长',
-          value: '组长'
+          label: '质检组长',
+          value: '质检组长'
+        }, {
+          label: '操作者',
+          value: '操作者'
+        }, {
+          label: '质检员',
+          value: '质检员'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'list',
       prop: 'bzxx',
@@ -179,11 +187,17 @@
       options: [{
           label: '白班',
           value: '白班'
-        }, {
+        },
+		{
+          label: '中班',
+          value: '中班'
+        },
+		{
           label: '夜班',
           value: '夜班'
         }
       ],
+	  hideoptionval:true,
       width: 150
     }, {
       coltype: 'bool',

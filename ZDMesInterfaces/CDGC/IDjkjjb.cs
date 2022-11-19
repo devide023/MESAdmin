@@ -27,5 +27,10 @@ namespace ZDMesInterfaces.CDGC
         /// <param name="bc"></param>
         /// <returns></returns>
         zxjc_djkjjb_bill Get_Djkjjb_Bill_ByBc(string rq, string bc);
+        /// <summary>
+        /// 电机壳产品
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> GetCpList();
     }
 }

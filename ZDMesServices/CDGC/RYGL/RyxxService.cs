@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using ZDMesModels.CDGC;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
+using ZDMesInterfaces.CDGC;
+
 namespace ZDMesServices.CDGC.RYGL
 {
-    public class RyxxService:BaseDao<zxjc_ryxx>
+    public class RyxxService:BaseDao<zxjc_ryxx>, ICDUser
     {
         public RyxxService(string constr) : base(constr)
         {
@@ -35,6 +37,24 @@ namespace ZDMesServices.CDGC.RYGL
                         ret = ret + cnt;
                     }
                     return ret;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<zxjc_ryxx> Get_RYXX_List()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select user_name as username, user_code as usercode,rylx,bzxx  FROM zxjc_ryxx where scbz='N' ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<zxjc_ryxx>(sql.ToString());
                 }
             }
             catch (Exception)

@@ -137,6 +137,7 @@
     <Compile Include="BaseDao.cs" />
     <Compile Include="CDGC\BHDGL\BHDCFService.cs" />
     <Compile Include="CDGC\BHDGL\BHDGLService.cs" />
+    <Compile Include="CDGC\GTJC\CDGCNOKMarkService.cs" />
     <Compile Include="CDGC\GTJC\GTJCBasedataService.cs" />
     <Compile Include="CDGC\GTJC\GTJCDataService.cs" />
     <Compile Include="CDGC\JCXX\JCXXService.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="CDGC\JJBGL\GTJJBService.cs" />
     <Compile Include="CDGC\RYGL\RyxxService.cs" />
     <Compile Include="CDGC\SBGL\SBGLService.cs" />
+    <Compile Include="CDGC\SCJH\CdGcScjhService.cs" />
     <Compile Include="CDGC\SJCJGL\CdGcSjCjService.cs" />
     <Compile Include="CDGC\YCGL\YCGLLSService.cs" />
     <Compile Include="CDGC\YCGL\YCGLService.cs" />
