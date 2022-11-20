@@ -34,7 +34,11 @@
   pagefuns: {
     download_jstcpdf: function (row) {
       var _this = this;
+	  if(row.jtly===1){
       window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
+	  }else if(row.jtly===0){
+		window.open("http://172.16.201.216:7002/jstz/" + row.wjlj);  
+	  }
     },
     jstz_fp: function (row, item) {
       var _this = this;
@@ -56,7 +60,6 @@
       coltype: 'string',
       label: '技通编号',
       prop: 'jcbh',
-      dbprop: 'm.jcbh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -87,12 +90,21 @@
       coltype: 'string',
       label: '技通名称',
       prop: 'jcmc',
-      dbprop: 'm.jcmc',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'left'
-    }, {
+    }, 
+	{
+      coltype: 'string',
+      label: '文件名称',
+      prop: 'wjlj',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'left'
+    },
+	{
       coltype: 'date',
       label: '有效期限开始',
       prop: 'yxqx1',
@@ -105,7 +117,6 @@
       coltype: 'date',
       label: '有效期限结束',
       prop: 'yxqx2',
-      dbprop: 'm.yxqx2',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -115,7 +126,6 @@
       coltype: 'string',
       label: '分配标志',
       prop: 'fpflg',
-      dbprop: 'm.fpflg',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -125,7 +135,6 @@
       coltype: 'string',
       label: '分配人',
       prop: 'fpr',
-      dbprop: 'm.fpr',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -135,7 +144,6 @@
       coltype: 'datetime',
       label: '分配时间',
       prop: 'fpsj',
-      dbprop: 'm.fpsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -145,7 +153,6 @@
       coltype: 'string',
       label: '创建者',
       prop: 'scry',
-      dbprop: 'm.scry',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -155,7 +162,6 @@
       coltype: 'datetime',
       label: '创建时间',
       prop: 'scsj',
-      dbprop: 'm.scsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',

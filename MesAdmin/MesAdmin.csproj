@@ -636,6 +636,7 @@
     <Content Include="sqlconfig\api-a1-gwwl-list.json" />
     <Content Include="sqlconfig\api-a1-gycs-list.json" />
     <Content Include="sqlconfig\api-lbj-rjrmls-list.json" />
+    <Content Include="sqlconfig\api-a1-jtgl-scxfpjllist.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

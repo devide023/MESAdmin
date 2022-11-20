@@ -283,7 +283,7 @@ namespace ZDMesServices.Common
             }
             finally
             {
-                Db.Dispose();
+                Db?.Dispose();
             }
         }
         public sys_userinfo_result GetUserInfo(string token)

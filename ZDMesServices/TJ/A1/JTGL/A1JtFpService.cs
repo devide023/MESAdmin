@@ -16,6 +16,107 @@ namespace ZDMesServices.TJ.A1.JTGL
 
         }
 
+        public override bool Del(IEnumerable<zxjc_t_jstcfp> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" update zxjc_t_jstc ");
+                sql.Append(" set    fp_flg = 'N',");
+                sql.Append("       fp_sj = null,");
+                sql.Append("       fpr = null ");
+                sql.Append(" where  fp_flg = 'Y'");
+                sql.Append(" and jcbh in :jcbh ");
+                sql.Append(" and    not exists");
+                sql.Append(" (select * FROM zxjc_t_jstcfp where jtid = zxjc_t_jstc.jcbh)");
+                StringBuilder sql1 = new StringBuilder();
+                sql1.Append("delete from zxjc_t_jstcfp where id in :ids");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                var jcbhlist = entitys.Select(t => t.jcbh).Distinct().ToList();
+                                var ids = entitys.Select(t => t.id).Distinct().ToList();
+                                db.Execute(sql1.ToString(), new { ids = ids }, trans);
+                                db.Execute(sql.ToString(), new { jcbh = jcbhlist }, trans);
+                                trans.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public override int Add(IEnumerable<zxjc_t_jstcfp> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update zxjc_t_jstc set fp_flg='Y',fp_sj=sysdate,fpr=:fpr where fp_flg='N' and jcbh in :jcbh");
+                StringBuilder sql2 = new StringBuilder();
+                sql2.Append("insert into zxjc_t_jstcfp ");
+                sql2.Append(" (id,jtid, gcdm, scx, gwh, jx_no, status_no, bz, lrr1, lrsj1)");
+                sql2.Append(" values");
+                sql2.Append(" (:id,:jtid, :gcdm, :scx, :gwh, :jxno, :statusno, :bz, :lrr1, :lrsj1)");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                var jcbhlist = entitys.Select(t => t.jtid).Distinct().ToList();
+                                var fpr = entitys.Select(t => t.lrr1).First();
+                                foreach (var item in entitys)
+                                {
+                                    db.Execute(sql2.ToString(), item, trans);
+                                }
+                                db.Execute(sql.ToString(), new { jcbh = jcbhlist,fpr= fpr }, trans);
+                                trans.Commit();
+                                return entitys.Count();
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<zxjc_t_jstcfp> IsDistribute(List<zxjc_t_jstcfp> list)
         {
             List<zxjc_t_jstcfp> retlist = new List<zxjc_t_jstcfp>();    
@@ -39,7 +140,7 @@ namespace ZDMesServices.TJ.A1.JTGL
         {
             List<zxjc_t_jstc_scx> retlist = new List<zxjc_t_jstc_scx>();
             StringBuilder sql = new StringBuilder();
-            sql.Append("select count(id) from zxjc_t_jstc_scx where jcbh=:jcbh and scx=:scx");
+            sql.Append("select count(jtid) from zxjc_t_jstc where jcbh=:jcbh and scx=:scx");
             using (var db = new OracleConnection(ConString))
             {
                 foreach (var item in list)
@@ -58,6 +159,8 @@ namespace ZDMesServices.TJ.A1.JTGL
         {
             try
             {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select no,name,url,expire_date FROM ZSDL_JSTZ@ln_pdm98 where no=:jtno");
                 using (var db = new OracleConnection(ConString))
                 {
                     try
@@ -70,7 +173,27 @@ namespace ZDMesServices.TJ.A1.JTGL
                             {
                                 foreach (var item in list)
                                 {
-                                    Db.Insert<zxjc_t_jstc_scx>(item, trans);
+                                    var q = db.Query<dynamic>(sql.ToString(), new { jtno = item.jcbh });
+                                    if (q.Count() > 0)
+                                    {
+                                        DateTime yxqjs = default;
+                                        var pdmobj = q.First();
+                                        DateTime.TryParse(pdmobj.EXPIRE_DATE, out yxqjs);
+                                        zxjc_t_jstc jstcentity = new zxjc_t_jstc();
+                                        jstcentity.jcbh = item.jcbh;
+                                        jstcentity.scry = item.lrr;
+                                        jstcentity.scx = item.scx;
+                                        jstcentity.yxqx2 = yxqjs;
+                                        jstcentity.fpflg = "N";
+                                        jstcentity.jcmc = pdmobj.URL;
+                                        jstcentity.jcms = pdmobj.NAME;
+                                        jstcentity.wjlj = pdmobj.URL;
+                                        jstcentity.scsj = DateTime.Now;
+                                        jstcentity.lrr = item.lrr;
+                                        jstcentity.jtly = 1;
+                                        Db.Insert<zxjc_t_jstc>(jstcentity, trans);
+                                    }
+                                    //Db.Insert<zxjc_t_jstc_scx>(item, trans);
                                 }
                                 trans.Commit();
                                 return true;

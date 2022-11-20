@@ -1,0 +1,5 @@
+{
+  "sql": "select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl, scx, lrr, lrsj from zxjc_t_jstc where 1=1 ",
+  "sql_cnt": " select count(jtid) from zxjc_t_jstc where 1=1  ",
+  "sql_orderby": " order by lrsj desc nulls last "
+}

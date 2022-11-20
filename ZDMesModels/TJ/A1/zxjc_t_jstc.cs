@@ -77,12 +77,19 @@ namespace ZDMesModels.TJ.A1
         /// 文件分类：技术通知、变更文件、质量事故、安全事故、标准作业培训视频文件、各岗位注意事项
         /// </summary>
         public string wjfl { get; set; } = "技术通知";
+        /// <summary>
+        /// 技通来源，1：pdm，0：zxjc_t_jstc
+        /// </summary>
+        public int jtly { get; set; } = 0;
+        public string lrr { get; set; }
+        public DateTime lrsj { get; set; } =DateTime.Now;
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>
     {
         public zxjc_t_jstc_mapper()
         {
+            Map(t => t.jtid).Key(KeyType.Assigned);
             Map(t => t.fpflg).Column("fp_flg");
             Map(t => t.fpsj).Column("fp_sj");
             AutoMap();

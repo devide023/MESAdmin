@@ -29,7 +29,11 @@
   pagefuns: {
     download_jstcpdf: function (row) {
       var _this = this;
+	  if(row.jtly === 1){
       window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
+	  }else if(row.jtly === 0){
+		window.open("http://172.16.201.216:7002/jstz/" + row.wjlj);  
+	  }
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -44,8 +48,8 @@
       }
     },
     select_fn: function (vm, item, row, col) {
-      row.statusno = '';
       if (col.prop === 'jxno') {
+      row.statusno = '';
         this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {

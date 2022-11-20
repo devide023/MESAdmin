@@ -551,6 +551,32 @@
     ]
   },
   {
+    "model": "ZDMesModels.TJ.A1.zxjc_t_jstc,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "jcbh",
+        "coltxt": "技通编号"
+      },
+      {
+        "colname": "wjfl",
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "jcmc",
+        "coltxt": "技通名称"
+      },
+      {
+        "colname": "yxqx2",
+        "coltxt": "有效期限结束"
+      },
+      {
+        "colname": "wjlj",
+        "coltxt": "文件名称"
+      }
+    ],
+    "templateconf": [],
+  },
+  {
     "model": "ZDMesModels.TJ.A1.zxjc_t_tstc,ZDMesModels",
     "requireconf": [
       {

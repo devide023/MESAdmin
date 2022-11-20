@@ -17,8 +17,31 @@ namespace MesAdmin.Controllers.A1.UpLoad
         {
             _uploadservice = uploadservice;
         }
+        [HttpPost,Route("jstc_pdf")]
+        public IHttpActionResult Upload_Jstz_Pdf()
+        {
+            try
+            {
+                Dictionary<string, object> kv = new Dictionary<string, object>();
+                _uploadservice.IsClientFileName = true;
+                var list = _uploadservice.File2Ftp("技术通知", UploadWjLx.pdf, out kv);
+                if (list.Count() > 0)
+                {
+                    return Json(new { code = 1, msg = "上传成功", files = list, extdata = kv });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "上传失败", files = list, extdata = kv });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpPost,Route("dzgy_pdf")]
-        public IHttpActionResult Uplad_DzGy_Pdf()
+        public IHttpActionResult Upload_DzGy_Pdf()
         {
             try
             {

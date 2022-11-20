@@ -3,8 +3,31 @@
   isbatoperate: false,
   isoperate: true,
   isfresh: true,
-  isselect: false,
+  isselect: true,
   operate_fnlist: [{
+      label: '上传Pdf',
+      btntype: 'upload',
+      action: 'http://172.16.201.216:7002/api/a1/upload/jstc_pdf',
+      callback: function (response, file) {
+        if (response.code === 1) {
+          this.$loading().close();
+          this.$message.success(response.msg);
+          let rowid = response.extdata.rowkey;
+          let finditem = this.$basepage.list.find(function (i) {
+            return i.rowkey === rowid;
+          });
+          if (finditem) {
+            finditem.jwdx = file.size;
+            finditem.jcmc = file.name;
+            finditem.wjlj = file.name;
+            finditem.scry = _this.$store.getters.name;
+            finditem.scsj = _this.$parseTime(new Date());
+          }
+        } else {
+          this.$message.error(response.msg);
+        }
+      }
+    }, {
       label: '查看Pdf',
       fnname: 'download_jstcpdf',
       btntype: 'text'
@@ -12,7 +35,13 @@
       label: '技通分配',
       fnname: 'jstz_fp',
       btntype: 'text',
-      callback: 'dialog_save_handle'
+      callback: 'dialog_save_handle',
+      condition: [{
+          field: 'jtly',
+		  oper:'=',
+          val: 1
+        }
+      ]
     },
   ],
   batoperate: {
@@ -32,9 +61,21 @@
     },
   },
   pagefuns: {
+    add_handle: function () {
+      var row = this.$deepClone(this.pageconfig.form);
+      row.scry = this.$store.getters.name;
+      row.scsj = this.$parseTime(new Date());
+      row.lrr = this.$store.getters.name;
+      row.lrsj = this.$parseTime(new Date());
+      this.list.unshift(row);
+    },
     download_jstcpdf: function (row) {
       var _this = this;
-      window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
+      if (row.jtly === 1) {
+        window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
+      } else if (row.jtly === 0) {
+        window.open("http://172.16.201.216:7002/jstz/" + row.wjlj);
+      }
     },
     jstz_fp: function (row, item) {
       var _this = this;
@@ -56,7 +97,6 @@
       coltype: 'string',
       label: '技通编号',
       prop: 'jcbh',
-      dbprop: 'm.jcbh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -87,11 +127,17 @@
       coltype: 'string',
       label: '技通名称',
       prop: 'jcmc',
-      dbprop: 'm.jcmc',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'left'
+    }, {
+      coltype: 'string',
+      label: '文件名称',
+      prop: 'wjlj',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
     }, {
       coltype: 'date',
       label: '有效期限开始',
@@ -105,37 +151,6 @@
       coltype: 'date',
       label: '有效期限结束',
       prop: 'yxqx2',
-      dbprop: 'm.yxqx2',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 150
-    }, {
-      coltype: 'string',
-      label: '分配标志',
-      prop: 'fpflg',
-      dbprop: 'm.fpflg',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 100
-    }, {
-      coltype: 'string',
-      label: '分配人',
-      prop: 'fpr',
-      dbprop: 'm.fpr',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 100
-    }, {
-      coltype: 'datetime',
-      label: '分配时间',
-      prop: 'fpsj',
-      dbprop: 'm.fpsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -145,7 +160,6 @@
       coltype: 'string',
       label: '创建者',
       prop: 'scry',
-      dbprop: 'm.scry',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -155,7 +169,6 @@
       coltype: 'datetime',
       label: '创建时间',
       prop: 'scsj',
-      dbprop: 'm.scsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -174,25 +187,27 @@
     scsj: '',
     yxqx1: '',
     yxqx2: '',
-    fpflg: '',
+    fpflg: 'N',
     fpsj: '',
     fpr: '',
-    wjfl: '',
+    wjfl: '技术通知',
+	lrr:'',
+	lrsj:'',
     isdb: false,
     isedit: true
   },
   addapi: {
-    url: '',
+    url: '/a1/jtgl/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '',
+    url: '/a1/jtgl/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '',
+    url: '/a1/jtgl/del',
     method: 'post',
     callback: function (vm, res) {},
   },

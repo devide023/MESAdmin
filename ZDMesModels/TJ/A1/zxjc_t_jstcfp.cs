@@ -65,9 +65,17 @@ namespace ZDMesModels.TJ.A1
         /// </summary>
         public string jcmc { get; set; }
         /// <summary>
+        /// 技通描述
+        /// </summary>
+        public string jcms { get; set; }
+        /// <summary>
         /// 技通编号
         /// </summary>
         public string jcbh { get; set; }
+        /// <summary>
+        /// 技通来源，1：pdm
+        /// </summary>
+        public int jtly { get; set; }
     }
 
     public class zxjc_t_jstcfp_mapper : ClassMapper<zxjc_t_jstcfp>
@@ -80,6 +88,8 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.wjlj).Ignore();
             Map(t => t.jcbh).Ignore();
             Map(t => t.jcmc).Ignore();
+            Map(t => t.jcms).Ignore();
+            Map(t => t.jtly).Ignore();
             AutoMap();
         }
     }

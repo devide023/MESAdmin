@@ -14,9 +14,16 @@ namespace MesAdmin.Controllers.A1.JTGL
     public class A1JTFPSCXController : BaseApiController<zxjc_t_jstc_scx>
     {
         private IJTFPSCX _jtfpscx;
+        private IDbOperate<zxjc_t_jstc_scx> _jtfpscxservice;
         public A1JTFPSCXController(IDbOperate<zxjc_t_jstc_scx> jtfpscxservice, IJTFPSCX jtfpscx) :base(jtfpscxservice)
         {
+            _jtfpscxservice = jtfpscxservice;
             _jtfpscx = jtfpscx;
+        }
+
+        public override IHttpActionResult Add(List<zxjc_t_jstc_scx> entitys)
+        {
+            return base.Add(entitys);
         }
 
         public override IHttpActionResult Del(List<zxjc_t_jstc_scx> entitys)

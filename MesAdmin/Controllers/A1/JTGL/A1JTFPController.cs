@@ -65,22 +65,41 @@ namespace MesAdmin.Controllers.A1.JTGL
             try
             {
                 List<zxjc_t_jstcfp> postdata = new List<zxjc_t_jstcfp>();
-                foreach (var item in form.gwh)
+                if (form.statusno.Count > 0)
                 {
-                    foreach (var sitem in form.statusno)
+                    foreach (var item in form.gwh)
+                    {
+                        foreach (var sitem in form.statusno)
+                        {
+                            postdata.Add(new zxjc_t_jstcfp()
+                            {
+                                jtid = form.jtid,
+                                jxno = form.jxno,
+                                gwh = item,
+                                statusno = sitem,
+                                lrr1 = _user.CurrentUser().name,
+                                lrsj1 = DateTime.Now,
+                                bz = form.bz,
+                            }) ;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in form.gwh)
                     {
                         postdata.Add(new zxjc_t_jstcfp()
                         {
                             jtid = form.jtid,
                             jxno = form.jxno,
                             gwh = item,
-                            statusno = sitem,
                             lrr1 = _user.CurrentUser().name,
                             lrsj1 = DateTime.Now,
                             bz = form.bz,
                         });
                     }
                 }
+                
                 var retlist = _jtfp.IsDistribute(postdata);
                 if (retlist.Count > 0)
                 {
