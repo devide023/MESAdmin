@@ -9,6 +9,7 @@ using Autofac.Configuration;
 using Autofac.Extras.DynamicProxy;
 using Microsoft.Extensions.Configuration;
 using ZDMesInterceptor;
+using ZDMesInterceptor.A1;
 using ZDMesInterceptor.LBJ;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ.ImportData;
@@ -37,6 +38,7 @@ namespace ZDMesModules.TJ
             builder.Register(c => new CUDLogger(TJConstr));
             builder.Register(c => new ImportLog(TJConstr));
             builder.Register(c => new UserLog(TJConstr));
+            builder.Register(t => new JtFpLog(TJConstr));
             var module_config = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
             module_config.AddJsonFile("TJA1_module_config.json");
             // Register the ConfigurationModule with Autofac.

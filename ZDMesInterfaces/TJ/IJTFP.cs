@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZDMesModels.TJ.A1;
+using Autofac.Extras.DynamicProxy;
+using ZDMesInterceptor.A1;
+
 namespace ZDMesInterfaces.TJ
 {
+    [Intercept(typeof(JtFpLog))]
     public interface IJTFP
     {
         /// <summary>

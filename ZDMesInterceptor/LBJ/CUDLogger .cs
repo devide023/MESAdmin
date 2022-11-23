@@ -13,6 +13,8 @@ using System.Reflection;
 using DapperExtensions.Sql;
 using ZDMesModels;
 using System.Text;
+using System.Data;
+
 namespace ZDMesInterceptor.LBJ
 {
     /// <summary>
@@ -23,12 +25,14 @@ namespace ZDMesInterceptor.LBJ
         private mes_oper_log updatelog = new mes_oper_log();
         private string _oracleconstr = string.Empty;
         private mes_user_entity userinfo;
-        private SqlGeneratorImpl sqlGenerator;
+        private StringBuilder sqllog = new StringBuilder();
         public CUDLogger(string constr)
         {
             _oracleconstr = ConfigurationManager.ConnectionStrings[constr]?.ToString();
-            var config = new DapperExtensionsConfiguration(typeof(AutoClassMapper<>), new List<Assembly>(), new OracleDialect());
-            sqlGenerator = new SqlGeneratorImpl(config);
+            sqllog.Append(" insert into mes_oper_log ");
+            sqllog.Append(" (name, lx, olddata, newdata, czrq, czr, path, czrid) ");
+            sqllog.Append(" values ");
+            sqllog.Append(" (:name, :lx, :olddata, :newdata, :czrq, :czr, :path, :czrid)");
         }
         public void Intercept(IInvocation invocation)
         {
@@ -144,7 +148,18 @@ namespace ZDMesInterceptor.LBJ
                     {
                         using (var db = new OracleConnection(_oracleconstr))
                         {
-                            IDatabase Db = new Database(db, sqlGenerator);
+                            updatelog.newdata = JsonConvert.SerializeObject(invocation.Arguments[0]);
+                            DynamicParameters p = new DynamicParameters();
+                            p.Add(":name", updatelog.name, DbType.String, ParameterDirection.Input);
+                            p.Add(":lx", updatelog.lx, DbType.String, ParameterDirection.Input);
+                            p.Add(":olddata", updatelog.olddata, DbType.String, ParameterDirection.Input);
+                            p.Add(":newdata", updatelog.newdata, DbType.String, ParameterDirection.Input);
+                            p.Add(":czrq", updatelog.czrq, DbType.DateTime, ParameterDirection.Input);
+                            p.Add(":czr", updatelog.czr, DbType.String, ParameterDirection.Input);
+                            p.Add(":path", updatelog.path, DbType.String, ParameterDirection.Input);
+                            p.Add(":czrid", updatelog.czrid, DbType.Int32, ParameterDirection.Input);
+                            db.Execute(sqllog.ToString(), p);
+                            /*IDatabase Db = new Database(db, sqlGenerator);
                             try
                             {
                                 updatelog.newdata = JsonConvert.SerializeObject(invocation.Arguments[0]);
@@ -158,7 +173,7 @@ namespace ZDMesInterceptor.LBJ
                             {
                                 db.Close();
                                 Db.Dispose();
-                            }
+                            }*/
                         }
                     }
                 }
@@ -177,6 +192,7 @@ namespace ZDMesInterceptor.LBJ
                 if (Convert.ToBoolean(invocation.ReturnValue))
                 {
                     string url = HttpContext.Current.Request.Path;
+                    
                     if (invocation.Arguments.Length > 0)
                     {
                         string tbname = string.Empty;
@@ -188,7 +204,17 @@ namespace ZDMesInterceptor.LBJ
                         using (var db = new OracleConnection(_oracleconstr))
                         {
                             userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
-                            IDatabase Db = new Database(db, sqlGenerator);
+                            DynamicParameters p = new DynamicParameters();
+                            p.Add(":name", tbname, DbType.String, ParameterDirection.Input);
+                            p.Add(":lx", "del", DbType.String, ParameterDirection.Input);
+                            p.Add(":olddata", "", DbType.String, ParameterDirection.Input);
+                            p.Add(":newdata", JsonConvert.SerializeObject(invocation.Arguments[0]), DbType.String, ParameterDirection.Input);
+                            p.Add(":czrq", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
+                            p.Add(":czr", userinfo?.name, DbType.String, ParameterDirection.Input);
+                            p.Add(":path", url, DbType.String, ParameterDirection.Input);
+                            p.Add(":czrid", userinfo == null ? 0 : userinfo.id, DbType.Int32, ParameterDirection.Input);
+                            db.Execute(sqllog.ToString(), p);
+                            /*IDatabase Db = new Database(db, sqlGenerator);
                             try
                             {
                                 Db.Insert<mes_oper_log>(new mes_oper_log()
@@ -210,7 +236,7 @@ namespace ZDMesInterceptor.LBJ
                             {
                                 db.Close();
                                 Db.Dispose();
-                            }
+                            }*/
                         }
                     }
                 }
@@ -253,7 +279,17 @@ namespace ZDMesInterceptor.LBJ
                         using (var db = new OracleConnection(_oracleconstr))
                         {
                             userinfo = db.Query<mes_user_entity>("select id,code,name from mes_user_entity where token = :token", new { token = ZDToolHelper.TokenHelper.GetToken }).FirstOrDefault();
-                            IDatabase Db = new Database(db, sqlGenerator);
+                            DynamicParameters p = new DynamicParameters();
+                            p.Add(":name", tbname, DbType.String, ParameterDirection.Input);
+                            p.Add(":lx", "add", DbType.String, ParameterDirection.Input);
+                            p.Add(":olddata", "", DbType.String, ParameterDirection.Input);
+                            p.Add(":newdata", JsonConvert.SerializeObject(invocation.Arguments[0]), DbType.String, ParameterDirection.Input);
+                            p.Add(":czrq", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
+                            p.Add(":czr", userinfo?.name, DbType.String, ParameterDirection.Input);
+                            p.Add(":path", url, DbType.String, ParameterDirection.Input);
+                            p.Add(":czrid", userinfo == null ? 0 : userinfo.id, DbType.Int32, ParameterDirection.Input);
+                            db.Execute(sqllog.ToString(), p);
+                            /*IDatabase Db = new Database(db, sqlGenerator);
                             try
                             {
                                 Db.Insert<mes_oper_log>(new mes_oper_log()
@@ -276,7 +312,7 @@ namespace ZDMesInterceptor.LBJ
                             {
                                 db.Close();
                                 Db.Dispose();
-                            }
+                            }*/
                         }
                     }
                 }
