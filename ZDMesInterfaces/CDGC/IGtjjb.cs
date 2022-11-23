@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZDMesModels.CDGC;
+using ZDMesInterceptor.CDGC;
+using Autofac.Extras.DynamicProxy;
 
 namespace ZDMesInterfaces.CDGC
 {
+    [Intercept(typeof(JJBLog))]
     public interface IGtjjb
     {
         /// <summary>

@@ -96,9 +96,9 @@
       align: 'center',
       width: 100
     }, {
-      coltype: 'string',
+      coltype: 'datetime',
       label: '分配时间',
-      prop: 'spsj',
+      prop: 'fpsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',

@@ -1,6 +1,6 @@
 {
   isgradequery: true,
-  isfresh: false,
+  isfresh: true,
   isoperate: true,
   pagefuns: {
     

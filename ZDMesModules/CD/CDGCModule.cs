@@ -17,6 +17,7 @@ using ZDMesServices.LBJ.CheckData;
 using ZDMesInterfaces.LBJ;
 using ZDMesServices.Common;
 using ZDMesInterfaces.Common;
+using ZDMesInterceptor.CDGC;
 
 namespace ZDMesModules.CD
 {
@@ -42,6 +43,8 @@ namespace ZDMesModules.CD
             builder.Register(c => new CUDLogger(CDGCConstr));
             builder.Register(c => new ImportLog(CDGCConstr));
             builder.Register(c => new UserLog(CDGCConstr));
+            builder.Register(c => new JJBLog(CDGCConstr));
+            builder.Register(t => new GTJCLog(CDGCConstr));
             var module_config = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
             module_config.AddJsonFile("CDGC_module_config.json");
             // Register the ConfigurationModule with Autofac.

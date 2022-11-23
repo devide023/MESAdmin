@@ -1,6 +1,6 @@
 {
   isgradequery: true,
-  isbatoperate: true,
+  isbatoperate: false,
   isoperate: false,
   isfresh: true,
   isselect: true,
@@ -11,7 +11,7 @@
       this.list.unshift(row);
     },
 	download_template_file: function () {
-      window.open('http://172.16.201.125:7002/template/lbj/员工基础数据.xlsx');
+      window.open('http://192.168.4.17:7002/template/lbj/员工基础数据.xlsx');
     }
   },
   bat_btnlist: [{
@@ -214,7 +214,7 @@
       label: '照片',
       headeralign: 'center',
       align: 'center',
-      action: 'http://localhost:52655/api/upload/image',
+      action: 'http://192.168.4.17:7002/api/upload/image',
       accept: '.jpg,.jpeg,.png',
 	  searchable:false,
       before_upload: function (file) {

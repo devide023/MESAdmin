@@ -469,13 +469,25 @@ namespace ZDMesServices.Common
                         db.Open();
                         using (var transaction = db.BeginTransaction())
                         {
-                            var p = new { id = entitys.Select(t => t.id) };
-                            var usercode = entitys.Select(t => t.code).ToList();
-                            var affectedRows1 = db.Execute("delete from mes_user_entity where id in :id", p, transaction: transaction);
-                            var affectedRows2 = db.Execute("delete from mes_user_role where userid in :id", p, transaction: transaction);
-                            var affectedRows3 = db.Execute("delete from app_role_user where usercode in :usercode", new { usercode = usercode }, transaction: transaction);
-                            transaction.Commit();
-                            return true;
+                            try
+                            {
+                                var p = new { id = entitys.Select(t => t.id) };
+                                var usercode = entitys.Select(t => t.code).ToList();
+                                var affectedRows1 = db.Execute("delete from mes_user_entity where id in :id", p, transaction: transaction);
+                                var affectedRows2 = db.Execute("delete from mes_user_role where userid in :id", p, transaction: transaction);
+                                var cnt = db.ExecuteScalar<int>("select count(*) from user_tables where table_name = upper('app_role_user')");
+                                if (cnt > 0)
+                                {
+                                    var affectedRows3 = db.Execute("delete from app_role_user where usercode in :usercode", new { usercode = usercode }, transaction: transaction);
+                                }
+                                transaction.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                transaction.Rollback();
+                                throw;
+                            }
                         }
                     }
                     finally

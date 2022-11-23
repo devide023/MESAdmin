@@ -18,7 +18,7 @@ namespace MesAdmin.Controllers.Common
         {
             _menuapi = menuapi;
         }
-        [HttpGet,Route("update")]
+        [HttpGet,AllowAnonymous,Route("update")]
         public IHttpActionResult Update()
         {
             try

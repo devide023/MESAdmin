@@ -115,6 +115,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CDGC\GTJCLog.cs" />
+    <Compile Include="CDGC\JJBLog.cs" />
     <Compile Include="LBJ\CUDLogger .cs" />
     <Compile Include="LBJ\DaoJuLog.cs" />
     <Compile Include="LBJ\ImportLog.cs" />
@@ -137,6 +139,7 @@
       <Name>ZDMesModels</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

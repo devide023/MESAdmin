@@ -13,15 +13,19 @@
       label: '编辑',
       fnname: 'edit_bill',
       btntype: 'text',
-      callback: 'dialog_save_handle'
+      callback: 'dialog_save_handle',
+      condition: [{
+          field: 'const_userid',
+          oper: 'in',
+          val: [1,25]
+        }
+      ]
     }
   ],
   batoperate: {},
   pagefuns: {
     edit_bill: function (row) {
-      var _uid = this.$store.getters.userinfo.id;
       var _this = this;
-      var _isadmin = _uid === 1 ? true : false;
       _this.dialog_title = '';
       _this.dialog_width = '60%';
       _this.dialogVisible = true;
@@ -31,7 +35,6 @@
         isread: false,
         calcrq: row.rq,
         calcbc: row.bc,
-        isadmin: _isadmin
       };
     },
     view_bill: function (row) {

@@ -8,36 +8,39 @@
       label: '明细',
       fnname: 'view_bill',
       btntype: 'text',
-	  callback:'dialog_close_handle'
+      callback: 'dialog_close_handle'
     }, {
       label: '编辑',
       fnname: 'edit_bill',
       btntype: 'text',
-	  callback:'dialog_save_handle'
+      callback: 'dialog_save_handle',
+      condition: [{
+          field: 'const_userid',
+          oper: 'in',
+          val: [1,25]
+        }
+      ]
     }
   ],
   pagefuns: {
-    edit_bill: function (row,fnitem) {
-	  var _uid = this.$store.getters.userinfo.id;
+    edit_bill: function (row, fnitem) {
       var _this = this;
-	  var _isadmin = _uid === 1?true:false;
       _this.dialog_title = '';
-	  _this.dialog_fnitem = fnitem;
+      _this.dialog_fnitem = fnitem;
       _this.dialog_width = '60%';
-	  _this.dialog_hidefooter = true;
+      _this.dialog_hidefooter = true;
       _this.dialogVisible = true;
       _this.dialog_viewpath = 'cdgc/jjbgl/djkjjb/component/djkjjb';
       _this.dialog_props = {
         isread: false,
         rq: row.rq,
-        bc: row.bc,
-		isadmin:_isadmin
+        bc: row.bc
       };
     },
-    view_bill: function (row,fnitem) {
+    view_bill: function (row, fnitem) {
       var _this = this;
       _this.dialog_title = '';
-	  _this.dialog_fnitem = fnitem;
+      _this.dialog_fnitem = fnitem;
       _this.dialog_width = '40%';
       _this.dialogVisible = true;
       _this.dialog_viewpath = 'cdgc/jjbgl/djkjjb/component/djkjjb';
@@ -47,12 +50,12 @@
         bc: row.bc
       };
     },
-	dialog_close_handle:function(vm){
-		this.dialogVisible = false;
-	},
+    dialog_close_handle: function (vm) {
+      this.dialogVisible = false;
+    },
     dialog_save_handle: function (vm) {
       var userid = this.$store.getters.userinfo.id;
-	  console.log(this.dialog_vm);
+      console.log(this.dialog_vm);
     }
   },
   fields: [{

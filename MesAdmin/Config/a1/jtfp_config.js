@@ -73,14 +73,16 @@
       headeralign: 'center',
       align: 'center',
       width: 130
-    }, {
+    },  
+	{
       coltype: 'string',
-      label: '文件描述',
-      prop: 'jcmc',
+      label: '文件名称',
+      prop: 'wjlj',
       overflowtooltip: true,
       headeralign: 'center',
       align: 'left',
-    }, {
+    },
+	{
       coltype: 'list',
       label: '岗位号',
       prop: 'gwh',
@@ -123,7 +125,15 @@
       hideoptionval: true,
       relation: 'statusno_list',
       width: 150
-    }, {
+    }, 
+	{
+      coltype: 'string',
+      label: '技通描述',
+      prop: 'jcms',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'left',
+    },{
       coltype: 'string',
       label: '备注',
       prop: 'bz',

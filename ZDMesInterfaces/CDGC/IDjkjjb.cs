@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Autofac.Extras.DynamicProxy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesInterceptor.CDGC;
 using ZDMesModels.CDGC;
 
 namespace ZDMesInterfaces.CDGC
@@ -10,6 +12,8 @@ namespace ZDMesInterfaces.CDGC
     /// <summary>
     /// 电机壳交接班
     /// </summary>
+    /// 
+    [Intercept(typeof(JJBLog))]
     public interface IDjkjjb
     {
         /// <summary>
