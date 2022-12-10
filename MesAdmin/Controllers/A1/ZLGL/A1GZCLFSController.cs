@@ -8,6 +8,7 @@ using ZDMesModels.TJ.A1;
 using ZDMesInterfaces.Common;
 using MesAdmin.Filters;
 using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesInterfaces.TJ;
 
 namespace MesAdmin.Controllers.A1.ZLGL
 {
@@ -19,17 +20,30 @@ namespace MesAdmin.Controllers.A1.ZLGL
             _requireverfify = requireverfify;
             _importservice = importservice;
         }
+        [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
+        public override IHttpActionResult Add(List<zxjc_fault_clfs> entitys)
+        {
+            return base.Add(entitys);
+        }
+        [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
+        public override IHttpActionResult Edit(List<zxjc_fault_clfs> entitys)
+        {
+            return base.Edit(entitys);
+        }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_fault_clfs,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
             return base.ReadTempFile(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_fault_clfs,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Replace(string fileid)
         {
             return base.ReadTempFile_By_Replace(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_fault_clfs,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Zh(string fileid)
         {
             return base.ReadTempFile_By_Zh(fileid);

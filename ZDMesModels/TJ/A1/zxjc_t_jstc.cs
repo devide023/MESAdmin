@@ -83,6 +83,10 @@ namespace ZDMesModels.TJ.A1
         public int jtly { get; set; } = 0;
         public string lrr { get; set; }
         public DateTime lrsj { get; set; } =DateTime.Now;
+        /// <summary>
+        /// 查看数量
+        /// </summary>
+        public int rcnt { get; set; }
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>

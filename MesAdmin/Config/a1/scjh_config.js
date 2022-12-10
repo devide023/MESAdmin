@@ -72,32 +72,23 @@
       headeralign: 'center',
       align: 'center',
       width: 100
-    }, {
+    },{
       coltype: 'string',
-      label: '生产序号',
-      prop: 'scxh',
-      overflowtooltip: true,
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 100
-    }, {
-      coltype: 'string',
-      label: '生产订单数量',
+      label: '生产数量',
       prop: 'scsl',
       overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 100
     }, {
       coltype: 'date',
-      label: '生产计划时间',
+      label: '生产时间',
       prop: 'scsj',
       overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
       sortable: true,
-      width: 150
+      width: 100
     }, {
       coltype: 'string',
       label: '装配计划数量',
@@ -106,7 +97,7 @@
       headeralign: 'center',
       sortable: true,
       align: 'center',
-      width: 150
+      width: 130
     }, {
       coltype: 'date',
       label: '装配时间',
@@ -115,7 +106,7 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
-      width: 150
+      width: 100
     }, {
       coltype: 'string',
       label: '备注',
@@ -123,23 +114,7 @@
       overflowtooltip: true,
       headeralign: 'center',
       align: 'left'
-    }, {
-      coltype: 'string',
-      label: '客户编码',
-      prop: 'csbm',
-      overflowtooltip: true,
-      headeralign: 'center',
-      align: 'center',
-	  width:100
-    },
-	{
-      coltype: 'string',
-      label: '客户名称',
-      prop: 'khmc',
-      overflowtooltip: true,
-      headeralign: 'center',
-      align: 'left'
-    },
+    }
   ],
   form: {
     isdb: false,

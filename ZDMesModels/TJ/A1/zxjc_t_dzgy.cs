@@ -84,6 +84,10 @@ namespace ZDMesModels.TJ.A1
         /// 状态
         /// </summary>
         public List<dynamic> statusno_list { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string bz { get; set; }
     }
 
     public class zxjc_t_dzgy_mapper : ClassMapper<zxjc_t_dzgy>

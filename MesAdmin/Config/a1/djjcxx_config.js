@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },	
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/点检基础信息.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/点检基础信息.xlsx?r='+Math.random());
     },
 	  suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -154,18 +154,13 @@
 	  hideoptionval:true,
 	  width:150
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '岗位编码',
       prop: 'gwh',
       overflowtooltip: true,      
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [],
-	  inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
 	  width:150
     }, {
       coltype: 'string',

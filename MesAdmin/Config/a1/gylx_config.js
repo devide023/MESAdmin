@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/工艺路线.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/工艺路线.xlsx?r='+Math.random());
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -161,18 +161,13 @@
 	  hideoptionval:true,
 	  relation:'statusno_list'
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '岗位编码',
       prop: 'gwh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      options: [],
     }, {
       coltype: 'int',
       label: '装配顺序',

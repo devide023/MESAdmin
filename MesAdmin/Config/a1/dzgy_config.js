@@ -156,39 +156,39 @@
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
-	  row.lrr = this.$store.getters.name;
+      row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/电子工艺.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/电子工艺.xlsx?r=' + Math.random());
     },
-	download_dzgypdf: function (row) {
+    download_dzgypdf: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {
         wjlx: '电子工艺',
-        wjlj: row.wjlj
+        wjlj: row.wjlj+"/"+row.gymc
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj);
+          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj+'/'+row.gymc);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
       });
     },
-	download_dzgyMp4:function(row){
-		var _this = this;
+    download_dzgyMp4: function (row) {
+      var _this = this;
       this.$request('get', "download/ftp2web", {
         wjlx: '视频',
-        wjlj: row.wjlj
+        wjlj: row.wjlj+"/"+row.gymc
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj);
+          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj+'/'+row.gymc);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
       });
-	},
+    },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
         row.username = '';
@@ -203,7 +203,7 @@
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
-		row.statusno='';
+        row.statusno = '';
         this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {
@@ -246,18 +246,13 @@
       width: 100,
       hideoptionval: true
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '岗位编码',
       prop: 'gwh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      options: [],
       width: 150
     }, {
       coltype: 'string',
@@ -301,8 +296,25 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    },
+    }, 
 	{
+      coltype: 'string',
+      label: '文件路径',
+      prop: 'wjlj',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, 
+	{
+      coltype: 'string',
+      label: '备注',
+      prop: 'bz',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',
@@ -310,9 +322,8 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width:100
-    },
-	{
+      width: 100
+    }, {
       coltype: 'datetime',
       label: '录入时间',
       prop: 'lrsj',
@@ -320,7 +331,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width:150
+      width: 150
     }
   ],
   form: {
@@ -337,7 +348,8 @@
     scry: '',
     scpc: '',
     scsj: '',
-	gylx:'工艺',
+    gylx: '工艺',
+    bz: '',
     statusno_list: [],
     isdb: false,
     isedit: true

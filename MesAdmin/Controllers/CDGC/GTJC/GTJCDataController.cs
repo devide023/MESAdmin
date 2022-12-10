@@ -109,11 +109,6 @@ namespace MesAdmin.Controllers.CDGC.GTJC
                     foreach (var bill in bills)
                     {
                         bill.lrr = _userservice.CurrentUser().name;
-                        var sfczjg = bill.zxjcgtjcdetail.Where(t => t.cpfw == "结果" && t.kxmc == "评定结果");
-                        if (sfczjg.Count() > 0)
-                        {
-                            bill.pdjg = sfczjg.First().jcjg;
-                        }
                         _gtjc_jgservice.Save_Gtjc_CheckData(bill);
                     }
                     return Json(new

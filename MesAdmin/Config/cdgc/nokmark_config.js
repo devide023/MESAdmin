@@ -30,7 +30,7 @@
   },
   fields: [{
       coltype: 'string',
-      label: '机号',
+      label: '件号',
       prop: 'vin',
       overflowtooltip: true,
       searchable: true,

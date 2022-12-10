@@ -85,7 +85,7 @@
       }).then(function (res) {
         if (res.code === 1) {
           let expdatalist = res.list;
-          _this.export_handle(_this.pageconfig.fields, expdatalist);
+          _this.export_handle(_this.pageconfig.fields.filter(function(i){return ['gzty'].indexOf(i.prop) === -1;}), expdatalist);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
 	download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/岗位站点.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/岗位站点.xlsx?r='+Math.random());
     },
   },
   fields: [{

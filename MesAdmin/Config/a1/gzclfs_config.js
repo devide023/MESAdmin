@@ -91,7 +91,7 @@
         }
       });
     },
-  },    
+  },
   bat_btnlist: [{
       btntxt: '模板下载',
       fnname: 'download_template_file'
@@ -103,9 +103,9 @@
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
-    },		
+    },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/处理方式基础信息.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/处理方式基础信息.xlsx?r=' + Math.random());
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'faultno') {
@@ -118,14 +118,63 @@
           }
         });
       }
+	  if(col.prop === 'faultname'){
+		  row.faultno = '';
+		  this.$request('get','/a1/baseinfo/faultno_by_key',{key:key}).then(function(res){
+			  if(res.code === 1){
+				  cb(res.list);
+			  }
+		  });
+	  }
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'faultno') {
         row.faultname = item.label;
       }
+	  if(col.prop === 'faultname'){
+		  row.faultname=item.label;
+		  row.faultno = item.value;
+	  }
     }
   },
   fields: [{
+      coltype: 'string',
+      label: '岗位编码',
+      prop: 'gwh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 150
+    }, {
+      coltype: 'string',
+      label: '故障名称',
+	  suggest: true,
+      prop: 'faultname',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+	  suggest_fn_name: 'suggest_fn',
+      select_fn_name: 'select_fn',
+      width: 150
+    }, {
+      coltype: 'string',
+      label: '处理方式名称',
+      prop: 'handname',
+      dbprop: 'hand_name',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '备注',
+      prop: 'remark',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
       coltype: 'string',
       suggest: true,
       label: '故障代码',
@@ -138,45 +187,6 @@
       suggest_fn_name: 'suggest_fn',
       select_fn_name: 'select_fn',
       width: 150
-    }, {
-      coltype: 'string',
-      label: '故障名称',
-      prop: 'faultname',
-      overflowtooltip: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 150
-    }, {
-      coltype: 'string',
-      label: '处理方式名称',
-      prop: 'handname',
-      dbprop: 'hand_name',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'list',
-      label: '岗位编码',
-      prop: 'gwh',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      width: 150
-    }, {
-      coltype: 'string',
-      label: '备注',
-      prop: 'remark',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
     }, {
       coltype: 'string',
       label: '录入人',

@@ -74,6 +74,9 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.2.10, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.3.2\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -456,6 +459,7 @@
     <Content Include="Config\cdgc\gtjc_jcsj_config.js" />
     <Content Include="Config\cdgc\gtjjb_config.js" />
     <Content Include="Config\cdgc\gtjjb_list_config.js" />
+    <Content Include="Config\cdgc\nokmark_config.js" />
     <Content Include="Config\cdgc\ryxx_config.js" />
     <Content Include="Config\cdgc\sbsjcj_config.js" />
     <Content Include="Config\cdgc\sbxx_config.js" />
@@ -552,6 +556,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\a1\jtfp_config.js.bak" />
+    <Content Include="log4net.config" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>

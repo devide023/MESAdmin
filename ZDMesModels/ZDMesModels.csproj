@@ -180,6 +180,7 @@
     <Compile Include="TJ\A1\base_gwzx_jx.cs" />
     <Compile Include="TJ\A1\base_gycs.cs" />
     <Compile Include="TJ\A1\base_sbxx.cs" />
+    <Compile Include="TJ\A1\mes_pdm_jstz_yd.cs" />
     <Compile Include="TJ\A1\sys_jstz_to_scx_form.cs" />
     <Compile Include="TJ\A1\sys_jtfp_form.cs" />
     <Compile Include="TJ\A1\tj_base_scxxx.cs" />

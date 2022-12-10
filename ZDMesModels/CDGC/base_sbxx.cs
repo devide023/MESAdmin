@@ -21,6 +21,10 @@ namespace ZDMesModels.CDGC
         ///</summary>
         public string sbbh { get; set; }
         /// <summary>
+        /// 设备自编号
+        /// </summary>
+        public string sbzbh { get; set; }
+        /// <summary>
         ///设备名称
         ///</summary>
         public string sbmc { get; set; }

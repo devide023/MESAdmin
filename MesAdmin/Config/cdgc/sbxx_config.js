@@ -16,11 +16,22 @@
     },
 	{
       coltype: 'string',
+      prop: 'sbzbh',
+      label: '设备自编号',
+      headeralign: 'center',
+      align: 'center',
+      sortable: true,
+	  overflowtooltip: true,
+    },
+	{
+      coltype: 'string',
       prop: 'sbmc',
       label: '设备名称',
       headeralign: 'center',
       align: 'center',
       sortable: true,
+	  width:200,
+	  overflowtooltip: true,
     },
 	{
       coltype: 'string',

@@ -92,10 +92,7 @@
       });
     },
   },
-  bat_btnlist: [{
-      btntxt: '模板下载',
-      fnname: 'download_template_file'
-    }
+  bat_btnlist: [
   ],
   pagefuns: {
     add_handle: function () {

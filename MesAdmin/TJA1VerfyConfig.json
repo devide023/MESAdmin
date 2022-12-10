@@ -311,52 +311,74 @@
     ]
   }, {
     "model": "ZDMesModels.TJ.A1.zxjc_t_dzgy,ZDMesModels",
-    "requireconf": [{
+    "requireconf": [
+      {
         "colname": "gybh",
         "coltxt": "工艺编号"
-      }, {
+      },
+      {
         "colname": "gylx",
         "coltxt": "文件分类"
-      }, {
+      },
+      {
         "colname": "gwh",
         "coltxt": "岗位编码"
-      }, {
+      },
+      {
         "colname": "jxno",
         "coltxt": "机型"
-      }, {
+      },
+      {
         "colname": "gymc",
         "coltxt": "文件名称"
-      },
+      }
     ],
-    "templateconf": [{
+    "templateconf": [
+      {
         "colname": "gybh",
         "colindex": 0,
         "coltxt": "工艺编号"
-      }, {
+      },
+      {
         "colname": "gylx",
         "colindex": 1,
         "coltxt": "文件分类"
-      }, {
+      },
+      {
         "colname": "gwh",
         "colindex": 2,
         "coltxt": "岗位编码"
-      }, {
+      },
+      {
         "colname": "jxno",
         "colindex": 3,
         "coltxt": "机型"
-      }, {
+      },
+      {
         "colname": "statusno",
         "colindex": 4,
         "coltxt": "状态码"
-      }, {
+      },
+      {
         "colname": "gymc",
         "colindex": 5,
         "coltxt": "文件名称"
-      }, {
+      },
+      {
         "colname": "gyms",
         "colindex": 6,
         "coltxt": "工艺描述"
       },
+      {
+        "colname": "wjlj",
+        "colindex": 7,
+        "coltxt": "文件路径"
+      },
+      {
+        "colname": "bz",
+        "colindex": 8,
+        "coltxt": "备注"
+      }
     ]
   }, {
     "model": "ZDMesModels.TJ.A1.base_gwzx_jx,ZDMesModels",
@@ -467,15 +489,9 @@
     ]
   }, {
     "model": "ZDMesModels.TJ.A1.zxjc_fault,ZDMesModels",
-    "requireconf": [{
-        "colname": "gwh",
-        "coltxt": "岗位编码"
-      }, {
+    "requireconf": [ {
         "colname": "faultname",
         "coltxt": "故障名称"
-      }, {
-        "colname": "jxno",
-        "coltxt": "机型"
       }, {
         "colname": "faultfl",
         "coltxt": "故障分类"
@@ -519,8 +535,8 @@
     "model": "ZDMesModels.TJ.A1.zxjc_fault_clfs,ZDMesModels",
     "requireconf": [
       {
-        "colname": "faultno",
-        "coltxt": "故障代码"
+        "colname": "faultname",
+        "coltxt": "故障名称"
       },
       {
         "colname": "handname",
@@ -529,25 +545,25 @@
     ],
     "templateconf": [
       {
-        "colname": "faultno",
+        "colname": "gwh",
         "colindex": 0,
-        "coltxt": "故障代码"
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "faultname",
+        "colindex": 1,
+        "coltxt": "故障名称"
       },
       {
         "colname": "handname",
-        "colindex": 1,
-        "coltxt": "处理方式名称"
-      },
-      {
-        "colname": "gwh",
         "colindex": 2,
-        "coltxt": "岗位编码"
+        "coltxt": "处理方式名称"
       },
       {
         "colname": "bz",
         "colindex": 3,
         "coltxt": "备注"
-      },
+      }
     ]
   },
   {

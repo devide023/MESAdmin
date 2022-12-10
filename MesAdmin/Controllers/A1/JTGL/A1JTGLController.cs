@@ -49,7 +49,7 @@ namespace MesAdmin.Controllers.A1.JTGL
             try
             {
                 int resultcount = 0;
-                var list = _baseservice.GetList(parm, out resultcount);
+                var list = _fpscxservice.Get_PDM_JSTZ_List(parm, out resultcount);
                 return Json(new
                 {
                     code = 1,

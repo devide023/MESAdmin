@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.HSSF.Record;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -19,6 +20,27 @@ namespace MesAdmin.Controllers.A1.JTGL
         {
             _jtfpscxservice = jtfpscxservice;
             _jtfpscx = jtfpscx;
+        }
+        [HttpGet,Route("read_pdm_jstz")]
+        public IHttpActionResult ReadPDMTZ(string jcbh)
+        {
+            try
+            {
+               var isok = _jtfpscx.Read_PDM_JSTZ(jcbh);
+                if (isok)
+                {
+                    return Json(new { code = 1, msg = $"{jcbh}打开成功" });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "打开失败" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public override IHttpActionResult Add(List<zxjc_t_jstc_scx> entitys)

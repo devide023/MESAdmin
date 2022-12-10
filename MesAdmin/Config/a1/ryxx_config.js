@@ -66,7 +66,7 @@
       _this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/员工基础信息.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/员工基础信息.xlsx?r='+Math.random());
     }
   },
   fields: [{
@@ -99,18 +99,13 @@
       align: 'center',
       width: 100
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '岗位号',
       prop: 'gwh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      options: []
     }, {
       coltype: 'list',
       label: '性别',
@@ -143,6 +138,12 @@
         }, {
           label: '机动',
           value: '机动'
+        },{
+          label: '线长',
+          value: '线长'
+        },{
+          label: '巡检',
+          value: '巡检'
         }
       ],
       hideoptionval: true,

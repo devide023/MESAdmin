@@ -38,7 +38,7 @@
       callback: 'dialog_save_handle',
       condition: [{
           field: 'jtly',
-		  oper:'=',
+          oper: '=',
           val: 1
         }
       ]
@@ -71,6 +71,9 @@
     },
     download_jstcpdf: function (row) {
       var _this = this;
+      this.$request('get', '/a1/jtfpscx/read_pdm_jstz', {
+        jcbh: row.jcbh
+      }).then(function (res) {});
       if (row.jtly === 1) {
         window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
       } else if (row.jtly === 0) {
@@ -176,6 +179,15 @@
       width: 150
     }
   ],
+  trbginfo: {
+    colname: 'rcnt',
+    logiclist: [{
+        logic: '>',
+        val0: 0,
+        classname: 'info-row',
+      }
+    ]
+  },
   form: {
     jcbh: '',
     jcmc: '',
@@ -191,8 +203,8 @@
     fpsj: '',
     fpr: '',
     wjfl: '技术通知',
-	lrr:'',
-	lrsj:'',
+    lrr: '',
+    lrsj: '',
     isdb: false,
     isedit: true
   },

@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.LBJ;
 using ZDMesInterfaces.Common;
+using System.Web.Configuration;
+
 namespace MesAdmin.Controllers.Common
 {
     [RoutePrefix("api/download")]
@@ -36,6 +38,16 @@ namespace MesAdmin.Controllers.Common
                     var ftpconf = q.First();
                     string path = $"ftp://{ftpconf.ftpuser}:{ftpconf.ftppassword}@{ftpconf.ftpurl}:{ftpconf.ftpport}{ftpconf.filepath}{wjlj}";
                     string downpath = HttpContext.Current.Server.MapPath("~/Upload/PDF/");
+                    var pos = wjlj.LastIndexOf("/");
+                    if(pos > 0)
+                    {
+                        string subdic = wjlj.Substring(0,pos);
+                        DirectoryInfo directoryInfo = new DirectoryInfo(downpath + subdic);
+                        if (!directoryInfo.Exists)
+                        {
+                            directoryInfo.Create();
+                        }
+                    }
                     string localfile = downpath + wjlj;
                     FtpWebRequest reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(path));
                     using (FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse())

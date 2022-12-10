@@ -105,7 +105,7 @@
       this.list.unshift(row);
 	},
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/岗位名称机型关系.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/岗位名称机型关系.xlsx?r='+Math.random());
     },
 	suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'cpjx') {

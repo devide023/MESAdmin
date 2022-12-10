@@ -234,6 +234,7 @@ namespace ZDMesServices.CDGC.GTJC
                                         Db.Update<zxjc_gtjc_detail>(item, trans);
                                     }
                                 }
+                                db.Execute("update zxjc_gtjc_bill set pdjg =(select jcjg from zxjc_gtjc_detail where billid = zxjc_gtjc_bill.id and cpfw='结果' and kxmc='评定结果' and rownum = 1)  where id = :id", new { id = bill.id }, trans);
                                 trans.Commit();
                                 return true;
                             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,14 +28,12 @@ namespace ZDMesServices.Common
                 var qftpconfig = _ftpservice.FtpConfig().Where(t => t.filetype == wjlx);
                 var extdata = HttpContext.Current.Request.Form;
                 kv = new Dictionary<string, object>();
+
                 if (extdata != null)
                 {
-                    if (extdata != null)
+                    foreach (var item in extdata.AllKeys)
                     {
-                        foreach (var item in extdata.AllKeys)
-                        {
-                            kv.Add(item, extdata.Get(item));
-                        }
+                        kv.Add(item, extdata.Get(item));
                     }
                 }
                 if (qftpconfig.Count() > 0)
@@ -77,7 +76,82 @@ namespace ZDMesServices.Common
                         }
                         file.SaveAs(serverpath + guid);
                         ftphelper.UploadFile(file.InputStream, ftpconfig.ftpurl + ":" + ftpconfig.ftpport + ftpconfig.filepath, guid, ftpconfig.ftpuser, ftpconfig.ftppassword);
-                        list.Add(new sys_upload_file_info(){ fileid = guid, filename = client_filename, filesize = fileszie });
+                        list.Add(new sys_upload_file_info() { fileid = guid, filename = client_filename, filesize = fileszie });
+                    }
+                    return list;
+                }
+                else
+                {
+                    return new List<sys_upload_file_info>();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<sys_upload_file_info> File2FtpByPath(string wjlx, UploadWjLx lx, string path, out Dictionary<string, object> kv)
+        {
+            try
+            {
+                var qftpconfig = _ftpservice.FtpConfig().Where(t => t.filetype == wjlx);
+                var extdata = HttpContext.Current.Request.Form;
+                kv = new Dictionary<string, object>();
+                if (extdata != null)
+                {
+                    foreach (var item in extdata.AllKeys)
+                    {
+                        kv.Add(item, extdata.Get(item));
+                    }
+                }
+                if (qftpconfig.Count() > 0)
+                {
+                    base_ftpfilepath ftpconfig = qftpconfig.First();
+                    string spath = string.Empty;
+                    switch (lx)
+                    {
+                        case UploadWjLx.pdf:
+                            spath = "~/Upload/PDF/";
+                            break;
+                        case UploadWjLx.image:
+                            spath = "~/Upload/Image/";
+                            break;
+                        case UploadWjLx.excel:
+                            spath = "~/Upload/Excel/";
+                            break;
+                        case UploadWjLx.video:
+                            spath = "~/Upload/Video/";
+                            break;
+                        default:
+                            spath = "~/Upload/";
+                            break;
+                    }
+                    string serverpath = HttpContext.Current.Server.MapPath(spath);
+                    DirectoryInfo directory = new DirectoryInfo(serverpath + path);
+                    if (!directory.Exists)
+                    {
+                        directory.Create();
+                    }
+                    HttpFileCollection files = HttpContext.Current.Request.Files;
+                    List<sys_upload_file_info> list = new List<sys_upload_file_info>();
+                    FtpHelper ftphelper = new FtpHelper();
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFile file = HttpContext.Current.Request.Files[i];
+                        string client_filename = file.FileName;
+                        int fileszie = file.ContentLength;
+                        int pos = client_filename.LastIndexOf(".");
+                        string filetype = client_filename.Substring(pos, client_filename.Length - pos);
+                        string guid = Guid.NewGuid().ToString() + filetype;
+                        if (IsClientFileName)
+                        {
+                            guid = file.FileName;
+                        }
+                        //file.SaveAs(serverpath + path + guid);
+                        ftphelper.UploadFile(file.InputStream, ftpconfig.ftpurl + ":" + ftpconfig.ftpport + ftpconfig.filepath + path, guid, ftpconfig.ftpuser, ftpconfig.ftppassword);
+                        list.Add(new sys_upload_file_info() { fileid = guid, filename = client_filename, filesize = fileszie });
                     }
                     return list;
                 }

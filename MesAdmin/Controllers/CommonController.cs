@@ -9,6 +9,7 @@ using Autofac.Integration.WebApi;
 using Autofac;
 using ZDMesServices.Common;
 using ZDMesModels;
+using System.Text.RegularExpressions;
 
 namespace MesAdmin.Controllers
 {
@@ -20,7 +21,38 @@ namespace MesAdmin.Controllers
         {
             _pageconfig = pageconfig;
         }
-        
+        [HttpGet,Route("scopefuns")]
+        public IHttpActionResult GetPageScopeFn(string path)
+        {
+            try
+            {
+                string config = _pageconfig.GetPageConf(path);
+                Regex reg = new Regex(@"(?<scopefuns>scopefuns[\s\S]*}[\s]*},?)");
+                var scopefuns = reg.Match(config).Groups["scopefuns"].Value;
+                if (scopefuns.Trim().Length > 0)
+                {
+                    var pos = scopefuns.LastIndexOf(",");
+                    if (pos == scopefuns.Length - 1)
+                    {
+                        scopefuns = scopefuns.Remove(scopefuns.Length - 1).Replace("scopefuns:", "");
+                    }
+                    else
+                    {
+                        scopefuns = scopefuns.Replace("scopefuns:", "");
+                    }
+                }
+                else
+                {
+                    scopefuns = "{}";
+                }
+                return Json(new { code = 1, msg = "ok", js = scopefuns });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet, Route("pageconf")]
         public IHttpActionResult GetPageConfig(string path)
         {

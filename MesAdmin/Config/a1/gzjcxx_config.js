@@ -91,7 +91,7 @@
         }
       });
     },
-  },    
+  },
   bat_btnlist: [{
       btntxt: '模板下载',
       fnname: 'download_template_file'
@@ -103,9 +103,9 @@
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
-    },	
+    },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/故障基础信息.xlsx');
+      window.open('http://172.16.201.216:7002/template/A1/故障基础信息.xlsx?r=' + Math.random());
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -182,9 +182,28 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [],
+      options: [{
+          label: '通用故障',
+          value: '通用故障'
+        }, {
+          label: '系统故障',
+          value: '系统故障'
+        }, {
+          label: '装配问题',
+          value: '装配问题'
+        }, {
+          label: '设备故障',
+          value: '设备故障'
+        }, {
+          label: '零部件问题',
+          value: '零部件问题'
+        }, {
+          label: '测试故障',
+          value: '测试故障'
+        },
+      ],
       width: 150,
-	  allowcreate:true,
+      allowcreate: true,
       hideoptionval: true,
     }, {
       coltype: 'string',

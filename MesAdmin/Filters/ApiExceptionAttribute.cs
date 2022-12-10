@@ -5,16 +5,17 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Filters;
+using log4net;
 using Newtonsoft.Json;
 using ZDToolHelper;
 namespace MesAdmin.Filters
 {
     public class ApiExceptionAttribute : ExceptionFilterAttribute
     {
-        //private ILog log;
+        private ILog log;
         public ApiExceptionAttribute()
         {
-            //log = LogManager.GetLogger(this.GetType());
+            log = LogManager.GetLogger(this.GetType());
         }
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
@@ -24,7 +25,7 @@ namespace MesAdmin.Filters
             var method = actionExecutedContext.Request.Method.Method;
             //var action = actionExecutedContext.Request.GetRouteData().Values["action"].ToString();
             //var ctrl = actionExecutedContext.Request.GetRouteData().Values["controller"].ToString();
-            //log.Error(actionExecutedContext.Exception.Message);
+            log.Error(actionExecutedContext.Exception.StackTrace);
             string jsonResult = JsonConvert.SerializeObject(new
             {
                 code = 0,

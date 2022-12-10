@@ -1,5 +1,5 @@
 {
-  "sql": "select gyid, gybh, gymc, gyms, gcdm, scx, gwh, jx_no as jxno, status_no as statusno, wjlj, jwdx, scry, scpc, scsj, bbbh, gylx, lrr, lrsj FROM zxjc_t_dzgy where 1=1 ",
+  "sql": "select gyid, gybh, gymc, gyms, gcdm, scx, gwh, jx_no as jxno, status_no as statusno, wjlj, jwdx, scry, scpc, scsj, bbbh, gylx, lrr, lrsj,bz FROM zxjc_t_dzgy where 1=1 ",
   "sql_cnt": "select count(gyid) from zxjc_t_dzgy where 1=1 ",
   "sql_orderby": " order by lrsj desc nulls last "
 }

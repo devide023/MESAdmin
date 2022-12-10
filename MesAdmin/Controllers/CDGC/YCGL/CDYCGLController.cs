@@ -27,6 +27,7 @@ namespace MesAdmin.Controllers.CDGC.YCGL
             try
             {
                 int resultcount = 0;
+                parm.default_order_colname = "lrsj";
                 var list = _bjxxservice.GetList(parm, out resultcount);
                 return Json(new
                 {
@@ -48,6 +49,7 @@ namespace MesAdmin.Controllers.CDGC.YCGL
             try
             {
                 int resultcount = 0;
+                parm.default_order_colname = "lrsj";
                 var list = _bjlsxxservice.GetList(parm, out resultcount);
                 return Json(new
                 {

@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://localhost:52655/template/A1/人员技能.xlsx');
+      window.open('http://localhost:52655/template/A1/人员技能.xlsx?r='+Math.random());
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'usercode') {
@@ -154,20 +154,16 @@
       headeralign: 'center',
       align: 'center',
       width: 130,
+	  searchable:false,
       overflowtooltip: true,
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '适应岗位',
       prop: 'gwh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
       width: 150,
     }, {
       coltype: 'list',

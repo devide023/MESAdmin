@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesModels;
+using ZDMesModels.TJ.A1;
 
 namespace ZDMesInterfaces.TJ
 {
@@ -14,5 +16,18 @@ namespace ZDMesInterfaces.TJ
         /// <param name="jcbh"></param>
         /// <returns></returns>
         bool CanRemove(string jcbh);
+        /// <summary>
+        /// 技术通知阅读
+        /// </summary>
+        /// <param name="jcbh"></param>
+        /// <returns></returns>
+        bool Read_PDM_JSTZ(string jcbh);
+        /// <summary>
+        /// 获取PDM技术通知
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <param name="resultcount"></param>
+        /// <returns></returns>
+        IEnumerable<zxjc_t_jstc> Get_PDM_JSTZ_List(sys_page parm, out int resultcount);
     }
 }

@@ -24,7 +24,8 @@ namespace ZDMesServices.TJ.A1.GYGL
             {
                 foreach (var item in list)
                 {
-                    item.wjlj = item.gymc;
+                    item.scry = item.lrr;
+                    item.scsj = DateTime.Now;
                 }
                 return list;
             }

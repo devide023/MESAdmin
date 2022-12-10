@@ -21,16 +21,19 @@ namespace MesAdmin.Controllers.A1.GYGL
             this._importservice = importservice;
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_t_dzgy,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_t_dzgy>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
             return base.ReadTempFile(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_t_dzgy,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_t_dzgy>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Replace(string fileid)
         {
             return base.ReadTempFile_By_Replace(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.zxjc_t_dzgy,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<zxjc_t_dzgy>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Zh(string fileid)
         {
             return base.ReadTempFile_By_Zh(fileid);
