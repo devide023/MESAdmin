@@ -21,7 +21,7 @@
     },
   },
   pagefuns: {
-	  add_handle: function () {
+    add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
@@ -37,7 +37,20 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }, {
+    }, 
+	{
+      coltype: 'string',
+      label: '机台号',
+      prop: 'jth',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:100,
+	  overflowtooltip: true,
+    },
+	{
       coltype: 'list',
       label: '检测结果',
       prop: 'lx',
@@ -46,8 +59,15 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  options:[{label:'修复后合格',value:'合格'},{label:'修复后不合格',value:'不合格'}],
-	  hideoptionval:true
+      options: [{
+          label: '修复后报废',
+          value: '报废'
+        }, {
+          label: '修复后不合格',
+          value: '不合格'
+        }
+      ],
+      hideoptionval: true
     }, {
       coltype: 'string',
       label: '故障信息',
@@ -66,7 +86,52 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }, {
+    },
+	{
+      coltype: 'string',
+      label: '操作人',
+      prop: 'czr',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:100,
+    },
+	{
+      coltype: 'datetime',
+      label: '操作时间',
+      prop: 'czsj',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:180,
+    },
+	{
+      coltype: 'string',
+      label: '退废人',
+      prop: 'tfr',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:100,
+    },
+	{
+      coltype: 'datetime',
+      label: '退废时间',
+      prop: 'tfsj',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:180,
+    },
+	{
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',
@@ -93,6 +158,11 @@
     yxxx: '',
     lrr: '',
     lrsj: '',
+	jth:'',
+	czr:'',
+	czsj:'',
+	tfr:'',
+	tfsj:'',
     isdb: false,
     isedit: true
   },

@@ -69,7 +69,7 @@ namespace ZDMesServices.CDGC.JJBGL
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select id, rq, bc, jbr, dbzz, slry, mcry, jyry, zlqk, sbqk, qtqk, lrr, lrsj ");
+                sql.Append("select id, rq, bc, jbr, dbzz, slry, mcry, jyry, zlqk, sbqk, qtqk, lrr, lrsj,unit1ok,unit1ng,unit2ok,unit2ng,unit3ok,unit3ng ");
                 sql.Append(" FROM   zxjc_gtjjb_bill ");
                 sql.Append(" where  1=1 ");
 
@@ -95,7 +95,7 @@ namespace ZDMesServices.CDGC.JJBGL
                     }
                     else
                     {
-                        sql.Append($" order by rq desc,bc asc ");
+                        sql.Append($" order by rq desc,lrsj desc,bc asc ");
                     }
                 }
                 var _dic = new Dictionary<int, zxjc_gtjjb_bill>();
@@ -141,7 +141,7 @@ namespace ZDMesServices.CDGC.JJBGL
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select ta.rq, ta.bc, ta.jbr, ta.dbzz, ta.slry, ta.mcry, ta.jyry, ta.zlqk, ta.sbqk, ta.qtqk, ta.lrr, ta.lrsj, tb.billid,tb.id, tb.cpmc, tb.sbcmpyl, tb.dbmpsl, tb.hcsl, tb.trjgs, tb.gfsl, tb.lfsl, tb.hgsl, tb.dbmpyl ");
+                sql.Append("select ta.rq, ta.bc, ta.jbr, ta.dbzz, ta.slry, ta.mcry, ta.jyry, ta.zlqk, ta.sbqk, ta.qtqk, ta.lrr, ta.lrsj,ta.unit1ng,ta.unit1ok,ta.unit2ok,ta.unit2ng,ta.unit3ok,ta.unit3ng, tb.billid,tb.id, tb.cpmc, tb.sbcmpyl, tb.dbmpsl, tb.hcsl, tb.trjgs, tb.gfsl, tb.lfsl, tb.hgsl, tb.dbmpyl ");
                 sql.Append(" FROM   zxjc_gtjjb_bill ta, zxjc_gtjjb_bill_detail tb ");
                 sql.Append(" where  ta.id = tb.billid ");
                 sql.Append(" and    trunc(ta.rq) = trunc(to_date(:rq, 'yyyy-MM-dd HH24:mi:ss')) ");
@@ -188,7 +188,7 @@ namespace ZDMesServices.CDGC.JJBGL
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select id, rq, bc, jbr, dbzz, slry, mcry, jyry, zlqk, sbqk, qtqk, lrr, lrsj ");
+                sql.Append("select id, rq, bc, jbr, dbzz, slry, mcry, jyry, zlqk, sbqk, qtqk, lrr, lrsj,unit1ok,unit1ng,unit2ok,unit2ng,unit3ok,unit3ng ");
                 sql.Append(" from ZXJC_GTJJB_BILL ");
                 sql.Append(" where trunc(rq) = trunc(:rq) and bc = :bc");
                 StringBuilder sqlmx = new StringBuilder();
@@ -221,7 +221,7 @@ namespace ZDMesServices.CDGC.JJBGL
                                     var obj = q.OrderBy(t => t.id).First();
                                     billid = obj.id;
                                     bill.id = obj.id;
-                                    db.Execute("update zxjc_gtjjb_bill set rq=:rq,bc=:bc,jbr=:jbr,dbzz=:dbzz,slry=:slry, mcry =:mcry, jyry=:jyry, zlqk =:zlqk, sbqk = :sbqk, qtqk = :qtqk where id = :id", bill,trans);
+                                    db.Execute("update zxjc_gtjjb_bill set rq=:rq,bc=:bc,jbr=:jbr,dbzz=:dbzz,slry=:slry, mcry =:mcry, jyry=:jyry, zlqk =:zlqk, sbqk = :sbqk, qtqk = :qtqk,unit1ok=:unit1ok,unit1ng=:unit1ng,unit2ok=:unit2ok,unit2ng=:unit2ng,unit3ok=:unit3ok,unit3ng=:unit3ng where id = :id", bill,trans);
                                 }
                                 int sfmx = db.ExecuteScalar<int>("select count(id) FROM zxjc_gtjjb_bill_detail where billid =:billid ", new { billid = billid });
                                 if (sfmx > 0)

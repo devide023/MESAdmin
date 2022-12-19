@@ -87,6 +87,7 @@ namespace ZDMesModels.TJ.A1
         /// 查看数量
         /// </summary>
         public int rcnt { get; set; }
+        public string fpscxlist { get; set; }
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>
@@ -96,6 +97,8 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.jtid).Key(KeyType.Assigned);
             Map(t => t.fpflg).Column("fp_flg");
             Map(t => t.fpsj).Column("fp_sj");
+            Map(t => t.rcnt).Ignore();
+            Map(t => t.fpscxlist).Ignore();
             AutoMap();
         }
     }

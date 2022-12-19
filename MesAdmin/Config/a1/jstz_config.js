@@ -159,7 +159,40 @@
       headeralign: 'center',
       align: 'center',
       width: 150
-    }, {
+    },
+	{
+      coltype: 'bool',
+      label: '是否分配',
+      prop: 'fpflg',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  activevalue:'Y',
+	  inactivevalue:'N',
+      width: 100
+    },
+	{
+      coltype: 'string',
+      label: '生产线',
+      prop: 'fpscxlist',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    },
+	{
+      coltype: 'string',
+      label: '技通描述',
+      prop: 'jcms',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    },
+	{
       coltype: 'string',
       label: '创建者',
       prop: 'scry',
@@ -179,7 +212,7 @@
       width: 150
     }
   ],
-  trbginfo: {
+  trbginfo: [{
     colname: 'rcnt',
     logiclist: [{
         logic: '>',
@@ -188,6 +221,16 @@
       }
     ]
   },
+  {
+    colname: 'fpflg',
+    logiclist: [{
+        logic: '=',
+        val0: 'Y',
+        classname: 'success-row',
+      }
+    ]
+  }
+  ],
   form: {
     jcbh: '',
     jcmc: '',

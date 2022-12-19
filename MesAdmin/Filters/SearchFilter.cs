@@ -66,7 +66,7 @@ namespace MesAdmin.Filters
                                 expression = expression + $" {item.left} {item.colname} {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
                                 p.Add($":{item.colname.Replace(".", "_")}{index}", Convert.ToDateTime(item.value), System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
                             }
-                            else if (item.values.Count > 0 && item.oper == "between")
+                            else if (item.values!=null && item.values.Count > 0 && item.oper == "between")
                             {
                                 expression = expression + $" {item.left} {item.colname} between :{item.colname.Replace(".", "_")}{index}3 and :{item.colname.Replace(".", "_")}{index}4 {item.right} {item.logic} ";
                                 p.Add($":{item.colname.Replace(".", "_")}{index}3", Convert.ToDateTime(item.values[0]), System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);

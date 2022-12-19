@@ -122,19 +122,7 @@
           value: '晚班'
         }
       ],
-    }, {
-      coltype: 'list',
-      label: '岗位号',
-      prop: 'gwh',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
+	  hideoptionval:true,
     }, {
       coltype: 'list',
       label: '类型',
@@ -149,7 +137,8 @@
           label: '惩罚',
           value: '惩罚'
         }
-      ]
+      ],
+	  hideoptionval:true,
     }, {
       coltype: 'int',
       label: '数量',

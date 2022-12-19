@@ -67,6 +67,13 @@ namespace ZDMesModels.CDGC
 
         public bool isadmin { get; set; } = false;
 
+        public int unit1ok { get; set; }
+        public int unit1ng { get; set; }
+        public int unit2ok { get; set; }
+        public int unit2ng { get; set; }
+        public int unit3ok { get; set; }
+        public int unit3ng { get; set; }
+
     }
 
     public class zxjc_gtjjb_bill_mapper : ClassMapper<zxjc_gtjjb_bill>

@@ -21,6 +21,10 @@ namespace ZDMesModels.CDGC
         /// </summary>
         public string th { get; set; }
         /// <summary>
+        /// 班次
+        /// </summary>
+        public string bc { get; set; }
+        /// <summary>
         ///检验日期
         ///</summary>
         public DateTime? rq { get; set; }

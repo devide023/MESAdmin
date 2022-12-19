@@ -130,9 +130,6 @@
         "colname": "usercode",
         "coltxt": "账号"
       }, {
-        "colname": "gwh",
-        "coltxt": "岗位号"
-      }, {
         "colname": "bzxx",
         "coltxt": "班组"
       }, {
@@ -157,48 +154,44 @@
         "colindex": 0,
         "coltxt": "员工账号"
       }, {
-        "colname": "gwh",
-        "colindex": 1,
-        "coltxt": "岗位号"
-      }, {
         "colname": "bzxx",
-        "colindex": 2,
+        "colindex": 1,
         "coltxt": "班组"
       }, {
         "colname": "lx",
-        "colindex": 3,
+        "colindex": 2,
         "coltxt": "类型"
       }, {
         "colname": "sl",
-        "colindex": 4,
+        "colindex": 3,
         "coltxt": "数量"
       }, {
         "colname": "jcje",
-        "colindex": 5,
+        "colindex": 4,
         "coltxt": "金额"
       }, {
         "colname": "jcxx",
-        "colindex": 6,
+        "colindex": 5,
         "coltxt": "奖惩描述"
       }, {
         "colname": "jclr",
-        "colindex": 7,
+        "colindex": 6,
         "coltxt": "来源"
       }, {
         "colname": "bz",
-        "colindex": 8,
+        "colindex": 7,
         "coltxt": "备注"
       }, {
         "colname": "fsrq",
-        "colindex": 9,
+        "colindex": 8,
         "coltxt": "发生日期"
       }, {
         "colname": "khr",
-        "colindex": 10,
+        "colindex": 9,
         "coltxt": "考核人"
       }, {
         "colname": "khbm",
-        "colindex": 11,
+        "colindex": 10,
         "coltxt": "考核部门"
       }
     ]

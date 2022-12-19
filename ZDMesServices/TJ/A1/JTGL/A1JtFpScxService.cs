@@ -7,6 +7,7 @@ using ZDMesModels.TJ.A1;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 using ZDMesInterfaces.TJ;
+using ZDMesModels;
 
 namespace ZDMesServices.TJ.A1.JTGL
 {
@@ -15,6 +16,7 @@ namespace ZDMesServices.TJ.A1.JTGL
         public A1JtFpScxService(string constr):base(constr)
         {
 
-        }        
+        }
+        
     }
 }

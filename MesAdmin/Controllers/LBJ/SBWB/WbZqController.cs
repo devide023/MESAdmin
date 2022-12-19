@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using ZDMesModels.LBJ;
 using ZDMesInterfaces.Common;
@@ -10,6 +9,7 @@ using MesAdmin.Filters;
 using ZDMesModels;
 using ZDMesInterfaces.LBJ.SBWB;
 using Dapper;
+
 namespace MesAdmin.Controllers.LBJ.SBWB
 {
     [RoutePrefix("api/lbj/wbzq")]
@@ -26,12 +26,12 @@ namespace MesAdmin.Controllers.LBJ.SBWB
             _sbwbzq = sbwbzq;
             _user = user;
         }
-        [HttpGet,Route("wbzq_list")]
-        public IHttpActionResult GetWbzqList()
+        [HttpPost,Route("wbzq_list")]
+        public IHttpActionResult GetWbzqList(base_sbwb parm)
         {
             try
             {
-               var list = _sbwbzq.WbZqList();
+               var list = _sbwbzq.WbXxList(parm).OrderBy(t=>t.scx).ThenBy(t=>t.wbsh);
                 return Json(new 
                 {
                     code = 1,
@@ -137,14 +137,45 @@ namespace MesAdmin.Controllers.LBJ.SBWB
         {
             try
             {
+                if (form.next_date == null)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择维保时间!"
+                    });
+                }
+                else
+                {
+                   var ksrq = Convert.ToDateTime(form.next_date[0]);
+                    var jsrq = Convert.ToDateTime(form.next_date[1]);
+                    if(DateTime.Compare(ksrq,jsrq)>0)
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "结束时间应大于开始时间!"
+                        });
+                    }
+                }
+                if (form.sbwbls.Count == 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请勾选维保项!"
+                    }) ;
+                }
+
                 List<base_sbwb_ls> savedata = new List<base_sbwb_ls>();
                 string token = ZDToolHelper.TokenHelper.GetToken;
                 var userinfo = _user.GetUserByToken(token);
                 int xsh = 1;
                 string sbbh = string.Empty, scx = string.Empty;
-                foreach (var item in form.sbwbls.OrderBy(t=>t.scx))
+                foreach (var item in form.sbwbls.OrderBy(t=>t.scx).Where(t=>!string.IsNullOrEmpty(t.gwh)))
                 {
                     item.autoid = Guid.NewGuid().ToString();
+                    
                     item.wbjhsj = Convert.ToDateTime(form.next_date[0]);
                     item.wbjhsjend = Convert.ToDateTime(form.next_date[1]);
                     item.lrr = userinfo.name;

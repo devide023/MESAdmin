@@ -12,5 +12,10 @@ namespace ZDMesInterfaces.LBJ.SBWB
     public interface ISbWbZq
     {
         IEnumerable<base_sbwb_ls> WbZqList();
+        /// <summary>
+        /// 所有维保数据
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_sbwb> WbXxList(base_sbwb item);
     }
 }

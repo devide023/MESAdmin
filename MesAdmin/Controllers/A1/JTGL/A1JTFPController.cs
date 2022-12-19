@@ -5,12 +5,16 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using MesAdmin.Filters;
+using NPOI.SS.Formula.Functions;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.TJ;
 using ZDMesModels.TJ.A1;
 
 namespace MesAdmin.Controllers.A1.JTGL
 {
+    /// <summary>
+    /// 产线技术通知
+    /// </summary>
     [RoutePrefix("api/a1/jtfp")]
     public class A1JTFPController : BaseApiController<zxjc_t_jstcfp>
     {
@@ -27,12 +31,31 @@ namespace MesAdmin.Controllers.A1.JTGL
             try
             {
                 List<zxjc_t_jstc_scx> postdata = new List<zxjc_t_jstc_scx>();
-                postdata.Add(new zxjc_t_jstc_scx()
+                if (form.scx != null)
                 {
-                    jcbh = form.jcbh,
-                    lrr = _user.CurrentUser().name,
-                    scx = form.scx,
-                });
+                    if (form.scx.Count > 0)
+                    {
+                        var lrr = _user.CurrentUser().name;
+                        foreach (var item in form.scx)
+                        {
+                            postdata.Add(new zxjc_t_jstc_scx()
+                            {
+                                jcbh = form.jcbh,
+                                lrr = lrr,
+                                scx = item,
+                            }) ;
+                        }
+                    }
+                    else
+                    {
+                        return Json(new { code = 0, msg = "选择生产线" });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "选择生产线" });
+                }
+                
                 var sftoscx = _jtfp.IsJtToScx(postdata);
                 if (sftoscx.Count == 0)
                 {

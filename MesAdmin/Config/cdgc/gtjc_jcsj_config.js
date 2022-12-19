@@ -5,6 +5,11 @@
   isfresh: true,
   isselect: true,
   operate_fnlist: [],
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   batoperate:{
 	  import_by_add: function (vm, res) {
       if (res.files.length > 0) {
@@ -30,6 +35,20 @@
         vm.$loading().close();
       }
     },
+	export_excel: function (_this) {
+      _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
+        pageindex: 1,
+        pagesize: 65535,
+        search_condition: _this.queryform.search_condition
+      }).then(function (res) {
+        if (res.code === 1) {
+          let expdatalist = res.list;
+          _this.export_handle(_this.pageconfig.fields, expdatalist);
+        } else if (res.code === 0) {
+          _this.$message.error(res.msg);
+        }
+      });
+    },
   },
   pagefuns: {
     add_handle: function () {
@@ -37,7 +56,10 @@
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
-    }
+    },
+	download_template_file: function () {
+      window.open('http://192.168.4.17:7002/template/CDGC/缸体检测基础数据.xlsx?r=' + Math.random());
+    },
   },
   fields: [{
       coltype: 'string',

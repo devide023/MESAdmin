@@ -195,8 +195,8 @@
     }
   ],
   form: {
-    gcdm: '',
-    scx: '',
+    gcdm: '9100',
+    scx: '1',
     cpjx: '',
     gwh: '',
     gwmc: '',

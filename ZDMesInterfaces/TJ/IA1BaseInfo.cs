@@ -8,6 +8,7 @@ namespace ZDMesInterfaces.TJ
 {
     public interface IA1BaseInfo
     {
+        IEnumerable<dynamic> Get_All_ScxList();
         /// <summary>
         /// 获取岗位信息
         /// </summary>

@@ -9,6 +9,7 @@ using Oracle.ManagedDataAccess.Client;
 using Dapper;
 using DapperExtensions.Predicate;
 using DapperExtensions;
+using System.Linq.Expressions;
 
 namespace ZDMesServices.CDGC.GTJC
 {
@@ -17,6 +18,24 @@ namespace ZDMesServices.CDGC.GTJC
         public GTJCDataService(string constr) : base(constr)
         {
 
+        }
+
+        public override bool Modify(zxjc_gtjc_bill entity)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update zxjc_gtjc_bill set cljl=:cljl,clsj=sysdate,clr=:clr where id=:id");
+                using(var db = new OracleConnection(ConString))
+                {
+                    return db.Execute(sql.ToString(), entity)>0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public override bool Del(IEnumerable<zxjc_gtjc_bill> entitys)
@@ -201,6 +220,7 @@ namespace ZDMesServices.CDGC.GTJC
                                         rq = bill.rq,
                                         lrsj = DateTime.Now,
                                         th = bill.th,
+                                        bc = bill.bc,
                                         vin = bill.vin,
                                         cplx = bill.cplx,
                                         jylb = bill.jylb,

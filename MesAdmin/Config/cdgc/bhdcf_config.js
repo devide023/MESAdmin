@@ -10,6 +10,16 @@
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     },
+    deal_handle: function () {
+      var l = this.selectlist;
+      if (l.length > 0) {
+        this.$request('post', '/cdgc/bhdcf/bhdbh', l).then(function (res) {
+			
+		});
+      } else {
+        this.$message.warning('请选择项目');
+      }
+    }
   },
   fields: [{
       coltype: 'list',
@@ -18,6 +28,7 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
+      allowcreate: true,
       options: [{
           label: '缸体',
           value: 'SCX01'
@@ -26,7 +37,7 @@
           value: 'SCX02'
         }
       ],
-      fixed: 'left'
+      hideoptionval: true
     }, {
       coltype: 'list',
       prop: 'rwzt',
@@ -41,8 +52,7 @@
           label: '闭环',
           value: 1
         }
-      ],
-      fixed: 'left'
+      ]
     }, {
       coltype: 'list',
       prop: 'jt',
@@ -51,6 +61,7 @@
       align: 'center',
       sortable: true,
       width: 100,
+      allowcreate: true,
       options: [{
           label: '1-1',
           value: '1-1'
@@ -89,7 +100,7 @@
           value: '3-4'
         }
       ],
-      fixed: 'left'
+      hideoptionval: true
     }, {
       coltype: 'list',
       prop: 'cpxh',
@@ -98,6 +109,7 @@
       align: 'center',
       sortable: true,
       width: 150,
+      allowcreate: true,
       options: [{
           label: '1.2T',
           value: '1.2T'
@@ -115,7 +127,7 @@
           value: '1.6L'
         }
       ],
-      fixed: 'left'
+	  hideoptionval: true
     }, {
       coltype: 'string',
       prop: 'cpmc',
@@ -124,7 +136,6 @@
       align: 'center',
       sortable: true,
       width: 100,
-      fixed: 'left'
     }, {
       coltype: 'string',
       prop: 'bhbw',
@@ -133,7 +144,6 @@
       align: 'center',
       sortable: true,
       width: 100,
-      fixed: 'left'
     }, {
       coltype: 'string',
       prop: 'fsddbh',
@@ -142,7 +152,6 @@
       align: 'center',
       sortable: true,
       width: 150,
-      fixed: 'left'
     }, {
       coltype: 'string',
       prop: 'fxddbh',
@@ -151,7 +160,6 @@
       align: 'center',
       sortable: true,
       width: 150,
-      fixed: 'left'
     }, {
       coltype: 'string',
       prop: 'gzxx',
@@ -176,6 +184,7 @@
       align: 'center',
       sortable: true,
       width: 120,
+      allowcreate: true,
       options: [{
           label: '正常流转',
           value: '1',
@@ -186,7 +195,8 @@
           label: '报废',
           value: '3',
         }
-      ]
+      ],
+	  hideoptionval: true
     }, {
       coltype: 'string',
       prop: 'czygsdd',
@@ -207,30 +217,6 @@
       coltype: 'string',
       prop: 'czypdjg',
       label: '操作员判定结果',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
-    }, {
-      coltype: 'string',
-      prop: 'scbzgsdd',
-      label: '生产组长改善断点',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
-    }, {
-      coltype: 'string',
-      prop: 'scbzscsj',
-      label: '生产组长实测数据',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
-    }, {
-      coltype: 'string',
-      prop: 'scbzpdjg',
-      label: '生产组长判定结果',
       headeralign: 'center',
       align: 'center',
       sortable: true,

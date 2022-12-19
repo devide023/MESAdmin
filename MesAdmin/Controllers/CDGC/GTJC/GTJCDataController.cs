@@ -24,6 +24,24 @@ namespace MesAdmin.Controllers.CDGC.GTJC
             _gtjc_jgservice = gtjc_jgservice;
             _userservice = userservice; 
         }
+        [HttpPost,Route("deal_gtjc")]
+        public IHttpActionResult Deal_Gtjc_Bill(zxjc_gtjc_bill entity)
+        {
+            try
+            {
+                _gtjcbaseservice.Modify(entity);
+                return Json(new
+                {
+                    code = 1,
+                    msg = "数据保存成功"
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet, Route("get_check_data")]
         public IHttpActionResult Get_CheckData_By_Vin(string rq,string ewm,string cplx)
         {

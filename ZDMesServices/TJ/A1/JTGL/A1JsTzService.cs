@@ -39,7 +39,12 @@ namespace ZDMesServices.TJ.A1.JTGL
                 throw;
             }
         }
-
+        /// <summary>
+        /// PDM分配到生产线列表
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <param name="resultcount"></param>
+        /// <returns></returns>
         public IEnumerable<zxjc_t_jstc> Get_PDM_JSTZ_List(sys_page parm, out int resultcount)
         {
             try
@@ -56,11 +61,11 @@ namespace ZDMesServices.TJ.A1.JTGL
                     StringBuilder sql_cnt = new StringBuilder();
                     StringBuilder sql = new StringBuilder();
                     sql.Append("select * from ");
-                    sql.Append(" (select jtid,jtly,wjfl,no as jcbh,name as jcmc,url as wjlj,creator as scry,");
+                    sql.Append(" (select jtid,jtly,wjfl,no as jcbh,name as jcmc,url as wjlj,creator as scry,jcms,");
                     sql.Append(" cjsj as scsj,expire_date as yxqx2,(select lrr from   zxjc_t_jstc where  jcbh = v_zxjc_t_jstc.no and  rownum =1) as fpr,");
                     sql.Append(" (select lrsj from zxjc_t_jstc where jcbh = v_zxjc_t_jstc.no and rownum = 1) as fpsj,");
-                    sql.Append(" (select fp_flg from zxjc_t_jstc where  jcbh = v_zxjc_t_jstc.no and rownum = 1) as fpflg,");
-                    sql.Append(" (select count(jcbh) from   zxjc_t_jstc where  jcbh = v_zxjc_t_jstc.no) as sffp ");
+                    sql.Append(" (select  wmsys.wm_concat(distinct bb.scxmc) from zxjc_t_jstc aa,tj_base_scxxx bb where aa.scx=bb.scx and bb.scxmc is not null and aa.jcbh = v_zxjc_t_jstc.no ) as fpscxlist,");
+                    sql.Append(" (select decode(count(jcbh),0,'N','Y') from   zxjc_t_jstc where  jcbh = v_zxjc_t_jstc.no) as fpflg ");
                     if (uid != 0)
                     {
                         sql.Append(" ,(select count(*) from mes_pdm_jstz_yd where jcbh = no and ydrid =" + uid + ") as rcnt ");
@@ -69,14 +74,15 @@ namespace ZDMesServices.TJ.A1.JTGL
                     {
                         sql.Append(" ,0 as rcnt ");
                     }
-                    sql.Append(" FROM v_zxjc_t_jstc) m where (m.fpflg = 'N' or m.sffp=0) ");
+                    sql.Append(" FROM v_zxjc_t_jstc) m where 1=1 ");
                     sql_cnt.Append("select count(m.jcbh) from ( ");
-                    sql_cnt.Append(" select jtly,wjfl,no as jcbh,name as jcmc,url as wjlj,creator as scry,cjsj as scsj,expire_date as yxqx2,");
+                    sql_cnt.Append(" select jtly,wjfl,no as jcbh,name as jcmc,url as wjlj,creator as scry,cjsj as scsj,expire_date as yxqx2,jcms,");
                     sql_cnt.Append(" (select lrr from zxjc_t_jstc where jcbh = v_zxjc_t_jstc.no and rownum =1) as fpr,");
                     sql_cnt.Append(" (select lrsj from zxjc_t_jstc where jcbh = v_zxjc_t_jstc.no and rownum = 1) as fpsj,");
-                    sql_cnt.Append(" (select fp_flg from zxjc_t_jstc where jcbh = v_zxjc_t_jstc.no and rownum = 1) as fpflg,");
-                    sql_cnt.Append(" (select count(jcbh) from   zxjc_t_jstc where jcbh = v_zxjc_t_jstc.no) as sffp FROM v_zxjc_t_jstc) m ");
-                    sql_cnt.Append(" where (m.fpflg = 'N' or m.sffp=0) ");
+                    sql_cnt.Append(" (select  wmsys.wm_concat(distinct bb.scxmc) from zxjc_t_jstc aa,tj_base_scxxx bb where aa.scx=bb.scx and bb.scxmc is not null and aa.jcbh = v_zxjc_t_jstc.no ) as fpscxlist,");
+                    sql_cnt.Append(" (select decode(count(jcbh),0,'N','Y') from   zxjc_t_jstc where  jcbh = v_zxjc_t_jstc.no) as fpflg ");
+                    sql_cnt.Append(" FROM v_zxjc_t_jstc) m ");
+                    sql_cnt.Append(" where 1=1 ");
                     if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                     {
                         sql.Append(" and " + parm.sqlexp);

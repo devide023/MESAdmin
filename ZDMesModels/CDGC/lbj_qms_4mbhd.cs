@@ -242,6 +242,7 @@ namespace ZDMesModels.CDGC
     {
         public lbj_qms_4mbhd_mapper()
         {
+            Map(t => t.id).Key(KeyType.Assigned);
             AutoMap();
         }
     }

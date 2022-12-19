@@ -8,6 +8,11 @@
       label: '明细',
       fnname: 'view_bill',
       btntype: 'text'
+    },
+	{
+      label: '处理',
+      fnname: 'deal_bill',
+      btntype: 'text'
     }
   ],
   pagefuns: {
@@ -22,6 +27,17 @@
         lx: row.cplx
       };
     },
+	deal_bill:function(row){
+		var _this = this;
+      _this.dialog_title = '缸体处理结论';
+      _this.dialog_width = '40%';
+      _this.dialogVisible = true;
+	  _this.dialog_hidefooter = true;
+      _this.dialog_viewpath = 'cdgc/jcgl/gtjc/component/deal_gtjc_bill';
+      _this.dialog_props = {
+        rowobj:row
+      };
+	},
     dialog_save_handle: function () {
       this.dialogVisible = false;
     }
@@ -35,7 +51,26 @@
       sortable: true,
       width: 120,
 	  overflowtooltip: true,
-    }, {
+    },
+{
+      coltype: 'string',
+      prop: 'bc',
+      label: '班次',
+      headeralign: 'center',
+      align: 'center',
+      sortable: true,
+      width: 100,
+	  overflowtooltip: true,
+    },	{
+      coltype: 'datetime',
+      prop: 'lrsj',
+      label: '录入时间',
+      headeralign: 'center',
+      align: 'center',
+      sortable: true,
+      width: 150,
+	  overflowtooltip: true,
+    },{
       coltype: 'string',
       prop: 'cplx',
       label: '产品类型',
@@ -141,15 +176,6 @@
       align: 'center',
       sortable: true,
       width: 120,
-	  overflowtooltip: true,
-    }, {
-      coltype: 'datetime',
-      prop: 'lrsj',
-      label: '录入时间',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
 	  overflowtooltip: true,
     }
   ],

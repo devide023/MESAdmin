@@ -7,6 +7,8 @@ using ZDMesInterfaces.TJ;
 using ZDMesModels.TJ.A1;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
+using ZDMesModels;
+
 namespace ZDMesServices.TJ.A1.JTGL
 {
     public class A1JtFpService:BaseDao<zxjc_t_jstcfp>,IJTFP
@@ -14,6 +16,58 @@ namespace ZDMesServices.TJ.A1.JTGL
         public A1JtFpService(string constr):base(constr)
         {
 
+        }
+
+        public override IEnumerable<zxjc_t_jstcfp> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                StringBuilder sql_cnt = new StringBuilder();
+                sql.Append($"select id, jtid,(select jtly from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx and rownum=1) as jtly,");
+                sql.Append(" (select wjlj from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx  and rownum=1) as wjlj,");
+                sql.Append(" (select jcbh from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx and rownum=1) as jcbh,");
+                sql.Append(" (select jcmc from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx and rownum=1) as jcmc,");
+                sql.Append(" (select jcms from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx  and rownum=1) as jcms,");
+                sql.Append(" gcdm, scx, gwh, jx_no as jxno, status_no as statusno, bz, lrr1, lrsj1,");
+                sql.Append(" (select lrr from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx and rownum = 1) as lrr2,");
+                sql.Append(" (select lrsj from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx and rownum = 1)as lrsj2 ");
+                sql.Append(" from zxjc_t_jstcfp where scx = 1 ");
+                sql_cnt.Append($" select count(id) from zxjc_t_jstcfp where scx=1  ");
+
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                //前端排序
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                    else
+                    {
+                        sql.Append(" order by lrsj1 desc,gwh asc,jx_no asc,status_no asc ");
+                    }
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<zxjc_t_jstcfp>(OraPager(sql.ToString()), parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public override bool Del(IEnumerable<zxjc_t_jstcfp> entitys)

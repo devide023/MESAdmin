@@ -12,6 +12,9 @@ using ZDMesModels;
 using ZDMesModels.TJ.A1;
 namespace MesAdmin.Controllers.A1.JTGL
 {
+    /// <summary>
+    /// PDM通知分配到zxjc_t_jstc列表
+    /// </summary>
     [RoutePrefix("api/a1/jtgl")]
     public class A1JTGLController : BaseApiController<zxjc_t_jstc>
     {
@@ -43,6 +46,11 @@ namespace MesAdmin.Controllers.A1.JTGL
                 throw;
             }
         }
+        /// <summary>
+        /// 分配PDM通知列表
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [HttpPost,SearchFilter,Route("toscxlist")]
         public IHttpActionResult JstzToScxList(sys_page parm)
         {

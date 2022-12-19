@@ -5,31 +5,8 @@
   isfresh: true,
   isselect: true,
   operate_fnlist: [{
-      label: '上传Pdf',
-      btntype: 'upload',
-      action: 'http://172.16.201.216:7002/api/a1/upload/dzgy_pdf',
-      callback: function (response, file) {
-        if (response.code === 1) {
-          this.$loading().close();
-          this.$message.success(response.msg);
-          let rowid = response.extdata.rowkey;
-          let finditem = this.$basepage.list.find(function (i) {
-            return i.rowkey === rowid;
-          });
-          if (finditem) {
-            finditem.jwdx = file.size;
-            finditem.gymc = file.name;
-            finditem.wjlj = response.files[0].fileid;
-            finditem.scry = this.$store.getters.name;
-            finditem.scsj = this.$parseTime(new Date());
-          }
-        } else {
-          this.$message.error(response.msg);
-        }
-      }
-    }, {
-      label: '下载Pdf',
-      fnname: 'download_dzgypdf',
+      label: '下载视频',
+      fnname: 'download_dzgyMp4',
       btntype: 'text'
     }
   ],
@@ -209,8 +186,8 @@
       headeralign: 'center',
       align: 'center',
       options: [{
-          label: '工艺',
-          value: '工艺'
+          label: '视频',
+          value: '视频'
         }
       ],
       width: 100,
@@ -318,29 +295,29 @@
     scry: '',
     scpc: '',
     scsj: '',
-    gylx: '工艺',
+    gylx: '视频',
     bz: '',
     statusno_list: [],
     isdb: false,
     isedit: true
   },
   addapi: {
-    url: '/a1/dzgy/add',
+    url: '/a1/gysp/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '/a1/dzgy/edit',
+    url: '/a1/gysp/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '/a1/dzgy/del',
+    url: '/a1/gysp/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/a1/dzgy/list',
+    url: '/a1/gysp/list',
     method: 'post',
     callback: function (vm, res) {},
   },

@@ -11,7 +11,7 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 生产线
         /// </summary>
-        public string scx { get; set; }
+        public List<string> scx { get; set; }
         /// <summary>
         /// 技通编号
         /// </summary>

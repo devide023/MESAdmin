@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aspose.Cells.Drawing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -22,9 +23,8 @@ namespace MesAdmin.Controllers.A1.BaseInfo
         {
             try
             {
-                List<dynamic> list = new List<dynamic>();
-                list.Add(new { label = "A1", value = "1" });
-                return Json(new { code = 1, msg = "ok", list = list });
+                List<dynamic> list = _a1baseinfo.Get_All_ScxList().ToList();
+                return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.scxmc, value = t.scx }).OrderBy(x => x.value) });
             }
             catch (Exception)
             {

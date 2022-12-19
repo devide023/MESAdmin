@@ -33,7 +33,7 @@ namespace MesAdmin.Controllers.CDGC.GTJC
             try
             {
                 int resultcount = 0;
-                parm.orderbyexp = " order by rq desc";
+                parm.orderbyexp = " order by rq desc,lrsj desc,bc asc ";
                 var list = _gtjclsservice.GetList(parm, out resultcount);
                 return Json(new
                 {

@@ -68,7 +68,7 @@
   fields: [{
       coltype: 'string',
       label: '技通编号',
-      prop: 'jcbh',
+      prop: 'jtid',
       overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
@@ -80,22 +80,18 @@
       prop: 'wjlj',
       overflowtooltip: true,
       headeralign: 'center',
+	  searchable:false,
       align: 'left',
     },
 	{
-      coltype: 'list',
+      coltype: 'string',
       label: '岗位号',
       prop: 'gwh',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
       headeralign: 'center',
-      align: 'left',
-      options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
+      align: 'center',
       width: 150
     }, {
       coltype: 'string',
@@ -132,6 +128,7 @@
       prop: 'jcms',
       overflowtooltip: true,
       headeralign: 'center',
+	  searchable: false,
       align: 'left',
     },{
       coltype: 'string',
@@ -147,7 +144,7 @@
       label: '分配人',
       prop: 'lrr2',
       overflowtooltip: true,
-      searchable: true,
+      searchable: false,
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -157,7 +154,7 @@
       label: '分配时间',
       prop: 'lrsj2',
       overflowtooltip: true,
-      searchable: true,
+      searchable: false,
       sortable: true,
       headeralign: 'center',
       align: 'center',

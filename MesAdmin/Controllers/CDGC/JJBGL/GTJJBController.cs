@@ -152,18 +152,18 @@ namespace MesAdmin.Controllers.CDGC.JJBGL
                 switch (bc)
                 {
                     case "白班":
-                        sybc = "晚班";
+                        sybc = "夜班";
                         ssbc = "中班";
                         sybc_rq = dt.AddDays(-1).ToString("yyyy-MM-dd");
                         ssbc_rq = dt.AddDays(-1).ToString("yyyy-MM-dd");
                         break;
                     case "中班":
                         sybc = "白班";
-                        ssbc = "晚班";
+                        ssbc = "夜班";
                         sybc_rq = dt.ToString("yyyy-MM-dd");
                         ssbc_rq = dt.AddDays(-1).ToString("yyyy-MM-dd");
                         break;
-                    case "晚班":
+                    case "夜班":
                         sybc = "中班";
                         ssbc = "白班";
                         sybc_rq = dt.AddDays(-1).ToString("yyyy-MM-dd");

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DapperExtensions.Mapper;
+using DapperExtensions.Predicate;
+
 namespace ZDMesModels.CDGC
 {
     public class zxjc_nok_mark
@@ -16,6 +18,11 @@ namespace ZDMesModels.CDGC
         public string jcjg { get; set; }
         public string gzxx { get; set; }
         public string yxxx { get; set; }
+        public string jth { get; set; }
+        public string czr { get; set; }
+        public DateTime? czsj { get; set; }
+        public string tfr { get; set; }
+        public DateTime? tfsj { get; set; }
         public string lrr { get; set; }
         public DateTime? lrsj { get; set; }
     }

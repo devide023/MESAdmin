@@ -48,7 +48,6 @@ namespace ZDMesServices.LBJ.SBWB
                                     pg.Predicates.Add(Predicates.Field<base_sbwb_ls>(t => t.sbbh, Operator.Eq, item.sbbh));
                                     pg.Predicates.Add(Predicates.Field<base_sbwb_ls>(t => t.wbzt, Operator.Eq, "计划中"));
                                     Db.Delete<base_sbwb_ls>(pg, tran);
-                                    item.gwh = _sbgw.GetGWH_By_Sbbh(item.sbbh);
                                 }
                                 Db.Insert<base_sbwb_ls>(entitys, tran);
                                 tran.Commit();
@@ -109,6 +108,35 @@ namespace ZDMesServices.LBJ.SBWB
             finally
             {
                 Db.Dispose();
+            }
+        }
+
+        public IEnumerable<base_sbwb> WbXxList(base_sbwb item)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select autoid, gcdm, scx, sbbh, gwh, wbsh, wbxx, bz from BASE_SBWB where  scbz = 'N' ");
+                DynamicParameters p = new DynamicParameters();
+                if (!string.IsNullOrEmpty(item.scx))
+                {
+                    sql.Append(" and scx = :scx ");
+                    p.Add(":scx",item.scx);
+                }
+                if (!string.IsNullOrEmpty(item.sbbh))
+                {
+                    sql.Append(" and sbbh = :sbbh ");
+                    p.Add(":sbbh", item.sbbh);
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_sbwb>(sql.ToString(),p); 
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
