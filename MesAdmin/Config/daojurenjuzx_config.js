@@ -329,7 +329,7 @@
       align: 'center',
       overflowtooltip: true,
     }],
-  trbginfo: {
+  trbginfo: [{
     colname: 'rjzt',
     logiclist: [{
         logic: 'between',
@@ -347,7 +347,7 @@
         classname: 'error-row',
       },
     ]
-  },
+  }],
   form: {
     gcdm: '',
     scx: '',

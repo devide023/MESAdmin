@@ -3,10 +3,38 @@
   isbatoperate: true,
   isoperate: true,
   isfresh: true,
-  isselect: false,
+  isselect: true,
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   operate_fnlist: [{
-      label: '装配明细',
-      fnname: 'view_zpmx_list',
+      label: '上传Pdf',
+      btntype: 'upload',
+      action: 'http://192.168.4.17:7002/api/cdgc/upload/dzgy_pdf',
+      callback: function (response, file) {
+        if (response.code === 1) {
+          this.$loading().close();
+          this.$message.success(response.msg);
+          let rowid = response.extdata.rowkey;
+          let finditem = this.$basepage.list.find(function (i) {
+            return i.rowkey === rowid;
+          });
+          if (finditem) {
+            finditem.jwdx = file.size;
+            finditem.gymc = file.name;
+            finditem.wjlj = response.files[0].fileid;
+            finditem.scry = this.$store.getters.name;
+            finditem.scsj = this.$parseTime(new Date());
+          }
+        } else {
+          this.$message.error(response.msg);
+        }
+      }
+    }, {
+      label: '查看Pdf',
+      fnname: 'view_dzgypdf',
       btntype: 'text'
     }
   ],
@@ -15,7 +43,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/**/**/readxls', {
+          _this.$request('get', '/cdgc/gygl/readxls', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -39,7 +67,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/**/**/readxls_by_replace', {
+          _this.$request('get', '/cdgc/gygl/readxls_by_replace', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -63,7 +91,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/**/**/readxls_by_zh', {
+          _this.$request('get', '/cdgc/gygl/readxls_by_zh', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -99,33 +127,58 @@
     },
   },
   pagefuns: {
-	  view_zpmx_list: function (row,item) {
-	  var _this = this;
-      _this.dialog_title = row.engineno + '装配明细';
-      _this.dialog_width = '65%';
-      _this.dialogVisible = true;
-      _this.dialog_hidefooter = true;
-      _this.dialog_viewpath = 'tja1/sjzs/zpmx';
-      _this.dialog_fnitem = item;
-      _this.dialog_props = {
-        rowobj: row
-      };
+    add_handle: function () {
+      var row = this.$deepClone(this.pageconfig.form);
+      row.lrr = this.$store.getters.name;
+      row.lrsj = this.$parseTime(new Date());
+      this.list.unshift(row);
     },
+    download_template_file: function () {
+      window.open('http://192.168.4.17:7002/template/cdgc/电子工艺.xlsx?r=' + Math.random());
+    },
+    view_dzgypdf: function (row) {
+      window.open("http://192.168.4.17:7002/dzgy/" + row.wjlj);
+    }
   },
   fields: [{
       coltype: 'string',
-      label: '发动机号',
-      prop: 'engineno',
-      dbprop: 'engine_no',
+      label: '工艺编号',
+      prop: 'gybh',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width:150
     }, {
       coltype: 'string',
-      label: '机型',
+      label: '类型',
+      prop: 'gylx',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '文件名称',
+      prop: 'gymc',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '描述',
+      prop: 'gyms',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '产品类型',
       prop: 'jxno',
       dbprop: 'jx_no',
       overflowtooltip: true,
@@ -133,20 +186,10 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    },{
+    }, {
       coltype: 'string',
-      label: '状态码',
-      prop: 'statusno',
-      dbprop: 'status_no',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    },{
-      coltype: 'string',
-      label: '装配岗位',
-      prop: 'gwh',
+      label: '备注',
+      prop: 'bz',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -154,8 +197,8 @@
       align: 'center',
     }, {
       coltype: 'string',
-      label: '装配人员',
-      prop: 'jcry',
+      label: '文件路径',
+      prop: 'wjlj',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -163,143 +206,59 @@
       align: 'center',
     }, {
       coltype: 'string',
-      label: '装配结果',
-      prop: 'jcjg',
+      label: '录入人',
+      prop: 'lrr',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
     }, {
-      coltype: 'string',
-      label: '检测值',
-      prop: 'jcz',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    },  {
-      coltype: 'string',
-      label: '设备编号',
-      prop: 'sbbh',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '设备类型',
-      prop: 'sblx',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '最小值',
-      prop: 'gymin',
-      dbprop: 'gy_min',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '最大值 ',
-      prop: 'gymax',
-      dbprop: 'gy_max',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '标准值 ',
-      prop: 'gybz',
-      dbprop: 'gy_bz',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      label: '计划单号',
-      prop: 'billno',
-      dbprop: 'bill_no',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-	  width:120
-    }, {
-      coltype: 'string',
-      label: '生产订单号',
-      prop: 'orderno',
-      dbprop: 'order_no',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-	  width:120
-    },{
       coltype: 'datetime',
-      label: '装配时间',
-      prop: 'jcsj',
+      label: '录入时间',
+      prop: 'lrsj',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width:150
-    },
+    }
   ],
   form: {
-    engineno: '',
-    statusno: '',
-    billno: '',
-    orderno: '',
-    gwh: '',
-    jcsj: '',
-    jcry: '',
-    jcjg: '',
-    fxflg: '',
-    jcz: '',
-    gcdm: '',
-    scx: '',
-    sbbh: '',
-    sblx: '',
-    gymin: '',
-    gymax: '',
-    gybz: '',
+    gybh: '',
+    gymc: '',
+    gyms: '',
     jxno: '',
+    statusno: '',
+    wjlj: '',
+    jwdx: '',
+    scry: '',
+    scpc: '',
+    scsj: '',
+    gylx: '工艺',
+    lrr: '',
+    lrsj: '',
+    bz: '',
     isdb: false,
     isedit: true
   },
   addapi: {
-    url: '',
+    url: '/cdgc/gygl/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '',
+    url: '/cdgc/gygl/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '',
+    url: '/cdgc/gygl/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/a1/sjzs/dtzs/list',
+    url: '/cdgc/gygl/list',
     method: 'post',
     callback: function (vm, res) {},
   },

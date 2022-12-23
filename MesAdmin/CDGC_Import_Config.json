@@ -6,5 +6,13 @@
     "replacetype": 2,
     "zhonghe": [ "user_code" ],
     "updatecol": [ "scx", "rylx", "gwh", "bzxx", "ryxb", "csrq", "rsrq" ]
+  },
+  {
+    "tablename": "zxjc_t_dzgy",
+    "xinzeng": [ "jx_no"],
+    "replace": [ "jx_no" ],
+    "replacetype": 1,
+    "zhonghe": [ "jx_no"],
+    "updatecol": [ "jx_no", "gybh", "gymc", "gyms" ]
   }
 ]

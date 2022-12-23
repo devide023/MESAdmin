@@ -308,9 +308,12 @@ namespace ZDMesServices.Common
                         }
                         if(!string.IsNullOrWhiteSpace(item.suggest))
                         {
-                            fieldcontent.Append($"suggest:true,");
-                            fieldcontent.Append($"suggest_fn_name:'suggest_fn',");
-                            fieldcontent.Append($"select_fn_name:'select_fn',");
+                            if (item.suggest == "true")
+                            {
+                                fieldcontent.Append($"suggest:true,");
+                                fieldcontent.Append($"suggest_fn_name:'suggest_fn',");
+                                fieldcontent.Append($"select_fn_name:'select_fn',");
+                            }
                         }
                         else if (item.coltype == "list" && !string.IsNullOrWhiteSpace(item.url)) {
                             fieldcontent.Append("inioptionapi:{");

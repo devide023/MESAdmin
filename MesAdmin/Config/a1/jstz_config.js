@@ -226,7 +226,7 @@
     logiclist: [{
         logic: '=',
         val0: 'Y',
-        classname: 'success-row',
+        classname: 'warning-row',
       }
     ]
   }

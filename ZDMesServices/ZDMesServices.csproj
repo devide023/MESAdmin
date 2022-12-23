@@ -140,9 +140,11 @@
     <Compile Include="CDGC\GTJC\CDGCNOKMarkService.cs" />
     <Compile Include="CDGC\GTJC\GTJCBasedataService.cs" />
     <Compile Include="CDGC\GTJC\GTJCDataService.cs" />
+    <Compile Include="CDGC\GYGL\CDGCGYGLService.cs" />
     <Compile Include="CDGC\JCXX\JCXXService.cs" />
     <Compile Include="CDGC\JJBGL\DJKJJBService.cs" />
     <Compile Include="CDGC\JJBGL\GTJJBService.cs" />
+    <Compile Include="CDGC\Report\CDGCReportService.cs" />
     <Compile Include="CDGC\RYGL\RyxxService.cs" />
     <Compile Include="CDGC\SBGL\SBGLService.cs" />
     <Compile Include="CDGC\SCJH\CdGcScjhService.cs" />
@@ -225,6 +227,8 @@
     <Compile Include="TJ\A1\RYGL\A1RyJnService.cs" />
     <Compile Include="TJ\A1\RYGL\A1RyxxService.cs" />
     <Compile Include="TJ\A1\SBGL\A1SbXxService.cs" />
+    <Compile Include="TJ\A1\SJZS\A1DDZSService.cs" />
+    <Compile Include="TJ\A1\SJZS\A1DTZSService.cs" />
     <Compile Include="TJ\A1\WLGL\A1WlGlService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1ClFsService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1DjJlService.cs" />

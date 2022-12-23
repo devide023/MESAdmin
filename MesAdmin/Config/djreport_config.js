@@ -99,7 +99,7 @@
 	  sortable:true,
     },
   ],
-  trbginfo: {
+  trbginfo: [{
     colname: 'rjzt',
     logiclist: [{
         logic: 'between',
@@ -117,7 +117,7 @@
         classname: 'error-row',
       },
     ]
-  },
+  }],
   form: {
     isdb: false,
     isedit: true

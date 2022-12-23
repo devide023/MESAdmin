@@ -21,6 +21,10 @@ namespace ZDMesModels.TJ.A1
         /// </summary>
         public string statusno { get; set; }
         /// <summary>
+        /// 机型
+        /// </summary>
+        public string jxno { get; set; }
+        /// <summary>
         /// 计划单号
         /// </summary>
         public string billno { get; set; }
@@ -104,6 +108,10 @@ namespace ZDMesModels.TJ.A1
         /// 删除标识
         /// </summary>
         public string scbz { get; set; }
+        /// <summary>
+        /// 装配明细
+        /// </summary>
+        public List<zxjc_data_detail_mx> zpmxlist { get; set; }
     }
 
     public class zxjc_data_list8_mapper : ClassMapper<zxjc_data_list8>

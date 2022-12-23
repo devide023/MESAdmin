@@ -72,7 +72,7 @@
       headeralign: 'center',
       align: 'center',
       width: 100
-    },{
+    }, {
       coltype: 'string',
       label: '生产数量',
       prop: 'scsl',
@@ -114,7 +114,26 @@
       overflowtooltip: true,
       headeralign: 'center',
       align: 'left'
+    }, {
+      coltype: 'string',
+      label: '工艺数量',
+      prop: 'gylx_jx_qty',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      searchable: false,
+      width: 80
     }
+  ],
+  trbginfo: [{
+      colname: 'gylx_jx_qty',
+      logiclist: [{
+          logic: '=',
+          val0: 0,
+          classname: 'error-row',
+        }
+      ]
+    },
   ],
   form: {
     isdb: false,

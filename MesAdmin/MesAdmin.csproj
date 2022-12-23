@@ -338,6 +338,8 @@
     <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYXXController.cs" />
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
+    <Compile Include="Controllers\A1\SJZSGL\A1DDZSController.cs" />
+    <Compile Include="Controllers\A1\SJZSGL\A1DTZSController.cs" />
     <Compile Include="Controllers\A1\UpLoad\A1UpLoadController.cs" />
     <Compile Include="Controllers\A1\WLGL\A1WLGLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJJLController.cs" />
@@ -352,13 +354,16 @@
     <Compile Include="Controllers\CDGC\GTJC\GTJCBaseDataController.cs" />
     <Compile Include="Controllers\CDGC\GTJC\GTJCDataController.cs" />
     <Compile Include="Controllers\CDGC\GTJC\GTJCHISController.cs" />
+    <Compile Include="Controllers\CDGC\GYGL\CGGCGYGLController.cs" />
     <Compile Include="Controllers\CDGC\JCXX\JCXXController.cs" />
     <Compile Include="Controllers\CDGC\JJBGL\DJKJJBController.cs" />
     <Compile Include="Controllers\CDGC\JJBGL\GTJJBController.cs" />
+    <Compile Include="Controllers\CDGC\Report\CDGCGTJJBController.cs" />
     <Compile Include="Controllers\CDGC\RYGL\RYGLController.cs" />
     <Compile Include="Controllers\CDGC\SBGL\SBGLController.cs" />
     <Compile Include="Controllers\CDGC\SCJH\CdgcScjhController.cs" />
     <Compile Include="Controllers\CDGC\SJCJGL\CDGCCNCSJController.cs" />
+    <Compile Include="Controllers\CDGC\UpLoad\CDGCUpLoadController.cs" />
     <Compile Include="Controllers\CDGC\YCGL\CDYCGLController.cs" />
     <Compile Include="Controllers\Common\DBInfoController.cs" />
     <Compile Include="Controllers\Common\DownLoadController.cs" />
@@ -643,13 +648,14 @@
     <Content Include="sqlconfig\api-a1-gycs-list.json" />
     <Content Include="sqlconfig\api-lbj-rjrmls-list.json" />
     <Content Include="sqlconfig\api-a1-jtgl-scxfpjllist.json" />
+    <Content Include="Template\CDGC\电子工艺.xlsx" />
+    <Content Include="Template\CDGC\缸体检测基础数据.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\MF\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
-    <Folder Include="Template\CDGC\" />
     <Folder Include="Upload\Excel\" />
     <Folder Include="Upload\Image\" />
     <Folder Include="Upload\PDF\" />

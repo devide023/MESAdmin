@@ -1,9 +1,9 @@
 {
   isgradequery: true,
-  isbatoperate: false,
+  isbatoperate: true,
   isoperate: false,
   isfresh: true,
-  isselect: false,
+  isselect: true,
   batoperate: {
     export_excel: function (_this) {
       _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
@@ -21,40 +21,34 @@
     },
   },
   pagefuns: {},
-  fields: [{
-      coltype: 'string',
-      label: '订单号',
-      prop: 'order_no',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    }, , {
-      coltype: 'string',
+  fields: [
+  {
+	  coltype: 'string',
       label: '机号',
       prop: 'vin',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    },
-    {
-      coltype: 'string',
-      label: '状态编码',
-      prop: 'ztbm',
+  },
+  {
+	  coltype: 'string',
+      label: '岗位号',
+      prop: 'gwh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }, {
-      coltype: 'string',
-      label: '刻字时间',
-      prop: 'print_time',
+  },
+  {
+	  coltype: 'string',
+      label: '程序号',
+      prop: 'cxh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }
+  }
   ],
   form: {
     isdb: false,
@@ -76,7 +70,7 @@
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/a1/sjzs/ddzs/list',
+    url: '/a1/sjzs/dtzs/list',
     method: 'post',
     callback: function (vm, res) {},
   },

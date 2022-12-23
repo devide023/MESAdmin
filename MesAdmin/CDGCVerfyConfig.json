@@ -84,5 +84,66 @@
       }
     ],
     "templateconf": []
+  },
+  {
+    "model": "ZDMesModels.CDGC.zxjc_t_dzgy,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "gylx",
+        "coltxt": "工艺类型"
+      },
+      {
+        "colname": "gybh",
+        "coltxt": "工艺编号"
+      },
+      {
+        "colname": "gymc",
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "gyms",
+        "coltxt": "描述"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "产品型号"
+      },
+      {
+        "colname": "wjlj",
+        "coltxt": "文件路径"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "gybh",
+        "colindex": 0,
+        "coltxt": "工艺编号"
+      },
+      {
+        "colname": "gylx",
+        "colindex": 1,
+        "coltxt": "类型"
+      },
+      {
+        "colname": "gymc",
+        "colindex": 2,
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "gyms",
+        "colindex": 3,
+        "coltxt": "描述"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 4,
+        "coltxt": "产品型号"
+      },
+      {
+        "colname": "wjlj",
+        "colindex": 5,
+        "coltxt": "文件路径"
+      }
+    ]
   }
 ]

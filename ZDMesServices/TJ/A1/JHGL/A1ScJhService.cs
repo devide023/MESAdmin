@@ -21,6 +21,12 @@ namespace ZDMesServices.TJ.A1.JHGL
         {
             try
             {
+                StringBuilder gylxsql= new StringBuilder();
+                gylxsql.Append("select count(*) FROM mes_zxjc_gylx where scx = :scx and status_no =:ztbm and jx_no = :jxno ");
+
+                StringBuilder gylxsql1 = new StringBuilder();
+                gylxsql1.Append("select count(*) FROM mes_zxjc_gylx where scx = :scx and status_no is null and jx_no = :jxno ");
+
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
                 sql.Append("select zpjhh, order_no, scx, xh, zpx, scxh, scbc, scsl, scsj, zpsl, zpsj, sxsl, hgsl, fxsl, wxssl, bz, ztbm, jx, status_flag,sap_zt, csbm, (select name1 FROM T_TJ_SD_KHDAXX where kunnr = tj_pp_sc_zpjh.csbm and rownum=1) as khmc, xsbz, jtdh, jssj, jhh, cqyy ");
@@ -59,6 +65,11 @@ namespace ZDMesServices.TJ.A1.JHGL
                 using (var db = new OracleConnection(ConString))
                 {
                     var q = db.Query<tj_pp_sc_zpjh>(OraPager(sql.ToString()), parm.sqlparam);
+                    foreach (var item in q)
+                    {
+                        item.gylx_jx_qty = db.ExecuteScalar<int>(gylxsql1.ToString(), new { scx = item.zpx, jxno = item.jx });
+                        item.gylx_ztbm_qty = db.ExecuteScalar<int>(gylxsql.ToString(), new { scx = item.zpx, ztbm=item.ztbm, jxno = item.jx });
+                    }
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
                 }

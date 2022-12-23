@@ -67,7 +67,9 @@
     <Compile Include="CDGC\ad_bjxxls.cs" />
     <Compile Include="CDGC\base_bhdxx.cs" />
     <Compile Include="CDGC\base_sbxx.cs" />
+    <Compile Include="CDGC\form_gtjjb.cs" />
     <Compile Include="CDGC\lbj_qms_4mbhd.cs" />
+    <Compile Include="CDGC\report_gtjjb.cs" />
     <Compile Include="CDGC\zxjc_base_gtjc.cs" />
     <Compile Include="CDGC\zxjc_djkjjb_bill.cs" />
     <Compile Include="CDGC\zxjc_djkjjb_detail.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="CDGC\zxjc_ryxx.cs" />
     <Compile Include="CDGC\zxjc_sbxx_ls_cnc.cs" />
     <Compile Include="CDGC\zxjc_scjh.cs" />
+    <Compile Include="CDGC\zxjc_t_dzgy.cs" />
     <Compile Include="LBJ\ad_bjxx.cs" />
     <Compile Include="LBJ\App_Menu.cs" />
     <Compile Include="LBJ\app_role.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="sys_verify_config.cs" />
     <Compile Include="sys_user.cs" />
     <Compile Include="mes_user_entity.cs" />
+    <Compile Include="TJ\A1\barcode_print.cs" />
     <Compile Include="TJ\A1\base_ftpfilepath.cs" />
     <Compile Include="TJ\A1\base_gwbj.cs" />
     <Compile Include="TJ\A1\base_gwzd.cs" />

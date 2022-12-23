@@ -112,5 +112,13 @@ namespace ZDMesModels.TJ.A1
         /// 差缺原因
         /// </summary>
         public string cqyy { get; set; }
+        /// <summary>
+        /// 工艺路线（状态编码）数量
+        /// </summary>
+        public int gylx_ztbm_qty { get; set; }
+        /// <summary>
+        /// 工艺路线（机型）数量
+        /// </summary>
+        public int gylx_jx_qty { get; set; }
     }
 }

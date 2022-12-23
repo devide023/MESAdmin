@@ -19,15 +19,15 @@
       }
     },
     {
-      "type": "ZDMesModules.CD.CDGCModule, ZDMesModules",
-      "properties": {
-        "CDGCConstr": "cdgcmes"
-      }
-    },
-    {
       "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
       "properties": {
         "TJConstr": "tjmes"
+      }
+    },
+    {
+      "type": "ZDMesModules.CD.CDGCModule, ZDMesModules",
+      "properties": {
+        "CDGCConstr": "cdgcmes"
       }
     }
   ]
