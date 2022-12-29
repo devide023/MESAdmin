@@ -53,9 +53,17 @@ namespace ZDMesServices.CDGC.Report
                         gfsl = t.Sum(a => a.gfsl),
                         lfsl = t.Sum(a => a.lfsl),
                         hgsl = t.Sum(a => a.hgsl)
-                    });
+                    }).OrderBy(t => t.rq).ThenBy(t => t.bc).ToList();
                     resultcount = resultlist.Count();
-                    return resultlist.OrderBy(t => t.rq).ThenBy(t => t.bc);
+                    resultlist.Add(new report_gtjjb()
+                    {
+                        cpmc = "总计：",
+                        trjgs = list.Sum(t => t.trjgs),
+                        gfsl = list.Sum(t => t.gfsl),
+                        lfsl = list.Sum(t => t.lfsl),
+                        hgsl = list.Sum(t => t.hgsl)
+                    });
+                    return resultlist.Skip((form.pageindex-1)*form.pagesize).Take(form.pagesize);
                 }
             }
             catch (Exception)

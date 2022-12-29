@@ -96,7 +96,7 @@ namespace ZDMesServices.TJ.A1.ZLGL
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }    

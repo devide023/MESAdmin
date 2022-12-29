@@ -69,7 +69,7 @@ namespace ZDMesServices.TJ.A1.GYGL
                     }
                     else
                     {
-                        sql.Append($" order by lrsj desc ");
+                        sql.Append($" order by jx_no asc, to_number(gwh) asc ");
                     }
                 }
                 using (var db = new OracleConnection(ConString))
@@ -118,7 +118,7 @@ namespace ZDMesServices.TJ.A1.GYGL
                     }
                     else
                     {
-                        sql.Append($" order by lrsj desc ");
+                        sql.Append($" order by jx_no asc, to_number(gwh) asc ");
                     }
                 }
                 using (var db = new OracleConnection(ConString))

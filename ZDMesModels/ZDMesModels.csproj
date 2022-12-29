@@ -184,6 +184,7 @@
     <Compile Include="TJ\A1\base_gwzx_jx.cs" />
     <Compile Include="TJ\A1\base_gycs.cs" />
     <Compile Include="TJ\A1\base_sbxx.cs" />
+    <Compile Include="TJ\A1\GYZD\zxjc_t_dzgy.cs" />
     <Compile Include="TJ\A1\mes_pdm_jstz_yd.cs" />
     <Compile Include="TJ\A1\sys_jstz_to_scx_form.cs" />
     <Compile Include="TJ\A1\sys_jtfp_form.cs" />
@@ -231,16 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FileManger.ttinclude">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FileManger1.cs</LastGenOutput>
-    </None>
-    <Content Include="TJ\EntityTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityTemplate.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

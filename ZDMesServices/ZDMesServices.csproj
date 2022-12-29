@@ -216,6 +216,7 @@
     <Compile Include="TJ\A1\GYGL\A1GwLxService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GyCsService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GyLxService.cs" />
+    <Compile Include="TJ\A1\GYGL\A1GYZPZDService.cs" />
     <Compile Include="TJ\A1\JCGL\A1JcGlService.cs" />
     <Compile Include="TJ\A1\JHGL\A1CgJhService.cs" />
     <Compile Include="TJ\A1\JHGL\A1ScJhService.cs" />

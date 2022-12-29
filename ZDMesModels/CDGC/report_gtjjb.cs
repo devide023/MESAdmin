@@ -11,7 +11,7 @@ namespace ZDMesModels.CDGC
         /// <summary>
         /// 日期
         /// </summary>
-        public DateTime rq { get; set; }
+        public DateTime? rq { get; set; }
         /// <summary>
         /// 班次
         /// </summary>

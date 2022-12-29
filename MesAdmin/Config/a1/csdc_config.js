@@ -4,9 +4,14 @@
   isoperate: true,
   isfresh: true,
   isselect: true,
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   operate_fnlist: [{
-      label: '下载视频',
-      fnname: 'download_dzgyMp4',
+      label: '下载Pdf',
+      fnname: 'download_dzgypdf',
       btntype: 'text'
     }
   ],
@@ -15,7 +20,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/a1/dzgy/readxls', {
+          _this.$request('get', '/a1/gyzpzd/readxls', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -35,23 +40,23 @@
         _this.$loading().close();
       }
     },
-    import_by_replace(_this, res) {
+    import_by_replace: function (_this, res) {
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/a1/dzgy/readxls_by_replace', {
+          _this.$request('get', '/a1/gyzpzd/readxls_by_replace', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
             if (result.code === 1) {
               _this.$message.success(result.msg);
+              _this.getlist(_this.queryform);
             } else if (result.code === 2) {
               _this.$message.warning(result.msg);
             } else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
-            _this.getlist(_this.queryform);
-          });
+          })
         } catch (error) {
           _this.$message.error(error);
         }
@@ -59,22 +64,22 @@
         _this.$loading().close();
       }
     },
-    import_by_zh(_this, res) {
+    import_by_zh: function (_this, res) {
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/a1/dzgy/readxls_by_zh', {
+          _this.$request('get', '/a1/gyzpzd/readxls_by_zh', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
             if (result.code === 1) {
               _this.$message.success(result.msg);
+              _this.getlist(_this.queryform);
             } else if (result.code === 2) {
               _this.$message.warning(result.msg);
             } else if (result.code === 0) {
               _this.$message.error(result.msg);
             }
-            _this.getlist(_this.queryform);
           });
         } catch (error) {
           _this.$message.error(error);
@@ -98,11 +103,6 @@
       });
     },
   },
-  bat_btnlist: [{
-      btntxt: '模板下载',
-      fnname: 'download_template_file'
-    }
-  ],
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
@@ -111,154 +111,82 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/电子工艺.xlsx?r=' + Math.random());
+      window.open('http://172.16.201.216:7002/template/A1/装配指导.xlsx?r=' + Math.random());
     },
     download_dzgypdf: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {
         wjlx: '电子工艺',
-        wjlj: row.wjlj+"/"+row.gymc
+        wjlj: row.wjlj + "/" + row.gymc
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj+'/'+row.gymc);
+          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj + '/' + row.gymc);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
       });
     },
-    download_dzgyMp4: function (row) {
-      var _this = this;
-      this.$request('get', "download/ftp2web", {
-        wjlx: '视频',
-        wjlj: row.wjlj+"/"+row.gymc
-      }).then(function (res) {
-        if (res.code === 1) {
-          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj+'/'+row.gymc);
-        } else if (res.code === 0) {
-          _this.$message.error(res.msg);
-        }
-      });
-    },
-    suggest_fn: function (vm, key, cb, row, col) {
-      if (col.prop === 'jxno') {
-        row.username = '';
-        this.$request('get', '/a1/baseinfo/jxno_by_code', {
-          key: key
-        }).then(function (res) {
-          if (res.code === 1) {
-            cb(res.list);
-          }
-        });
-      }
-    },
-    select_fn: function (vm, item, row, col) {
-      if (col.prop === 'jxno') {
-        row.statusno = '';
-        this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
-          jxno: item.value
-        }).then(function (res) {
-          if (res.code === 1) {
-            row.statusno_list = res.list.map(function (i) {
-              return {
-                label: i,
-                value: i
-              };
-            });
-          }
-        });
-      }
-    }
   },
   fields: [{
       coltype: 'string',
-      label: '工艺编号',
+      label: '文件编号',
       prop: 'gybh',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
     }, {
-      coltype: 'list',
-      label: '文件分类',
+      coltype: 'string',
+      label: '分类',
       prop: 'gylx',
+      overflowtooltip: true,
       searchable: false,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [{
-          label: '视频',
-          value: '视频'
-        }
-      ],
-      width: 100,
-      hideoptionval: true
     }, {
       coltype: 'string',
       label: '岗位编码',
       prop: 'gwh',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
-    }, {
-      coltype: 'string',
-      suggest: true,
-      label: '机型',
-      prop: 'jxno',
-      dbprop: 'jx_no',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      suggest_fn_name: 'suggest_fn',
-      select_fn_name: 'select_fn',
-      width: 150
-    }, {
-      coltype: 'list',
-      label: '状态码',
-      prop: 'statusno',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 150,
-      options: [],
-      hideoptionval: true,
-      relation: 'statusno_list'
     }, {
       coltype: 'string',
       label: '文件名称',
       prop: 'gymc',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 300
     }, {
       coltype: 'string',
-      label: '工艺描述',
+      label: '描述',
       prop: 'gyms',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }, 
-	{
+    }, {
       coltype: 'string',
       label: '文件路径',
       prop: 'wjlj',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }, 
-	{
+    }, {
       coltype: 'string',
       label: '备注',
       prop: 'bz',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -267,58 +195,52 @@
       label: '录入人',
       prop: 'lrr',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 100
     }, {
       coltype: 'datetime',
       label: '录入时间',
       prop: 'lrsj',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
     }
   ],
   form: {
-    gcdm: '9100',
-    scx: '1',
     gybh: '',
     gymc: '',
     gyms: '',
     gwh: '',
-    jxno: '',
-    statusno: '',
     wjlj: '',
-    jwdx: '',
-    scry: '',
-    scpc: '',
     scsj: '',
-    gylx: '视频',
+    gylx: '装配指导',
+    lrr: '',
+    lrsj: '',
     bz: '',
-    statusno_list: [],
     isdb: false,
     isedit: true
   },
   addapi: {
-    url: '/a1/gysp/add',
+    url: '/a1/gyzpzd/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '/a1/gysp/edit',
+    url: '/a1/gyzpzd/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '/a1/gysp/del',
+    url: '/a1/gyzpzd/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/a1/gysp/list',
+    url: '/a1/gyzpzd/list',
     method: 'post',
     callback: function (vm, res) {},
   },

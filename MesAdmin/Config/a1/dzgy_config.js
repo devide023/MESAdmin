@@ -205,6 +205,7 @@
       coltype: 'list',
       label: '文件分类',
       prop: 'gylx',
+      searchable: false,
       sortable: true,
       headeralign: 'center',
       align: 'center',

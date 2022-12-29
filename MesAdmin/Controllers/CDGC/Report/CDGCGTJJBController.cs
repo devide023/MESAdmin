@@ -31,6 +31,7 @@ namespace MesAdmin.Controllers.CDGC.Report
             {
                 int resultcount = 0;
                 var list = _reportservice.Get_GTJJB_Report(form, out resultcount);
+
                 return Json(new
                 {
                     code = 1,
