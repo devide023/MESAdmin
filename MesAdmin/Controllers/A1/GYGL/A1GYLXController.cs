@@ -9,6 +9,7 @@ using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels.TJ.A1;
 using MesAdmin.Filters;
 using ZDMesModels;
+using ZDMesInterfaces.TJ;
 
 namespace MesAdmin.Controllers.A1.GYGL
 {
@@ -48,17 +49,30 @@ namespace MesAdmin.Controllers.A1.GYGL
                 throw;
             }
         }
+        [AtachValue(typeof(IBatAtachValue<mes_zxjc_gylx>), "BatSetValue")]
+        public override IHttpActionResult Add(List<mes_zxjc_gylx> entitys)
+        {
+            return base.Add(entitys);
+        }
+        [AtachValue(typeof(IBatAtachValue<mes_zxjc_gylx>), "BatSetValue")]
+        public override IHttpActionResult Edit(List<mes_zxjc_gylx> entitys)
+        {
+            return base.Edit(entitys);
+        }
         [TemplateVerify("ZDMesModels.TJ.A1.mes_zxjc_gylx,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<mes_zxjc_gylx>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
             return base.ReadTempFile(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.mes_zxjc_gylx,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<mes_zxjc_gylx>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Replace(string fileid)
         {
             return base.ReadTempFile_By_Replace(fileid);
         }
         [TemplateVerify("ZDMesModels.TJ.A1.mes_zxjc_gylx,ZDMesModels")]
+        [AtachValue(typeof(IBatAtachValue<mes_zxjc_gylx>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Zh(string fileid)
         {
             return base.ReadTempFile_By_Zh(fileid);

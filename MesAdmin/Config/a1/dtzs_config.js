@@ -172,15 +172,6 @@
       align: 'center',
     }, {
       coltype: 'string',
-      label: '检测值',
-      prop: 'jcz',
-      overflowtooltip: true,
-      searchable: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-    },  {
-      coltype: 'string',
       label: '设备编号',
       prop: 'sbbh',
       overflowtooltip: true,

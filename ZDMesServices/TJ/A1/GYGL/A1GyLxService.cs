@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesInterfaces.TJ;
 using ZDMesModels;
 using ZDMesModels.TJ.A1;
 namespace ZDMesServices.TJ.A1.GYGL
 {
-    public class A1GyLxService:BaseDao<mes_zxjc_gylx>
+    public class A1GyLxService:BaseDao<mes_zxjc_gylx>,IBatAtachValue<mes_zxjc_gylx>
     {
         public A1GyLxService(string constr):base(constr)
         {
@@ -69,6 +70,24 @@ namespace ZDMesServices.TJ.A1.GYGL
                 {
                     return db.Execute(sql.ToString(), new { rids = rids }) > 0;
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<mes_zxjc_gylx> BatSetValue(List<mes_zxjc_gylx> list)
+        {
+            try
+            {
+                list.ForEach(i =>
+                 {
+                     i.jxno = i.jxno.Trim();
+                     i.statusno = i.statusno.Trim();
+                 });
+                return list;
             }
             catch (Exception)
             {
