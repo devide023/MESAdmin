@@ -37,7 +37,7 @@
 	  if(row.jtly===1){
       window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
 	  }else if(row.jtly===0){
-		window.open("http://172.16.201.216:7002/jstz/" + row.wjlj);  
+		window.open("http://172.16.201.216:81/技术通知/" + row.wjlj);  
 	  }
     },
     jstz_fp: function (row, item) {

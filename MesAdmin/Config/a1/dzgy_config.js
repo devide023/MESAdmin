@@ -5,7 +5,7 @@
   isfresh: true,
   isselect: true,
   operate_fnlist: [{
-      label: '上传Pdf',
+      label: '上传',
       btntype: 'upload',
       action: 'http://172.16.201.216:7002/api/a1/upload/dzgy_pdf',
       callback: function (response, file) {
@@ -28,10 +28,15 @@
         }
       }
     }, {
-      label: '下载Pdf',
+      label: '下载',
       fnname: 'download_dzgypdf',
       btntype: 'text'
-    }
+    },
+	{
+		label: '查看',
+      fnname: 'view_dzgypdf',
+      btntype: 'text'
+	}
   ],
   batoperate: {
     import_by_add: function (_this, res) {
@@ -136,6 +141,9 @@
     download_template_file: function () {
       window.open('http://172.16.201.216:7002/template/A1/电子工艺.xlsx?r=' + Math.random());
     },
+	view_dzgypdf:function(row){
+		window.open("http://172.16.201.216:81/电子工艺/" + row.wjlj+'/'+row.gymc);
+	},
     download_dzgypdf: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {

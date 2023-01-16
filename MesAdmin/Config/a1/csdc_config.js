@@ -10,8 +10,13 @@
     }
   ],
   operate_fnlist: [{
-      label: '下载Pdf',
+      label: '下载',
       fnname: 'download_dzgypdf',
+      btntype: 'text'
+    },
+	{
+      label: '查看',
+      fnname: 'view_zpzdpdf',
       btntype: 'text'
     }
   ],
@@ -110,6 +115,9 @@
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
+	view_zpzdpdf:function(row){
+		window.open("http://172.16.201.216:81/电子工艺/" + row.wjlj+'/'+row.gymc);
+	},
     download_template_file: function () {
       window.open('http://172.16.201.216:7002/template/A1/装配指导.xlsx?r=' + Math.random());
     },
