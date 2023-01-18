@@ -25,32 +25,41 @@
           this.$message.error(response.msg);
         }
       },
-	  condition:[{
-		  field: 'wjfl',
+      condition: [{
+          field: 'wjfl',
           oper: '=',
           val: '工艺'
-	  }]
+        }
+      ]
     }, {
       label: '下载',
       fnname: 'download_dzgypdf',
       btntype: 'text',
-	  condition:[{
-		  field: 'wjfl',
+      condition: [{
+          field: 'wjfl',
           oper: '=',
           val: '工艺'
-	  }]
-    },
-	{
+        }, {
+          field: 'jwdx',
+          oper: '>',
+          val: 0
+        }
+      ]
+    }, {
       label: '查看',
       fnname: 'view_dzgypdf',
       btntype: 'text',
-	  condition:[{
-		  field: 'wjfl',
+      condition: [{
+          field: 'wjfl',
           oper: '=',
           val: '工艺'
-	  }]
-    },
-	{
+        }, {
+          field: 'jwdx',
+          oper: '>',
+          val: 0
+        }
+      ]
+    }, {
       label: '上传',
       btntype: 'uploadvideo',
       action: 'http://172.16.201.125:7002/api/upload/video',
@@ -73,30 +82,40 @@
           this.$message.error(response.msg);
         }
       },
-	  condition:[{
-		  field: 'wjfl',
+      condition: [{
+          field: 'wjfl',
           oper: '=',
           val: '视频'
-	  }]
+        }
+      ]
     }, {
       label: '下载',
       fnname: 'download_dzgyMp4',
       btntype: 'text',
-	  condition:[{
-		  field: 'wjfl',
+      condition: [{
+          field: 'wjfl',
           oper: '=',
           val: '视频'
-	  }]
-    },
-	{
+        }, {
+          field: 'jwdx',
+          oper: '>',
+          val: 0
+        }
+      ]
+    }, {
       label: '查看',
       fnname: 'view_dzgymp4',
       btntype: 'text',
-	  condition:[{
-		  field: 'wjfl',
+      condition: [{
+          field: 'wjfl',
           oper: '=',
           val: '视频'
-	  }]
+        }, {
+          field: 'jwdx',
+          oper: '>',
+          val: 0
+        }
+      ]
     }
   ],
   isbatoperate: true,
@@ -121,9 +140,9 @@
         }
       });
     },
-	view_dzgypdf:function(row){
-		window.open("http://172.16.201.125:81/电子工艺/" + row.wjlj);
-	},
+    view_dzgypdf: function (row) {
+      window.open("http://172.16.201.125:81/电子工艺/" + row.wjlj);
+    },
     download_dzgyMp4: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {
@@ -137,9 +156,9 @@
         }
       });
     },
-	view_dzgymp4:function(row){
-		window.open("http://172.16.201.125:81/视频/" + row.wjlj);
-	}
+    view_dzgymp4: function (row) {
+      window.open("http://172.16.201.125:81/视频/" + row.wjlj);
+    }
   },
   batoperate: {
     import_by_add: function (vm, res) {
@@ -225,8 +244,8 @@
       width: 150,
       multiple: false,
       sortable: true,
-	  allowcreate:true,
-	  filterable:true,
+      allowcreate: true,
+      filterable: true,
       remote: function (q, _this, row) {
         if (q) {
           if (q.length >= 3) {
@@ -281,7 +300,7 @@
           value: '视频'
         }
       ],
-	  hideoptionval:true
+      hideoptionval: true
     }, {
       coltype: 'datetime',
       prop: 'scsj',

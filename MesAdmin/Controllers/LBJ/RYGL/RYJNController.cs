@@ -149,12 +149,21 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                     });
                 }
                 var jnsjq = entitys.Where(t => t.jnsj == null);
-                if (gwhq.Count() > 0)
+                if (jnsjq.Count() > 0)
                 {
                     return Json(new sys_result()
                     {
                         code = 0,
                         msg = "请选择技能时间"
+                    });
+                }
+                var sldq = entitys.Where(t => t.jnsld == 0);
+                if (sldq.Count() > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择技能熟练度"
                     });
                 }
 
@@ -165,14 +174,23 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                     {
                         foreach (var item in entity.selectedgwh)
                         {
-                            var objitem = new zxjc_ryxx_jn();
-                            objitem = entity;
                             var jnbh = _seqservice.Get_Seq_Number("seq_mes_jnbh");
-                            objitem.jnbh = "JN" + jnbh.ToString().PadLeft(4, '0');
-                            objitem.gwh = item;
-                            objitem.jnxx = entity.gwhoptions.Where(t => t.value == item).FirstOrDefault().label;
-                            objitem.jnfl = objitem.jnxx;
-                            postdata.Add(objitem);
+                            var jnxx = entity.gwhoptions.Where(t => t.value == item).FirstOrDefault().label;
+                            postdata.Add(new zxjc_ryxx_jn()
+                            {
+                                gcdm = entity.gcdm,
+                                usercode = entity.usercode,
+                                jnbh = "JN" + jnbh.ToString().PadLeft(4, '0'),
+                                jnxx = jnxx,
+                                scx = entity.scx,
+                                gwh = item,
+                                sfhg= entity.sfhg,
+                                lrr= entity.lrr,
+                                lrsj= entity.lrsj,
+                                jnfl = jnxx,
+                                jnsj = entity.jnsj,
+                                jnsld = entity.jnsld
+                            });
                         }
                     }
                     else

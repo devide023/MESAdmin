@@ -6,7 +6,7 @@
     fieldvalue: 'Y'
   },
   operate_fnlist: [{
-      label: '上传Pdf',
+      label: '上传',
       btntype: 'upload',
       action: 'http://172.16.201.125:7002/api/upload/jstc_pdf',
       callback: function (response, file) {
@@ -30,9 +30,25 @@
         }
       }
     }, {
-      label: '下载Pdf',
+      label: '下载',
       fnname: 'download_jstcpdf',
-      btntype: 'text'
+      btntype: 'text',
+      condition: [{
+          field: 'jwdx',
+          oper: '>',
+          val: 0
+        }
+      ]
+    }, {
+      label: '查看',
+      fnname: 'view_jstcpdf',
+      btntype: 'text',
+      condition: [{
+          field: 'jwdx',
+          oper: '>',
+          val: 0
+        }
+      ]
     }
   ],
   pagefuns: {
@@ -68,6 +84,9 @@
           _this.$message.error(res.msg);
         }
       });
+    },
+    view_jstcpdf: function (row) {
+      window.open("http://172.16.201.125:81/技术通知/" + row.wjlj);
     }
   },
   isbatoperate: true,
@@ -185,7 +204,7 @@
           value: '发放明细'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
       sortable: true,
     }, {
       coltype: 'string',
@@ -225,7 +244,7 @@
       label: '文件大小(M)',
       headeralign: 'center',
       align: 'center',
-	  width:150
+      width: 150
     }, {
       coltype: 'string',
       prop: 'scry',

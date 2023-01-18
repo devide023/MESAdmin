@@ -4,8 +4,11 @@
   isoperate: true,
   isfresh: true,
   isselect: true,
-  operate_type: 'text',
   operate_fnlist: [{
+      label: '查看',
+      fnname: 'view_jstz_handle',
+      btntype: 'text'
+    }, {
       label: '下载',
       fnname: 'download_jstcpdf',
       btntype: 'text'
@@ -14,6 +17,7 @@
       fnname: 'jstz_fp_handle',
       btntype: 'text'
     }
+
   ],
   pagefuns: {
     jstz_fp_handle: function (row) {
@@ -74,6 +78,9 @@
           _this.$message.error(res.msg);
         }
       });
+    },
+    view_jstz_handle: function (row) {
+      window.open("http://172.16.201.125:81/技术通知/" + row.wjlj);
     }
   },
   fields: [{
@@ -108,7 +115,7 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
-	  sortable:true,
+      sortable: true,
       overflowtooltip: true,
     }, {
       coltype: 'list',
@@ -122,28 +129,22 @@
         }, {
           label: '技改',
           value: '技改'
-        }, 		
-		{
+        }, {
           label: '清单',
           value: '清单'
-        },
-		{
+        }, {
           label: '通知单',
           value: '通知单'
-        },
-		{
+        }, {
           label: '作业文件',
           value: '作业文件'
-        },
-		{
+        }, {
           label: '质量警示',
           value: '质量警示'
-        },
-		{
+        }, {
           label: '内控标准',
           value: '内控标准'
-        },
-		{
+        }, {
           label: '发放明细',
           value: '发放明细'
         }
@@ -154,8 +155,8 @@
       label: '技通名称',
       headeralign: 'center',
       align: 'center',
-	  width:150,
-	  sortable:true,
+      width: 150,
+      sortable: true,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -171,7 +172,7 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
-	  sortable:true,
+      sortable: true,
     }, {
       coltype: 'date',
       prop: 'yxqx2',
@@ -179,7 +180,7 @@
       headeralign: 'center',
       align: 'center',
       width: 150,
-	  sortable:true,
+      sortable: true,
     }, {
       coltype: 'string',
       prop: 'jwdx',
@@ -198,8 +199,8 @@
       label: '上传时间',
       headeralign: 'center',
       align: 'center',
-	  sortable:true,
-	  width:100,
+      sortable: true,
+      width: 100,
       overflowtooltip: true,
     }, {
       coltype: 'bool',
@@ -211,7 +212,7 @@
       width: 100,
       activevalue: 'Y',
       inactivevalue: 'N',
-	  sortable:true,
+      sortable: true,
     }, {
       coltype: 'string',
       prop: 'fpmx',
@@ -220,7 +221,7 @@
       align: 'center',
       width: 80,
       overflowtooltip: true,
-	  searchable:false,
+      searchable: false,
     }, {
       coltype: 'bool',
       prop: 'shbz',
@@ -230,7 +231,7 @@
       width: 110,
       activevalue: 'Y',
       inactivevalue: 'N',
-	  sortable:true,
+      sortable: true,
     }, {
       coltype: 'string',
       prop: 'fpr',
@@ -245,8 +246,8 @@
       headeralign: 'center',
       align: 'center',
       overflowtooltip: true,
-	  width:150,
-	  sortable:true,
+      width: 150,
+      sortable: true,
     }, {
       coltype: 'string',
       prop: 'shr',
