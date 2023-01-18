@@ -107,18 +107,83 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             }
         }
 
-        [HttpPost,CheckData, Route("add")]
+        [HttpPost, Route("add")]
         public IHttpActionResult Add(List<zxjc_ryxx_jn> entitys)
         {
             try
             {
-                foreach (var item in entitys)
+                var q = entitys.Where(t => string.IsNullOrEmpty(t.gcdm));
+                if(q.Count() > 0)
                 {
-                    var jnbh = _seqservice.Get_Seq_Number("seq_mes_jnbh");
-                    item.jnbh = "JN" + jnbh.ToString().PadLeft(4, '0');
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择工厂"
+                    });
                 }
-                var ret = _ryjnservice.Add(entitys);
-                if (ret == entitys.Count)
+                var scxq = entitys.Where(t => string.IsNullOrEmpty(t.scx));
+                if (scxq.Count() > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择生产线"
+                    });
+                }
+                var userq = entitys.Where(t => string.IsNullOrEmpty(t.usercode));
+                if (userq.Count() > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择账号"
+                    });
+                }
+                var gwhq = entitys.Where(t => t.selectedgwh.Count==0);
+                if (gwhq.Count() > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择岗位"
+                    });
+                }
+                var jnsjq = entitys.Where(t => t.jnsj == null);
+                if (gwhq.Count() > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择技能时间"
+                    });
+                }
+
+                List<zxjc_ryxx_jn> postdata = new List<zxjc_ryxx_jn>();
+                foreach (var entity in entitys)
+                {
+                    if (entity.selectedgwh.Count > 0)
+                    {
+                        foreach (var item in entity.selectedgwh)
+                        {
+                            var objitem = new zxjc_ryxx_jn();
+                            objitem = entity;
+                            var jnbh = _seqservice.Get_Seq_Number("seq_mes_jnbh");
+                            objitem.jnbh = "JN" + jnbh.ToString().PadLeft(4, '0');
+                            objitem.gwh = item;
+                            objitem.jnxx = entity.gwhoptions.Where(t => t.value == item).FirstOrDefault().label;
+                            objitem.jnfl = objitem.jnxx;
+                            postdata.Add(objitem);
+                        }
+                    }
+                    else
+                    {
+                        var jnbh = _seqservice.Get_Seq_Number("seq_mes_jnbh");
+                        entity.jnbh = "JN" + jnbh.ToString().PadLeft(4, '0');
+                        postdata.Add(entity);
+                    }
+                }                
+                var ret = _ryjnservice.Add(postdata);
+                if (ret == postdata.Count)
                 {
                     return Json(new sys_result()
                     {
@@ -126,7 +191,7 @@ namespace MesAdmin.Controllers.LBJ.RYGL
                         msg = "数据保存成功"
                     });
                 }
-                else if (ret < entitys.Count && ret != 0)
+                else if (ret < postdata.Count && ret != 0)
                 {
                     return Json(new sys_result()
                     {

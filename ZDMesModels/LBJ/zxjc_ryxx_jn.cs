@@ -68,7 +68,11 @@ namespace ZDMesModels.LBJ
         /// <summary>
         /// 生产线人员选项
         /// </summary>
-        public List<sys_column_options> useroptions { get; set; }        
+        public List<sys_column_options> useroptions { get; set; } 
+        /// <summary>
+        /// 多选岗位
+        /// </summary>
+        public List<string> selectedgwh { get; set; }
     }
     public class zxjcryxxjn_mapper : ClassMapper<zxjc_ryxx_jn>
     {
@@ -79,6 +83,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.username).Ignore();
             Map(t => t.gwhoptions).Ignore();
             Map(t => t.useroptions).Ignore();
+            Map(t => t.selectedgwh).Ignore();
             AutoMap();
         }
     }

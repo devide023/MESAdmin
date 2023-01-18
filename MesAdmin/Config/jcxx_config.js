@@ -184,7 +184,8 @@
           label: '晚班',
           value: '晚班'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'list',
       prop: 'gwh',
@@ -210,7 +211,8 @@
           label: '惩罚',
           value: '惩罚'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'int',
       prop: 'sl',

@@ -2,7 +2,7 @@
   isgradequery: true,
   isoperate: true,
   operate_fnlist: [{
-      label: '上传Pdf',
+      label: '上传',
       btntype: 'upload',
       action: 'http://172.16.201.125:7002/api/upload/dzgy_pdf',
       callback: function (response, file) {
@@ -24,13 +24,34 @@
         } else {
           this.$message.error(response.msg);
         }
-      }
+      },
+	  condition:[{
+		  field: 'wjfl',
+          oper: '=',
+          val: '工艺'
+	  }]
     }, {
-      label: '下载Pdf',
+      label: '下载',
       fnname: 'download_dzgypdf',
-      btntype: 'text'
-    }, {
-      label: '上传视频',
+      btntype: 'text',
+	  condition:[{
+		  field: 'wjfl',
+          oper: '=',
+          val: '工艺'
+	  }]
+    },
+	{
+      label: '查看',
+      fnname: 'view_dzgypdf',
+      btntype: 'text',
+	  condition:[{
+		  field: 'wjfl',
+          oper: '=',
+          val: '工艺'
+	  }]
+    },
+	{
+      label: '上传',
       btntype: 'uploadvideo',
       action: 'http://172.16.201.125:7002/api/upload/video',
       callback: function (response, file) {
@@ -51,11 +72,31 @@
         } else {
           this.$message.error(response.msg);
         }
-      }
+      },
+	  condition:[{
+		  field: 'wjfl',
+          oper: '=',
+          val: '视频'
+	  }]
     }, {
-      label: '下载视频',
+      label: '下载',
       fnname: 'download_dzgyMp4',
-      btntype: 'text'
+      btntype: 'text',
+	  condition:[{
+		  field: 'wjfl',
+          oper: '=',
+          val: '视频'
+	  }]
+    },
+	{
+      label: '查看',
+      fnname: 'view_dzgymp4',
+      btntype: 'text',
+	  condition:[{
+		  field: 'wjfl',
+          oper: '=',
+          val: '视频'
+	  }]
     }
   ],
   isbatoperate: true,
@@ -80,6 +121,9 @@
         }
       });
     },
+	view_dzgypdf:function(row){
+		window.open("http://172.16.201.125:81/电子工艺/" + row.wjlj);
+	},
     download_dzgyMp4: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {
@@ -92,7 +136,10 @@
           _this.$message.error(res.msg);
         }
       });
-    }
+    },
+	view_dzgymp4:function(row){
+		window.open("http://172.16.201.125:81/视频/" + row.wjlj);
+	}
   },
   batoperate: {
     import_by_add: function (vm, res) {

@@ -427,6 +427,7 @@
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Config\a1\cgjh_config.js" />
+    <Content Include="Config\a1\csdc_config.js" />
     <Content Include="Config\a1\ddzs_config.js" />
     <Content Include="Config\a1\djjcxx_config.js" />
     <Content Include="Config\a1\djls_config.js" />
@@ -439,6 +440,7 @@
     <Content Include="Config\a1\gwzd_config.js" />
     <Content Include="Config\a1\gycs_config.js" />
     <Content Include="Config\a1\gylx_config.js" />
+    <Content Include="Config\a1\gysp_config.js" />
     <Content Include="Config\a1\gzclfs_config.js" />
     <Content Include="Config\a1\gzjcxx_config.js" />
     <Content Include="Config\a1\jcxx_config.js" />

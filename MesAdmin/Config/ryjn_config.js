@@ -217,6 +217,8 @@
       },
       options: [],
       relation: 'gwhoptions',
+	  multiple:true,
+	  selectedvals:'selectedgwh'
     }, {
       coltype: 'list',
       prop: 'jnfl',
@@ -239,7 +241,8 @@
           label: '检测',
           value: '检测'
         }
-      ]
+      ],
+	  hideoptionval:true
     }, {
       coltype: 'date',
       prop: 'jnsj',
@@ -290,6 +293,7 @@
     jnsld: 0,
     gwhoptions: [],
 	useroptions:[],
+	selectedgwh:[],
     isdb: false,
     isedit: true,
   },
