@@ -6,6 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using ZDMesModels.TJ.A1;
 using ZDMesInterfaces.Common;
+using ZDMesModels;
+using MesAdmin.Filters;
+
 namespace MesAdmin.Controllers.A1.WLGL
 {
     [RoutePrefix("api/a1/gwwl")]

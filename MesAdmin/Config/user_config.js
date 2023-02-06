@@ -40,6 +40,7 @@
       headeralign: 'center',
       align: 'left',
       width: 100,
+	  sortable:true
     }, {
       coltype: 'string',
       prop: 'name',
@@ -48,6 +49,7 @@
       headeralign: 'center',
       align: 'left',
 	  width:200,
+	  sortable:true
     },
 	{
       coltype: 'string',
@@ -56,6 +58,7 @@
       headeralign: 'center',
       align: 'center',
 	  width:150,
+	  sortable:true
     },
 	{
       coltype: 'list',
@@ -69,6 +72,7 @@
         url: '/role/all'
       },
       options: [],
+	  selectedvals:'role',
 	  searchable:false
     },
 	{
@@ -76,8 +80,9 @@
       prop: 'addusername',
       label: '录入人',
       headeralign: 'center',
-      width: 80,
+      width: 100,
       align: 'left',
+	  sortable:true
     }, {
       coltype: 'datetime',
       prop: 'addtime',
@@ -86,6 +91,7 @@
       width: 150,
       align: 'left',
       overflowtooltip: true,
+	  sortable:true
     }
   ],
   form: {
@@ -96,6 +102,7 @@
     adduser: '',
     addtime: '',
 	role:[],
+	
     isdb: false,
     isedit: true
   },

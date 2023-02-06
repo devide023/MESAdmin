@@ -147,7 +147,7 @@ namespace ZDMesServices.CDGC.JJBGL
                 sql.Append(" and    trunc(ta.rq) = trunc(to_date(:rq, 'yyyy-MM-dd HH24:mi:ss')) ");
                 sql.Append(" and    ta.bc = :bc");
                 StringBuilder sqlgfmx = new StringBuilder();
-                sqlgfmx.Append("select id,detailid,vin,yx from zxjc_gtjjb_gfmx where detailid = :mxid ");
+                sqlgfmx.Append("select id,detailid,vin,yx,jth,lrr,lrsj,tfr,tfsj from zxjc_gtjjb_gfmx where detailid = :mxid ");
                 using (var db = new OracleConnection(ConString))
                 {
                     var _dic = new Dictionary<int, zxjc_gtjjb_bill>();
@@ -253,6 +253,7 @@ namespace ZDMesServices.CDGC.JJBGL
                                     foreach (var sitem in item.gfmxlist)
                                     {
                                         sitem.detailid = mxid;
+                                        sitem.lrr = bill.lrr;
                                         Db.Insert<zxjc_gtjjb_gfmx>(sitem, trans);
                                     }
                                 }

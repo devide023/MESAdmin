@@ -10,7 +10,7 @@ using ZDMesModels;
 using ZDMesModels.TJ.A1;
 namespace ZDMesServices.TJ.A1.GYGL
 {
-    public class A1GyLxService:BaseDao<mes_zxjc_gylx>,IBatAtachValue<mes_zxjc_gylx>
+    public class A1GyLxService:BaseDao<mes_zxjc_gylx>,IBatAtachValue<mes_zxjc_gylx>,IA1GYLX
     {
         public A1GyLxService(string constr):base(constr)
         {
@@ -88,6 +88,44 @@ namespace ZDMesServices.TJ.A1.GYGL
                      i.statusno = i.statusno.Trim();
                  });
                 return list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool IsExsit(string jxno)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select count(1) from mes_zxjc_gylx where  jx_no = :jxno and status_no is null");
+                using (var db = new OracleConnection(ConString))
+                {
+                   var cnt = db.ExecuteScalar<int>(sql.ToString(), new { jxno = jxno });
+                    return cnt > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool IsExsit(string jxno, string statusno)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select count(1) from mes_zxjc_gylx where jx_no = :jxno and status_no = :statusno ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    var cnt = db.ExecuteScalar<int>(sql.ToString(), new { jxno = jxno,statusno = statusno });
+                    return cnt > 0;
+                }
             }
             catch (Exception)
             {

@@ -10,6 +10,7 @@ using ZDMesModels.TJ.A1;
 using MesAdmin.Filters;
 using ZDMesModels;
 using ZDMesInterfaces.TJ;
+using ZDMesServices.TJ.Common;
 
 namespace MesAdmin.Controllers.A1.GYGL
 {
@@ -18,12 +19,16 @@ namespace MesAdmin.Controllers.A1.GYGL
     {
         private IDbOperate<mes_zxjc_gylx> _gylxservice;
         private IEntityDetail<string> _detailservice;
-        public A1GYLXController(IDbOperate<mes_zxjc_gylx> gylxservice, IRequireVerify requireverfify, IImportData<mes_zxjc_gylx> importservice, IEntityDetail<string> detailservice) :base(gylxservice)
+        private IA1GYLX _a1gylx;
+        private IUser _userservice;
+        public A1GYLXController(IDbOperate<mes_zxjc_gylx> gylxservice, IRequireVerify requireverfify, IImportData<mes_zxjc_gylx> importservice, IEntityDetail<string> detailservice,IA1GYLX a1gylx, IUser user) : base(gylxservice)
         {
             _gylxservice = gylxservice;
             this._requireverfify = requireverfify;
             this._importservice = importservice;
             _detailservice = detailservice;
+            _a1gylx = a1gylx;
+            _userservice= user;
         }
         public override IHttpActionResult GetList(sys_page parm)
         {
@@ -42,6 +47,85 @@ namespace MesAdmin.Controllers.A1.GYGL
                     resultcount = resultcount,
                     list = list
                 });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost, Route("copy")]
+        public IHttpActionResult CopyData(List<mes_zxjc_gylx> entitys)
+        {
+            try
+            {
+                string jxno = string.Empty;
+                string statusno = string.Empty;
+                if (entitys != null && entitys.Count > 0)
+                {
+                    var jxnull = entitys.Where(t => string.IsNullOrEmpty(t.jxno));
+                    if (jxnull.Count() > 0)
+                    {
+                        return Json(new
+                        {
+                            code = 0,
+                            msg = "请完善机型为空的行"
+                        });
+                    }
+                    jxno = entitys.Select(t => t.jxno).Distinct().First();
+                    statusno = entitys.Select(t => t.statusno).Distinct().First();
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "未接收到数据"
+                    });
+
+                }
+                if (!string.IsNullOrEmpty(jxno) && string.IsNullOrEmpty(statusno))
+                {
+                    var isexsit = _a1gylx.IsExsit(jxno);
+                    if (isexsit)
+                    {
+                        return Json(new
+                        {
+                            code = 0,
+                            msg = $"机型：{jxno},已存在！"
+                        });
+                    }
+                }
+                if (!string.IsNullOrEmpty(jxno) && !string.IsNullOrEmpty(statusno))
+                {
+                    var isexsit = _a1gylx.IsExsit(jxno, statusno);
+                    if (isexsit)
+                    {
+                        return Json(new
+                        {
+                            code = 0,
+                            msg = $"机型：{jxno},状态：{statusno}已存在！"
+                        });
+                    }
+                }
+                entitys.ForEach(t => { t.lrsj = DateTime.Now;t.lrr = _userservice.CurrentUser().name; });
+                var cnt = _gylxservice.Add(entitys);
+                if (cnt > 0)
+                {
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "复制数据成功"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "复制数据失败"
+                    });
+                }
             }
             catch (Exception)
             {

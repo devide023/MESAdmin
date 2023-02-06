@@ -22,18 +22,13 @@
   },
   pagefuns: {},
   fields: [{
-      coltype: 'list',
+      coltype: 'string',
       prop: 'gwh',
 	  label: '岗位编号',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      options: [],
 	  width:150,
     }, {
       coltype: 'string',

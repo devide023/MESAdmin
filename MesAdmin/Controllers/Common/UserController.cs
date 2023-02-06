@@ -158,6 +158,7 @@ namespace MesAdmin.Controllers.Common
             try
             {
                 int resultcount = 0;
+                parm.default_order_colname = "addtime";
                 var list = _userservice.GetList(parm, out resultcount);
                 return Json(new sys_search_result()
                 {

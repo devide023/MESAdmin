@@ -142,6 +142,7 @@
     <Compile Include="CDGC\GTJC\GTJCDataService.cs" />
     <Compile Include="CDGC\GYGL\CDGCGYGLService.cs" />
     <Compile Include="CDGC\JCXX\JCXXService.cs" />
+    <Compile Include="CDGC\JJBGL\CDGC_GTTF_Service.cs" />
     <Compile Include="CDGC\JJBGL\DJKJJBService.cs" />
     <Compile Include="CDGC\JJBGL\GTJJBService.cs" />
     <Compile Include="CDGC\Report\CDGCReportService.cs" />

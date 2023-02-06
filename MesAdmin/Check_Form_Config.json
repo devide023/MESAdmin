@@ -11,10 +11,6 @@
         "collabel": "用户编码"
       },
       {
-        "colname": "tel",
-        "collabel": "手机号码"
-      },
-      {
         "colname": "role",
         "collabel": "角色"
       }

@@ -14,7 +14,22 @@ namespace ZDMesModels.CDGC
         public string id { get; set; }=Guid.NewGuid().ToString();
         public int detailid { get; set; }
         public string vin { get; set; }
+        /// <summary>
+        /// 机台号
+        /// </summary>
+        public string jth { get; set; }
+        /// <summary>
+        /// 工废原因
+        /// </summary>
         public string yx { get; set; }
+        /// <summary>
+        /// 退废人
+        /// </summary>
+        public string tfr { get; set; }
+        /// <summary>
+        /// 退费时间
+        /// </summary>
+        public DateTime? tfsj { get; set; }
     }
 
     public class zxjc_djkjjb_gfmx_mapper : ClassMapper<zxjc_djkjjb_gfmx>

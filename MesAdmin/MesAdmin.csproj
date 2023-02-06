@@ -357,6 +357,7 @@
     <Compile Include="Controllers\CDGC\GTJC\GTJCHISController.cs" />
     <Compile Include="Controllers\CDGC\GYGL\CGGCGYGLController.cs" />
     <Compile Include="Controllers\CDGC\JCXX\JCXXController.cs" />
+    <Compile Include="Controllers\CDGC\JJBGL\CDGC_GTTF_Controller.cs" />
     <Compile Include="Controllers\CDGC\JJBGL\DJKJJBController.cs" />
     <Compile Include="Controllers\CDGC\JJBGL\GTJJBController.cs" />
     <Compile Include="Controllers\CDGC\Report\CDGCGTJJBController.cs" />
@@ -653,12 +654,15 @@
     <Content Include="sqlconfig\api-a1-jtgl-scxfpjllist.json" />
     <Content Include="Template\CDGC\电子工艺.xlsx" />
     <Content Include="Template\CDGC\缸体检测基础数据.xlsx" />
+    <Content Include="sqlconfig\tj\a1\wlgl\api-a1-gwwl-list.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\MF\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
+    <Folder Include="sqlconfig\cdgc\" />
+    <Folder Include="sqlconfig\lbj\" />
     <Folder Include="Upload\Excel\" />
     <Folder Include="Upload\Image\" />
     <Folder Include="Upload\PDF\" />

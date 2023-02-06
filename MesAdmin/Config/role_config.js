@@ -45,19 +45,22 @@
       headeralign: 'center',
       align: 'center',
       width: 100,
+	  sortable:true
     }, {
       coltype: 'string',
       prop: 'name',
       label: '名称',
       headeralign: 'center',
       align: 'left',
+	  sortable:true
     }, {
       coltype: 'string',
       prop: 'addusername',
       label: '录入人',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 100,
+	  sortable:true
     }, {
       coltype: 'datetime',
       prop: 'addtime',
@@ -66,6 +69,7 @@
       align: 'left',
       with : 150,
       overflowtooltip: true,
+	  sortable:true
     }
   ],
   form: {

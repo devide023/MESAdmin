@@ -95,7 +95,11 @@
   bat_btnlist: [{
       btntxt: '模板下载',
       fnname: 'download_template_file'
-    }
+    },
+	{
+      btntxt: '机型复制',
+      fnname: 'data_copy_handle'
+    },
   ],
   pagefuns: {
     add_handle: function () {
@@ -132,7 +136,16 @@
           }
         });
       }
-    }
+    },
+	data_copy_handle:function(){
+		var _this = this;
+      _this.dialog_title = '数据复制';
+      _this.dialog_width = '55%';
+      _this.dialogVisible = true;
+      _this.dialog_hidefooter = true;
+      _this.dialog_viewpath = 'tja1/gygl/gylx_copy';
+      _this.dialog_props = {};
+	}
   },
   fields: [{
       coltype: 'string',

@@ -5,8 +5,13 @@
   isfresh: true,
   isselect: true,
   operate_fnlist: [{
-      label: '下载视频',
+      label: '下载',
       fnname: 'download_dzgyMp4',
+      btntype: 'text'
+    },
+	{
+      label: '查看',
+      fnname: 'view_dzgyMp4',
       btntype: 'text'
     }
   ],
@@ -126,6 +131,9 @@
         }
       });
     },
+	view_dzgyMp4:function(row){
+		window.open("http://172.16.201.216:81/视频/" + row.wjlj+'/'+row.gymc);
+	},
     download_dzgyMp4: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {

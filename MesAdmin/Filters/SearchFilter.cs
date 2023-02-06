@@ -12,6 +12,11 @@ namespace MesAdmin.Filters
 {
     public class SearchFilterAttribute : ActionFilterAttribute
     {
+        private string _sqlconfigpath = string.Empty;
+        public SearchFilterAttribute(string sqlconfigpath="~/sqlconfig/")
+        {
+            _sqlconfigpath = sqlconfigpath;
+        }
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             try
@@ -28,7 +33,7 @@ namespace MesAdmin.Filters
                 }
                 sys_page condition = obj as sys_page;
                 string routetemplate = actionContext.ControllerContext.RouteData.Route.RouteTemplate;
-                var sqlconfigpath = HttpContext.Current.Server.MapPath($"~/sqlconfig/{routetemplate.Replace("/", "-")}.json");
+                var sqlconfigpath = HttpContext.Current.Server.MapPath($"{_sqlconfigpath}{routetemplate.Replace("/", "-")}.json");
                 FileInfo fi = new FileInfo(sqlconfigpath);
                 if (fi.Exists)
                 {
@@ -43,7 +48,7 @@ namespace MesAdmin.Filters
                             {
                                 var templist = new List<string>();
                                 item.values.ForEach(t => templist.Add(t.ToLower()));
-                                expression = expression + $" {item.left} lower({item.colname}) {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
+                                expression = expression + $" {item.left} {item.colname} {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
                                 p.Add($":{item.colname.Replace(".", "_")}{index}", templist);
                             }
                             break;
@@ -78,14 +83,14 @@ namespace MesAdmin.Filters
                             p.Add($":{item.colname.Replace(".", "_")}{index}", item.value);
                             break;
                         case "string":
-                            expression = expression + $" {item.left} lower({item.colname}) {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
+                            expression = expression + $" {item.left} {item.colname} {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
                             if (item.oper == "like")
                             {
-                                p.Add($":{item.colname.Replace(".", "_")}{index}", "%" + item.value.ToLower() + "%");
+                                p.Add($":{item.colname.Replace(".", "_")}{index}", "%" + item.value + "%");
                             }
                             else
                             {
-                                p.Add($":{item.colname.Replace(".", "_")}{index}", item.value.ToLower());
+                                p.Add($":{item.colname.Replace(".", "_")}{index}", item.value);
                             }
                             break;
                         case "int":
@@ -93,7 +98,7 @@ namespace MesAdmin.Filters
                             p.Add($":{item.colname.Replace(".", "_")}{index}", Convert.ToInt32(item.value), System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
                             break;
                         default:
-                            expression = expression + $" {item.left} lower({item.colname}) {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
+                            expression = expression + $" {item.left} {item.colname} {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
                             p.Add($":{item.colname.Replace(".", "_")}{index}", item.value);
                             break;
                     }

@@ -125,6 +125,7 @@
     <Compile Include="TJ\IA1BaseInfo.cs" />
     <Compile Include="TJ\IA1DDZS.cs" />
     <Compile Include="TJ\IA1GYGL.cs" />
+    <Compile Include="TJ\IA1GYLX.cs" />
     <Compile Include="TJ\IA1ZPMX.cs" />
     <Compile Include="TJ\IBatAtachValue.cs" />
     <Compile Include="TJ\IDJGL.cs" />

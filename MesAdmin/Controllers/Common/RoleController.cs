@@ -122,6 +122,7 @@ namespace MesAdmin.Controllers.Common
             {
                 //var scope = GlobalConfiguration.Configuration.DependencyResolver.GetRequestLifetimeScope();
                 //scope.Resolve<IDbOperate<mes_role_entity>>();
+                parm.default_order_colname = "code";
                 int resultcount = 0;
                 var list = _roleservice.GetList(parm, out resultcount);
                 return Json(new sys_search_result()
