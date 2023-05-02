@@ -178,6 +178,21 @@
     }
   },
   fields: [{
+	  coltype: 'list',
+      label: '生产线',
+      prop: 'scx',
+      dbprop: 'scx',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+	  inioptionapi: {
+        method: 'get',
+        url: '/a1/baseinfo/scx'
+      },
+	  hideoptionval:true,
+	  options:[]
+  },{
       coltype: 'string',
       label: '工艺编号',
       prop: 'gybh',
@@ -252,6 +267,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  width:100,
     }, 
 	{
       coltype: 'string',
@@ -261,6 +277,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  width:100,
     }, 
 	{
       coltype: 'string',
@@ -292,7 +309,7 @@
   ],
   form: {
     gcdm: '9100',
-    scx: '1',
+    scx: '',
     gybh: '',
     gymc: '',
     gyms: '',

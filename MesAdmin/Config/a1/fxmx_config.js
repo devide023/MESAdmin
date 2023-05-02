@@ -5,7 +5,22 @@
   isfresh: false,
   isselect: false,
   pagefuns: {},
-  fields: [
+  fields: [{
+	  coltype: 'list',
+      label: '生产线',
+      prop: 'scx',
+      dbprop: 'scx',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+	  inioptionapi: {
+        method: 'get',
+        url: '/a1/baseinfo/scx'
+      },
+	  hideoptionval:true,
+	  options:[]
+  },
   {
       coltype: 'string',
       label: '订单号',
@@ -93,6 +108,29 @@
       align: 'center',
 	  width:150
     }, {
+      coltype: 'string',
+      label: '故障代码',
+      prop: 'faultno',
+      dbprop: 'fault_no',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:100
+    },
+	{
+      coltype: 'string',
+      label: '故障名称',
+      prop: 'faultname',
+      dbprop: 'faultname',
+      overflowtooltip: true,      
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  searchable:false,
+	  width:100
+    },
+	{
       coltype: 'string',
       label: '处理方式',
       prop: 'clfs',
@@ -201,19 +239,10 @@
       headeralign: 'center',
       align: 'center',
 	  width:150
-    }, {
-      coltype: 'string',
-      label: '故障代码',
-      prop: 'faultno',
-      dbprop: 'fault_no',
-      overflowtooltip: true,      
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-	  width:100
-    }
+    } 
   ],
   form: {
+	  scx:'',
     gwh: '',
     engineno: '',
     statusno: '',

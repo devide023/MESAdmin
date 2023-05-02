@@ -24,7 +24,21 @@ namespace MesAdmin.Controllers.A1.BaseInfo
             try
             {
                 List<dynamic> list = _a1baseinfo.Get_All_ScxList().ToList();
-                return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.scxmc, value = t.scx }).OrderBy(x => x.value) });
+                return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.scxmc, value = t.scx }).OrderBy(x => x.label) });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("gwzdbyscx")]
+        public IHttpActionResult GetGwZd(string scx)
+        {
+            try
+            {
+                var list = _a1baseinfo.GetGWList(scx);
+                return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.gwmc, value = t.gwh }) });
             }
             catch (Exception)
             {

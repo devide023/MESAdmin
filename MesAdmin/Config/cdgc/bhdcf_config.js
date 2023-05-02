@@ -8,6 +8,7 @@
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
+	  row.cjsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
     deal_handle: function () {
@@ -38,7 +39,25 @@
         }
       ],
       hideoptionval: true
-    }, {
+    }, 
+	{
+      coltype: 'datetime',
+      prop: 'cjsj',
+      label: '创建时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 150,
+	  overflowtooltip: true,
+      options: [{
+          label: '创建',
+          value: 0
+        }, {
+          label: '闭环',
+          value: 1
+        }
+      ]
+    },
+	{
       coltype: 'list',
       prop: 'rwzt',
       label: '状态',
@@ -130,28 +149,11 @@
 	  hideoptionval: true
     }, {
       coltype: 'string',
-      prop: 'cpmc',
-      label: '产品名称',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 100,
-    }, {
-      coltype: 'string',
       prop: 'bhbw',
       label: '变化部位',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-      width: 100,
-    }, {
-      coltype: 'string',
-      prop: 'fsddbh',
-      label: '发生断点编号',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
     }, {
       coltype: 'string',
       prop: 'fxddbh',
@@ -160,22 +162,6 @@
       align: 'center',
       sortable: true,
       width: 150,
-    }, {
-      coltype: 'string',
-      prop: 'gzxx',
-      label: '故障现象',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
-    }, {
-      coltype: 'string',
-      prop: 'zssl',
-      label: '追溯数量',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 100,
     }, {
       coltype: 'list',
       prop: 'yzpcl',
@@ -199,20 +185,11 @@
 	  hideoptionval: true
     }, {
       coltype: 'string',
-      prop: 'czygsdd',
-      label: '操作员改善断点',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
-    }, {
-      coltype: 'string',
       prop: 'czyscsj',
       label: '操作员实测数据',
       headeralign: 'center',
       align: 'center',
       sortable: true,
-      width: 150,
     }, {
       coltype: 'string',
       prop: 'czypdjg',
@@ -220,15 +197,6 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
-      width: 150,
-    }, {
-      coltype: 'string',
-      prop: 'xcxjgsdd',
-      label: '巡检改善断点',
-      headeralign: 'center',
-      align: 'center',
-      sortable: true,
-      width: 150,
     }, {
       coltype: 'string',
       prop: 'xcxjscsj',
@@ -236,7 +204,6 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
-      width: 150,
     }, {
       coltype: 'string',
       prop: 'xcxjpdjg',
@@ -244,11 +211,11 @@
       headeralign: 'center',
       align: 'center',
       sortable: true,
-      width: 150,
     }
   ],
   form: {
     rwzt: '创建',
+	cjsj:'',
     scx: 'SCX01',
     cpxh: '',
     cpmc: '',

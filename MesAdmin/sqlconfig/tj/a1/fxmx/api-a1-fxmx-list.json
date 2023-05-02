@@ -1,0 +1,5 @@
+{
+  "sql": "select id, gcdm, scx, gwh, engine_no as engineno, status_no as statusno, order_no as orderno, gzxx, jcbj, jyclgw,(select user_name from zxjc_ryxx where user_code = zxjc_gwzd_fxmx.jcry) as jcry, jcsj, clfs, sjclgw, sjbjbm, sjbjcs, yyfx, cljg, fxj_flg as fxjflg,(select user_name from zxjc_ryxx where user_code = zxjc_gwzd_fxmx.fxr) as fxr, fxsj, bhbz,(select user_name from zxjc_ryxx where user_code = zxjc_gwzd_fxmx.bhr) as bhr, bhsj, fault_no as faultno,(select fault_name from zxjc_fault where fault_no = zxjc_gwzd_fxmx.fault_no and rownum = 1) as faultname, hand_no as handno,(select hand_name from zxjc_fault_clfs where fault_no = zxjc_gwzd_fxmx.hand_no and rownum = 1) as handname, tpzb, tpname FROM zxjc_gwzd_fxmx where 1=1",
+  "sql_cnt": "select count(1) from zxjc_gwzd_fxmx where 1=1 ",
+  "sql_orderby": " order by jcsj desc nulls last "
+}

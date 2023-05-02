@@ -61,6 +61,7 @@ namespace ZDMesModels.LBJ
         /// 设备信息选项
         /// </summary>
         public List<sys_column_options> sbxxoptions { get; set; }
+        public List<string> scxs { get; set; }
     }
 
     public class base_sbwb_mapper : ClassMapper<base_sbwb>
@@ -69,6 +70,7 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.autoid).Key(KeyType.Assigned);
             Map(t => t.sbmc).Ignore();
+            Map(t => t.scxs).Ignore();
             Map(t => t.sbxxoptions).Ignore();
             AutoMap();
         }

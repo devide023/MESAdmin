@@ -8,14 +8,16 @@ using ZDMesModels.TJ.A1;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 using ZDMesModels;
+using ZDMesServices.Common;
 
 namespace ZDMesServices.TJ.A1.JTGL
 {
     public class A1JtFpService:BaseDao<zxjc_t_jstcfp>,IJTFP
     {
+        private UserUtilService _us;
         public A1JtFpService(string constr):base(constr)
         {
-
+            _us = new UserUtilService(constr);
         }
 
         public override IEnumerable<zxjc_t_jstcfp> GetList(sys_page parm, out int resultcount)
@@ -32,8 +34,8 @@ namespace ZDMesServices.TJ.A1.JTGL
                 sql.Append(" gcdm, scx, gwh, jx_no as jxno, status_no as statusno, bz, lrr1, lrsj1,");
                 sql.Append(" (select lrr from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx and rownum = 1) as lrr2,");
                 sql.Append(" (select lrsj from zxjc_t_jstc where jcbh = zxjc_t_jstcfp.jtid and scx = zxjc_t_jstcfp.scx and rownum = 1)as lrsj2 ");
-                sql.Append(" from zxjc_t_jstcfp where scx = 1 ");
-                sql_cnt.Append($" select count(id) from zxjc_t_jstcfp where scx=1  ");
+                sql.Append($" from zxjc_t_jstcfp where scx in (select distinct zbid from   zxjc_t_jstcfp_ry where  usercode = '{_us.CurrentUser.code}') ");
+                sql_cnt.Append($" select count(id) from zxjc_t_jstcfp where scx in (select distinct zbid from   zxjc_t_jstcfp_ry where  usercode = '{_us.CurrentUser.code}')  ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {

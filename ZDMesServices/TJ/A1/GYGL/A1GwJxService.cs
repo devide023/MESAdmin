@@ -15,6 +15,38 @@ namespace ZDMesServices.TJ.A1.GYGL
         {
 
         }
+        public override int Add(IEnumerable<base_gwzx_jx> entitys, out IEnumerable<base_gwzx_jx> noklist)
+        {
+            try
+            {
+                List<base_gwzx_jx> postdata = new List<base_gwzx_jx>();
+                List<base_gwzx_jx> repeatdata = new List<base_gwzx_jx>();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select count(*) FROM  base_gwzx_jx where scx = :scx and cpjx = :cpjx and gwh = :gwh ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    foreach (var item in entitys)
+                    {
+                        var cnt = db.ExecuteScalar<int>(sql.ToString(), new { scx = item.scx, cpjx = item.cpjx, gwh = item.gwh });
+                        if (cnt == 0)
+                        {
+                            postdata.Add(item);
+                        }
+                        else
+                        {
+                            repeatdata.Add(item);
+                        }
+                    }
+                }
+                noklist = repeatdata;
+                return base.Add(postdata);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public override bool Modify(IEnumerable<base_gwzx_jx> entitys)
         {
             StringBuilder sql = new StringBuilder();

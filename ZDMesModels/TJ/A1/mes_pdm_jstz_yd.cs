@@ -25,6 +25,22 @@ namespace ZDMesModels.TJ.A1
         /// 阅读人id
         /// </summary>
         public int ydrid { get; set; }
+        /// <summary>
+        /// 技通id
+        /// </summary>
+        public string jtid { get; set; }
+        /// <summary>
+        /// 组别id
+        /// </summary>
+        public string zbid { get; set; }
+        /// <summary>
+        /// 用户编码
+        /// </summary>
+        public string usercode { get; set; }
+        /// <summary>
+        /// 技术通知信息
+        /// </summary>
+        public zxjc_t_jstc jstcinfo { get; set; }
     }
 
     public class mes_pdm_jstz_yd_mapper:ClassMapper<mes_pdm_jstz_yd>
@@ -32,6 +48,7 @@ namespace ZDMesModels.TJ.A1
         public mes_pdm_jstz_yd_mapper()
         {
             Map(t => t.id).Key(KeyType.Assigned);
+            Map(t => t.jstcinfo).Ignore();
             AutoMap();
         }
     }

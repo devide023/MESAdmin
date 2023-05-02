@@ -136,7 +136,54 @@ namespace MesAdmin.Controllers.A1.GYGL
         [AtachValue(typeof(IBatAtachValue<mes_zxjc_gylx>), "BatSetValue")]
         public override IHttpActionResult Add(List<mes_zxjc_gylx> entitys)
         {
-            return base.Add(entitys);
+            try
+            {
+                IEnumerable<mes_zxjc_gylx> repeatlist = new List<mes_zxjc_gylx>();
+                var ret = _gylxservice.Add(entitys, out repeatlist);
+                if (ret > 0)
+                {
+                    if (repeatlist.Count() > 0)
+                    {
+                        return Json(new
+                        {
+                            code = 1,
+                            msg = $"有{repeatlist.Count()}条数据重复跳过,其它数据保存成功！"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 1,
+                            msg = "数据保存成功"
+                        });
+                    }
+                }
+                else
+                {
+                    if (repeatlist.Count() > 0)
+                    {
+                        return Json(new
+                        {
+                            code = 0,
+                            msg = $"有{repeatlist.Count()}条数据重复"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new sys_result()
+                        {
+                            code = 0,
+                            msg = "数据保存失败"
+                        });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [AtachValue(typeof(IBatAtachValue<mes_zxjc_gylx>), "BatSetValue")]
         public override IHttpActionResult Edit(List<mes_zxjc_gylx> entitys)

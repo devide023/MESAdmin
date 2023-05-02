@@ -12,7 +12,13 @@
       label: '技通分配',
       fnname: 'jstz_fp',
       btntype: 'text',
-      callback: 'dialog_save_handle'
+      callback: 'dialog_save_handle',
+      condition: [{
+          field: 'istogwh',
+          oper: '=',
+          val: 'Y'
+        }
+      ]
     },
   ],
   batoperate: {
@@ -34,11 +40,14 @@
   pagefuns: {
     download_jstcpdf: function (row) {
       var _this = this;
-	  if(row.jtly===1){
-      window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
-	  }else if(row.jtly===0){
-		window.open("http://172.16.201.216:81/技术通知/" + row.wjlj);  
-	  }
+      this.$request('get', '/a1/jtfpscx/read_pdm_jstz', {
+        jcbh: row.jcbh
+      }).then(function (res) {});
+      if (row.jtly === 1) {
+        window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
+      } else if (row.jtly === 0) {
+        window.open("http://172.16.201.216:81/技术通知/" + row.wjlj);
+      }
     },
     jstz_fp: function (row, item) {
       var _this = this;
@@ -57,6 +66,21 @@
     }
   },
   fields: [{
+      coltype: 'list',
+      label: '技通组别',
+      prop: 'scx',
+      dbprop: 'scx',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+      inioptionapi: {
+        method: 'get',
+        url: '/a1/jtfp/group/all_zblist'
+      },
+      hideoptionval: true,
+      options: []
+    }, {
       coltype: 'string',
       label: '技通编号',
       prop: 'jcbh',
@@ -94,8 +118,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'left'
-    }, 
-	{
+    }, {
       coltype: 'string',
       label: '文件名称',
       prop: 'wjlj',
@@ -103,8 +126,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'left'
-    },
-	{
+    }, {
       coltype: 'date',
       label: '有效期限开始',
       prop: 'yxqx1',

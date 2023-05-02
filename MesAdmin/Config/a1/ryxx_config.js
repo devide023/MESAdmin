@@ -69,7 +69,24 @@
       window.open('http://172.16.201.216:7002/template/A1/员工基础信息.xlsx?r='+Math.random());
     }
   },
-  fields: [{
+  fields: [
+  {
+	  coltype: 'list',
+      label: '生产线',
+      prop: 'scx',
+      dbprop: 'scx',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+	  inioptionapi: {
+        method: 'get',
+        url: '/a1/baseinfo/scx'
+      },
+	  hideoptionval:true,
+	  options:[]
+  },
+  {
       coltype: 'string',
       label: '帐号',
       prop: 'usercode',
@@ -235,6 +252,7 @@
     }
   ],
   form: {
+	  scx:'',
     usercode: '',
     username: '',
     password: '123456',

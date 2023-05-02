@@ -7,6 +7,7 @@ using System.Web.Http;
 using ZDMesModels.CDGC;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.CDGC;
+using ZDMesModels;
 
 namespace MesAdmin.Controllers.CDGC.BHDGL
 {
@@ -23,6 +24,12 @@ namespace MesAdmin.Controllers.CDGC.BHDGL
         {
             _4mbhdservice = fmbhdservice;
             _bhdservice = bhdservice;
+        }
+
+        public override IHttpActionResult GetList(sys_page parm)
+        {
+            parm.default_order_colname = "cjsj";
+            return base.GetList(parm);
         }
 
         [HttpPost,Route("bhdbh")]

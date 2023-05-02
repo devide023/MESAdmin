@@ -73,7 +73,23 @@ namespace ZDMesServices.TJ.A1.BaseInfo
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
 
+        public IEnumerable<base_gwzd> GetGWList(string scx)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select distinct gwh,gwmc FROM base_gwzd where scx = :scx order by to_number(REGEXP_REPLACE(gwh, '-', '.')) asc");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_gwzd>(sql.ToString(), new {scx = scx});
+                }
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

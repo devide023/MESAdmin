@@ -19,12 +19,110 @@ namespace MesAdmin.Controllers.A1.JTGL
     public class A1JTGLController : BaseApiController<zxjc_t_jstc>
     {
         private IJTFPSCX _fpscxservice;
-        public A1JTGLController(IDbOperate<zxjc_t_jstc> jstzservice, IRequireVerify requireverfify, IImportData<zxjc_t_jstc> importservice, IJTFPSCX fpscxservice) :base(jstzservice)
+        private IA1MyDoc _pdmfpedservice;
+        private IA1JtFpzt _jtfpztservice;
+        public A1JTGLController(IDbOperate<zxjc_t_jstc> jstzservice, IRequireVerify requireverfify, IImportData<zxjc_t_jstc> importservice, IJTFPSCX fpscxservice, IA1MyDoc pdmfpedservice , IA1JtFpzt jtfpztservice) :base(jstzservice)
         {
             this._requireverfify = requireverfify;
             this._importservice = importservice;
             _fpscxservice = fpscxservice;
+            _pdmfpedservice = pdmfpedservice;
+            _jtfpztservice = jtfpztservice;
         }
+        /// <summary>
+        /// 设置技通已分配状态
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet,Route("set_jstz_fp")]
+        public IHttpActionResult Set_Jstz_Fpzt(string jcbh)
+        {
+            try
+            {
+               var ret =  _jtfpztservice.Set_JtFpZt(jcbh);
+                if (ret)
+                {
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "设置成功"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "设置失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public override IHttpActionResult Add(List<zxjc_t_jstc> entitys)
+        {
+            List<zxjc_t_jstc> postdata = new List<zxjc_t_jstc>();
+            foreach (var item in entitys)
+            {
+                foreach (var scx in item.scxs)
+                {
+                    postdata.Add(new zxjc_t_jstc()
+                    {
+                        gcdm="9100",
+                        scx=scx,
+                        jtid = Guid.NewGuid().ToString(),
+                        jcbh = item.jcbh,
+                        jcmc = item.jcmc,
+                        jcms = item.jcms,
+                        wjlj = item.wjlj,
+                        jwdx = item.jwdx,
+                        scry = item.scry,
+                        scsj = item.scsj,
+                        yxqx1 = item.yxqx1,
+                        yxqx2 = item.yxqx2,
+                        fpflg = "Y",
+                        fpsj = item.fpsj,
+                        fpr = item.fpr,
+                        wjfl = item.wjfl,
+                        jtly = 0,
+                        lrr = item.lrr,
+                        lrsj = item.lrsj
+                    });
+                }
+            }
+            return base.Add(postdata);
+        }
+
+        [HttpPost, SearchFilter, Route("pdmfped_list")]
+        public IHttpActionResult PDM_FPED_List(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                var list = _pdmfpedservice.Get_PDMFP_List(parm, out resultcount);
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
+        /// 生产线分配记录列表
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [HttpPost, SearchFilter, Route("scxfpjllist")]
         public IHttpActionResult JsFzToScxJlList(sys_page parm)
         {
@@ -47,7 +145,7 @@ namespace MesAdmin.Controllers.A1.JTGL
             }
         }
         /// <summary>
-        /// 分配PDM通知列表
+        /// PDM通知列表
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>

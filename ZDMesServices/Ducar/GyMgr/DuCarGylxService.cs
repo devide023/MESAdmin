@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZDMesModels.Ducar;
+
+namespace ZDMesServices.Ducar.GyMgr
+{
+    public class DuCarGylxService : BaseDao<zxjc_gylx>
+    {
+        public DuCarGylxService(string constr) : base(constr)
+        {
+        }
+    }
+}

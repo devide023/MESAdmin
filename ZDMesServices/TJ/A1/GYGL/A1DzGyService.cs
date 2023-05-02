@@ -19,6 +19,38 @@ namespace ZDMesServices.TJ.A1.GYGL
 
         }
 
+        public override int Add(IEnumerable<zxjc_t_dzgy> entitys, out IEnumerable<zxjc_t_dzgy> noklist)
+        {
+            try
+            {
+                List<zxjc_t_dzgy> postdata = new List<zxjc_t_dzgy>();
+                List<zxjc_t_dzgy> repeatdata = new List<zxjc_t_dzgy>();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select count(gyid) FROM  zxjc_t_dzgy where scx = :scx and jx_no = :jxno and gwh = :gwh and gymc = :gymc ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    foreach (var item in entitys)
+                    {
+                        var cnt = db.ExecuteScalar<int>(sql.ToString(), new { scx = item.scx, jxno = item.jxno, gwh = item.gwh, gymc = item.gymc });
+                        if (cnt == 0) {
+                            postdata.Add(item);
+                        }
+                        else
+                        {
+                            repeatdata.Add(item);
+                        }
+                    }
+                }
+                noklist = repeatdata;
+                return base.Add(postdata);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<zxjc_t_dzgy> BatSetValue(List<zxjc_t_dzgy> list)
         {
             try

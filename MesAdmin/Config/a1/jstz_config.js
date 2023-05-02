@@ -42,7 +42,11 @@
           val: 1
         }
       ]
-    },
+    }, {
+      label: '已分配',
+      fnname: 'set_jstc_fp',
+      btntype: 'text'
+    }
   ],
   batoperate: {
     export_excel: function (_this) {
@@ -91,6 +95,19 @@
       _this.dialog_props = {
         row: row
       };
+    },
+    set_jstc_fp: function (row) {
+      var _this = this;
+      this.$request('get', '/a1/jtgl/set_jstz_fp', {
+        jcbh: row.jcbh
+      }).then(function (res) {
+        if (res.code === 1) {
+          _this.getlist(_this.queryform);
+        } else {
+          _this.$message.error(res.msg);
+        }
+      })
+
     },
     dialog_save_handle: function (vm) {
       console.log(vm)
@@ -159,8 +176,7 @@
       headeralign: 'center',
       align: 'center',
       width: 150
-    },
-	{
+    }, {
       coltype: 'bool',
       label: '是否分配',
       prop: 'fpflg',
@@ -168,21 +184,26 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  activevalue:'Y',
-	  inactivevalue:'N',
+      activevalue: 'Y',
+      inactivevalue: 'N',
       width: 100
-    },
-	{
-      coltype: 'string',
+    }, {
+      coltype: 'list',
       label: '生产线',
-      prop: 'fpscxlist',
+      prop: 'scxs',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
+      options: [],
+      inioptionapi: {
+        method: 'get',
+        url: '/a1/jtfp/group/all_zblist'
+      },
+      multiple: true,
+      selectedvals: 'scxs',
       width: 100
-    },
-	{
+    }, {
       coltype: 'string',
       label: '技通描述',
       prop: 'jcms',
@@ -191,8 +212,7 @@
       headeralign: 'center',
       align: 'center',
       width: 100
-    },
-	{
+    }, {
       coltype: 'string',
       label: '创建者',
       prop: 'scry',
@@ -213,23 +233,22 @@
     }
   ],
   trbginfo: [{
-    colname: 'rcnt',
-    logiclist: [{
-        logic: '>',
-        val0: 0,
-        classname: 'info-row',
-      }
-    ]
-  },
-  {
-    colname: 'fpflg',
-    logiclist: [{
-        logic: '=',
-        val0: 'Y',
-        classname: 'warning-row',
-      }
-    ]
-  }
+      colname: 'rcnt',
+      logiclist: [{
+          logic: '>',
+          val0: 0,
+          classname: 'info-row',
+        }
+      ]
+    }, {
+      colname: 'fpflg',
+      logiclist: [{
+          logic: '=',
+          val0: 'Y',
+          classname: 'warning-row',
+        }
+      ]
+    }
   ],
   form: {
     jcbh: '',
@@ -248,6 +267,7 @@
     wjfl: '技术通知',
     lrr: '',
     lrsj: '',
+    scxs: [],
     isdb: false,
     isedit: true
   },

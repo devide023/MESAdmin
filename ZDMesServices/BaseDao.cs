@@ -96,6 +96,7 @@ namespace ZDMesServices
 
         public virtual int Add(IEnumerable<T> entitys, out IEnumerable<T> noklist)
         {
+            
             throw new NotImplementedException();
         }
 

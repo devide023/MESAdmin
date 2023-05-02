@@ -1,5 +1,5 @@
 {
-  "sql": "select jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj from zxjc_t_jstc where fp_flg ='N' ",
+  "sql": "select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj from zxjc_t_jstc where fp_flg ='N' ",
   "sql_cnt": "select count(jcbh) from zxjc_t_jstc where fp_flg ='N'  ",
   "sql_orderby": " order by lrsj desc nulls last "
 }

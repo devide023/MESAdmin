@@ -112,10 +112,12 @@ namespace ZDMesModels.TJ.A1
         /// 故障代码
         /// </summary>
         public string faultno { get; set; }
+        public string faultname { get; set; }
         /// <summary>
         /// 标注坐标
         /// </summary>
         public string handno { get; set; }
+        public string handname { get; set; }
         /// <summary>
         ///  
         /// </summary>

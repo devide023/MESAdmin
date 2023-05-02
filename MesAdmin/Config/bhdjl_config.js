@@ -27,7 +27,7 @@
       align: 'center',
       fixed: 'left',
       width: 150,
-	  sortable:true,
+      sortable: true,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
@@ -60,7 +60,7 @@
     }, {
       coltype: 'list',
       prop: 'trigtype',
-	  dbprop:'trig_type',
+      dbprop: 'trig_type',
       label: '触发类型',
       headeralign: 'center',
       align: 'center',
@@ -77,7 +77,7 @@
     }, {
       coltype: 'list',
       prop: 'changetype',
-	  dbprop:'change_type',
+      dbprop: 'change_type',
       label: '变化点类型',
       headeralign: 'center',
       align: 'center',
@@ -110,8 +110,8 @@
       overflowtooltip: true,
     }, {
       coltype: 'string',
-      prop: 'cpmc',
-      label: '产品名称',
+      prop: 'jt',
+      label: '设备编号',
       headeralign: 'center',
       align: 'center',
       width: 100,
@@ -171,7 +171,7 @@
       headeralign: 'center',
       align: 'center',
       width: 100,
-	  sortable:true,
+      sortable: true,
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -189,10 +189,10 @@
       align: 'center',
       width: 80,
       overflowtooltip: true,
-	  sortable:true,
+      sortable: true,
     },
   ],
-        form: {
+  form: {
     isdb: false,
     isedit: true
   },

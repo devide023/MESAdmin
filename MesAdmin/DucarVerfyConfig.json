@@ -1,0 +1,1068 @@
+[
+  {
+    "model": "ZDMesModels.Ducar.base_gwzd,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编号"
+      },
+      {
+        "colname": "gwmc",
+        "coltxt": "岗位名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gwmc",
+        "colindex": 2,
+        "coltxt": "岗位名称"
+      },
+      {
+        "colname": "gwlx",
+        "colindex": 3,
+        "coltxt": "岗位类型"
+      },
+      {
+        "colname": "gwfl",
+        "colindex": 4,
+        "coltxt": "岗位分类"
+      },
+      {
+        "colname": "bz",
+        "colindex": 5,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_ryxx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "username",
+        "coltxt": "姓名"
+      },
+      {
+        "colname": "rylx",
+        "coltxt": "员工类型"
+      },
+      {
+        "colname": "bzxx",
+        "coltxt": "班组"
+      },
+      {
+        "colname": "usercode",
+        "coltxt": "账号"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "username",
+        "colindex": 1,
+        "coltxt": "姓名"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "默认岗位"
+      },
+      {
+        "colname": "ryxb",
+        "colindex": 3,
+        "coltxt": "性别"
+      },
+      {
+        "colname": "rylx",
+        "colindex": 4,
+        "coltxt": "类型"
+      },
+      {
+        "colname": "tel",
+        "colindex": 5,
+        "coltxt": "手机号"
+      },
+      {
+        "colname": "bzxx",
+        "colindex": 6,
+        "coltxt": "班组"
+      },
+      {
+        "colname": "rsrq",
+        "colindex": 7,
+        "coltxt": "入司日期"
+      },
+      {
+        "colname": "csrq",
+        "colindex": 8,
+        "coltxt": "出生日期"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_ryxx_jn,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "usercode",
+        "coltxt": "账号"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位号"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "usercode",
+        "colindex": 1,
+        "coltxt": "账号"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "适应岗位"
+      },
+      {
+        "colname": "jnfl",
+        "colindex": 3,
+        "coltxt": "技能分类"
+      },
+      {
+        "colname": "jnsld",
+        "colindex": 4,
+        "coltxt": "熟练度"
+      },
+      {
+        "colname": "jnxx",
+        "colindex": 5,
+        "coltxt": "技能描述"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_jcgl,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "usercode",
+        "coltxt": "账号"
+      },
+      {
+        "colname": "bzxx",
+        "coltxt": "班组"
+      },
+      {
+        "colname": "jcje",
+        "coltxt": "金额"
+      },
+      {
+        "colname": "fsrq",
+        "coltxt": "发生日期"
+      },
+      {
+        "colname": "lx",
+        "coltxt": "类型"
+      },
+      {
+        "colname": "jcxx",
+        "coltxt": "奖惩描述"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "usercode",
+        "colindex": 1,
+        "coltxt": "员工账号"
+      },
+      {
+        "colname": "bzxx",
+        "colindex": 3,
+        "coltxt": "班组"
+      },
+      {
+        "colname": "lx",
+        "colindex": 4,
+        "coltxt": "类型"
+      },
+      {
+        "colname": "sl",
+        "colindex": 5,
+        "coltxt": "数量"
+      },
+      {
+        "colname": "jcje",
+        "colindex": 6,
+        "coltxt": "金额"
+      },
+      {
+        "colname": "fsrq",
+        "colindex": 7,
+        "coltxt": "发生日期"
+      },
+      {
+        "colname": "jcxx",
+        "colindex": 8,
+        "coltxt": "奖惩描述"
+      },
+      {
+        "colname": "jclr",
+        "colindex": 9,
+        "coltxt": "奖惩来源"
+      },
+      {
+        "colname": "khr",
+        "colindex": 10,
+        "coltxt": "考核人"
+      },
+      {
+        "colname": "khbm",
+        "colindex": 11,
+        "coltxt": "考核部门"
+      },
+      {
+        "colname": "bz",
+        "colindex": 12,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_gylx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型编码"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "zpsx",
+        "coltxt": "装配顺序"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 1,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 2,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 3,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "zpsx",
+        "colindex": 4,
+        "coltxt": "装配顺序"
+      },
+      {
+        "colname": "mj",
+        "colindex": 5,
+        "coltxt": "是否免检"
+      },
+      {
+        "colname": "fsbz",
+        "colindex": 6,
+        "coltxt": "互锁标志"
+      },
+      {
+        "colname": "sfzp",
+        "colindex": 7,
+        "coltxt": "是否装配"
+      },
+      {
+        "colname": "bz",
+        "colindex": 8,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.base_gycs,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型编码"
+      },
+      {
+        "colname": "sbbh",
+        "coltxt": "设备编码"
+      },
+      {
+        "colname": "sbcxh",
+        "coltxt": "程序号"
+      },
+      {
+        "colname": "gymin",
+        "coltxt": "最小值"
+      },
+      {
+        "colname": "gymax",
+        "coltxt": "最大值"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 2,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 3,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "sbbh",
+        "colindex": 4,
+        "coltxt": "设备编号"
+      },
+      {
+        "colname": "sbcxh",
+        "colindex": 5,
+        "coltxt": "程序号"
+      },
+      {
+        "colname": "gymin",
+        "colindex": 6,
+        "coltxt": "最小值"
+      },
+      {
+        "colname": "gymax",
+        "colindex": 7,
+        "coltxt": "最大值"
+      },
+      {
+        "colname": "gybz",
+        "colindex": 8,
+        "coltxt": "标准值"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_t_dzgy,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "coltxt": "工艺编号"
+      },
+      {
+        "colname": "gylx",
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型"
+      },
+      {
+        "colname": "gymc",
+        "coltxt": "文件名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "colindex": 1,
+        "coltxt": "工艺编号"
+      },
+      {
+        "colname": "gylx",
+        "colindex": 2,
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 3,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 4,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 5,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "gymc",
+        "colindex": 6,
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "gyms",
+        "colindex": 7,
+        "coltxt": "工艺描述"
+      },
+      {
+        "colname": "wjlj",
+        "colindex": 8,
+        "coltxt": "文件路径"
+      },
+      {
+        "colname": "bz",
+        "colindex": 9,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_t_dzgy_sp,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "coltxt": "工艺编号"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型"
+      },
+      {
+        "colname": "gymc",
+        "coltxt": "文件名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "colindex": 1,
+        "coltxt": "工艺编号"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 3,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 4,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "gymc",
+        "colindex": 5,
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "gyms",
+        "colindex": 6,
+        "coltxt": "工艺描述"
+      },
+      {
+        "colname": "wjlj",
+        "colindex": 7,
+        "coltxt": "文件路径"
+      },
+      {
+        "colname": "bz",
+        "colindex": 8,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.base_gwzx_jx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "cpjx",
+        "coltxt": "产品机型"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gwmc",
+        "coltxt": "岗位名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "cpjx",
+        "colindex": 1,
+        "coltxt": "产品机型"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gwmc",
+        "colindex": 3,
+        "coltxt": "岗位名称"
+      },
+      {
+        "colname": "bz",
+        "colindex": 4,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.base_gwzx_gwlx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "产品机型"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编号"
+      },
+      {
+        "colname": "gwmc",
+        "coltxt": "岗位类型"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 1,
+        "coltxt": "产品机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 2,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 3,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gwmc",
+        "colindex": 4,
+        "coltxt": "岗位类型"
+      },
+      {
+        "colname": "bz",
+        "colindex": 5,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_djgw,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "djno",
+        "coltxt": "点检编号"
+      },
+      {
+        "colname": "djlx",
+        "coltxt": "点检类型"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型"
+      },
+      {
+        "colname": "djxx",
+        "coltxt": "点检内容"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "djlx",
+        "colindex": 1,
+        "coltxt": "点检类型"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 3,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 4,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "djxx",
+        "colindex": 5,
+        "coltxt": "点检内容"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_fault,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "faultname",
+        "coltxt": "故障名称"
+      },
+      {
+        "colname": "faultfl",
+        "coltxt": "故障分类"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "faultname",
+        "colindex": 2,
+        "coltxt": "故障名称"
+      },
+      {
+        "colname": "faultfl",
+        "colindex": 3,
+        "coltxt": "故障分类"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 4,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 5,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "gwhbz",
+        "colindex": 6,
+        "coltxt": "默认处理岗位"
+      },
+      {
+        "colname": "bz",
+        "colindex": 7,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_fault_clfs,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "faultname",
+        "coltxt": "故障名称"
+      },
+      {
+        "colname": "handname",
+        "coltxt": "处理方式名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "faultname",
+        "colindex": 2,
+        "coltxt": "故障名称"
+      },
+      {
+        "colname": "handname",
+        "colindex": 3,
+        "coltxt": "处理方式名称"
+      },
+      {
+        "colname": "bz",
+        "colindex": 4,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_t_jstc,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jcbh",
+        "coltxt": "技通编号"
+      },
+      {
+        "colname": "wjfl",
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "jcmc",
+        "coltxt": "技通名称"
+      },
+      {
+        "colname": "yxqx2",
+        "coltxt": "有效期限结束"
+      },
+      {
+        "colname": "wjlj",
+        "coltxt": "文件名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jcbh",
+        "colindex": 1,
+        "coltxt": "技通编号"
+      },
+      {
+        "colname": "wjfl",
+        "colindex": 2,
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "jcmc",
+        "colindex": 3,
+        "coltxt": "技通名称"
+      },
+      {
+        "colname": "wjlj",
+        "colindex": 4,
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "yxqx1",
+        "colindex": 5,
+        "coltxt": "有效期限开始"
+      },
+      {
+        "colname": "yxqx2",
+        "colindex": 6,
+        "coltxt": "有效期限结束"
+      },
+      {
+        "colname": "jcms",
+        "colindex": 8,
+        "coltxt": "技通描述"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_t_tstc,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "tcbh",
+        "coltxt": "通知编号"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "tcmc",
+        "coltxt": "通知内容"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "tcbh",
+        "colindex": 0,
+        "coltxt": "通知编号"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编号"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 2,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 3,
+        "coltxt": "状态码"
+      },
+      {
+        "colname": "tcmc",
+        "colindex": 4,
+        "coltxt": "通知内容"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.base_gwbj,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编号"
+      },
+      {
+        "colname": "wlbm",
+        "coltxt": "物料编码"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 1,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位号"
+      },
+      {
+        "colname": "wlbm",
+        "colindex": 3,
+        "coltxt": "物料编码"
+      },
+      {
+        "colname": "dxsl",
+        "colindex": 4,
+        "coltxt": "单箱数量"
+      },
+      {
+        "colname": "gwpb",
+        "colindex": 5,
+        "coltxt": "岗位用量"
+      },
+      {
+        "colname": "wlsx",
+        "colindex": 6,
+        "coltxt": "物料属性"
+      },
+      {
+        "colname": "bz",
+        "colindex": 7,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.flxxb,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编号"
+      },
+      {
+        "colname": "jxno",
+        "coltxt": "机型"
+      },
+      {
+        "colname": "fllx",
+        "coltxt": "辅料类型"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jxno",
+        "colindex": 2,
+        "coltxt": "机型"
+      },
+      {
+        "colname": "statusno",
+        "colindex": 3,
+        "coltxt": "状态编码"
+      },
+      {
+        "colname": "fllx",
+        "colindex": 4,
+        "coltxt": "辅料类型"
+      },
+      {
+        "colname": "wlms",
+        "colindex": 5,
+        "coltxt": "物料描述"
+      }
+    ]
+  }
+]

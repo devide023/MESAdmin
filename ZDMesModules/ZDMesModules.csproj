@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CD\CDGCModule.cs" />
+    <Compile Include="DUCAR\DucarModule.cs" />
     <Compile Include="LBJ\BaseinfoModule.cs" />
     <Compile Include="MF\BaseinfoModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,0 +1,138 @@
+[
+  {
+    "tablename": "zxjc_ryxx",
+    "xinzeng": [ "scx", "user_code" ],
+    "replace": [ "scx", "user_code" ],
+    "replacetype": 2,
+    "zhonghe": [ "scx", "user_code" ],
+    "updatecol": [ "scx", "user_name", "rylx", "gwh", "bzxx", "ryxb", "tel", "csrq", "rsrq" ]
+  },
+  {
+    "tablename": "zxjc_ryxx_jn",
+    "xinzeng": [ "scx", "user_code", "scx", "gwh" ],
+    "replace": [ "scx", "user_code" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "user_code", "scx", "gwh" ],
+    "updatecol": [ "scx", "jnxx", "jnfl", "gwh", "jnsld" ]
+  },
+  {
+    "tablename": "zxjc_jcgl",
+    "xinzeng": [ "scx", "user_code", "scx", "gwh", "fsrq", "lx", "sl", "jcje" ],
+    "replace": [ "scx", "user_code", "scx", "gwh", "fsrq", "lx", "sl", "jcje" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "user_code", "scx", "gwh", "fsrq", "lx", "sl", "fsje" ],
+    "updatecol": [ "scx", "gwh", "lx", "sl", "fsje", "fsrq", "bzxx", "jclr", "jcxx" ]
+  },
+  {
+    "tablename": "base_gwzd",
+    "xinzeng": [ "scx", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "gwh", "scx" ],
+    "updatecol": [ "scx", "gwh", "gwmc", "gwfl", "gwlx", "bz" ]
+  },
+  {
+    "tablename": "zxjc_gylx",
+    "xinzeng": [ "scx", "jx_no", "status_no", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "status_no", "gwh" ],
+    "updatecol": [ "scx", "jx_no", "status_no", "gwh", "zpsx", "mj", "fsbz", "sfzp", "bz" ]
+  },
+  {
+    "tablename": "base_gycs",
+    "xinzeng": [ "scx", "jx_no", "sbbh", "gwh", "sbcxh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "sbbh", "gwh", "sbcxh" ],
+    "updatecol": [ "scx", "jx_no", "status_no", "sbbh", "gwh", "gy_min", "gy_max", "gy_bz", "sbcxh", "parm1", "bz" ]
+  },
+  {
+    "tablename": "zxjc_t_dzgy",
+    "xinzeng": [ "scx", "jx_no", "gwh" ],
+    "replace": [ "scx", "jx_no" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "gwh" ],
+    "updatecol": [ "scx", "jx_no", "status_no", "gybh", "gymc", "gyms" ]
+  },
+  {
+    "tablename": "zxjc_t_dzgy_sp",
+    "xinzeng": [ "scx", "jx_no", "gwh" ],
+    "replace": [ "scx", "jx_no" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "gwh" ],
+    "updatecol": [ "scx", "jx_no", "status_no", "gybh", "gymc", "gyms" ]
+  },
+  {
+    "tablename": "base_gwzx_jx",
+    "xinzeng": [ "scx", "cpjx", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "cpjx", "gwh" ],
+    "updatecol": [ "scx", "cpjx", "gwh", "gwmc", "bz" ]
+  },
+  {
+    "tablename": "base_gwzx_gwlx",
+    "xinzeng": [ "scx", "jx_no", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "gwh" ],
+    "updatecol": [ "scx", "jx_no", "status_no", "gwh", "gwmc", "bz" ]
+  },
+  {
+    "tablename": "zxjc_djgw",
+    "xinzeng": [ "scx", "jx_no", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "gwh" ],
+    "updatecol": [ "scx", "djno", "jx_no", "status_no", "gwh", "djlx", "djxx" ]
+  },
+  {
+    "tablename": "zxjc_fault",
+    "xinzeng": [ "scx", "jx_no", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "gwh" ],
+    "updatecol": [ "scx", "fault_fl", "jx_no", "status_no", "gwh", "gwh_bz", "fault_no", "fault_name", "bz" ]
+  },
+  {
+    "tablename": "zxjc_fault_clfs",
+    "xinzeng": [ "scx", "fault_no", "gwh" ],
+    "replace": [ "scx", "fault_no" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "fault_no", "gwh" ],
+    "updatecol": [ "scx", "fault_no", "gwh", "hand_no", "hand_name", "remark" ]
+  },
+  {
+    "tablename": "zxjc_t_jstc",
+    "xinzeng": [ "scx", "jcbh", "jcmc" ],
+    "replace": [ "scx", "jcbh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jcbh" ],
+    "updatecol": [ "scx", "jcmc", "jcms", "yxqx1", "yxqx2", "wjfl" ]
+  },
+  {
+    "tablename": "zxjc_t_tstc",
+    "xinzeng": [ "scx", "jx_no", "status_no", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "status_no", "gwh" ],
+    "updatecol": [ "scx", "jx_no", "gwh", "status_no", "tcbh", "tcmc" ]
+  },
+  {
+    "tablename": "base_gwbj",
+    "xinzeng": [ "scx", "jx_no", "gwh", "wlbm" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "gwh", "wlbm" ],
+    "updatecol": [ "scx", "jx_no", "gwh", "wlbm", "dxsl", "gwpb", "wlsx", "bz", "qwwbm" ]
+  },
+  {
+    "tablename": "flxxb",
+    "xinzeng": [ "scx", "jx_no", "gwh" ],
+    "replace": [ "scx", "gwh" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jx_no", "gwh"],
+    "updatecol": [ "scx", "jx_no", "gwh", "status_no", "fllx", "wlms" ]
+  }
+]

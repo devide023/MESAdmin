@@ -181,7 +181,7 @@ namespace ZDMesServices.LBJ.ImportData
                                     DynamicParameters dyp = new DynamicParameters();
                                     foreach (var col in rules)
                                     {
-                                        var cz = pi.Where(t => t.Name == col);
+                                        var cz = pi.Where(t => t.Name == col.Replace("_",""));
                                         if (cz.Count() > 0)
                                         {
                                             var colval = cz.First().GetValue(item);

@@ -97,6 +97,7 @@ namespace MesAdmin.Controllers.A1.JTGL
                             postdata.Add(new zxjc_t_jstcfp()
                             {
                                 jtid = form.jtid,
+                                scx = form.scx,
                                 jxno = form.jxno,
                                 gwh = item,
                                 statusno = sitem,
@@ -114,6 +115,7 @@ namespace MesAdmin.Controllers.A1.JTGL
                         postdata.Add(new zxjc_t_jstcfp()
                         {
                             jtid = form.jtid,
+                            scx = form.scx,
                             jxno = form.jxno,
                             gwh = item,
                             lrr1 = _user.CurrentUser().name,

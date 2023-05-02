@@ -29,11 +29,11 @@
   pagefuns: {
     download_jstcpdf: function (row) {
       var _this = this;
-	  if(row.jtly === 1){
-      window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
-	  }else if(row.jtly === 0){
-		window.open("http://172.16.201.216:7002/jstz/" + row.wjlj);  
-	  }
+      if (row.jtly === 1) {
+        window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
+      } else if (row.jtly === 0) {
+        window.open("http://172.16.201.216:7002/jstz/" + row.wjlj);
+      }
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -49,7 +49,7 @@
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
-      row.statusno = '';
+        row.statusno = '';
         this.$request('get', '/a1/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {
@@ -66,6 +66,21 @@
     }
   },
   fields: [{
+      coltype: 'list',
+      label: '生产线',
+      prop: 'scx',
+      dbprop: 'scx',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+      inioptionapi: {
+        method: 'get',
+        url: '/a1/baseinfo/scx'
+      },
+      hideoptionval: true,
+      options: []
+    }, {
       coltype: 'string',
       label: '技通编号',
       prop: 'jtid',
@@ -73,17 +88,15 @@
       headeralign: 'center',
       align: 'center',
       width: 130
-    },  
-	{
+    }, {
       coltype: 'string',
       label: '文件名称',
       prop: 'wjlj',
       overflowtooltip: true,
       headeralign: 'center',
-	  searchable:false,
+      searchable: false,
       align: 'left',
-    },
-	{
+    }, {
       coltype: 'string',
       label: '岗位号',
       prop: 'gwh',
@@ -121,16 +134,15 @@
       hideoptionval: true,
       relation: 'statusno_list',
       width: 150
-    }, 
-	{
+    }, {
       coltype: 'string',
       label: '技通描述',
       prop: 'jcms',
       overflowtooltip: true,
       headeralign: 'center',
-	  searchable: false,
+      searchable: false,
       align: 'left',
-    },{
+    }, {
       coltype: 'string',
       label: '备注',
       prop: 'bz',

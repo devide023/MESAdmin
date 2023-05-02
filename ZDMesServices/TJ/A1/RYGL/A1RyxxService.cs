@@ -27,7 +27,7 @@ namespace ZDMesServices.TJ.A1.RYGL
                     foreach (var item in list)
                     {
                         var no = db.ExecuteScalar<int>(sql.ToString());
-                        var ucode = "01" + no.ToString().PadLeft(4, '0');
+                        var ucode = item.scx.PadLeft(2,'0') + no.ToString().PadLeft(4, '0');
                         item.usercode = ucode;
                     }
                 }

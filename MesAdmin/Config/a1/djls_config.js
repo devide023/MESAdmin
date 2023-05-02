@@ -22,6 +22,21 @@
   },
   pagefuns: {},
   fields: [{
+	  coltype: 'list',
+      label: '生产线',
+      prop: 'scx',
+      dbprop: 'scx',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 80,
+	  inioptionapi: {
+        method: 'get',
+        url: '/a1/baseinfo/scx'
+      },
+	  hideoptionval:true,
+	  options:[]
+  },{
       coltype: 'list',
       label: '岗位编码',
       prop: 'gwh',

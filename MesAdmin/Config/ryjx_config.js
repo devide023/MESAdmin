@@ -23,6 +23,13 @@
       headeralign: 'center',
       align: 'center',
       width: 100,
+    },{
+      coltype: 'string',
+      prop: 'JCRYMC',
+      label: '员工姓名',
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
     }, {
       coltype: 'list',
       prop: 'GWH',

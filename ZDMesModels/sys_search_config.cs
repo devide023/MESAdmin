@@ -13,6 +13,10 @@ namespace ZDMesModels
         /// </summary>
         public string sql { get; set; } = string.Empty;
         /// <summary>
+        /// 子查询语句
+        /// </summary>
+        public string sql_sub { get; set; } = string.Empty;
+        /// <summary>
         /// 记录集条数统计
         /// </summary>
         public string sql_cnt { get; set; } = string.Empty;

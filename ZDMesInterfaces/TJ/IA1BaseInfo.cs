@@ -15,6 +15,12 @@ namespace ZDMesInterfaces.TJ
         /// <returns></returns>
         IEnumerable<base_gwzd> GetGWList();
         /// <summary>
+        /// 获取生产线岗位
+        /// </summary>
+        /// <param name="scx"></param>
+        /// <returns></returns>
+        IEnumerable<base_gwzd> GetGWList(string scx);
+        /// <summary>
         /// 获取设备信息
         /// </summary>
         /// <returns></returns>

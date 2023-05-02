@@ -6,6 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using ZDMesModels.TJ.A1;
 using ZDMesInterfaces.Common;
+using ZDMesModels;
+using MesAdmin.Filters;
+
 namespace MesAdmin.Controllers.A1.ZLGL
 {
     /// <summary>
@@ -17,6 +20,11 @@ namespace MesAdmin.Controllers.A1.ZLGL
         public A1FXMXController(IDbOperate<zxjc_gwzd_fxmx> fxmxservice):base(fxmxservice)
         {
 
+        }
+        [SearchFilter("~/sqlconfig/tj/a1/fxmx/")]
+        public override IHttpActionResult GetList(sys_page parm)
+        {
+            return base.GetList(parm);
         }
     }
 }

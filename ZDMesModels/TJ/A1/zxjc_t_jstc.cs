@@ -15,7 +15,7 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 生产线
         /// </summary>
-        public string scx { get; set; } = "1";
+        public string scx { get; set; }
         /// <summary>
         /// 技通ID(GUID)
         /// </summary>
@@ -88,6 +88,19 @@ namespace ZDMesModels.TJ.A1
         /// </summary>
         public int rcnt { get; set; }
         public string fpscxlist { get; set; }
+        /// <summary>
+        /// 是否分配到岗位
+        /// </summary>
+        public string istogwh { get; set; }
+        /// <summary>
+        /// 多选生产线
+        /// </summary>
+        public List<string> scxs { get; set; }
+        /// <summary>
+        /// 阅读人
+        /// </summary>
+        public string ydrs { get; set; }
+
     }
 
     public class zxjc_t_jstc_mapper : ClassMapper<zxjc_t_jstc>
@@ -98,7 +111,10 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.fpflg).Column("fp_flg");
             Map(t => t.fpsj).Column("fp_sj");
             Map(t => t.rcnt).Ignore();
+            Map(t => t.istogwh).Ignore();
             Map(t => t.fpscxlist).Ignore();
+            Map(t => t.scxs).Ignore();
+            Map(t => t.ydrs).Ignore();
             AutoMap();
         }
     }

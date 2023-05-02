@@ -118,6 +118,11 @@ namespace ZDMesServices.LBJ.SBWB
                 StringBuilder sql = new StringBuilder();
                 sql.Append("select autoid, gcdm, scx, sbbh, gwh, wbsh, wbxx, bz from BASE_SBWB where  scbz = 'N' ");
                 DynamicParameters p = new DynamicParameters();
+                if (item.scxs!=null && item.scxs.Count > 0)
+                {
+                    sql.Append(" and scx in :scx ");
+                    p.Add(":scx", item.scxs);
+                }
                 if (!string.IsNullOrEmpty(item.scx))
                 {
                     sql.Append(" and scx = :scx ");

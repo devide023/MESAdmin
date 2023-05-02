@@ -1,0 +1,140 @@
+{
+  isgradequery: true,
+  isbatoperate: false,
+  isoperate: false,
+  isfresh: true,
+  isselect: false,
+  pagefuns: {},
+  fields: [{
+      coltype: 'string',
+      label: '生产线',
+      prop: 'scx',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 120
+    }, {
+      coltype: 'string',
+      label: '岗位编码',
+      prop: 'gwh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 120
+    }, {
+      coltype: 'string',
+      label: '进出站标志',
+      prop: 'inout',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 130
+    }, {
+      coltype: 'string',
+      label: '进出站结果',
+      prop: 'result',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 120
+    }, {
+      coltype: 'string',
+      label: '消息',
+      prop: 'message',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '原因',
+      prop: 'reason',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '机号',
+      prop: 'engine_no',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 150
+    }, {
+      coltype: 'string',
+      label: '夹具号',
+      prop: 'jjh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 120
+    }, {
+      coltype: 'string',
+      label: '订单号',
+      prop: 'order_no',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 120
+    }, {
+      coltype: 'string',
+      label: '换产校验',
+      prop: 'hcjy',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    }, {
+      coltype: 'string',
+      label: '换产校验结果',
+      prop: 'hcjyjg',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    }, {
+      coltype: 'datetime',
+      label: '交互时间',
+      prop: 'time',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 140
+    }
+  ],
+  form: {
+    isdb: false,
+    isedit: true
+  },
+  addapi: {
+    url: '',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  editapi: {
+    url: '',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  delapi: {
+    url: '',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  queryapi: {
+    url: '/ducar/iolog/list',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+}

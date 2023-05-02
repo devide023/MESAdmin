@@ -17,6 +17,39 @@ namespace ZDMesServices.TJ.A1.GYGL
 
         }
 
+        public override int Add(IEnumerable<mes_zxjc_gylx> entitys, out IEnumerable<mes_zxjc_gylx> noklist)
+        {
+            try
+            {
+                List<mes_zxjc_gylx> postdata = new List<mes_zxjc_gylx>();
+                List<mes_zxjc_gylx> repeatdata = new List<mes_zxjc_gylx>();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select count(*) FROM  mes_zxjc_gylx where scx = :scx and jx_no = :jxno and gwh = :gwh and nvl(status_no,'_') = :statusno ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    foreach (var item in entitys)
+                    {
+                        var cnt = db.ExecuteScalar<int>(sql.ToString(), new { scx = item.scx, jxno = item.jxno, gwh = item.gwh, statusno = string.IsNullOrEmpty(item.statusno)?"_": item.statusno });
+                        if (cnt == 0)
+                        {
+                            postdata.Add(item);
+                        }
+                        else
+                        {
+                            repeatdata.Add(item);
+                        }
+                    }
+                }
+                noklist = repeatdata;
+                return base.Add(postdata);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public override bool Modify(IEnumerable<mes_zxjc_gylx> entitys)
         {
             try
@@ -84,8 +117,8 @@ namespace ZDMesServices.TJ.A1.GYGL
             {
                 list.ForEach(i =>
                  {
-                     i.jxno = i.jxno.Trim();
-                     i.statusno = i.statusno.Trim();
+                     i.jxno = i.jxno?.Trim();
+                     i.statusno = i.statusno?.Trim();
                  });
                 return list;
             }

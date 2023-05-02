@@ -332,8 +332,12 @@
     <Compile Include="Controllers\A1\JHGL\A1CGJHController.cs" />
     <Compile Include="Controllers\A1\JHGL\A1SCJHController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1JTFPController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1JtfpGroupController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1JTFPRYSZController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1JTFPSCXController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1JTGLController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1JTLLJLController.cs" />
+    <Compile Include="Controllers\A1\JTGL\A1MyJTController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1SCXTZController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1TsZtTzController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
@@ -373,6 +377,35 @@
     <Compile Include="Controllers\Common\MenuController.cs" />
     <Compile Include="Controllers\Common\OperateLogController.cs" />
     <Compile Include="Controllers\Common\UpLoadController.cs" />
+    <Compile Include="Controllers\DuCar\BaseInfo\DuCarBaseInfoController.cs" />
+    <Compile Include="Controllers\DuCar\GyMgr\DuCarDzgyController.cs" />
+    <Compile Include="Controllers\DuCar\GyMgr\DuCarGwzdController.cs" />
+    <Compile Include="Controllers\DuCar\GyMgr\DuCarGycsController.cs" />
+    <Compile Include="Controllers\DuCar\GyMgr\DuCarGylxController.cs" />
+    <Compile Include="Controllers\DuCar\GyMgr\DuCarGyspController.cs" />
+    <Compile Include="Controllers\DuCar\JhMgr\DuCarDDZPController.cs" />
+    <Compile Include="Controllers\DuCar\JhMgr\DuCarOrderXhController.cs" />
+    <Compile Include="Controllers\DuCar\JhMgr\DuCarZPJHController.cs" />
+    <Compile Include="Controllers\DuCar\JstzMgr\DuCarJSTZController.cs" />
+    <Compile Include="Controllers\DuCar\JstzMgr\DuCarJTFPController.cs" />
+    <Compile Include="Controllers\DuCar\JstzMgr\DuCarScxTzController.cs" />
+    <Compile Include="Controllers\DuCar\PLC\DuCarIOZTController.cs" />
+    <Compile Include="Controllers\DuCar\PLC\DuCarIOZTLogController.cs" />
+    <Compile Include="Controllers\DuCar\PLC\DuCarPLCJHZTController.cs" />
+    <Compile Include="Controllers\DuCar\PLC\DuCarPLCJHZTLogController.cs" />
+    <Compile Include="Controllers\DuCar\RyMgr\DuCarRyjcController.cs" />
+    <Compile Include="Controllers\DuCar\RyMgr\DuCarRyjnController.cs" />
+    <Compile Include="Controllers\DuCar\RyMgr\DuCarRyxxController.cs" />
+    <Compile Include="Controllers\DuCar\SbMgr\DuCarJjbdController.cs" />
+    <Compile Include="Controllers\DuCar\SbMgr\DuCarJjbdlogController.cs" />
+    <Compile Include="Controllers\DuCar\SbMgr\DuCarSbxxController.cs" />
+    <Compile Include="Controllers\DuCar\WlMgr\DuCarFLXXController.cs" />
+    <Compile Include="Controllers\DuCar\WlMgr\DuCarGWBJController.cs" />
+    <Compile Include="Controllers\DuCar\ZlMgr\DuCarDjJlController.cs" />
+    <Compile Include="Controllers\DuCar\ZlMgr\DuCarDjxxController.cs" />
+    <Compile Include="Controllers\DuCar\ZlMgr\DuCarFxMxController.cs" />
+    <Compile Include="Controllers\DuCar\ZlMgr\DuCarGzclfsController.cs" />
+    <Compile Include="Controllers\DuCar\ZlMgr\DuCarGzjcxxController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\Common\LoginController.cs" />
@@ -384,6 +417,7 @@
     <Compile Include="Controllers\LBJ\BHDGL\BHDJLController.cs" />
     <Compile Include="Controllers\LBJ\BHDGL\BHDXXController.cs" />
     <Compile Include="Controllers\LBJ\CPGL\CPPSController.cs" />
+    <Compile Include="Controllers\LBJ\CPGL\LBJSjBlController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DaoBinController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjGxController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjLyController.cs" />
@@ -464,6 +498,7 @@
     <Content Include="Config\cdgc\bhdjcxx_config.js" />
     <Content Include="Config\cdgc\djkjjb_config.js" />
     <Content Include="Config\cdgc\djkjjb_list_config.js" />
+    <Content Include="Config\cdgc\dzgy_config.js" />
     <Content Include="Config\cdgc\gtjchis_config.js" />
     <Content Include="Config\cdgc\gtjc_config.js" />
     <Content Include="Config\cdgc\gtjc_jcsj_config.js" />
@@ -474,6 +509,7 @@
     <Content Include="Config\cdgc\sbsjcj_config.js" />
     <Content Include="Config\cdgc\sbxx_config.js" />
     <Content Include="Config\cdgc\scjh_config.js" />
+    <Content Include="Config\cdgc\tfgl_config.js" />
     <Content Include="Config\cdgc\ycck_config.js" />
     <Content Include="Config\cdgc\ychis_config.js" />
     <Content Include="Config\cpps_config.js" />
@@ -484,6 +520,9 @@
     <Content Include="Config\djgw_config.js" />
     <Content Include="Config\djreport_config.js" />
     <Content Include="Config\djxx_config.js" />
+    <Content Include="Config\ducar\gwzd_config.js" />
+    <Content Include="Config\ducar\ryjn_config.js" />
+    <Content Include="Config\ducar\ryxx_config.js" />
     <Content Include="Config\dzgysp_config.js" />
     <Content Include="Config\dzgy_config.js" />
     <Content Include="Config\gwxx_config.js" />
@@ -567,6 +606,7 @@
     </Content>
     <Content Include="Config\a1\jtfp_config.js.bak" />
     <Content Include="log4net.config" />
+    <Content Include="DucarVerfyConfig.json" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -655,9 +695,12 @@
     <Content Include="Template\CDGC\电子工艺.xlsx" />
     <Content Include="Template\CDGC\缸体检测基础数据.xlsx" />
     <Content Include="sqlconfig\tj\a1\wlgl\api-a1-gwwl-list.json" />
+    <Content Include="sqlconfig\tj\a1\fxmx\api-a1-fxmx-list.json" />
+    <Content Include="Ducar_Import_Config.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\DuCar\CpMgr\" />
     <Folder Include="Controllers\MF\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />

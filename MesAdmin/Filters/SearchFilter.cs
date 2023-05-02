@@ -47,7 +47,7 @@ namespace MesAdmin.Filters
                             if (item.values.Count > 0)
                             {
                                 var templist = new List<string>();
-                                item.values.ForEach(t => templist.Add(t.ToLower()));
+                                item.values.ForEach(t => templist.Add(t));
                                 expression = expression + $" {item.left} {item.colname} {item.oper} :{item.colname.Replace(".", "_")}{index} {item.right} {item.logic} ";
                                 p.Add($":{item.colname.Replace(".", "_")}{index}", templist);
                             }

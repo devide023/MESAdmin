@@ -7,9 +7,9 @@
       }
     },
     {
-      "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
+      "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules",
       "properties": {
-        "LBJConstr": "lbjmes"
+        "TJConstr": "tjmes"
       }
     },
     {
@@ -19,15 +19,21 @@
       }
     },
     {
-      "type": "ZDMesModules.TJ.BaseinfoModule, ZDMesModules",
+      "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
       "properties": {
         "TJConstr": "tjmes"
       }
     },
     {
-      "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
+      "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
       "properties": {
-        "TJConstr": "tjmes"
+        "LBJConstr": "lbjmes"
+      }
+    },
+    {
+      "type": "ZDMesModules.DUCAR.DucarModule, ZDMesModules",
+      "properties": {
+        "DucarConstr": "ducarmes"
       }
     }
   ]
