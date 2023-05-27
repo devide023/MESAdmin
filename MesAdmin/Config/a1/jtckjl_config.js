@@ -8,81 +8,13 @@
       label: '查看Pdf',
       fnname: 'download_jstcpdf',
       btntype: 'text'
+    }, {
+      label: '设置未读',
+      fnname: 'set_jstc_unread',
+      btntype: 'text'
     }
   ],
   batoperate: {
-    import_by_add: function (_this, res) {
-      if (res.files.length > 0) {
-        var fid = res.files[0].fileid;
-        try {
-          _this.$request('get', '/**/**/readxls', {
-            fileid: fid
-          }).then(function (result) {
-            _this.$loading().close();
-            if (result.code === 1) {
-              _this.$message.success(result.msg);
-              _this.getlist(_this.queryform);
-            } else if (result.code === 2) {
-              _this.$message.warning(result.msg);
-            } else {
-              _this.$message.error(result.msg);
-            }
-          });
-        } catch (error) {
-          _this.$message.error(error);
-        }
-      } else {
-        _this.$loading().close();
-      }
-    },
-    import_by_replace: function (_this, res) {
-      if (res.files.length > 0) {
-        var fid = res.files[0].fileid;
-        try {
-          _this.$request('get', '/**/**/readxls_by_replace', {
-            fileid: fid
-          }).then(function (result) {
-            _this.$loading().close();
-            if (result.code === 1) {
-              _this.$message.success(result.msg);
-              _this.getlist(_this.queryform);
-            } else if (result.code === 2) {
-              _this.$message.warning(result.msg);
-            } else if (result.code === 0) {
-              _this.$message.error(result.msg);
-            }
-          })
-        } catch (error) {
-          _this.$message.error(error);
-        }
-      } else {
-        _this.$loading().close();
-      }
-    },
-    import_by_zh: function (_this, res) {
-      if (res.files.length > 0) {
-        var fid = res.files[0].fileid;
-        try {
-          _this.$request('get', '/**/**/readxls_by_zh', {
-            fileid: fid
-          }).then(function (result) {
-            _this.$loading().close();
-            if (result.code === 1) {
-              _this.$message.success(result.msg);
-              _this.getlist(_this.queryform);
-            } else if (result.code === 2) {
-              _this.$message.warning(result.msg);
-            } else if (result.code === 0) {
-              _this.$message.error(result.msg);
-            }
-          });
-        } catch (error) {
-          _this.$message.error(error);
-        }
-      } else {
-        _this.$loading().close();
-      }
-    },
     export_excel: function (_this) {
       _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
         pageindex: 1,
@@ -100,7 +32,6 @@
   },
   pagefuns: {
     download_jstcpdf: function (row) {
-		console.log(row);
       if (row.jstcinfo) {
         if (row.jstcinfo.jtly === 1) {
           window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.jstcinfo.wjlj);
@@ -109,6 +40,19 @@
         }
       }
     },
+	set_jstc_unread:function(row){
+		console.log(row);
+		var _this = this;
+		if(row.jstcinfo){
+			_this.$request("post",'/a1/jtck/del',[row]).then(function(res){
+				if(res.code ===1){
+					_this.$message.success('设置成功');
+				}else{
+					_this.$message.error(res.msg);
+				}
+			});
+		}
+	}
   },
   fields: [{
       coltype: 'list',
@@ -125,7 +69,7 @@
       },
       hideoptionval: true,
       options: []
-    },{
+    }, {
       coltype: 'string',
       label: '技通编号',
       prop: 'jcbh',

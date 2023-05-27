@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/处理方式基础信息.xlsx?r=' + Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/处理方式基础信息.xlsx?r=' + Math.random());
     },
 	select_scx: function (collist, val, row) {
         row.gwhs=[];
@@ -201,10 +201,9 @@
       prop: 'faultname',
       overflowtooltip: true,
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
 	  suggest_fn_name: 'suggest_fn',
       select_fn_name: 'select_fn',
-      width: 150
     }, {
       coltype: 'string',
       label: '处理方式名称',
@@ -213,7 +212,7 @@
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
     }, {
       coltype: 'string',
       label: '备注',
@@ -222,6 +221,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  width: 100
     },  {
       coltype: 'string',
       label: '录入人',

@@ -20,13 +20,7 @@ namespace MesAdmin.Controllers.CuCar.RyMgr
             _requireverfify = requireverfify;
             _importservice = importservice;
         }
-        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx>), "BatSetValue")]
-        public override IHttpActionResult Add(List<zxjc_ryxx> entitys)
-        {
-            return base.Add(entitys);
-        }
         [TemplateVerify("ZDMesModels.Ducar.zxjc_ryxx,ZDMesModels")]
-        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
             return base.ReadTempFile(fileid);

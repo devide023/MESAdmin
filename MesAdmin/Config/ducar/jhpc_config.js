@@ -24,7 +24,6 @@
     add_handle: function () {
       let _this = this;
       var row = _this.$deepClone(_this.pageconfig.form);
-      console.log(row);
       row.sjscsj = this.$parseTime(new Date());
       row.lrsj = this.$parseTime(new Date());
       _this.list.unshift(row);
@@ -46,11 +45,11 @@
           orderno: item.value
         }).then(function (res) {
           if (res.code === 1) {
-			  row.orderinfo.order_no = res.orderinfo.order_no;
-            row.orderinfo.scx = res.orderinfo.scx;
+            row.orderinfo.order_no = res.orderinfo.order_no;
+            row.scx = res.orderinfo.scx;
             row.orderinfo.jx = res.orderinfo.jx;
             row.orderinfo.ztbm = res.orderinfo.ztbm;
-            row.orderinfo.scsl = res.orderinfo.scsl;
+            row.pcsl = res.orderinfo.scsl;
             row.orderinfo.scddlx = res.orderinfo.scddlx;
             row.orderinfo.xsbz = res.orderinfo.xsbz;
           }
@@ -92,8 +91,16 @@
     }, {
       coltype: 'string',
       label: '生产线',
-      prop: 'orderinfo',
-      subprop: 'scx',
+      prop: 'scx',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    },{
+      coltype: 'string',
+      label: '排产数量',
+      prop: 'pcsl',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -164,14 +171,15 @@
     xh: '',
     sjscsj: '',
     lrsj: '',
+    scx: '',
+	pcsl:'',
     orderinfo: {
-		order_no:null,
-      scx: null,
-      jx: null,
-      ztbm: null,
-      scsl: null,
-      xsbz: null,
-      scddlx: null
+      order_no: '',
+      jx: '',
+      ztbm: '',
+      scsl: '',
+      xsbz: '',
+      scddlx: ''
     },
     isdb: false,
     isedit: true

@@ -117,5 +117,32 @@ namespace MesAdmin.Controllers.DuCar.JhMgr
                 throw;
             }
         }
+        [HttpPost,Route("alljy")]
+        public IHttpActionResult CheckAll(List<pp_zpjh> orders)
+        {
+            try
+            {
+                StringBuilder msg = new StringBuilder();
+                foreach (var order in orders)
+                {
+                    var qtret = _orderservice.YQT(order.order_no);
+                    msg.Append(qtret.msg);
+                    var gylxret = _orderservice.Set_OrderJy_Gylx(order.order_no);
+                    msg.Append(gylxret.msg);
+                    var bomret = _orderservice.Set_OrderJy_BOM(order.order_no);
+                    msg.Append(bomret.msg);
+                }
+                return Json(new
+                {
+                    code = 1,
+                    msg = msg.ToString(),
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

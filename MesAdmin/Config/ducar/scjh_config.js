@@ -29,7 +29,7 @@
   pagefuns: {
     view_scddzj_mx: function (row) {
       this.$router.push({
-        path: '/jhgl/scddzj?order_no=' + row.order_no
+        path: '/jhgl/scddzj?scddh=' + row.order_no
       });
     },
     yqt_handle: function () {
@@ -91,6 +91,20 @@
         _this.$message.warning('请选项目');
       }
     },
+	all_jy_handle:function(){
+		var _this = this;
+		if (_this.selectlist.length > 0){
+			_this.$request('post', '/ducar/zpjh/alljy', _this.selectlist).then(function (res) {
+          _this.$alert(res.msg,'校验结果',{dangerouslyUseHTMLString:true}).then(function(){
+			  _this.getlist(_this.queryform);
+		  }).catch(function(){
+			  _this.getlist(_this.queryform);
+		  });
+        });
+		}else {
+        _this.$message.warning('请选项目');
+      }
+	}
   },
   fields: [{
       coltype: 'list',
@@ -135,18 +149,10 @@
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
-      align: 'center'
-    },
-	{
-      coltype: 'string',
-      label: 'BOM校验',
-	  prop: 'orderjy',
-      subprop: 'gdbomjy',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center'
-    },
+      align: 'center',
+	  cellbg:'#ff4949',
+	  cellbgval:'N',
+    },	
 	{
       coltype: 'string',
       label: '工艺路线校验',
@@ -155,7 +161,20 @@
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
-      align: 'center'
+      align: 'center',
+	  cellbg:'#ff4949',
+	  cellbgval:'N',
+    },{
+      coltype: 'string',
+      label: 'BOM校验',
+	  prop: 'orderjy',
+      subprop: 'gdbomjy',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  cellbg:'#ff4949',
+	  cellbgval:'N',
     },
 	{
       coltype: 'string',

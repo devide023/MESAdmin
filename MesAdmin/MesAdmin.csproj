@@ -320,6 +320,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\A1\BaseInfo\A1BaseInfoController.cs" />
+    <Compile Include="Controllers\A1\CheckMgr\A1JcjcxxController.cs" />
+    <Compile Include="Controllers\A1\CheckMgr\A1JclxController.cs" />
     <Compile Include="Controllers\A1\GWZD\A1GWZDController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1DZGYController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1GWJXController.cs" />
@@ -340,6 +342,8 @@
     <Compile Include="Controllers\A1\JTGL\A1MyJTController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1SCXTZController.cs" />
     <Compile Include="Controllers\A1\JTGL\A1TsZtTzController.cs" />
+    <Compile Include="Controllers\A1\Report\A1MjghjlController.cs" />
+    <Compile Include="Controllers\A1\Report\A1ReportController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYJNController.cs" />
     <Compile Include="Controllers\A1\RYGL\A1RYXXController.cs" />
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
@@ -350,6 +354,7 @@
     <Compile Include="Controllers\A1\ZLGL\A1DJJLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJXXController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1FXMXController.cs" />
+    <Compile Include="Controllers\A1\ZLGL\A1FXWLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1GZCLFSController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1GZJCXXController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
@@ -393,12 +398,15 @@
     <Compile Include="Controllers\DuCar\PLC\DuCarIOZTLogController.cs" />
     <Compile Include="Controllers\DuCar\PLC\DuCarPLCJHZTController.cs" />
     <Compile Include="Controllers\DuCar\PLC\DuCarPLCJHZTLogController.cs" />
+    <Compile Include="Controllers\DuCar\Report\DuCarReportController.cs" />
+    <Compile Include="Controllers\DuCar\RyMgr\DuCarJcxxController.cs" />
     <Compile Include="Controllers\DuCar\RyMgr\DuCarRyjcController.cs" />
     <Compile Include="Controllers\DuCar\RyMgr\DuCarRyjnController.cs" />
     <Compile Include="Controllers\DuCar\RyMgr\DuCarRyxxController.cs" />
     <Compile Include="Controllers\DuCar\SbMgr\DuCarJjbdController.cs" />
     <Compile Include="Controllers\DuCar\SbMgr\DuCarJjbdlogController.cs" />
     <Compile Include="Controllers\DuCar\SbMgr\DuCarSbxxController.cs" />
+    <Compile Include="Controllers\DuCar\UpLoad\DucarUpLoadController.cs" />
     <Compile Include="Controllers\DuCar\WlMgr\DuCarFLXXController.cs" />
     <Compile Include="Controllers\DuCar\WlMgr\DuCarGWBJController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarDjJlController.cs" />
@@ -406,6 +414,7 @@
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarFxMxController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarGzclfsController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarGzjcxxController.cs" />
+    <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\Common\LoginController.cs" />
@@ -520,9 +529,38 @@
     <Content Include="Config\djgw_config.js" />
     <Content Include="Config\djreport_config.js" />
     <Content Include="Config\djxx_config.js" />
+    <Content Include="Config\ducar\djjcxx_config.js" />
+    <Content Include="Config\ducar\djjl_config - 副本.js" />
+    <Content Include="Config\ducar\djjl_config.js" />
+    <Content Include="Config\ducar\dtzs_config.js" />
+    <Content Include="Config\ducar\dzgy_config.js" />
+    <Content Include="Config\ducar\flxx_config.js" />
+    <Content Include="Config\ducar\fpmx_config.js" />
+    <Content Include="Config\ducar\fxmx_config.js" />
     <Content Include="Config\ducar\gwzd_config.js" />
+    <Content Include="Config\ducar\gycs_config.js" />
+    <Content Include="Config\ducar\gylx_config.js" />
+    <Content Include="Config\ducar\gysp_config.js" />
+    <Content Include="Config\ducar\gzclfs_config.js" />
+    <Content Include="Config\ducar\gzjcxx_config.js" />
+    <Content Include="Config\ducar\gztj_config.js" />
+    <Content Include="Config\ducar\iolog_config.js" />
+    <Content Include="Config\ducar\iozt_config.js" />
+    <Content Include="Config\ducar\jhlog_config.js" />
+    <Content Include="Config\ducar\jhpc_config.js" />
+    <Content Include="Config\ducar\jhzt_config.js" />
+    <Content Include="Config\ducar\jjbdgx_config.js" />
+    <Content Include="Config\ducar\jjbdlog_config.js" />
+    <Content Include="Config\ducar\jstz_config.js" />
+    <Content Include="Config\ducar\jtfp_config.js" />
+    <Content Include="Config\ducar\ryjc_config.js" />
     <Content Include="Config\ducar\ryjn_config.js" />
     <Content Include="Config\ducar\ryxx_config.js" />
+    <Content Include="Config\ducar\sbxx_config.js" />
+    <Content Include="Config\ducar\scddzj_config.js" />
+    <Content Include="Config\ducar\scjh_config.js" />
+    <Content Include="Config\ducar\scxtz_config.js" />
+    <Content Include="Config\ducar\wljcxx_config.js" />
     <Content Include="Config\dzgysp_config.js" />
     <Content Include="Config\dzgy_config.js" />
     <Content Include="Config\gwxx_config.js" />
@@ -607,6 +645,12 @@
     <Content Include="Config\a1\jtfp_config.js.bak" />
     <Content Include="log4net.config" />
     <Content Include="DucarVerfyConfig.json" />
+    <Content Include="Config\ducar\jjbdgx_config.js.bak" />
+    <Content Include="Config\ducar\jjbdlog_config.js.bak" />
+    <Content Include="Config\ducar\ryjc_config.js.bak" />
+    <Content Include="Config\ducar\scddzj_config.js.bak" />
+    <Content Include="Config\ducar\fxmx_config.js.bak" />
+    <Content Include="ColumnValReplace_Config.json" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -697,6 +741,20 @@
     <Content Include="sqlconfig\tj\a1\wlgl\api-a1-gwwl-list.json" />
     <Content Include="sqlconfig\tj\a1\fxmx\api-a1-fxmx-list.json" />
     <Content Include="Ducar_Import_Config.json" />
+    <Content Include="Template\DuCar\人员技能.xlsx" />
+    <Content Include="Template\DuCar\员工基础信息.xlsx" />
+    <Content Include="Template\DuCar\处理方式基础信息.xlsx" />
+    <Content Include="Template\DuCar\奖惩信息.xlsx" />
+    <Content Include="Template\DuCar\岗位名称机型关系.xlsx" />
+    <Content Include="Template\DuCar\岗位物料.xlsx" />
+    <Content Include="Template\DuCar\岗位站点.xlsx" />
+    <Content Include="Template\DuCar\岗位类型机型关系.xlsx" />
+    <Content Include="Template\DuCar\工艺参数.xlsx" />
+    <Content Include="Template\DuCar\工艺路线.xlsx" />
+    <Content Include="Template\DuCar\故障基础信息.xlsx" />
+    <Content Include="Template\DuCar\点检基础信息.xlsx" />
+    <Content Include="Template\DuCar\电子工艺.xlsx" />
+    <Content Include="Template\DuCar\工艺视频.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

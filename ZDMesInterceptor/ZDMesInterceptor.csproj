@@ -118,6 +118,7 @@
     <Compile Include="A1\JtFpLog.cs" />
     <Compile Include="CDGC\GTJCLog.cs" />
     <Compile Include="CDGC\JJBLog.cs" />
+    <Compile Include="ColValReplaceLog.cs" />
     <Compile Include="LBJ\CUDLogger .cs" />
     <Compile Include="LBJ\DaoJuLog.cs" />
     <Compile Include="LBJ\ImportLog.cs" />

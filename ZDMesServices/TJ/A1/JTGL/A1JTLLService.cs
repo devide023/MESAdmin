@@ -28,7 +28,7 @@ namespace ZDMesServices.TJ.A1.JTGL
             {
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt= new StringBuilder();
-                sql.Append("select ta.jcbh,ta.ydr,ta.ydsj,ta.zbid,ta.usercode,ta.jtid,");
+                sql.Append("select ta.id,ta.jcbh,ta.ydr,ta.ydsj,ta.zbid,ta.usercode,ta.jtid,");
                 sql.Append("tb.jcmc,tb.jcms,tb.scry,tb.scsj,tb.yxqx1,tb.yxqx2,tb.fp_sj as fpsj,tb.fpr,tb.wjfl,tb.wjlj,tb.jtly ");
                 sql.Append($"from mes_pdm_jstz_yd ta,zxjc_t_jstc tb where ta.jtid = tb.jtid and ta.ydrid = {_uservice.CurrentUser.id} ");
                 sql_cnt.Append($"select count(*) from mes_pdm_jstz_yd ta,zxjc_t_jstc tb where ta.jtid = tb.jtid and ta.ydrid = {_uservice.CurrentUser.id} ");
@@ -60,6 +60,25 @@ namespace ZDMesServices.TJ.A1.JTGL
                     }, parm.sqlparam,splitOn: "jtid");
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public override bool Del(IEnumerable<mes_pdm_jstz_yd> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("delete from mes_pdm_jstz_yd where id in :ids");
+                using (var db = new OracleConnection(ConString))
+                {
+                    var ids = entitys.Select(t => t.id).ToArray();
+                    return db.Execute(sql.ToString(), new { ids = ids })>0;
                 }
             }
             catch (Exception)

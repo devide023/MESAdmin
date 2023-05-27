@@ -107,6 +107,24 @@
     download_template_file: function () {
       window.open('http://172.16.201.216:7002/template/A1/故障基础信息.xlsx?r=' + Math.random());
     },
+	select_scx: function (collist, val, row) {
+        row.gwhs=[];
+		row.gwh='';
+		row.gwmc = '';
+		row.gwhbz='';
+        this.$request('get', '/a1/baseinfo/gwzdbyscx', {
+          scx: val
+        }).then(function (res) {
+          if (res.code === 1) {
+            row.gwhs = res.list.map(function (i) {
+              return {
+                label: i.label,
+                value: i.value
+              };
+            });
+          }
+        });
+    },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
         row.username = '';
@@ -150,6 +168,7 @@
         url: '/a1/baseinfo/scx'
       },
 	  hideoptionval:true,
+	  change_fn_name: 'select_scx',
 	  options:[]
   },{
       coltype: 'string',
@@ -172,10 +191,7 @@
       headeralign: 'center',
       align: 'center',
       options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
+	  relation: 'gwhs',
       width: 150
     }, {
       coltype: 'string',
@@ -259,11 +275,8 @@
       headeralign: 'center',
       align: 'center',
       options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      width: 150
+      width: 150,
+	  relation: 'gwhs',
     }, {
       coltype: 'string',
       label: '备注',
@@ -308,6 +321,7 @@
     lrr: '',
     lrsj: '',
     statusno_list: [],
+	gwhs:[],
     isdb: false,
     isedit: true
   },

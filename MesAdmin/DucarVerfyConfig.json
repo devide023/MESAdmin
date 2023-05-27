@@ -56,6 +56,10 @@
         "coltxt": "生产线"
       },
       {
+        "colname": "usercode",
+        "coltxt": "账号"
+      },
+      {
         "colname": "username",
         "coltxt": "姓名"
       },
@@ -79,43 +83,48 @@
         "coltxt": "生产线"
       },
       {
-        "colname": "username",
+        "colname": "usercode",
         "colindex": 1,
+        "coltxt": "账号"
+      },
+      {
+        "colname": "username",
+        "colindex": 2,
         "coltxt": "姓名"
       },
       {
         "colname": "gwh",
-        "colindex": 2,
+        "colindex": 3,
         "coltxt": "默认岗位"
       },
       {
         "colname": "ryxb",
-        "colindex": 3,
+        "colindex": 4,
         "coltxt": "性别"
       },
       {
         "colname": "rylx",
-        "colindex": 4,
+        "colindex": 5,
         "coltxt": "类型"
       },
       {
         "colname": "tel",
-        "colindex": 5,
+        "colindex": 6,
         "coltxt": "手机号"
       },
       {
         "colname": "bzxx",
-        "colindex": 6,
+        "colindex": 7,
         "coltxt": "班组"
       },
       {
         "colname": "rsrq",
-        "colindex": 7,
+        "colindex": 8,
         "coltxt": "入司日期"
       },
       {
         "colname": "csrq",
-        "colindex": 8,
+        "colindex": 9,
         "coltxt": "出生日期"
       }
     ]
@@ -326,8 +335,13 @@
         "coltxt": "是否装配"
       },
       {
-        "colname": "bz",
+        "colname": "cfcs",
         "colindex": 8,
+        "coltxt": "充放次数"
+      },
+      {
+        "colname": "bz",
+        "colindex": 9,
         "coltxt": "备注"
       }
     ]
@@ -350,14 +364,6 @@
       {
         "colname": "sbcxh",
         "coltxt": "程序号"
-      },
-      {
-        "colname": "gymin",
-        "coltxt": "最小值"
-      },
-      {
-        "colname": "gymax",
-        "coltxt": "最大值"
       }
     ],
     "templateconf": [
@@ -1062,6 +1068,83 @@
         "colname": "wlms",
         "colindex": 5,
         "coltxt": "物料描述"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.sc_jxgl,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编号"
+      },
+      {
+        "colname": "usercode",
+        "coltxt": "员工账号"
+      },
+      {
+        "colname": "lx",
+        "coltxt": "类型"
+      },
+      {
+        "colname": "wtd",
+        "coltxt": "奖惩来源"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "usercode",
+        "colindex": 1,
+        "coltxt": "员工账号"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 2,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "lx",
+        "colindex": 3,
+        "coltxt": "类型"
+      },
+      {
+        "colname": "khyy",
+        "colindex": 4,
+        "coltxt": "考核原因"
+      },
+      {
+        "colname": "wtd",
+        "colindex": 5,
+        "coltxt": "奖惩来源"
+      },
+      {
+        "colname": "jlje",
+        "colindex": 6,
+        "coltxt": "奖励金额"
+      },
+      {
+        "colname": "cfje",
+        "colindex": 7,
+        "coltxt": "惩罚金额"
+      },
+      {
+        "colname": "fsrq",
+        "colindex": 8,
+        "coltxt": "发生日期"
+      },
+      {
+        "colname": "bz",
+        "colindex": 9,
+        "coltxt": "备注"
       }
     ]
   }

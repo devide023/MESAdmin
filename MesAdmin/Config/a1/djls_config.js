@@ -37,19 +37,14 @@
 	  hideoptionval:true,
 	  options:[]
   },{
-      coltype: 'list',
+      coltype: 'string',
       label: '岗位编码',
       prop: 'gwh',
       overflowtooltip: true,      
       sortable: true,
       headeralign: 'center',
-      align: 'left',
-	  inioptionapi: {
-        method: 'get',
-        url: '/a1/baseinfo/gwzd'
-      },
-      options: [],
-	  width:150
+      align: 'center',
+	  width:100
     }, {
       coltype: 'string',
       label: '机型',

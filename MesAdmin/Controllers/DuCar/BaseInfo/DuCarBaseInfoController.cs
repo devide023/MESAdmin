@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web.Helpers;
 using System.Web.Http;
 using ZDMesInterfaces.DuCar;
 using ZDMesInterfaces.TJ;
@@ -54,6 +55,29 @@ namespace MesAdmin.Controllers.DuCar.BaseInfo
             {
                 var list = _basesinfoservice.GetGWList(scx);
                 return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.gwmc, value = t.gwh }) });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost, Route("gwzdby_scx_ry")]
+        public IHttpActionResult GetGwZd_By_Scx_User(dynamic parm)
+        {
+            try
+            {
+                if (parm != null)
+                {
+                    string scx = parm.scx?.ToString();
+                    string usercode = parm.usercode?.ToString();
+                    var list = _basesinfoservice.GetGWByRyList(scx,usercode);
+                    return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.gwmc, value = t.gwh }) });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "参数为空" });
+                }
             }
             catch (Exception)
             {
@@ -134,6 +158,49 @@ namespace MesAdmin.Controllers.DuCar.BaseInfo
                 {
                     var list = _basesinfoservice.Get_FaultNo_By_Key(key);
                     return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.faultname, value = t.faultno }) });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "查询参数为空" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet,Route("jxno_by_code")]
+        public IHttpActionResult Get_JxNo_ByCode(string key)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    var list = _basesinfoservice.Get_JxNo_ByCode(key);
+                    return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t, value = t }) });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "查询参数为空" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet,Route("ztbm_by_jxno")]
+        public IHttpActionResult Get_ZtbmByJxno(string jxno)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(jxno))
+                {
+                    var list = _basesinfoservice.Get_Ztbm_ByJxno(jxno);
+                    return Json(new { code = 1, msg = "ok", list =list });
                 }
                 else
                 {

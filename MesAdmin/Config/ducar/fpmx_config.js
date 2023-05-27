@@ -28,22 +28,14 @@
   },
   pagefuns: {
     download_jstcpdf: function (row) {
-      var _this = this;
-      this.$request('get', '/a1/jtfpscx/read_pdm_jstz', {
-        jcbh: row.jcbh
-      }).then(function (res) {});
-      if (row.jtly === 1) {
-        window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
-      } else if (row.jtly === 0) {
-        window.open("http://172.16.201.216:81/技术通知/" + row.wjlj);
-      }
+      window.open("http://192.168.1.114:8100/储能/技术通知/" + row.jstc.wjlj);
     }
   },
   fields: [{
       coltype: 'list',
       label: '生产线',
       prop: 'scx',
-      dbprop: 'scx',
+      dbprop: 'ta.scx',
       overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
@@ -58,6 +50,7 @@
       coltype: 'string',
       label: '岗位编号',
       prop: 'gwh',
+	  dbprop: 'ta.gwh',
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -67,6 +60,7 @@
       coltype: 'string',
       label: '机型',
       prop: 'jxno',
+	  dbprop: 'ta.jxno',
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -76,6 +70,7 @@
       coltype: 'string',
       label: '状态编号',
       prop: 'statusno',
+	  dbprop: 'ta.statusno',
       sortable: true,
       headeralign: 'center',
       align: 'center',
@@ -85,6 +80,7 @@
       coltype: 'string',
       label: '技通编号',
       prop: 'jstc',
+	  dbprop:'tb.jcbh',
       subprop: 'jcbh',
       overflowtooltip: true,
       sortable: true,
@@ -95,6 +91,7 @@
       coltype: 'list',
       label: '文件分类',
       prop: 'jstc',
+	  dbprop:'tb.wjfl',
       subprop: 'wjfl',
       searchable: false,
       overflowtooltip: true,
@@ -118,6 +115,7 @@
       label: '技通名称',
       prop: 'jstc',
       subprop: 'jcmc',
+	  dbprop:'tb.jcmc',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -127,6 +125,7 @@
       label: '文件名称',
       prop: 'jstc',
       subprop: 'wjlj',
+	  dbprop:'tb.wjlj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -140,7 +139,8 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 150,
+	  searchable:false,
     }, {
       coltype: 'date',
       label: '有效期限结束',
@@ -150,7 +150,8 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 150,
+	  searchable:false,
     }, {
       coltype: 'string',
       label: '分配标志',
@@ -160,12 +161,14 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  searchable:false,
       width: 100
     }, {
       coltype: 'string',
       label: '分配人',
       prop: 'jstc',
       subprop: 'fpr',
+	  dbprop: 'tb.fpr',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -176,6 +179,7 @@
       label: '分配时间',
       prop: 'jstc',
       subprop: 'fpsj',
+	  dbprop: 'tb.fpsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -190,6 +194,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  searchable:false,
       width: 100
     }, {
       coltype: 'datetime',
@@ -198,6 +203,7 @@
       subprop: 'scsj',
       overflowtooltip: true,
       sortable: true,
+	  searchable:false,
       headeralign: 'center',
       align: 'center',
       width: 150

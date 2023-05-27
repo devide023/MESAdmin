@@ -88,6 +88,7 @@
     <Compile Include="CDGC\IGtjjb.cs" />
     <Compile Include="CDGC\ICDUser.cs" />
     <Compile Include="CDGC\IReport.cs" />
+    <Compile Include="Common\IColumnValueReplace.cs" />
     <Compile Include="Common\IEntityDetail.cs" />
     <Compile Include="Common\IFtpConfig.cs" />
     <Compile Include="Common\IRequireVerify.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="DuCar\IDuCarFault.cs" />
     <Compile Include="DuCar\IDuCarJstz.cs" />
     <Compile Include="DuCar\IDuCarOrder.cs" />
+    <Compile Include="DuCar\IDuCarReport.cs" />
     <Compile Include="DuCar\IDuCarRyjn.cs" />
     <Compile Include="LBJ\App\IApp.cs" />
     <Compile Include="LBJ\BHDGL\IBHD.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="TJ\IA1GYLX.cs" />
     <Compile Include="TJ\IA1JtFpzt.cs" />
     <Compile Include="TJ\IA1MyJSTZ.cs" />
+    <Compile Include="TJ\IA1Report.cs" />
     <Compile Include="TJ\IA1ZPMX.cs" />
     <Compile Include="TJ\IBatAtachValue.cs" />
     <Compile Include="TJ\IDJGL.cs" />

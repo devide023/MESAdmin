@@ -49,6 +49,10 @@ namespace ZDMesModels.Ducar
         /// </summary>
         public string sfzp { get; set; }
         /// <summary>
+        /// 充放次数
+        /// </summary>
+        public int cfcs { get; set; }
+        /// <summary>
         /// 右连接字段
         /// </summary>
         public string sfzp2 { get; set; }

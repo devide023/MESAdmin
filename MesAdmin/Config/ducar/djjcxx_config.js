@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },	
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/点检基础信息.xlsx?r='+Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/点检基础信息.xlsx?r='+Math.random());
     },
 	select_scx: function (collist, val, row) {
         row.gwhs=[];
@@ -138,6 +138,8 @@
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
+		  row.statusno = '';
+		  row.statusno_list=[];
         this.$request('get', '/ducar/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {
@@ -185,7 +187,7 @@
       align: 'center',
 	  options:[{label:'点检',value:'点检'},{label:'互检',value:'互检'}],
 	  hideoptionval:true,
-	  width:150
+	  width:100
     }, {
       coltype: 'list',
       label: '岗位编码',
@@ -194,7 +196,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width:150,
+	  width:100,
 	  relation: 'gwhs',
     }, {
       coltype: 'string',
@@ -208,7 +210,7 @@
       align: 'center',
 	  suggest_fn_name: 'suggest_fn',
       select_fn_name: 'select_fn',
-	  width:150,
+	  width:100,
     }, {
       coltype: 'list',
       label: '状态码',
@@ -221,7 +223,7 @@
 	  hideoptionval:true,
 	  options:[],
 	  relation:'statusno_list',
-	  width:150
+	  width:100
     }, {
       coltype: 'string',
       label: '点检内容',
@@ -262,7 +264,6 @@
     }
   ],
   form: {
-	  gcdm:'101',
 	  scx:'',
     gwh: '',
     jxno: '',

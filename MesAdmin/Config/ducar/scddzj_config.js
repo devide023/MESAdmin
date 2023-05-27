@@ -2,8 +2,25 @@
   isgradequery: true,
   isbatoperate: false,
   isoperate: false,
-  isfresh: true,
+  isfresh: false,
   isselect: false,
+  activated: function (_this) {
+    var q = _this.$route.query;
+    var keys = Object.keys(q);
+	_this.queryform.search_condition=[];
+    for (var i = 0; i < keys.length; i++) {
+      _this.queryform.search_condition.push({
+        colname: keys[i],
+        coltype: 'string',
+        oper: '=',
+        value: q[keys[i]]
+      });
+    }
+    _this.getlist(_this.queryform);
+  },
+  mounted: function (_this) {
+    console.log(_this);
+  },
   batoperate: {
     export_excel: function (_this) {
       _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
@@ -38,7 +55,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'left',
-      width: 150
+      width: 100
     }, {
       coltype: 'string',
       label: '物料名称',
@@ -83,6 +100,16 @@
       headeralign: 'center',
       align: 'left',
       width: 150
+    },
+	{
+      coltype: 'string',
+      label: '供应商锁定',
+      prop: 'supl_lock',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width: 150
     }
   ],
   form: {

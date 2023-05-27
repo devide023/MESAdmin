@@ -23,7 +23,7 @@ namespace ZDMesServices.TJ.A1.ZLGL
                 resultcount = 0;
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
-                sql.Append($"select id, gcdm, scx, gwh, jx_no as jxno, status_no as statusno, djno, djxx, djjg, bz, decode(instr(lrr,'01'),0,lrr,(select user_name from zxjc_ryxx where user_code = lrr and rownum = 1 )) as lrr, lrsj from zxjc_djxx where 1=1 ");
+                sql.Append($"select id, gcdm, scx, gwh, jx_no as jxno, status_no as statusno, djno, djxx, djjg, bz, decode(instr(lrr,'0'),0,lrr,(select user_name from zxjc_ryxx where user_code = lrr and rownum = 1 )) as lrr, lrsj from zxjc_djxx where 1=1 ");
                 sql_cnt.Append($"select count(*) from zxjc_djxx where 1=1 ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))

@@ -92,12 +92,20 @@
       });
     },
   },
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    },
+  ],
   pagefuns: {
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
+    },
+	download_template_file: function () {
+      window.open('http://192.168.1.111:7002/template/Ducar/岗位物料.xlsx?r='+Math.random());
     },
     select_scx: function (collist, val, row) {
       row.gwhs = [];

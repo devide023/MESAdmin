@@ -204,5 +204,41 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
+        [HttpGet,Route("zxjclx")]
+        public IHttpActionResult GetZxjcLx()
+        {
+            try
+            {
+                var list = _a1baseinfo.GetZxjcLx();
+                return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.jclx, value = t.jclx }) });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet,Route("jclxbykey")]
+        public IHttpActionResult GetJclxByKey(string key)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    var list = _a1baseinfo.GetJcLxByKey(key);
+                    return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.scx, value = t.jclx }) });
+                }
+                else
+                {
+                    List<dynamic> list = new List<dynamic>();
+                    return Json(new { code = 1, msg = "ok", list = list });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

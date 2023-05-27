@@ -50,6 +50,17 @@ namespace ZDMesInterfaces.TJ
         /// <param name="key"></param>
         /// <returns></returns>
         IEnumerable<dynamic> GetZPLXList();
+        /// <summary>
+        /// 获取检测类型
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<zxjc_jclx> GetZxjcLx();
+        /// <summary>
+        /// 获取检测类型
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetJcLxByKey(string key);
 
     }
 }

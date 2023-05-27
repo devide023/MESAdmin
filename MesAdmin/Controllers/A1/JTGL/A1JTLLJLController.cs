@@ -20,6 +20,5 @@ namespace MesAdmin.Controllers.A1.JTGL
         public A1JTLLJLController(IDbOperate<mes_pdm_jstz_yd> baseservice) : base(baseservice)
         {
         }
-
     }
 }

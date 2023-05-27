@@ -21,19 +21,19 @@ namespace MesAdmin.Controllers.DuCar.GyMgr
             _importservice = importservice;
         }
         [TemplateVerify("ZDMesModels.Ducar.base_gycs,ZDMesModels")]
-        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx_jn>), "BatSetValue")]
+        [AtachValue(typeof(IBatAtachValue<base_gycs>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)
         {
             return base.ReadTempFile(fileid);
         }
         [TemplateVerify("ZDMesModels.Ducar.base_gycs,ZDMesModels")]
-        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx_jn>), "BatSetValue")]
+        [AtachValue(typeof(IBatAtachValue<base_gycs>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Replace(string fileid)
         {
             return base.ReadTempFile_By_Replace(fileid);
         }
         [TemplateVerify("ZDMesModels.Ducar.base_gycs,ZDMesModels")]
-        [AtachValue(typeof(IBatAtachValue<zxjc_ryxx_jn>), "BatSetValue")]
+        [AtachValue(typeof(IBatAtachValue<base_gycs>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile_By_Zh(string fileid)
         {
             return base.ReadTempFile_By_Zh(fileid);

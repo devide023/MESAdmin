@@ -16,6 +16,49 @@ namespace ZDMesServices.Ducar.JhMgr
         {
         }
 
+        public override bool Modify(IEnumerable<zxjc_order_sxh> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update zxjc_order_sxh set order_no=:orderno,xh=:xh,scx=:scx,pcsl=:pcsl,sjscsj=:sjscsj where rowid = :rid ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var item in entitys)
+                                {
+                                    db.Execute(sql.ToString(), item, trans);
+                                }
+                                trans.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public override IEnumerable<zxjc_order_sxh> GetList(sys_page parm, out int resultcount)
         {
             try
@@ -33,7 +76,7 @@ namespace ZDMesServices.Ducar.JhMgr
                 orderinfosql.Append("jd_bm, jd_bz, write_flg, bsxcpm, yqjhrq, cljhrq, ychf, write_exc, dcyy, zrbm, yqscsj, jj_bj, jj_bz, csmc,");
                 orderinfosql.Append("bjmc, yjscrq, jd_lrsj, zhtbsj FROM pp_zpjh where order_no = :orderno");
                 //
-                sql.Append($"select order_no as orderno, xh, sjscsj, lrsj from zxjc_order_sxh where sjscsj >= trunc(sysdate) ");
+                sql.Append($"select rowid as rid,order_no as orderno, xh, sjscsj, lrsj,scx,pcsl from zxjc_order_sxh where sjscsj >= trunc(sysdate) ");
                 sql_cnt.Append($"select count(*) from zxjc_order_sxh where sjscsj >= trunc(sysdate) ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))

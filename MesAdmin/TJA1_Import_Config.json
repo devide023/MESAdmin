@@ -1,7 +1,7 @@
 [
   {
     "tablename": "zxjc_ryxx",
-    "xinzeng": [ "scx","user_code" ],
+    "xinzeng": [ "scx", "user_code" ],
     "replace": [ "scx", "user_code" ],
     "replacetype": 2,
     "zhonghe": [ "scx", "user_code" ],
@@ -102,5 +102,29 @@
     "replacetype": 1,
     "zhonghe": [ "scx", "jx_no", "status_no", "gwh" ],
     "updatecol": [ "scx", "jx_no", "gwh", "status_no", "tcbh", "tcmc" ]
+  },
+  {
+    "tablename": "base_fxwl",
+    "xinzeng": [ "scx", "wlmc" ],
+    "replace": [ "scx", "wlmc" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "wlfl", "wlmc" ],
+    "updatecol": [ "scx", "wlfl", "wlmc" ]
+  },
+  {
+    "tablename": "zxjc_jclx",
+    "xinzeng": [ "scx", "jclx" ],
+    "replace": [ "scx", "jclx" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "jclx" ],
+    "updatecol": [ "scx", "jclx" ]
+  },
+  {
+    "tablename": "zxjc_jcjcxx",
+    "xinzeng": [ "scx", "gwh","jclx","jclb","jcyq" ],
+    "replace": [ "scx", "gwh", "jclx", "jclb", "jcyq" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx","gwh", "jclx" ],
+    "updatecol": [ "scx","gwh", "jclx","jclb","xh","jcyq","bzz","bzsx","bzxx" ]
   }
 ]

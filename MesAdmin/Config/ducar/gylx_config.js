@@ -99,7 +99,7 @@
 	{
       btntxt: '机型复制',
       fnname: 'data_copy_handle'
-    },
+    }
   ],
   pagefuns: {
     add_handle: function () {
@@ -109,7 +109,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/工艺路线.xlsx?r='+Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/工艺路线.xlsx?r='+Math.random());
     },
 	select_scx: function (collist, val, row) {
         row.gwhs=[];
@@ -259,6 +259,14 @@
       inactivevalue: 'N',
       width: 100
     }, {
+      coltype: 'int',
+      label: '充放次数',
+      prop: 'cfcs',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:120
+    },{
       coltype: 'string',
       label: '备注',
       prop: 'bz',
@@ -295,6 +303,7 @@
     shbz: 'Y',
     sfzp: 'Y',
     fjbh: '',
+	cfcs:0,
     bz: '',
     lrr: '',
     lrsj: '',

@@ -55,7 +55,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width:150,
+	  width:100,
 	  relation: 'gwhs',
     }, {
       coltype: 'string',
@@ -69,7 +69,7 @@
       align: 'center',
 	  suggest_fn_name: 'suggest_fn',
       select_fn_name: 'select_fn',
-	  width:150,
+	  width:100,
     }, {
       coltype: 'list',
       label: '状态码',
@@ -82,7 +82,7 @@
 	  hideoptionval:true,
 	  options:[],
 	  relation:'statusno_list',
-	  width:150
+	  width:100
     }, {
       coltype: 'string',
       label: '点检内容',
@@ -110,6 +110,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  width:100,
     },
 	{
       coltype: 'string',

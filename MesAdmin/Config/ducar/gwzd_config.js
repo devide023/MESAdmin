@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
 	download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/岗位站点.xlsx?r='+Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/岗位站点.xlsx?r='+Math.random());
     },
   },
   fields: [{

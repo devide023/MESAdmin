@@ -37,7 +37,7 @@
     "replace": [ "scx", "gwh" ],
     "replacetype": 1,
     "zhonghe": [ "scx", "jx_no", "status_no", "gwh" ],
-    "updatecol": [ "scx", "jx_no", "status_no", "gwh", "zpsx", "mj", "fsbz", "sfzp", "bz" ]
+    "updatecol": [ "scx", "jx_no", "status_no", "gwh", "zpsx", "mj", "fsbz", "sfzp","cfcs","bz" ]
   },
   {
     "tablename": "base_gycs",
@@ -132,7 +132,15 @@
     "xinzeng": [ "scx", "jx_no", "gwh" ],
     "replace": [ "scx", "gwh" ],
     "replacetype": 1,
-    "zhonghe": [ "scx", "jx_no", "gwh"],
+    "zhonghe": [ "scx", "jx_no", "gwh" ],
     "updatecol": [ "scx", "jx_no", "gwh", "status_no", "fllx", "wlms" ]
+  },
+  {
+    "tablename": "sc_jxgl",
+    "xinzeng": [ "scx", "user_code", "gwh", "wtd", "khyy" ],
+    "replace": [ "scx", "user_code","gwh","wtd" ],
+    "replacetype": 1,
+    "zhonghe": [ "scx", "user_code", "gwh", "wtd" ],
+    "updatecol": [ "scx", "user_code", "gwh", "wtd", "khyy", "lx","jlje","cfje","fsrq","bz" ]
   }
 ]

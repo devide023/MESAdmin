@@ -894,5 +894,128 @@
         "coltxt": "备注"
       }
     ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.base_fxwl,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "wlfl",
+        "coltxt": "物料分类"
+      },
+      {
+        "colname": "wlmc",
+        "coltxt": "物料名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "wlfl",
+        "colindex": 1,
+        "coltxt": "物料分类"
+      },
+      {
+        "colname": "wlmc",
+        "colindex": 2,
+        "coltxt": "物料名称"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.zxjc_jclx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jclx",
+        "coltxt": "检测类型"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jclx",
+        "colindex": 1,
+        "coltxt": "检测类型"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.zxjc_jcjcxx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "jclx",
+        "coltxt": "检测类型"
+      },
+      {
+        "colname": "jclb",
+        "coltxt": "检测类别"
+      },
+      {
+        "colname": "jcyq",
+        "coltxt": "检测要求"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 1,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "jclx",
+        "colindex": 2,
+        "coltxt": "检测类型"
+      },
+      {
+        "colname": "jclb",
+        "colindex": 3,
+        "coltxt": "检测类别"
+      },
+      {
+        "colname": "xh",
+        "colindex": 4,
+        "coltxt": "序号"
+      },
+      {
+        "colname": "jcyq",
+        "colindex": 5,
+        "coltxt": "检测要求"
+      },
+      {
+        "colname": "bzz",
+        "colindex": 6,
+        "coltxt": "标准值"
+      },
+      {
+        "colname": "bzsx",
+        "colindex": 7,
+        "coltxt": "标准上限"
+      },
+      {
+        "colname": "bzxx",
+        "colindex": 8,
+        "coltxt": "标准下限"
+      }
+    ]
   }
 ]

@@ -1,0 +1,20 @@
+{
+  "colvalreplace_config": [
+    {
+      "routepath": "/gygl/gylx",
+      "tablename": "mes_zxjc_gylx"
+    },
+    {
+      "routepath": "/gygl/dzgy",
+      "tablename": "zxjc_t_dzgy"
+    },
+    {
+      "routepath": "/gymgr/gylx",
+      "tablename": "zxjc_gylx"
+    },
+    {
+      "routepath": "/check/jcxx",
+      "tablename": "zxjc_jcjcxx"
+    }
+  ]
+}

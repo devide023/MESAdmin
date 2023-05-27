@@ -94,6 +94,24 @@ namespace ZDMesServices.TJ.A1.BaseInfo
             }
         }
 
+        public IEnumerable<dynamic> GetJcLxByKey(string key)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select scx as \"scx\", jclx as \"jclx\" FROM zxjc_jclx where scbz = 'N' and jclx like :key ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<dynamic>(sql.ToString(), new { key = "%" + key + "%" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<dynamic> GetJxNoByKey(string key)
         {
             try
@@ -175,6 +193,24 @@ namespace ZDMesServices.TJ.A1.BaseInfo
                 using (var db = new OracleConnection(ConString))
                 {
                     return db.Query<string>(sql.ToString(),new { jxno=jxno});
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<zxjc_jclx> GetZxjcLx()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select scx,jclx FROM zxjc_jclx where scbz='N' order by jclx ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<zxjc_jclx>(sql.ToString());
                 }
             }
             catch (Exception)

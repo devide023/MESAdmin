@@ -7,7 +7,7 @@
   operate_fnlist: [{
       label: '上传',
       btntype: 'upload',
-      action: 'http://172.16.201.216:7002/api/a1/upload/dzgy_pdf',
+      action: 'http://192.168.1.111:7002/api/ducar/upload/dzgy_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
           this.$loading().close();
@@ -139,19 +139,19 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/电子工艺.xlsx?r=' + Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/电子工艺.xlsx?r=' + Math.random());
     },
 	view_dzgypdf:function(row){
-		window.open("http://172.16.201.216:81/电子工艺/" + row.wjlj+'/'+row.gymc);
+		window.open("http://192.168.1.114:8100/储能/电子工艺/"+row.gymc);
 	},
     download_dzgypdf: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {
         wjlx: '电子工艺',
-        wjlj: row.wjlj+"/"+row.gymc
+        wjlj: row.gymc
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj+'/'+row.gymc);
+          window.open("http://192.168.1.111:7002/api/download/downloadpdf?wjlj="+row.gymc);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -161,10 +161,10 @@
       var _this = this;
       this.$request('get', "download/ftp2web", {
         wjlx: '视频',
-        wjlj: row.wjlj+"/"+row.gymc
+        wjlj: row.gymc
       }).then(function (res) {
         if (res.code === 1) {
-          window.open("http://172.16.201.216:7002/api/download/downloadpdf?wjlj=" + row.wjlj+'/'+row.gymc);
+          window.open("http://192.168.1.111:7002/api/download/downloadpdf?wjlj=" +row.gymc);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }

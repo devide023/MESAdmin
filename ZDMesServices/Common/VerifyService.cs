@@ -198,7 +198,7 @@ namespace ZDMesServices.Common
                                         }
                                         else if (sxlx == typeof(Decimal?) || sxlx == typeof(Decimal))
                                         {
-                                            p.SetValue(obj, Convert.ToInt32(val));
+                                            p.SetValue(obj, Convert.ToDecimal(val));
                                         }
                                         else if (sxlx == typeof(Double?) || sxlx == typeof(Double))
                                         {

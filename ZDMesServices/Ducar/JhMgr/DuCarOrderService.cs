@@ -154,6 +154,7 @@ namespace ZDMesServices.Ducar.JhMgr
                 using (var db = new OracleConnection(ConString))
                 {
                     var ret = db.Execute(sql.ToString(), new { orderno = orderno, qt = "N" });
+                    Update_JyStatus(orderno);
                     return new sys_order_jy_result()
                     {
                         result = false,
@@ -179,6 +180,7 @@ namespace ZDMesServices.Ducar.JhMgr
                 using (var db = new OracleConnection(ConString))
                 {
                     var ret = db.Execute(sql.ToString(), new { orderno = orderno, qt = "Y" });
+                    Update_JyStatus(orderno);
                     return new sys_order_jy_result()
                     {
                         result = false,
@@ -212,6 +214,7 @@ namespace ZDMesServices.Ducar.JhMgr
                     {
                         db.Execute(sql.ToString(), new { orderno = orderno, gylx = "N" });
                     }
+                    Update_JyStatus(orderno);
                     return result;
                 }
             }
@@ -229,7 +232,7 @@ namespace ZDMesServices.Ducar.JhMgr
                 StringBuilder sql = new StringBuilder();
                 sql.Append("update ZXJC_ORDER_JY set gdbomjy = :bom where order_no = :orderno ");
                 IsOrderJy(orderno);
-                var result = HasGylx(orderno);
+                var result = HasBOM(orderno);
                 using (var db = new OracleConnection(ConString))
                 {
                     if (result.result)
@@ -240,7 +243,36 @@ namespace ZDMesServices.Ducar.JhMgr
                     {
                         db.Execute(sql.ToString(), new { orderno = orderno, bom = "N" });
                     }
+                    Update_JyStatus(orderno);
                     return result;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void Update_JyStatus(string orderno)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                StringBuilder sqlcheck = new StringBuilder();
+                sqlcheck.Append("select count(*) from ZXJC_ORDER_JY where order_no = :orderno and qdjy='Y' and gdbomjy='Y' and gylxjy='Y' ");
+                sql.Append("update ZXJC_ORDER_JY set status = '已完成校验' where order_no = :orderno and qdjy='Y' and gdbomjy='Y' and gylxjy='Y' ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    var cnt = db.ExecuteScalar<int>(sqlcheck.ToString(), new { orderno = orderno });
+                    if (cnt > 0)
+                    {
+                        db.Execute(sql.ToString(), new { orderno = orderno });
+                    }
+                    else
+                    {
+                        db.Execute("update ZXJC_ORDER_JY set status = '未完成校验' where order_no = :orderno", new { orderno = orderno });
+                    }
                 }
             }
             catch (Exception)

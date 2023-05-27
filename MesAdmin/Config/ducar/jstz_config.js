@@ -7,7 +7,7 @@
   operate_fnlist: [{
       label: '上传Pdf',
       btntype: 'upload',
-      action: 'http://172.16.201.216:7002/api/a1/upload/jstc_pdf',
+      action: 'http://192.168.1.111:7002/api/ducar/upload/jstc_pdf',
       callback: function (response, file) {
         if (response.code === 1) {
           this.$loading().close();
@@ -35,7 +35,7 @@
       label: '分配明细',
       fnname: 'jtfp_detail',
       btntype: 'text',
-    },
+    }
   ],
   batoperate: {
 	  import_by_add: function (_this, res) {
@@ -135,15 +135,7 @@
       this.list.unshift(row);
     },
     download_jstcpdf: function (row) {
-      var _this = this;
-      this.$request('get', '/a1/jtfpscx/read_pdm_jstz', {
-        jcbh: row.jcbh
-      }).then(function (res) {});
-      if (row.jtly === 1) {
-        window.open("http://jsgltj.zsdl.cn/tjjstz/file/" + row.wjlj);
-      } else if (row.jtly === 0) {
-        window.open("http://172.16.201.216:81/技术通知/" + row.wjlj);
-      }
+      window.open("http://192.168.1.114:8100/储能/技术通知/" + row.wjlj);
     },
     jtfp_detail: function (row, item) {
       var _this = this;

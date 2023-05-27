@@ -16,6 +16,28 @@ namespace ZDMesServices.Ducar.BaseInfo
         {
         }
 
+        public IEnumerable<base_gwzd> GetGWByRyList(string scx, string usercode)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select gwh, gwmc FROM base_gwzd where scx = :scx and gwh in (");
+                sql.Append("select gwh FROM zxjc_ryxx where user_code = :usercode ");
+                sql.Append(" union ");
+                sql.Append(" select gwh FROM zxjc_ryxx_jn where user_code = :usercode and scx = :scx ");
+                sql.Append(")");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_gwzd>(sql.ToString(), new { scx = scx,usercode = usercode });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<base_gwzd> GetGWList()
         {
             try
@@ -196,6 +218,26 @@ namespace ZDMesServices.Ducar.BaseInfo
             }
         }
 
+        public IEnumerable<string> Get_JxNo_ByCode(string key)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select * FROM ");
+                sql.Append(" (select distinct jx FROM pp_zpjh where jx like :key )");
+                sql.Append(" where rownum < 10 order by jx");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<string>(sql.ToString(), new { key = "%" + key + "%" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<pp_zpjh> Get_OrderNo_By_Key(string key)
         {
             try
@@ -205,6 +247,24 @@ namespace ZDMesServices.Ducar.BaseInfo
                 using (var db = new OracleConnection(ConString))
                 {
                    return db.Query<pp_zpjh>(sql.ToString(), new { key = "%" + key + "%" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<string> Get_Ztbm_ByJxno(string jxno)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select distinct replace(ztbm,'\n','') FROM pp_zpjh where jx like :jxno ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<string>(sql.ToString(), new { jxno = "%" + jxno + "%" });
                 }
             }
             catch (Exception)

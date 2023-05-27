@@ -90,7 +90,7 @@ namespace ZDMesServices.Ducar.ZlMgr
                 list.ForEach(t =>
                 {
                     t.handno = Create_CLFS_No();
-                    t.faultno = GetFaultNoByName(t.handname);
+                    t.faultno = GetFaultNoByName(t.faultname);
                     t.lrr = _uservice.CurrentUser.name;
                 });
                 return list;

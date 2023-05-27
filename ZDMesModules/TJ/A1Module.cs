@@ -39,6 +39,7 @@ namespace ZDMesModules.TJ
             builder.Register(c => new ImportLog(TJConstr));
             builder.Register(c => new UserLog(TJConstr));
             builder.Register(t => new JtFpLog(TJConstr));
+            builder.Register(t => new ColValReplaceLog(TJConstr));
             var module_config = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
             module_config.AddJsonFile("TJA1_module_config.json");
             // Register the ConfigurationModule with Autofac.

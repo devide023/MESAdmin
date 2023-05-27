@@ -105,7 +105,7 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://localhost:52655/template/A1/人员技能.xlsx?r='+Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/人员技能.xlsx?r='+Math.random());
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'usercode') {

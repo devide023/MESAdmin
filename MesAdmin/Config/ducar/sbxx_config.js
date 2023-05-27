@@ -37,18 +37,14 @@
       headeralign: 'center',
       align: 'center',
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '岗位号',
       prop: 'gwh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/ducar/baseinfo/gwzd'
-      },
-      options: []
+      width:100
     }, {
       coltype: 'list',
       label: '设备类型',
@@ -58,21 +54,12 @@
       headeralign: 'center',
       align: 'center',
       options: [{
-          label: 'ATLAS拧紧枪',
-          value: 'ATLAS拧紧枪'
+          label: '拧紧枪',
+          value: '拧紧枪'
         }, {
-          label: 'ATLAS拧紧轴',
-          value: 'ATLAS拧紧轴'
-        }, {
-          label: '压机',
-          value: '压机'
-        }, {
-          label: '检漏机',
-          value: '检漏机'
-        }, {
-          label: '加油机',
-          value: '加油机'
-        },
+          label: '拧紧轴',
+          value: '拧紧轴'
+        }
       ],
       hideoptionval: true
     }, {

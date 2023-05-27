@@ -47,8 +47,8 @@ namespace ZDMesServices.Ducar.JstzMgr
             {
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
-                sql.Append($"select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl, scx from zxjc_t_jstc where fp_flg='N' ");
-                sql_cnt.Append($"select count(*) from zxjc_t_jstc where fp_flg='N' ");
+                sql.Append($"select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl, scx from zxjc_t_jstc where 1=1 ");
+                sql_cnt.Append($"select count(*) from zxjc_t_jstc where 1=1 ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {
@@ -68,7 +68,7 @@ namespace ZDMesServices.Ducar.JstzMgr
                     }
                     else
                     {
-                        sql.Append($" order by yxqx2 desc ");
+                        sql.Append($" order by decode(fp_flg,'N',1,0) desc,yxqx2 desc ");
                     }
                 }
                 using (var db = new OracleConnection(ConString))

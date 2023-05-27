@@ -105,7 +105,24 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/故障基础信息.xlsx?r=' + Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/故障基础信息.xlsx?r=' + Math.random());
+    },
+	select_scx: function (collist, val, row) {
+        row.gwhs=[];
+		row.gwh='';
+		row.gwmc = '';
+        this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
+          scx: val
+        }).then(function (res) {
+          if (res.code === 1) {
+            row.gwhs = res.list.map(function (i) {
+              return {
+                label: i.label,
+                value: i.value
+              };
+            });
+          }
+        });
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -121,6 +138,8 @@
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
+		  row.statusno = '';
+		  row.statusno_list=[];
         this.$request('get', '/ducar/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {
@@ -150,7 +169,8 @@
         url: '/ducar/baseinfo/scx'
       },
 	  hideoptionval:true,
-	  options:[]
+	  options:[],
+	  change_fn_name: 'select_scx',
   },{
       coltype: 'string',
       label: '故障代码',
@@ -172,7 +192,8 @@
       headeralign: 'center',
       align: 'center',
       options: [],
-      width: 150
+      width: 100,
+	  relation: 'gwhs',
     }, {
       coltype: 'string',
       label: '故障名称',
@@ -213,7 +234,7 @@
           value: '测试故障'
         },
       ],
-      width: 150,
+      width: 100,
       allowcreate: true,
       hideoptionval: true,
     }, {
@@ -245,7 +266,7 @@
       relation: 'statusno_list',
       width: 150
     }, {
-      coltype: 'list',
+      coltype: 'string',
       label: '默认处理岗位',
       prop: 'gwhbz',
       dbprop: 'gwh_bz',
@@ -254,11 +275,6 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [],
-      inioptionapi: {
-        method: 'get',
-        url: '/ducar/baseinfo/gwzd'
-      },
       width: 150
     }, {
       coltype: 'string',
@@ -303,6 +319,7 @@
     bz: '',
     lrr: '',
     lrsj: '',
+	gwhs:[],
     statusno_list: [],
     isdb: false,
     isedit: true

@@ -37,6 +37,10 @@ namespace ZDMesModels.TJ.A1
         /// </summary>
         public string statusno { get; set; }
         /// <summary>
+        /// 机型
+        /// </summary>
+        public string jxno { get; set; }
+        /// <summary>
         /// 生产订单号
         /// </summary>
         public string orderno { get; set; }
@@ -139,6 +143,7 @@ namespace ZDMesModels.TJ.A1
             Map(t => t.faultno).Column("fault_no");
             Map(t => t.handno).Column("hand_no");
             Map(t => t.gwmc).Ignore();
+            Map(t => t.jxno).Ignore();
             AutoMap();
         }
     }

@@ -152,6 +152,7 @@
     <Compile Include="CDGC\SJCJGL\CdGcSjCjService.cs" />
     <Compile Include="CDGC\YCGL\YCGLLSService.cs" />
     <Compile Include="CDGC\YCGL\YCGLService.cs" />
+    <Compile Include="Common\ColumnValReplaceService.cs" />
     <Compile Include="Common\DbInfoService.cs" />
     <Compile Include="Common\FtpConfigService.cs" />
     <Compile Include="Common\MesMenuApiService.cs" />
@@ -179,6 +180,8 @@
     <Compile Include="Ducar\PLC\DuCarIOztService.cs" />
     <Compile Include="Ducar\PLC\DuCarPlcLogService.cs" />
     <Compile Include="Ducar\PLC\DuCarPlcZtService.cs" />
+    <Compile Include="Ducar\Report\DucarReportService.cs" />
+    <Compile Include="Ducar\RyMgr\DuCarJxglService.cs" />
     <Compile Include="Ducar\RyMgr\DuCarRyjcService.cs" />
     <Compile Include="Ducar\RyMgr\DuCarRyjnService.cs" />
     <Compile Include="Ducar\RyMgr\DuCarRyxxService.cs" />
@@ -242,6 +245,10 @@
     <Compile Include="Common\MesRoleService.cs" />
     <Compile Include="Common\MesUserService.cs" />
     <Compile Include="TJ\A1\BaseInfo\A1BaseInfoService.cs" />
+    <Compile Include="TJ\A1\CheckMgr\A1JcjgService.cs" />
+    <Compile Include="TJ\A1\CheckMgr\A1JcjcxxService.cs" />
+    <Compile Include="TJ\A1\CheckMgr\A1JclxService.cs" />
+    <Compile Include="TJ\A1\CheckMgr\A1JcmxService.cs" />
     <Compile Include="TJ\A1\GWZD\A1GWZDService.cs" />
     <Compile Include="TJ\A1\GYGL\A1DzGyService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GwJxService.cs" />
@@ -260,6 +267,8 @@
     <Compile Include="TJ\A1\JTGL\A1JTLLService.cs" />
     <Compile Include="TJ\A1\JTGL\A1ScxTzService.cs" />
     <Compile Include="TJ\A1\JTGL\A1TsZtTzService.cs" />
+    <Compile Include="TJ\A1\Report\A1GztjService.cs" />
+    <Compile Include="TJ\A1\Report\A1MjghjlService.cs" />
     <Compile Include="TJ\A1\RYGL\A1RyJnService.cs" />
     <Compile Include="TJ\A1\RYGL\A1RyxxService.cs" />
     <Compile Include="TJ\A1\SBGL\A1SbXxService.cs" />
@@ -271,6 +280,7 @@
     <Compile Include="TJ\A1\ZLGL\A1DjXxService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1FaultService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1FxMxService.cs" />
+    <Compile Include="TJ\A1\ZLGL\A1FxwlService.cs" />
     <Compile Include="TJ\BaseInfo\BaseInfoService.cs" />
     <Compile Include="TJ\Common\ConfigServicecs.cs" />
     <Compile Include="TJ\Common\MenuApiService.cs" />

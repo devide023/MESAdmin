@@ -66,7 +66,7 @@
       _this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/员工基础信息.xlsx?r='+Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/员工基础信息.xlsx?r='+Math.random());
     },
     select_scx: function (collist, val, row) {
         row.gwhs=[];
@@ -231,7 +231,7 @@
       searchable: false,
       headeralign: 'center',
       align: 'center',
-      action: 'http://172.16.201.216:7002/api/upload/image',
+      action: 'http://192.168.1.111:7002/api/upload/image',
       accept: '.jpg,.jpeg,.png',
       before_upload: function (file) {
         var isJPG = file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png";

@@ -22,6 +22,13 @@ namespace ZDMesInterfaces.DuCar
         /// <returns></returns>
         IEnumerable<base_gwzd> GetGWList(string scx);
         /// <summary>
+        /// 获取生产线人员岗位
+        /// </summary>
+        /// <param name="scx"></param>
+        /// <param name="usercode"></param>
+        /// <returns></returns>
+        IEnumerable<base_gwzd> GetGWByRyList(string scx,string usercode);
+        /// <summary>
         /// 所有设备信息
         /// </summary>
         /// <returns></returns>
@@ -66,5 +73,17 @@ namespace ZDMesInterfaces.DuCar
         /// <param name="key"></param>
         /// <returns></returns>
         IEnumerable<pp_zpjh> Get_OrderNo_By_Key(string key);
+        /// <summary>
+        /// 关键字过滤机型
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<string> Get_JxNo_ByCode(string key);
+        /// <summary>
+        /// 机型编码查状态编码
+        /// </summary>
+        /// <param name="jxno"></param>
+        /// <returns></returns>
+        IEnumerable<string> Get_Ztbm_ByJxno(string jxno);
     }
 }

@@ -13,6 +13,7 @@ using ZDToolHelper;
 using System.Reflection;
 using Dapper;
 using DapperExtensions.Mapper;
+using Castle.Core.Internal;
 
 namespace ZDMesServices.LBJ.ImportData
 {
@@ -54,7 +55,7 @@ namespace ZDMesServices.LBJ.ImportData
                     sql.Append($"select count(*) from {tbname} where 1=1 ");
                     foreach (var item in xzruleslist)
                     {
-                        sql.Append($" and {item} =  :{item} ");
+                        sql.Append($" and nvl({item},' ') =  :{item} ");
                     }
                     using (var db = new OracleConnection(ConString))
                     {
@@ -66,10 +67,14 @@ namespace ZDMesServices.LBJ.ImportData
                                 DynamicParameters dyp = new DynamicParameters();
                                 foreach (var col in xzruleslist)
                                 {
-                                    var cz = pi.Where(t => t.Name == col);
+                                    var cz = pi.Where(t => t.Name == col.Replace("_",""));                                    
                                     if (cz.Count() > 0)
                                     {
+                                        var protype = cz.First().PropertyType;
                                         var colval = cz.First().GetValue(item);
+                                        if (protype.Name == "String" && string.IsNullOrEmpty(colval.ToString())) {
+                                            colval = " ";
+                                        }
                                         dyp.Add($":{col}", colval);
                                     }
                                     else
