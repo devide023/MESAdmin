@@ -124,6 +124,7 @@
     <Compile Include="LBJ\IFormCheck.cs" />
     <Compile Include="LBJ\ImportData\IImportData.cs" />
     <Compile Include="LBJ\JTGL\IJTFP.cs" />
+    <Compile Include="LBJ\OEE\ILBJOEE.cs" />
     <Compile Include="LBJ\RyMgr\IRyJn.cs" />
     <Compile Include="LBJ\RyMgr\IRyJx.cs" />
     <Compile Include="LBJ\RyMgr\IRyXx.cs" />

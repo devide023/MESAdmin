@@ -183,6 +183,40 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             }
         }
         /// <summary>
+        /// 菱形刀换角
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        [HttpPost,Route("lxdhj")]
+        public IHttpActionResult LxdHj(List<base_dbrjzx> entitys)
+        {
+            try
+            {
+                var ret = _gxservice.LXDHJ(entitys);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "操作成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "操作失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
         /// 刀柄刃具首次领用
         /// </summary>
         /// <param name="form"></param>

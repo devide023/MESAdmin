@@ -9,16 +9,16 @@
   },
   {
     "tablename": "base_rjxx",
-    "xinzeng": [ "rjlx","jgwz" ],
-    "replace": [ "rjlx","jgwz" ],
+    "xinzeng": [ "rjlx", "jgwz" ],
+    "replace": [ "rjlx", "jgwz" ],
     "replacetype": 1,
-    "zhonghe": [ "rjlx","jgwz" ],
-    "updatecol": [ "rjmc", "rjbzsm","bz"]
+    "zhonghe": [ "rjlx", "jgwz" ],
+    "updatecol": [ "rjmc", "rjbzsm", "bz" ]
 
   },
   {
     "tablename": "base_dbrjgx",
-    "xinzeng": [ "dbh", "cpzt", "rjid"],
+    "xinzeng": [ "dbh", "cpzt", "rjid" ],
     "replace": [ "cpzt" ],
     "replacetype": 1,
     "zhonghe": [ "dbh", "cpzt", "rjid" ],
@@ -26,11 +26,11 @@
   },
   {
     "tablename": "base_dbrjzx",
-    "xinzeng": [ "scx", "dbh", "sbbh", "rjlx","rjwz" ],
-    "replace": [ "scx","sbbh" ],
+    "xinzeng": [ "scx", "dbh", "sbbh", "rjlx", "rjwz" ],
+    "replace": [ "scx", "sbbh" ],
     "replacetype": 1,
-    "zhonghe": [ "scx", "dbh", "sbbh", "rjlx","rjwz" ],
-    "updatecol": [ "rjlyr", "dblyr","rjbzsm" ]
+    "zhonghe": [ "scx", "dbh", "sbbh", "rjlx", "rjwz" ],
+    "updatecol": [ "rjlyr", "dblyr", "rjbzsm" ]
   },
   {
     "tablename": "base_rjsmxh",
@@ -81,10 +81,18 @@
   },
   {
     "tablename": "zxjc_base_gtjc",
-    "xinzeng": [ "cplx", "mh", "cpfw", "th", "kxmc","kjzsz","sdzsz" ],
-    "replace": [ "cplx"],
+    "xinzeng": [ "cplx", "mh", "cpfw", "th", "kxmc", "kjzsz", "sdzsz" ],
+    "replace": [ "cplx" ],
     "replacetype": 1,
     "zhonghe": [ "cplx", "mh", "cpfw", "th", "kxmc", "kjzsz", "sdzsz" ],
     "updatecol": [ "cplx", "mh", "cpfw", "th", "kxmc", "kjcc", "kjzsz", "sdzsz" ]
   },
+  {
+    "tablename": "base_template_scx_oee",
+    "xinzeng": [ "gcdm","scx" ],
+    "replace": [ "gcdm", "scx" ],
+    "replacetype": 1,
+    "zhonghe": [ "gcdm", "scx" ],
+    "updatecol": [ "jhzxsj", "zzwbqh", "zzwcf", "zzwbzxx", "zzwsbby", "px", "xx", "dlsj_jam", "dlsj_wait", "hdsj", "hxsj", "gzsj", "qttjsj", "lljp", "oee_target" ]
+  }
 ]

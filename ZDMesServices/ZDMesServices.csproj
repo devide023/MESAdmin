@@ -222,6 +222,9 @@
     <Compile Include="LBJ\GYGL\GYLXService.cs" />
     <Compile Include="LBJ\ImportData\ImportDataService.cs" />
     <Compile Include="LBJ\JHGL\ZpJhService.cs" />
+    <Compile Include="LBJ\OEE\LbjOeeDataService.cs" />
+    <Compile Include="LBJ\OEE\LBJOEEService.cs" />
+    <Compile Include="LBJ\OEE\LbjScxOeeService.cs" />
     <Compile Include="LBJ\RyMgr\RYJCService.cs" />
     <Compile Include="LBJ\RyMgr\RYJNService.cs" />
     <Compile Include="LBJ\RyMgr\RYJXService.cs" />

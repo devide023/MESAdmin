@@ -31,6 +31,12 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <returns></returns>
         bool OldToNew(List<base_dbrjzx> entitys);
         /// <summary>
+        /// 菱形刀换角
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        bool LXDHJ(List<base_dbrjzx> entitys);
+        /// <summary>
         /// 刀柄刃具领用
         /// </summary>
         /// <param name="from"></param>

@@ -10,8 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ZDMesInterceptor;
 using ZDMesInterceptor.LBJ;
+using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ;
 using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesServices.Common;
 using ZDMesServices.LBJ.CheckData;
 using ZDMesServices.LBJ.ImportData;
 
@@ -28,6 +30,9 @@ namespace ZDMesModules.LBJ
             var AssInterfaces = Assembly.Load("ZDMesInterfaces");
             builder.RegisterAssemblyTypes(AssInterfaces).Where(t => t.FullName.StartsWith("ZDMesInterfaces.LBJ")).PreserveExistingDefaults();
             builder.RegisterGeneric(typeof(ImportDataService<>)).Named("lbjimp",typeof(IImportData<>)).WithParameter("constr", LBJConstr).PropertiesAutowired().WithProperty("Import_Config_File_Path", "~/Import_Config.json").AsImplementedInterfaces().EnableInterfaceInterceptors();
+            builder.RegisterType<VerifyService>().As<ITemplateVerify>().As<IRequireVerify>()
+                .PropertiesAutowired().WithProperty("VerifyConfigPath", "~/LBJVerfyConfig.json")
+                .AsImplementedInterfaces().EnableInterfaceInterceptors();
             //注册拦截器
             builder.Register(c => new CUDLogger(LBJConstr));
             builder.Register(c => new ImportLog(LBJConstr));

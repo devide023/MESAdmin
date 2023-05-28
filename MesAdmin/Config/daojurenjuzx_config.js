@@ -92,6 +92,21 @@
         _this.$message.warning('请选择刃具');
       }
 	},
+	lxdhj_handle:function(){
+		var _this = this;
+		if (_this.selectlist.length > 0){
+			this.$request('post', '/lbj/dbrjly/lxdhj', _this.selectlist).then(function (res) {
+          if (res.code === 1) {
+            _this.$message.success(res.msg);
+			_this.getlist(_this.queryform);
+          } else if (res.code === 0) {
+            _this.$message.error(res.msg);
+          }
+        });
+		}else{
+			_this.$message.warning('请选择刃具');
+		}
+	},
     rjxz_handle: function () {
       var _this = this;
       if (this.selectlist.length > 0) {

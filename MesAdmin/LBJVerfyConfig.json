@@ -1,0 +1,93 @@
+[
+  {
+    "model": "ZDMesModels.LBJ.base_template_scx_oee,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "jhzxsj",
+        "colindex": 1,
+        "coltxt": "计划作息时长"
+      },
+      {
+        "colname": "zzwbqh",
+        "colindex": 2,
+        "coltxt": "班前会时长"
+      },
+      {
+        "colname": "zzwcf",
+        "colindex": 3,
+        "coltxt": "用餐时长"
+      },
+      {
+        "colname": "zzwbzxx",
+        "colindex": 4,
+        "coltxt": "休息时长"
+      },
+      {
+        "colname": "zzwsbby",
+        "colindex": 5,
+        "coltxt": "5S整理/设备保养时长"
+      },
+      {
+        "colname": "px",
+        "colindex": 6,
+        "coltxt": "培训时长"
+      },
+      {
+        "colname": "xx",
+        "colindex": 7,
+        "coltxt": "休息时长"
+      },
+      {
+        "colname": "dlsjjam",
+        "colindex": 8,
+        "coltxt": "堵料时长"
+      },
+      {
+        "colname": "dlsjwait",
+        "colindex": 9,
+        "coltxt": "待料时长"
+      },
+      {
+        "colname": "hdsj",
+        "colindex": 10,
+        "coltxt": "换刀时长"
+      },
+      {
+        "colname": "hxsj",
+        "colindex": 11,
+        "coltxt": "换型时长"
+      },
+      {
+        "colname": "gzsj",
+        "colindex": 12,
+        "coltxt": "故障时长"
+      },
+      {
+        "colname": "qttjsj",
+        "colindex": 13,
+        "coltxt": "其他停机时长"
+      },
+      {
+        "colname": "lljp",
+        "colindex": 14,
+        "coltxt": "理论节拍"
+      },
+      {
+        "colname": "oeetarget",
+        "colindex": 15,
+        "coltxt": "目标OEE"
+      }
+    ]
+  }
+]

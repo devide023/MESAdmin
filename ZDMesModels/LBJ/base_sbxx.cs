@@ -9,10 +9,11 @@ namespace ZDMesModels.LBJ
     ///</summary>
     public class base_sbxx
     {
+        public string rid { get; set; }
         /// <summary>
         /// 设备编号（资产号） 
         ///</summary>
-         public string sbbh { get; set; }
+        public string sbbh { get; set; }
         /// <summary>
         /// 设备名称 
         ///</summary>
@@ -73,6 +74,18 @@ namespace ZDMesModels.LBJ
         /// 录入时间 
         ///</summary>
          public DateTime? lrsj { get; set; }
+        /// <summary>
+        /// 设备残值率
+        /// </summary>
+        public string sbczl { get; set; }
+        /// <summary>
+        /// 设备原值
+        /// </summary>
+        public string sbyz { get; set; }
+        /// <summary>
+        /// 设备折旧
+        /// </summary>
+        public string sbzj { get; set; }
     }
 
     public class basesbxx_mapper : ClassMapper<base_sbxx>
@@ -81,6 +94,7 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.sbbh).Key(KeyType.Assigned);
             Map(t => t.sbxxbz).Column("bz");
+            Map(t => t.rid).Ignore();
             AutoMap();
         }
     }

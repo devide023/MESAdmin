@@ -144,6 +144,7 @@
     <Compile Include="LBJ\base_sbxx.cs" />
     <Compile Include="LBJ\base_gcxx.cs" />
     <Compile Include="LBJ\base_scxxx.cs" />
+    <Compile Include="LBJ\base_template_scx_oee.cs" />
     <Compile Include="LBJ\base_wlxx.cs" />
     <Compile Include="LBJ\dbrjlyform.cs" />
     <Compile Include="LBJ\dbrjly_form.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="LBJ\zxjc_djgw.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_spc_hj.cs" />
     <Compile Include="LBJ\zxjc_sbxx_ls_ylj.cs" />
+    <Compile Include="LBJ\zxjc_scx_oee.cs" />
     <Compile Include="LBJ\zxjc_smls.cs" />
     <Compile Include="LBJ\zxjc_t_dzgy_sp.cs" />
     <Compile Include="LBJ\zxjc_t_tstc.cs" />

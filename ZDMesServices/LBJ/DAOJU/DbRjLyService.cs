@@ -114,6 +114,22 @@ namespace ZDMesServices.LBJ.DAOJU
                 return "select gwh FROM base_sbxx where sbbh = :sbbh";
             }
         }
+        //变化点是否为创建状态
+        private string BHD_Sfcl_Sql
+        {
+            get
+            {
+                return "select id from lbj_qms_4mbhd where jt=:sbbh and rwzt = '00' order by cjsj desc";
+            }
+        }
+        public string Append_BHD_Sql
+        {
+            get
+            {
+                return "update lbj_qms_4mbhd set gzxx = nvl(gzxx,' ') || :gzxx|| ',' where id = :id";
+            }
+        }
+        
         public override IEnumerable<base_dbrjzx> GetList(sys_page parm, out int resultcount)
         {
             StringBuilder sql = new StringBuilder();
@@ -1114,11 +1130,33 @@ namespace ZDMesServices.LBJ.DAOJU
                             try
                             {
                                 string token = ZDToolHelper.TokenHelper.GetToken;
+                                var _u = UserInfo;
                                 var ids = entitys.Select(t => t.id).ToList();
                                 var oldlist = db.Query<base_dbrjzx>(oldsql.ToString(), new { id = ids}).ToList();
                                 var ret = db.Execute(sql.ToString(), new { id = ids }, trans);
                                 foreach (var item in oldlist)
                                 {
+                                    //变化点是否处理
+                                    var bhdsfcl = db.Query<string>(BHD_Sfcl_Sql, new { sbbh = item.sbbh });
+                                    //未处理时在原变化点累加
+                                    if (bhdsfcl.Count() > 0)
+                                    {
+                                        db.Execute(Append_BHD_Sql, new { id = bhdsfcl.First(),gzxx=item.rjlx });
+                                    }
+                                    else
+                                    {
+                                        db.Execute(Inser_BHD_Sql.ToString(), new
+                                        {
+                                            id = Guid.NewGuid().ToString().Replace("-", ""),
+                                            scx = item.scx,
+                                            cjrmc = _u.name,
+                                            djffr = _u.name,
+                                            sbbh = item.sbbh,
+                                            gzxx = $"刃具更换:{item.rjlx}",
+                                            f = "0007",
+                                            gwh = item.gwh
+                                        });
+                                    }
                                     db.Execute(Insert_RjZX_Ls_Sql.ToString(), new
                                     {
                                         gcdm = item.gcdm,
@@ -1231,6 +1269,9 @@ namespace ZDMesServices.LBJ.DAOJU
                 sql.Append(" when rjdqsm/:rjbzsm >=0.95 and rjdqsm/:rjbzsm <= 1 then 1 ");
                 sql.Append(" when rjdqsm/:rjbzsm >1 then 2 end ");
                 sql.Append(" where id = :id ");
+                //更新刃具基础表标准寿命
+                StringBuilder sqlrjxx = new StringBuilder();
+                sqlrjxx.Append("update base_rjxx set rjbzsm = :rjbzsm where id = :rjid");
                 //更新流水表
                 StringBuilder sqlls = new StringBuilder();
                 sqlls.Append("update base_dbrjzx_ls set djbzsm = :rjbzsm where id = ");
@@ -1247,6 +1288,7 @@ namespace ZDMesServices.LBJ.DAOJU
                                 foreach (var item in entitys)
                                 {
                                     db.Execute(sql.ToString(), item, trans);
+                                    db.Execute(sqlrjxx.ToString(), item, trans);
                                     db.Execute(sqlls.ToString(), item, trans);
                                 }
                                 trans.Commit();
@@ -1282,6 +1324,98 @@ namespace ZDMesServices.LBJ.DAOJU
                 using (var db = new OracleConnection(ConString))
                 {
                     return db.Query<zxjc_rjrm_ls>(sql.ToString(), new { id = id });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool LXDHJ(List<base_dbrjzx> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update base_dbrjzx set rjbzsm=(select rjbzsm FROM base_rjxx where id = base_dbrjzx.rjid),rjdqsm = 0,rjlysj=sysdate,rjrmcs=0,rjzhrmsj=null,cxz=0 where id in :id");
+                //原记录
+                StringBuilder oldsql = new StringBuilder();
+                oldsql.Append("select * from base_dbrjzx where id in :id");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                string token = ZDToolHelper.TokenHelper.GetToken;
+                                var _u = UserInfo;
+                                var ids = entitys.Select(t => t.id).ToList();
+                                var oldlist = db.Query<base_dbrjzx>(oldsql.ToString(), new { id = ids }).ToList();
+                                var ret = db.Execute(sql.ToString(), new { id = ids }, trans);
+                                foreach (var item in oldlist)
+                                {
+                                    //变化点是否处理
+                                    var bhdsfcl = db.Query<string>(BHD_Sfcl_Sql, new { sbbh = item.sbbh });
+                                    //未处理时在原变化点累加
+                                    if (bhdsfcl.Count() > 0)
+                                    {
+                                        db.Execute(Append_BHD_Sql, new { id = bhdsfcl.First(), gzxx = item.rjlx });
+                                    }
+                                    else
+                                    {
+                                        db.Execute(Inser_BHD_Sql.ToString(), new
+                                        {
+                                            id = Guid.NewGuid().ToString().Replace("-", ""),
+                                            scx = item.scx,
+                                            cjrmc = _u.name,
+                                            djffr = _u.name,
+                                            sbbh = item.sbbh,
+                                            gzxx = $"刃具角度更换:{item.rjlx}",
+                                            f = "0007",
+                                            gwh = item.gwh
+                                        });
+                                    }
+                                    db.Execute(Insert_RjZX_Ls_Sql.ToString(), new
+                                    {
+                                        gcdm = item.gcdm,
+                                        scx = item.scx,
+                                        dbh = item.dbh,
+                                        sbbh = item.sbbh,
+                                        rjlx = item.rjlx,
+                                        rjbzsm = item.rjbzsm,
+                                        rjazsm = 0,
+                                        rjdqsm = 0,
+                                        rjazjgs = item.rjazjgs,
+                                        dqjgs = item.dqjgs,
+                                        dblysj = item.dblysj,
+                                        dblyr = item.dblyr,
+                                        rjlysj = DateTime.Now,
+                                        rjlyr = item.rjlyr,
+                                        rjrmcs = 0,
+                                        rjzhrmsj = Convert.ToDateTime(null),
+                                        rjid = item.rjid,
+                                        cxz = 0,
+                                        gwh = item.gwh
+                                    }, trans);
+                                }
+                                trans.Commit();
+                                return ret > 0;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
             catch (Exception)

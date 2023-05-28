@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.UI.WebControls.WebParts;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
 using ZDMesModels.LBJ;
@@ -30,6 +31,35 @@ namespace MesAdmin.Controllers.LBJ.SbXx
                 resultcount = resultcount,
                 list = list
             });
+        }
+        [HttpPost, Route("edit")]
+        public IHttpActionResult Edit(List<base_sbxx> entitys)
+        {
+            try
+            {
+                var ret = _sbxxservice.Modify(entitys);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "数据修改成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "数据修改失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
