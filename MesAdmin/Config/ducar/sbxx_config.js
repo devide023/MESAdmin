@@ -3,10 +3,10 @@
   isbatoperate: false,
   isoperate: false,
   isfresh: false,
-  isselect: false,
+  isselect: true,
   pagefuns: {},
   fields: [{
-	  coltype: 'list',
+      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       dbprop: 'scx',
@@ -14,16 +14,24 @@
       headeralign: 'center',
       align: 'center',
       width: 80,
-	  inioptionapi: {
+      inioptionapi: {
         method: 'get',
         url: '/ducar/baseinfo/scx'
       },
-	  hideoptionval:true,
-	  options:[]
-  },{
+      hideoptionval: true,
+      options: []
+    }, {
       coltype: 'string',
       label: '设备编号',
       prop: 'sbbh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '资产编号',
+      prop: 'zcbh',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -44,8 +52,17 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width:100
+      width: 100
     }, {
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 150,
+    },{
       coltype: 'list',
       label: '设备类型',
       prop: 'sblx',
@@ -119,8 +136,24 @@
       inactivevalue: 'N',
     }, {
       coltype: 'string',
+      label: '型号',
+      prop: 'sbxh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
       label: '备注',
       prop: 'bz',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'bool',
+      label: '是否核心数据',
+      prop: 'ishxsj',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -144,7 +177,7 @@
     }
   ],
   form: {
-	  scx:'',
+    scx: '',
     sbbh: '',
     sbmc: '',
     gwh: '',
@@ -166,7 +199,7 @@
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '',
+    url: '/ducar/sbxx/edit',
     method: 'post',
     callback: function (vm, res) {},
   },

@@ -137,7 +137,7 @@ namespace ZDMesModels.Ducar
         public string bjmc { get; set; }
         public string yjscrq { get; set; }
         public string jd_lrsj { get; set; }
-        public string zhtbsj { get; set; }
+        public DateTime zhtbsj { get; set; }
         public zxjc_order_jy orderjy { get; set; }
     }
 }

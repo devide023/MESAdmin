@@ -123,7 +123,32 @@
           });
         }
       });
-    }
+    },
+	select_gwh:function(collist, val, row){
+		var pos = row.gwhs.findIndex(t=>t.value === val);
+		if(pos!==-1){
+			row.gwmc = row.gwhs[pos].label;
+		}else{
+			row.gwmc='';
+		}	
+	},
+	suggest_fn: function (vm, key, cb, row, col) {
+      if (col.prop === 'wlbm') {
+        row.username = '';
+        this.$request('get', '/ducar/baseinfo/wlbm_by_key', {
+          key: key
+        }).then(function (res) {
+          if (res.code === 1) {
+            cb(res.list);
+          }
+        });
+      }
+    },
+    select_fn: function (vm, item, row, col) {
+      if (col.prop === 'wlbm') {
+		  row.wlmc=item.label;
+      }
+    },
   },
   fields: [{
       coltype: 'list',
@@ -162,23 +187,50 @@
       options: [],
       relation: 'gwhs',
 	  width: 110,
-    },{
+	  change_fn_name: 'select_gwh'
+    },
+	{
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'left',
+	  searchable:false,
+	  width: 150,
+    },
+	{
       coltype: 'string',
       label: '物料编码',
       prop: 'wlbm',
+	  suggest: true,
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width: 100,
+	  width: 180,
+	  suggest_fn_name: 'suggest_fn',
+      select_fn_name: 'select_fn'
     },{
       coltype: 'string',
       label: '物料名称',
       prop: 'wlmc',
       overflowtooltip: true,
       sortable: true,
+	  searchable:false,
+      headeralign: 'center',
+      align: 'left',
+	  width: 250,
+    },{
+      coltype: 'list',
+      label: '料箱判断',
+      prop: 'lxpd',
+      overflowtooltip: true,
+      sortable: true,
       headeralign: 'center',
       align: 'center',
+	  options:[{label:'不校验',value:'N'},{label:'首台',value:'Y'},{label:'每台',value:'A'}],
 	  width: 100,
     },{
       coltype: 'string',

@@ -32,6 +32,7 @@ namespace ZDMesModels.Ducar
         /// 单箱数量
         /// </summary>
         public int dxsl { get; set; }
+        public string lxpd { get; set; }
         /// <summary>
         /// 前5位编码
         /// </summary>

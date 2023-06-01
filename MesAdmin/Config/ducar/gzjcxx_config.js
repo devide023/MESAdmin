@@ -111,6 +111,8 @@
         row.gwhs=[];
 		row.gwh='';
 		row.gwmc = '';
+		row.gwhbz='';
+		row.clgwmc='';
         this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
           scx: val
         }).then(function (res) {
@@ -124,6 +126,22 @@
           }
         });
     },
+	select_gwh: function (collist, val, row){
+		var pos = row.gwhs.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.gwmc = row.gwhs[pos].label;
+      } else {
+        row.gwmc = '';
+      }
+	},
+	select_clgwh:function(collist, val, row){
+		var pos = row.gwhs.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.clgwmc = row.gwhs[pos].label;
+      } else {
+        row.clgwmc = '';
+      }
+	},
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
         row.username = '';
@@ -175,7 +193,6 @@
       coltype: 'string',
       label: '故障代码',
       prop: 'faultno',
-      dbprop: 'fault_no',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -194,11 +211,22 @@
       options: [],
       width: 100,
 	  relation: 'gwhs',
-    }, {
+	  change_fn_name: 'select_gwh',
+    }, 
+	{
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 150,
+    },
+	{
       coltype: 'string',
       label: '故障名称',
       prop: 'faultname',
-      dbprop: 'fault_name',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -208,7 +236,6 @@
       coltype: 'list',
       label: '故障分类',
       prop: 'faultfl',
-      dbprop: 'fault_fl',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -242,7 +269,6 @@
       suggest: true,
       label: '机型',
       prop: 'jxno',
-      dbprop: 'jx_no',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -255,7 +281,6 @@
       coltype: 'list',
       label: '状态码',
       prop: 'statusno',
-      dbprop: 'status_no',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -266,10 +291,22 @@
       relation: 'statusno_list',
       width: 150
     }, {
-      coltype: 'string',
+      coltype: 'list',
       label: '默认处理岗位',
       prop: 'gwhbz',
-      dbprop: 'gwh_bz',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 140,
+	  relation: 'gwhs',
+	  options: [],
+	  change_fn_name: 'select_clgwh',
+    },{
+      coltype: 'string',
+      label: '处理岗位名称',
+      prop: 'clgwmc',
       overflowtooltip: true,
       searchable: true,
       sortable: true,

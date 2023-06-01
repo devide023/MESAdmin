@@ -44,6 +44,10 @@ namespace ZDMesModels.Ducar
         /// </summary>
         public string sbmc { get; set; }
         /// <summary>
+        /// 设备类型
+        /// </summary>
+        public string sblx { get; set; }
+        /// <summary>
         /// 程序号
         /// </summary>
         public string sbcxh { get; set; }
@@ -104,6 +108,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.rid).Ignore();
             Map(t => t.gwmc).Ignore();
             Map(t => t.sbmc).Ignore();
+            Map(t => t.sblx).Ignore();
             AutoMap();
         }
     }

@@ -9,7 +9,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/ducar/clfs/readxls', {
+          _this.$request('get', '/ducar/gzflxx/readxls', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -33,7 +33,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/ducar/clfs/readxls_by_replace', {
+          _this.$request('get', '/ducar/gzflxx/readxls_by_replace', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -57,7 +57,7 @@
       if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
-          _this.$request('get', '/ducar/clfs/readxls_by_zh', {
+          _this.$request('get', '/ducar/gzflxx/readxls_by_zh', {
             fileid: fid
           }).then(function (result) {
             _this.$loading().close();
@@ -98,197 +98,99 @@
     }
   ],
   pagefuns: {
-    add_handle: function () {
+	  add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
-    download_template_file: function () {
-      window.open('http://192.168.1.111:7002/template/Ducar/处理方式基础信息.xlsx?r=' + Math.random());
+	download_template_file: function () {
+      window.open('http://192.168.1.111:7002/template/Ducar/故障分类信息.xlsx');
     },
-	select_scx: function (collist, val, row) {
-        row.gwhs=[];
-		row.gwh='';
-		row.gwmc = '';
-        this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
-          scx: val
-        }).then(function (res) {
-          if (res.code === 1) {
-            row.gwhs = res.list.map(function (i) {
-              return {
-                label: i.label,
-                value: i.value
-              };
-            });
-          }
-        });
-    },
-	select_gwh: function (collist, val, row){
-		var pos = row.gwhs.findIndex(t => t.value === val);
-      if (pos !== -1) {
-        row.gwmc = row.gwhs[pos].label;
-      } else {
-        row.gwmc = '';
-      }
-	},
-    suggest_fn: function (vm, key, cb, row, col) {
-      if (col.prop === 'faultno') {
-        row.faultname = '';
-        this.$request('get', '/ducar/baseinfo/faultno_by_key', {
-          key: key
-        }).then(function (res) {
-          if (res.code === 1) {
-            cb(res.list);
-          }
-        });
-      }
-	  if(col.prop === 'faultname'){
-		  row.faultno = '';
-		  this.$request('get','/ducar/baseinfo/faultno_by_key',{key:key}).then(function(res){
-			  if(res.code === 1){
-				  cb(res.list);
-			  }
-		  });
-	  }
-    },
-    select_fn: function (vm, item, row, col) {
-      if (col.prop === 'faultno') {
-        row.faultname = item.label;
-      }
-	  if(col.prop === 'faultname'){
-		  row.faultname=item.label;
-		  row.faultno = item.value;
-	  }
-    }
   },
   fields: [{
-	  coltype: 'list',
-      label: '生产线',
-      prop: 'scx',
-      dbprop: 'scx',
-      overflowtooltip: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 80,
-	  inioptionapi: {
-        method: 'get',
-        url: '/ducar/baseinfo/scx'
-      },
-	  hideoptionval:true,
-	  options:[],
-	  change_fn_name: 'select_scx',
-  },{
-      coltype: 'list',
-      label: '岗位编码',
-      prop: 'gwh',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      width: 150,
-	  options:[],
-	  relation: 'gwhs',
-	  change_fn_name: 'select_gwh',
-    },{
       coltype: 'string',
-      label: '岗位名称',
-      prop: 'gwmc',
+      label: '大类名称',
+      prop: 'dlmc',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150,
-    },{
-      coltype: 'string',
-      suggest: true,
-      label: '故障代码',
-      prop: 'faultno',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'center',
-      suggest_fn_name: 'suggest_fn',
-      select_fn_name: 'select_fn',
-      width: 150
     }, {
       coltype: 'string',
-      label: '故障名称',
-	  suggest: true,
+      label: '中类名称',
+      prop: 'zlmc',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '小类名称',
+      prop: 'xlmc',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '故障现象',
       prop: 'faultname',
       overflowtooltip: true,
-      headeralign: 'center',
-      align: 'left',
-	  suggest_fn_name: 'suggest_fn',
-      select_fn_name: 'select_fn',
-    }, {
-      coltype: 'string',
-      label: '处理方式名称',
-      prop: 'handname',
-      dbprop: 'hand_name',
-      overflowtooltip: true,
-      sortable: true,
-      headeralign: 'center',
-      align: 'left',
-    }, {
-      coltype: 'string',
-      label: '备注',
-      prop: 'remark',
-      overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  width: 100
-    },  {
+    }, {
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 100
     }, {
       coltype: 'datetime',
       label: '录入时间',
       prop: 'lrsj',
       overflowtooltip: true,
+      searchable: true,
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
     }
   ],
   form: {
-	  scx:'',
-    gwh: '',
-    faultno: '',
-    handno: '',
-    handname: '',
-    remark: '',
+    dlmc: '',
+    zlmc: '',
+    xlmc: '',
+    faultname: '',
     lrr: '',
     lrsj: '',
-	gwhs:[],
     isdb: false,
     isedit: true
   },
   addapi: {
-    url: '/ducar/clfs/add',
+    url: '/ducar/gzflxx/add',
     method: 'post',
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '/ducar/clfs/edit',
+    url: '/ducar/gzflxx/edit',
     method: 'post',
     callback: function (vm, res) {},
   },
   delapi: {
-    url: '/ducar/clfs/del',
+    url: '/ducar/gzflxx/del',
     method: 'post',
     callback: function (vm, res) {},
   },
   queryapi: {
-    url: '/ducar/clfs/list',
+    url: '/ducar/gzflxx/list',
     method: 'post',
     callback: function (vm, res) {},
   },

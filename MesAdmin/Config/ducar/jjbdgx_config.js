@@ -3,7 +3,7 @@
   isbatoperate: false,
   isoperate: false,
   isfresh: true,
-  isselect: false,
+  isselect: true,
   batoperate: {
     export_excel: function (_this) {
       _this.$request(_this.pageconfig.queryapi.method, _this.pageconfig.queryapi.url, {
@@ -20,7 +20,31 @@
       });
     },
   },
-  pagefuns: {},
+  pagefuns: {
+    add_dbgx_handle: function () {
+      var _this = this;
+      _this.dialog_title = '机号夹具绑定';
+      _this.dialog_width = '30%';
+      _this.dialogVisible = true;
+      _this.dialog_hidefooter = true;
+      _this.dialog_viewpath = 'ducar/bdgx/jjbdgx';
+    },
+    del_bdgx_handle: function () {
+      var _this = this;
+      _this.dialog_title = '机号夹具解绑';
+      if (_this.selectlist.length > 0) {
+        _this.$request('post', '/ducar/jjgx/unbind', _this.selectlist).then(function (res) {
+          if (res.code === 1) {
+            _this.getlist(_this.queryform);
+          } else {
+            _this.$message.error(res.msg);
+          }
+        });
+      } else {
+        _this.$message.warning('请选项目');
+      }
+    }
+  },
   fields: [{
       coltype: 'string',
       label: '机号',

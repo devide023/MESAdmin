@@ -24,8 +24,19 @@ namespace ZDMesServices.Ducar.RyMgr
             {
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
-                sql.Append($"select gcdm, user_code as usercode, (select user_name FROM zxjc_ryxx where user_code = zxjc_ryxx_jn.user_code and rownum = 1) as username, jnbh, jnxx, scx, gwh, sfhg, lrr, lrsj, jnfl, jnsj, jnsld from zxjc_ryxx_jn where 1=1 ");
-                sql_cnt.Append($"select count(*) from zxjc_ryxx_jn where 1=1 ");
+                StringBuilder sql_main = new StringBuilder();
+                sql_main.Append($"select ta.gcdm, ta.user_code as usercode, tb.user_name as username, ta.jnbh, ta.jnxx, ta.scx, ta.gwh,tc.gwmc, ta.sfhg, ta.lrr, ta.lrsj, ta.jnfl, ta.jnsj, ta.jnsld from zxjc_ryxx_jn ta,zxjc_ryxx tb,base_gwzd tc  ");
+                sql_main.Append(" where ta.user_code = tb.user_code(+) ");
+                sql_main.Append(" and ta.scx = tb.scx(+) ");
+                sql_main.Append(" and ta.gwh = tc.gwh(+) ");
+                sql_main.Append(" and ta.scx = tc.scx(+) ");
+                //
+                sql.Append("select * from (");
+                sql.Append(sql_main);
+                sql.Append(" ) zxjc_ryxx_jn where 1=1 ");
+                sql_cnt.Append($"select count(*) from (");
+                sql_cnt.Append(sql_main);
+                sql_cnt.Append(" ) zxjc_ryxx_jn where 1=1 ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {

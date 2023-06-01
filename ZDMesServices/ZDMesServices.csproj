@@ -185,6 +185,7 @@
     <Compile Include="Ducar\RyMgr\DuCarRyjcService.cs" />
     <Compile Include="Ducar\RyMgr\DuCarRyjnService.cs" />
     <Compile Include="Ducar\RyMgr\DuCarRyxxService.cs" />
+    <Compile Include="Ducar\SbMgr\DuCarBindService.cs" />
     <Compile Include="Ducar\SbMgr\DuCarJjGxLsService.cs" />
     <Compile Include="Ducar\SbMgr\DuCarJjGxService.cs" />
     <Compile Include="Ducar\SbMgr\DuCarSbxxService.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Ducar\ZlMgr\DuCarDjxxService.cs" />
     <Compile Include="Ducar\ZlMgr\DuCarFxmxService.cs" />
     <Compile Include="Ducar\ZlMgr\DuCarGzclfsService.cs" />
+    <Compile Include="Ducar\ZlMgr\DuCarGzflxxService.cs" />
     <Compile Include="Ducar\ZlMgr\DuCarGzjcxxService.cs" />
     <Compile Include="LBJ\App\AppMenuService.cs" />
     <Compile Include="LBJ\App\AppRoleService.cs" />

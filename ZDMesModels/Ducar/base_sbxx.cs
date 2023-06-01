@@ -32,6 +32,7 @@ namespace ZDMesModels.Ducar
         public string ishxsj { get; set; }
         public string ljlx { get; set; }
         public string sbxh { get; set; }
+        public string zcbh { get; set; }
     }
     public class base_sbxx_mapper : ClassMapper<base_sbxx>
     {

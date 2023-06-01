@@ -187,6 +187,14 @@
           }
         });
     },
+	select_gwh: function (collist, val, row){
+		var pos = row.gwhs.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.gwmc = row.gwhs[pos].label;
+      } else {
+        row.gwmc = '';
+      }
+	},
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
         row.username = '';
@@ -250,9 +258,19 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150,
+      width: 100,
 	  options: [],
 	  relation: 'gwhs',
+	  change_fn_name: 'select_gwh',
+    },{
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'left',
+	  width:100
     }, {
       coltype: 'string',
       label: '机型',
@@ -262,7 +280,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 150
+      width: 120
     }, {
       coltype: 'string',
       label: '状态码',
@@ -280,8 +298,8 @@
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
-      align: 'center',
-      width: 300
+      align: 'left',
+      width: 200
     }, {
       coltype: 'string',
       label: '工艺描述',
@@ -289,7 +307,7 @@
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
     }, 
 	{
       coltype: 'string',
@@ -298,7 +316,7 @@
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
-      align: 'center',
+      align: 'left',
     }, 
 	{
       coltype: 'string',

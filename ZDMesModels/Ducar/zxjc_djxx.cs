@@ -31,11 +31,11 @@ namespace ZDMesModels.Ducar
         /// <summary>
         /// 机型
         /// </summary>
-        public string jx_no { get; set; }
+        public string jxno { get; set; }
         /// <summary>
         /// 状态码
         /// </summary>
-        public string status_no { get; set; }
+        public string statusno { get; set; }
         /// <summary>
         /// 点检编号
         /// </summary>
@@ -67,6 +67,8 @@ namespace ZDMesModels.Ducar
         public zxjc_djxx_mapper()
         {
             Map(t => t.gwmc).Ignore();
+            Map(t => t.jxno).Column("jx_no");
+            Map(t => t.statusno).Column("status_no");
             AutoMap();
         }
     }

@@ -66,29 +66,36 @@
       _this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://192.168.1.111:7002/template/Ducar/员工基础信息.xlsx?r='+Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/员工基础信息.xlsx?r=' + Math.random());
     },
     select_scx: function (collist, val, row) {
-        row.gwhs=[];
-		row.gwh='';
-		row.gwmc = '';
-        this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
-          scx: val
-        }).then(function (res) {
-          if (res.code === 1) {
-            row.gwhs = res.list.map(function (i) {
-              return {
-                label: i.label,
-                value: i.value
-              };
-            });
-          }
-        });
-    }
+      row.gwhs = [];
+      row.gwh = '';
+      row.gwmc = '';
+      this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
+        scx: val
+      }).then(function (res) {
+        if (res.code === 1) {
+          row.gwhs = res.list.map(function (i) {
+            return {
+              label: i.label,
+              value: i.value
+            };
+          });
+        }
+      });
+    },
+    select_gwh: function (collist, val, row) {
+      var pos = row.gwhs.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.gwmc = row.gwhs[pos].label;
+      } else {
+        row.gwmc = '';
+      }
+    },
   },
-  fields: [
-  {
-	  coltype: 'list',
+  fields: [{
+      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       dbprop: 'scx',
@@ -96,19 +103,17 @@
       headeralign: 'center',
       align: 'center',
       width: 80,
-	  inioptionapi: {
+      inioptionapi: {
         method: 'get',
         url: '/ducar/baseinfo/scx'
       },
-	  hideoptionval:true,
-	  options:[],
+      hideoptionval: true,
+      options: [],
       change_fn_name: 'select_scx',
-  },
-  {
+    }, {
       coltype: 'string',
       label: '账号',
       prop: 'usercode',
-      dbprop: 'user_code',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -118,7 +123,6 @@
       coltype: 'string',
       label: '姓名',
       prop: 'username',
-      dbprop: 'user_name',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -127,7 +131,6 @@
       coltype: 'string',
       label: '密码',
       prop: 'password',
-      dbprop: 'pass_word',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -141,7 +144,18 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  relation: 'gwhs',
+      relation: 'gwhs',
+	  change_fn_name: 'select_gwh'
+    }, {
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      searchable: false,
+      headeralign: 'center',
+      align: 'center',
+      relation: 'gwhs',
     }, {
       coltype: 'list',
       label: '性别',
@@ -174,10 +188,10 @@
         }, {
           label: '机动',
           value: '机动'
-        },{
+        }, {
           label: '线长',
           value: '线长'
-        },{
+        }, {
           label: '巡检',
           value: '巡检'
         }
@@ -277,7 +291,7 @@
     gcdm: '101',
     scx: '',
     gwh: '',
-	gwmc:'',
+    gwmc: '',
     bzxx: '白班',
     hgsg: 'Y',
     rsrq: '',
@@ -288,7 +302,7 @@
     xpmc: '',
     scbz: 'N',
     lzrq: '',
-	gwhs:[],
+    gwhs: [],
     isdb: false,
     isedit: true
   },

@@ -2,6 +2,7 @@
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -256,6 +257,24 @@ namespace ZDMesServices.Ducar.BaseInfo
             }
         }
 
+        public IEnumerable<base_wlxx> Get_WlxxByKey(string key)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select wlbm,wlmc,cpjx,wlzt,wlz FROM base_wlxx where (wlmc like :key or wlbm like :key) and rownum < 20 ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_wlxx>(sql.ToString(), new { key = "%" + key + "%" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<string> Get_Ztbm_ByJxno(string jxno)
         {
             try
@@ -273,5 +292,7 @@ namespace ZDMesServices.Ducar.BaseInfo
                 throw;
             }
         }
+
+
     }
 }

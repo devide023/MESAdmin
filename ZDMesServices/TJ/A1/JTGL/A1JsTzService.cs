@@ -34,12 +34,24 @@ namespace ZDMesServices.TJ.A1.JTGL
                 //
                 sql_read.Append($",(select count(id) FROM mes_pdm_jstz_yd where jcbh = zxjc_t_jstc.jcbh and zbid = zxjc_t_jstc.scx and ydrid = {uservice.CurrentUser.id}) as readcnt,(select istogwh from zxjc_t_jstcfp_group where zbid = zxjc_t_jstc.scx) as istogwh ");
                 StringBuilder sql_where = new StringBuilder();
+                sql.Append(" select * from ( ");
                 sql.Append($"select * from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
                 sql.Append(sql_read);
-                sql.Append(" from zxjc_t_jstc where fp_flg ='N' ) zxjc_t_jstc where readcnt=0 ");
-                sql_cnt.Append($"select count(*) from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
+                sql.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt=0 ");
+                sql.Append(" union ");
+                sql.Append($"select * from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
+                sql.Append(sql_read);
+                sql.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt > 0  and istogwh = 'Y' ");
+                sql.Append(") zxjc_t_jstc where 1=1 ");
+                //
+                sql_cnt.Append($"select count(*) from ( select * from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
                 sql_cnt.Append(sql_read);
-                sql_cnt.Append(" from zxjc_t_jstc where fp_flg ='N' ) zxjc_t_jstc where readcnt=0 ");
+                sql_cnt.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt=0 ");
+                sql_cnt.Append(" union ");
+                sql_cnt.Append(" select * from( select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj ");
+                sql_cnt.Append(sql_read);
+                sql_cnt.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt > 0  and istogwh = 'Y' ");
+                sql_cnt.Append(" ) zxjc_t_jstc  where 1=1 ");
                 //
                 sql_where.Append($" and scx in (select distinct zbid FROM zxjc_t_jstcfp_ry where usercode = '{uservice.CurrentUser.code}') ");
 

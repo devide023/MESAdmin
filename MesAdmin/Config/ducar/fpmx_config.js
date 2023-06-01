@@ -56,6 +56,16 @@
       align: 'center',
       width: 150
     },
+	{
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 150,
+    },
 {
       coltype: 'string',
       label: '机型',

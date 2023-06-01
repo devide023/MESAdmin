@@ -85,5 +85,11 @@ namespace ZDMesInterfaces.DuCar
         /// <param name="jxno"></param>
         /// <returns></returns>
         IEnumerable<string> Get_Ztbm_ByJxno(string jxno);
+        /// <summary>
+        /// 关键字获取物料信息
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<base_wlxx> Get_WlxxByKey(string key);
     }
 }

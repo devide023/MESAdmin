@@ -1147,5 +1147,52 @@
         "coltxt": "备注"
       }
     ]
+  },
+  {
+    "model": "ZDMesModels.Ducar.zxjc_fault_flxx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "dlmc",
+        "coltxt": "大类名称"
+      },
+      {
+        "colname": "zlmc",
+        "coltxt": "中类名称"
+      },
+      {
+        "colname": "xlmc",
+        "coltxt": "小类名称"
+      },
+      {
+        "colname": "xlmc",
+        "coltxt": "小类名称"
+      },
+      {
+        "colname": "faultname",
+        "coltxt": "故障名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "dlmc",
+        "colindex": 0,
+        "coltxt": "大类名称"
+      },
+      {
+        "colname": "zlmc",
+        "colindex": 1,
+        "coltxt": "中类名称"
+      },
+      {
+        "colname": "xlmc",
+        "colindex": 2,
+        "coltxt": "小类名称"
+      },
+      {
+        "colname": "faultname",
+        "colindex": 3,
+        "coltxt": "故障名称"
+      }
+    ]
   }
 ]

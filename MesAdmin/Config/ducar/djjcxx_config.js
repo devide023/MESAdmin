@@ -124,6 +124,14 @@
           }
         });
     },
+	select_gwh: function (collist, val, row){
+		var pos = row.gwhs.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.gwmc = row.gwhs[pos].label;
+      } else {
+        row.gwmc = '';
+      }
+	},
 	  suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
         row.username = '';
@@ -198,6 +206,16 @@
       align: 'center',
 	  width:100,
 	  relation: 'gwhs',
+	  change_fn_name: 'select_gwh',
+    },{
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 150,
     }, {
       coltype: 'string',
 	  suggest:true,

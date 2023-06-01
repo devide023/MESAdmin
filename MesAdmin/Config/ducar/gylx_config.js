@@ -95,8 +95,7 @@
   bat_btnlist: [{
       btntxt: '模板下载',
       fnname: 'download_template_file'
-    },
-	{
+    }, {
       btntxt: '机型复制',
       fnname: 'data_copy_handle'
     }
@@ -109,24 +108,32 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://192.168.1.111:7002/template/Ducar/工艺路线.xlsx?r='+Math.random());
+      window.open('http://192.168.1.111:7002/template/Ducar/工艺路线.xlsx?r=' + Math.random());
     },
-	select_scx: function (collist, val, row) {
-        row.gwhs=[];
-		row.gwh='';
-		row.gwmc = '';
-        this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
-          scx: val
-        }).then(function (res) {
-          if (res.code === 1) {
-            row.gwhs = res.list.map(function (i) {
-              return {
-                label: i.label,
-                value: i.value
-              };
-            });
-          }
-        });
+    select_scx: function (collist, val, row) {
+      row.gwhs = [];
+      row.gwh = '';
+      row.gwmc = '';
+      this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
+        scx: val
+      }).then(function (res) {
+        if (res.code === 1) {
+          row.gwhs = res.list.map(function (i) {
+            return {
+              label: i.label,
+              value: i.value
+            };
+          });
+        }
+      });
+    },
+    select_gwh: function (collist, val, row) {
+      var pos = row.gwhs.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.gwmc = row.gwhs[pos].label;
+      } else {
+        row.gwmc = '';
+      }
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -142,30 +149,33 @@
     },
     select_fn: function (vm, item, row, col) {
       if (col.prop === 'jxno') {
-		  row.statusno='';
+        row.statusno = '';
         this.$request('get', '/ducar/baseinfo/ztbm_by_jxno', {
           jxno: item.value
         }).then(function (res) {
           if (res.code === 1) {
-            row.statusno_list = res.list.map(function(i){
-				return {label:i,value:i};
-			});
+            row.statusno_list = res.list.map(function (i) {
+              return {
+                label: i,
+                value: i
+              };
+            });
           }
         });
       }
     },
-	data_copy_handle:function(){
-		var _this = this;
+    data_copy_handle: function () {
+      var _this = this;
       _this.dialog_title = '数据复制';
       _this.dialog_width = '55%';
       _this.dialogVisible = true;
       _this.dialog_hidefooter = true;
       _this.dialog_viewpath = 'tja1/gygl/gylx_copy';
       _this.dialog_props = {};
-	}
+    }
   },
   fields: [{
-	  coltype: 'list',
+      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       dbprop: 'scx',
@@ -173,14 +183,14 @@
       headeralign: 'center',
       align: 'center',
       width: 80,
-	  inioptionapi: {
+      inioptionapi: {
         method: 'get',
         url: '/ducar/baseinfo/scx'
       },
-	  hideoptionval:true,
-	  options:[],
-	  change_fn_name: 'select_scx',
-  },{
+      hideoptionval: true,
+      options: [],
+      change_fn_name: 'select_scx',
+    }, {
       coltype: 'string',
       label: '机型',
       prop: 'jxno',
@@ -200,8 +210,8 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  options:[],
-	  hideoptionval:true,
+      options: [],
+      hideoptionval: true,
     }, {
       coltype: 'list',
       label: '岗位编码',
@@ -210,7 +220,16 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  relation: 'gwhs',
+      relation: 'gwhs',
+      change_fn_name: 'select_gwh'
+    }, {
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
     }, {
       coltype: 'int',
       label: '装配顺序',
@@ -265,8 +284,8 @@
       overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
-	  width:120
-    },{
+      width: 120
+    }, {
       coltype: 'string',
       label: '备注',
       prop: 'bz',
@@ -293,7 +312,7 @@
     }
   ],
   form: {
-	  scx:'',
+    scx: '',
     jxno: '',
     statusno: '',
     gwh: '',
@@ -303,12 +322,12 @@
     shbz: 'Y',
     sfzp: 'Y',
     fjbh: '',
-	cfcs:0,
+    cfcs: 0,
     bz: '',
     lrr: '',
     lrsj: '',
     statusno_list: [],
-	gwhs:[],
+    gwhs: [],
     isdb: false,
     isedit: true
   },

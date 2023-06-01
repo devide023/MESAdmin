@@ -133,6 +133,15 @@
     },
 	{
       coltype: 'string',
+      label: '序号',
+	  prop: 'xh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center'
+    },
+	{
+      coltype: 'string',
       label: '状态',
 	  prop: 'orderjy',
       subprop: 'status',
@@ -164,9 +173,10 @@
       align: 'center',
 	  cellbg:'#ff4949',
 	  cellbgval:'N',
+	  width:140
     },{
       coltype: 'string',
-      label: 'BOM校验',
+      label: '订单组件校验',
 	  prop: 'orderjy',
       subprop: 'gdbomjy',
       overflowtooltip: true,
@@ -175,6 +185,7 @@
       align: 'center',
 	  cellbg:'#ff4949',
 	  cellbgval:'N',
+	  width:140
     },
 	{
       coltype: 'string',
@@ -240,6 +251,15 @@
       sortable: true,
       headeralign: 'center',
       align: 'center'
+    },
+	{
+      coltype: 'datetime',
+      label: '同步时间',
+      prop: 'zhtbsj',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center'
     }
   ],
   form: {
@@ -252,7 +272,7 @@
     callback: function (vm, res) {},
   },
   editapi: {
-    url: '',
+    url: '/ducar/zpjh/edit',
     method: 'post',
     callback: function (vm, res) {},
   },

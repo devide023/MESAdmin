@@ -213,5 +213,27 @@ namespace MesAdmin.Controllers.DuCar.BaseInfo
                 throw;
             }
         }
+
+        [HttpGet,Route("wlbm_by_key")]
+        public IHttpActionResult Get_WlxxByKey(string key)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    var list = _basesinfoservice.Get_WlxxByKey(key);
+                    return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label=t.wlmc,value=t.wlbm}) });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "查询参数为空" });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

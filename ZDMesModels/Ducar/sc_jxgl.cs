@@ -13,6 +13,7 @@ namespace ZDMesModels.Ducar
         public string username { get; set; }
         public string scx { get; set; }
         public string gwh { get; set; }
+        public string gwmc { get; set; }
         public string wtd { get; set; }
         public string khyy { get; set; }
         public string lx { get; set; }
@@ -31,6 +32,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.id).Key(KeyType.Assigned);
             Map(t => t.usercode).Column("user_code");
             Map(t => t.username).Ignore();
+            Map(t => t.gwmc).Ignore();
             AutoMap();
         }
     }

@@ -413,6 +413,7 @@
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarDjxxController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarFxMxController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarGzclfsController.cs" />
+    <Compile Include="Controllers\DuCar\ZlMgr\DuCarGzflxxController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarGzjcxxController.cs" />
     <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

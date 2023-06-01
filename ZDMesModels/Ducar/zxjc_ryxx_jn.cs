@@ -37,6 +37,7 @@ namespace ZDMesModels.Ducar
         /// 适应岗位
         /// </summary>
         public string gwh { get; set; }
+        public string gwmc { get; set; }
         /// <summary>
         /// 是否合格
         /// </summary>
@@ -73,6 +74,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.jnbh).Key(KeyType.Assigned);
             Map(t => t.usercode).Column("user_code");
             Map(t => t.username).Ignore();
+            Map(t => t.gwmc).Ignore();
             AutoMap();
         }
     }

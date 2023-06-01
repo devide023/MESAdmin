@@ -27,8 +27,18 @@ namespace ZDMesServices.Ducar.ZlMgr
             {
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
-                sql.Append($"select rowid as rid, gcdm, scx, gwh, fault_no as faultno,(select fault_name FROM zxjc_fault where fault_no =zxjc_fault_clfs.fault_no and rownum =1) as faultname, hand_no as handno, hand_name as handname, remark, lrr, lrsj from zxjc_fault_clfs where 1=1 ");
-                sql_cnt.Append($"select count(*) from zxjc_fault_clfs where 1=1 ");
+                StringBuilder sql_main = new StringBuilder();
+                sql_main.Append($"select ta.rowid as rid, ta.gcdm, ta.scx, ta.gwh, tc.gwmc, ta.fault_no as faultno,tb.fault_name as faultname, ta.hand_no as handno, ta.hand_name as handname, ta.remark, ta.lrr, ta.lrsj from zxjc_fault_clfs ta,zxjc_fault tb");
+                sql_main.Append(",base_gwzd tc where ta.fault_no = tb.fault_no(+) ");
+                sql_main.Append(" and ta.gwh = tc.gwh(+) ");
+                sql_main.Append(" and ta.scx = tc.scx(+) ");
+                sql.Append("select * from (");
+                sql.Append(sql_main);
+                sql.Append(") zxjc_fault_clfs where 1=1 ");
+                //
+                sql_cnt.Append($"select count(*) from (");
+                sql_cnt.Append(sql_main);
+                sql_cnt.Append(") zxjc_fault_clfs where 1=1 ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {

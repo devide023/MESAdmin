@@ -138,9 +138,17 @@
   {
     "tablename": "sc_jxgl",
     "xinzeng": [ "scx", "user_code", "gwh", "wtd", "khyy" ],
-    "replace": [ "scx", "user_code","gwh","wtd" ],
+    "replace": [ "scx", "user_code", "gwh", "wtd" ],
     "replacetype": 1,
     "zhonghe": [ "scx", "user_code", "gwh", "wtd" ],
-    "updatecol": [ "scx", "user_code", "gwh", "wtd", "khyy", "lx","jlje","cfje","fsrq","bz" ]
+    "updatecol": [ "scx", "user_code", "gwh", "wtd", "khyy", "lx", "jlje", "cfje", "fsrq", "bz" ]
+  },
+  {
+    "tablename": "zxjc_fault_flxx",
+    "xinzeng": [ "dlmc", "zlmc", "xlmc", "faultname" ],
+    "replace": [ "dlmc", "zlmc", "xlmc", "faultname" ],
+    "replacetype": 1,
+    "zhonghe": [ "dlmc", "zlmc", "xlmc", "faultname" ],
+    "updatecol": [ "dlmc", "zlmc", "xlmc", "faultname" ]
   }
 ]

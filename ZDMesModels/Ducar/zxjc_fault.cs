@@ -50,6 +50,7 @@ namespace ZDMesModels.Ducar
         /// 默认处理岗位(一个)
         /// </summary>
         public string gwhbz { get; set; }
+        public string clgwmc { get; set; }
         /// <summary>
         /// 备注
         /// </summary>

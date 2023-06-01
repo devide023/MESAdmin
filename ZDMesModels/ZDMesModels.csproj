@@ -104,6 +104,7 @@
     <Compile Include="Ducar\pp_zpjh.cs" />
     <Compile Include="Ducar\report_query_parm.cs" />
     <Compile Include="Ducar\sc_jxgl.cs" />
+    <Compile Include="Ducar\sys_bind_parm.cs" />
     <Compile Include="Ducar\sys_jtfp_form.cs" />
     <Compile Include="Ducar\sys_option_item.cs" />
     <Compile Include="Ducar\sys_order_jy_result.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Ducar\zxjc_djxx.cs" />
     <Compile Include="Ducar\zxjc_fault.cs" />
     <Compile Include="Ducar\zxjc_fault_clfs.cs" />
+    <Compile Include="Ducar\zxjc_fault_flxx.cs" />
     <Compile Include="Ducar\zxjc_gwzd_fxmx.cs" />
     <Compile Include="Ducar\zxjc_gylx.cs" />
     <Compile Include="Ducar\zxjc_jcgl.cs" />

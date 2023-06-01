@@ -29,6 +29,7 @@ namespace ZDMesModels.Ducar
         /// 岗位编码
         /// </summary>
         public string gwh { get; set; }
+        public string gwmc { get; set; }
         /// <summary>
         /// 机型
         /// </summary>
@@ -63,6 +64,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.djno).Key(KeyType.Assigned);
             Map(t => t.jxno).Column("jx_no");
             Map(t => t.statusno).Column("status_no");
+            Map(t => t.gwmc).Ignore();
             AutoMap();
         }
     }

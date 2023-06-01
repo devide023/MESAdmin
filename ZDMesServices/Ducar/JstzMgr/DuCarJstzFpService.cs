@@ -113,9 +113,17 @@ namespace ZDMesServices.Ducar.JstzMgr
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
                 StringBuilder mx = new StringBuilder();
-                sql.Append("select ta.gcdm, ta.scx, ta.gwh, ta.jx_no as jxno, ta.status_no as statusno, ta.bz, ta.lrr1, ta.lrsj1, ta.lrr2, ta.lrsj2, ta.jtid,ta.id");
-                sql.Append(" FROM zxjc_t_jstcfp ta,(select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl from zxjc_t_jstc) tb where ta.jtid = tb.jtid ");
-                sql_cnt.Append($"select count(*) from zxjc_t_jstcfp ta,(select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl from zxjc_t_jstc) tb where ta.jtid = tb.jtid ");
+                StringBuilder sql_main = new StringBuilder();
+                //
+                sql.Append("select ta.gcdm, ta.scx, ta.gwh,tc.gwmc, ta.jx_no as jxno, ta.status_no as statusno, ta.bz, ta.lrr1, ta.lrsj1, ta.lrr2, ta.lrsj2, ta.jtid,ta.id");
+                sql.Append(" FROM zxjc_t_jstcfp ta,(select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl from zxjc_t_jstc) tb,base_gwzd tc where ta.jtid = tb.jtid ");
+                sql.Append(" and ta.scx = tc.scx(+) ");
+                sql.Append(" and ta.gwh = tc.gwh(+) ");
+                //
+                sql_cnt.Append("select count(*) FROM zxjc_t_jstcfp ta,(select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl from zxjc_t_jstc) tb,base_gwzd tc where ta.jtid = tb.jtid ");
+                sql_cnt.Append(" and ta.scx = tc.scx(+) ");
+                sql_cnt.Append(" and ta.gwh = tc.gwh(+) ");
+                //
                 mx.Append("select jtid, jcbh, jcmc, jcms, wjlj, jwdx, scry, scpc, scsj, yxqx1, yxqx2, gcdm, fp_flg as fpflg, fp_sj as fpsj, fpr, wjfl, scx FROM zxjc_t_jstc where jtid = :jtid");
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {

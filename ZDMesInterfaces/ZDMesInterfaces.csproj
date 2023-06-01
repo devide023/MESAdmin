@@ -106,6 +106,7 @@
     <Compile Include="DuCar\IDuCarBaseInfo.cs" />
     <Compile Include="DuCar\IDuCarDjgw.cs" />
     <Compile Include="DuCar\IDuCarFault.cs" />
+    <Compile Include="DuCar\IDuCarJjGxb.cs" />
     <Compile Include="DuCar\IDuCarJstz.cs" />
     <Compile Include="DuCar\IDuCarOrder.cs" />
     <Compile Include="DuCar\IDuCarReport.cs" />

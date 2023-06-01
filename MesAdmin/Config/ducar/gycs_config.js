@@ -93,6 +93,10 @@
     },
   },
   bat_btnlist: [
+  {
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
   ],
   pagefuns: {
     add_handle: function () {
@@ -104,50 +108,58 @@
     download_template_file: function () {
       window.open('http://192.168.1.111:7002/template/Ducar/工艺参数.xlsx');
     },
-	gwh_change_handle:function(collist,val, row){
-		row.sbbh_list=[];
-		row.sbbh='';
-		this.$request('get','/a1/baseinfo/sbxx_by_gwh',{gwh:val}).then(function(res){
-			row.sbbh_list = res.list;
-		});
-	},
-	gwh_clear_handle(row,col){
-		row.sbbh='';
-	},
-	select_scx: function (collist, val, row) {
-        row.gwhs=[];
-		row.gwh='';
-		row.gwmc = '';
-        this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
-          scx: val
-        }).then(function (res) {
-          if (res.code === 1) {
-            row.gwhs = res.list.map(function (i) {
-              return {
-                label: i.label,
-                value: i.value
-              };
-            });
-          }
-        });
+    gwh_change_handle: function (collist, val, row) {
+      row.sbbh_list = [];
+      row.sbbh = '';
+      this.$request('get', '/a1/baseinfo/sbxx_by_gwh', {
+        gwh: val
+      }).then(function (res) {
+        row.sbbh_list = res.list;
+      });
     },
-	select_gwh:function(collist, val, row){
-		row.sbbh_list=[];
-		row.sbbh='';
-		this.$request('post', '/ducar/baseinfo/sbbhbygwh', {
-			scx:row.scx,
-          gwh: val
-        }).then(function(res){
-			if (res.code === 1) {
-            row.sbbh_list = res.list.map(function (i) {
-              return {
-                label: i.label,
-                value: i.value
-              };
-            });
-          }
-		});
-	},
+    gwh_clear_handle(row, col) {
+      row.sbbh = '';
+    },
+    select_scx: function (collist, val, row) {
+      row.gwhs = [];
+      row.gwh = '';
+      row.gwmc = '';
+      this.$request('get', '/ducar/baseinfo/gwzdbyscx', {
+        scx: val
+      }).then(function (res) {
+        if (res.code === 1) {
+          row.gwhs = res.list.map(function (i) {
+            return {
+              label: i.label,
+              value: i.value
+            };
+          });
+        }
+      });
+    },
+    select_gwh: function (collist, val, row) {
+      row.sbbh_list = [];
+      row.sbbh = '';
+      var pos = row.gwhs.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.gwmc = row.gwhs[pos].label;
+      } else {
+        row.gwmc = '';
+      }
+      this.$request('post', '/ducar/baseinfo/sbbhbygwh', {
+        scx: row.scx,
+        gwh: val
+      }).then(function (res) {
+        if (res.code === 1) {
+          row.sbbh_list = res.list.map(function (i) {
+            return {
+              label: i.label,
+              value: i.value
+            };
+          });
+        }
+      });
+    },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
         row.username = '';
@@ -178,7 +190,7 @@
     }
   },
   fields: [{
-	  coltype: 'list',
+      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       dbprop: 'scx',
@@ -186,14 +198,14 @@
       headeralign: 'center',
       align: 'center',
       width: 80,
-	  inioptionapi: {
+      inioptionapi: {
         method: 'get',
         url: '/ducar/baseinfo/scx'
       },
-	  hideoptionval:true,
-	  options:[],
-	  change_fn_name: 'select_scx',
-  },{
+      hideoptionval: true,
+      options: [],
+      change_fn_name: 'select_scx',
+    }, {
       coltype: 'list',
       label: '岗位编码',
       prop: 'gwh',
@@ -202,8 +214,16 @@
       headeralign: 'center',
       align: 'center',
       options: [],
-	  relation: 'gwhs',
-	  change_fn_name: 'select_gwh',
+      relation: 'gwhs',
+      change_fn_name: 'select_gwh',
+    }, {
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
     }, {
       coltype: 'string',
       label: '机型',
@@ -230,8 +250,26 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  options:[],
-	  relation:'sbbh_list'
+      options: [],
+      relation: 'sbbh_list'
+    }, {
+      coltype: 'string',
+      label: '设备名称',
+      prop: 'sbmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      searchable: false,
+      align: 'center',
+    }, {
+      coltype: 'string',
+      label: '设备类型',
+      prop: 'sblx',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      searchable: false,
+      align: 'center',
     }, {
       coltype: 'string',
       label: '程序号',
@@ -300,8 +338,8 @@
     lrr: '',
     lrsj: '',
     statusno_list: [],
-	sbbh_list:[],
-	gwhs:[],
+    sbbh_list: [],
+    gwhs: [],
     isdb: false,
     isedit: true
   },

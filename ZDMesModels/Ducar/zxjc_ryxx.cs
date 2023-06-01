@@ -33,6 +33,7 @@ namespace ZDMesModels.Ducar
         /// 岗位信息,如：OP10
         /// </summary>
         public string gwh { get; set; }
+        public string gwmc { get; set; }
         /// <summary>
         /// 班组信息（白班、中班、夜班）
         /// </summary>
@@ -78,6 +79,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.usercode).Column("user_code");
             Map(t => t.username).Column("user_name");
             Map(t => t.password).Column("pass_word");
+            Map(t => t.gwmc).Ignore();
             AutoMap();
         }
     }
