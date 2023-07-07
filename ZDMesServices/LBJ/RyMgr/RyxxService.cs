@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Dapper;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ.RyMgr;
-using ZDMesModels;
 using ZDMesModels.LBJ;
-using Dapper;
-using System.Data;
-using Oracle.ManagedDataAccess.Client;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
-using ZDMesInterfaces.LBJ;
 
 namespace ZDMesServices.LBJ.RyMgr
 {

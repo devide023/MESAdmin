@@ -92,8 +92,7 @@
       });
     },
   },
-  bat_btnlist: [
-  {
+  bat_btnlist: [{
       btntxt: '模板下载',
       fnname: 'download_template_file'
     }
@@ -159,6 +158,14 @@
           });
         }
       });
+    },
+    select_sbbh: function (collist, val, row) {
+      var pos = row.sbbh_list.findIndex(t => t.value === val);
+      if (pos !== -1) {
+        row.sbmc = row.sbbh_list[pos].label;
+      } else {
+        row.sbmc = '';
+      }
     },
     suggest_fn: function (vm, key, cb, row, col) {
       if (col.prop === 'jxno') {
@@ -251,7 +258,8 @@
       headeralign: 'center',
       align: 'center',
       options: [],
-      relation: 'sbbh_list'
+      relation: 'sbbh_list',
+      change_fn_name: 'select_sbbh',
     }, {
       coltype: 'string',
       label: '设备名称',
@@ -279,6 +287,26 @@
       headeralign: 'center',
       align: 'center',
     }, {
+      coltype: 'bool',
+      label: '是否下发程序号',
+      prop: 'iscxh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      activevalue: 'Y',
+      inactivevalue: 'N',
+    }, {
+      coltype: 'bool',
+      label: '是否核心数据',
+      prop: 'ishxsj',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      activevalue: 'Y',
+      inactivevalue: 'N',
+    }, {
       coltype: 'string',
       label: '最小值',
       prop: 'gymin',
@@ -305,7 +333,17 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }, {
+    }, 
+	{
+      coltype: 'string',
+      label: '螺钉数',
+      prop: 'parm1',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+    },	
+	{
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',

@@ -66,12 +66,11 @@
       _this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/员工基础信息.xlsx?r='+Math.random());
+      window.open('http://172.16.201.216:7002/template/A1/员工基础信息.xlsx?r=' + Math.random());
     }
   },
-  fields: [
-  {
-	  coltype: 'list',
+  fields: [{
+      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       dbprop: 'scx',
@@ -79,14 +78,13 @@
       headeralign: 'center',
       align: 'center',
       width: 80,
-	  inioptionapi: {
+      inioptionapi: {
         method: 'get',
         url: '/a1/baseinfo/scx'
       },
-	  hideoptionval:true,
-	  options:[]
-  },
-  {
+      hideoptionval: true,
+      options: []
+    }, {
       coltype: 'string',
       label: '帐号',
       prop: 'usercode',
@@ -155,15 +153,42 @@
         }, {
           label: '机动',
           value: '机动'
-        },{
+        }, {
           label: '线长',
           value: '线长'
-        },{
+        }, {
           label: '巡检',
           value: '巡检'
         }
       ],
       hideoptionval: true,
+    }, {
+      coltype: 'list',
+      label: '学历',
+      prop: 'xl',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      options: [{
+          label: '小学',
+          value: '小学'
+        }, {
+          label: '初中',
+          value: '初中'
+        }, {
+          label: '高中',
+          value: '高中'
+        }, {
+          label: '大专',
+          value: '大专'
+        }, {
+          label: '本科',
+          value: '本科'
+        }
+      ],
+	  hideoptionval:true,
+      width: 100
     }, {
       coltype: 'string',
       label: '手机号',
@@ -252,7 +277,7 @@
     }
   ],
   form: {
-	  scx:'',
+    scx: '',
     usercode: '',
     username: '',
     password: '123456',

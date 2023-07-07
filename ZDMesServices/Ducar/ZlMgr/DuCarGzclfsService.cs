@@ -28,17 +28,20 @@ namespace ZDMesServices.Ducar.ZlMgr
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
                 StringBuilder sql_main = new StringBuilder();
-                sql_main.Append($"select ta.rowid as rid, ta.gcdm, ta.scx, ta.gwh, tc.gwmc, ta.fault_no as faultno,tb.fault_name as faultname, ta.hand_no as handno, ta.hand_name as handname, ta.remark, ta.lrr, ta.lrsj from zxjc_fault_clfs ta,zxjc_fault tb");
-                sql_main.Append(",base_gwzd tc where ta.fault_no = tb.fault_no(+) ");
-                sql_main.Append(" and ta.gwh = tc.gwh(+) ");
-                sql_main.Append(" and ta.scx = tc.scx(+) ");
+                sql_main.Append("select rowid as rid, gcdm, scx, gwh, ");
+                sql_main.Append(" (select gwmc FROM base_gwzd where gwh = zxjc_fault_clfs.gwh and scx =zxjc_fault_clfs.scx and rownum = 1 ) as gwmc, fault_no as faultno,");
+                sql_main.Append(" (select fault_name FROM zxjc_fault where fault_no = zxjc_fault_clfs.fault_no and scx = zxjc_fault_clfs.scx and rownum = 1 ) as faultname,");
+                sql_main.Append(" hand_no as handno, hand_name as handname, remark, lrr, lrsj from zxjc_fault_clfs ");
+                //
                 sql.Append("select * from (");
                 sql.Append(sql_main);
                 sql.Append(") zxjc_fault_clfs where 1=1 ");
-                //
-                sql_cnt.Append($"select count(*) from (");
+                sql_cnt.Append("select count(*) from (");
                 sql_cnt.Append(sql_main);
-                sql_cnt.Append(") zxjc_fault_clfs where 1=1 ");
+                sql_cnt.Append(" ) zxjc_fault_clfs where 1=1 ");
+                //
+                StringBuilder sqlgwh = new StringBuilder();
+                sqlgwh.Append("select scx, gwh, gwmc FROM base_gwzd order by scx asc");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {
@@ -63,7 +66,12 @@ namespace ZDMesServices.Ducar.ZlMgr
                 }
                 using (var db = new OracleConnection(ConString))
                 {
+                    var gwzdlist = db.Query<base_gwzd>(sqlgwh.ToString());
                     var q = db.Query<zxjc_fault_clfs>(OraPager(sql.ToString()), parm.sqlparam);
+                    foreach (var item in q)
+                    {
+                        item.gwhs = gwzdlist.Where(t => t.scx == item.scx).Select(t=>new sys_options_list() {label=t.gwmc,value=t.gwh }).OrderBy(t => t.value).ToList();
+                    }
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
                 }
@@ -92,7 +100,55 @@ namespace ZDMesServices.Ducar.ZlMgr
                 throw;
             }
         }
+        public override bool Modify(IEnumerable<zxjc_fault_clfs> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update zxjc_fault_clfs ");
+                sql.Append(" set scx = :scx,");
+                sql.Append("        gwh = :gwh, ");
+                sql.Append("        fault_no = :faultno, ");
+                sql.Append("        hand_no = :handno, ");
+                sql.Append("        hand_name = :handname, ");
+                sql.Append("        remark = :remark ");
+                sql.Append(" where  rowid = :rid ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var item in entitys)
+                                {
+                                    db.Execute(sql.ToString(), item, trans);
+                                }
+                                trans.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public List<zxjc_fault_clfs> BatSetValue(List<zxjc_fault_clfs> list)
         {
             try

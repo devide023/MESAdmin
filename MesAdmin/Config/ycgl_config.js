@@ -1,181 +1,167 @@
 {
-    isgradequery: true,
-    isselect: false,
-    isoperate: false,
-    pagefuns: { },
-    fields: [{
-        coltype: 'list',
-        prop: 'gcdm',
-        label: '工厂',
-        headeralign: 'center',
-        align: 'center',
-        width: 80,
-        fixed: 'left',
-        inioptionapi: {
-            method: 'get',
-            url: '/lbj/baseinfo/gcxx'
-        },
-        options: []
-    },
-    {
-        coltype: 'list',
-        prop: 'scx',
-        label: '生产线',
-        headeralign: 'center',
-        align: 'center',
-        width: 100,
-        fixed: 'left',
-        overflowtooltip: true,
-        inioptionapi: {
-            method: 'get',
-            url: '/lbj/baseinfo/scx?gcdm=9902'
-        },
-        options: []
+  isgradequery: true,
+  isselect: false,
+  isoperate: false,
+  pagefuns: {},
+  fields: [{
+      coltype: 'list',
+      prop: 'scx',
+      label: '生产线',
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+      fixed: 'left',
+      overflowtooltip: true,
+      inioptionapi: {
+        method: 'get',
+        url: '/lbj/baseinfo/scx?gcdm=9902'
+      },
+      options: []
     }, {
-        coltype: 'string',
-        prop: 'bjzt',
-        label: '报警主体',
-        headeralign: 'center',
-        align: 'center',
-        width: 100,
-        fixed: 'left',
+      coltype: 'string',
+      prop: 'bjzt',
+      label: '报警主体',
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+      fixed: 'left',
     }, {
-        coltype: 'string',
-        prop: 'zlyc',
-        label: '质量异常',
-        headeralign: 'center',
-        align: 'center',
-        width: 70
+      coltype: 'string',
+      prop: 'zlyc',
+      label: '质量异常',
+      headeralign: 'center',
+      align: 'center',
+      width: 70
     }, {
-        coltype: 'datetime',
-        prop: 'zlyc_kssj',
-        label: '质量异常开始时间',
-        headeralign: 'center',
-        align: 'center',
-        width: 120,
-        overflowtooltip: true
+      coltype: 'datetime',
+      prop: 'zlyc_kssj',
+      label: '质量异常开始时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 120,
+      overflowtooltip: true
     }, {
-        coltype: 'string',
-        prop: 'wlyc',
-        label: '物料异常',
-        headeralign: 'center',
-        align: 'center',
-        width: 70
+      coltype: 'string',
+      prop: 'wlyc',
+      label: '物料异常',
+      headeralign: 'center',
+      align: 'center',
+      width: 70
     }, {
-        coltype: 'datetime',
-        prop: 'wlyc_kssj',
-        label: '物料异常开始时间',
-        headeralign: 'center',
-        align: 'center',
-        width: 120,
-        overflowtooltip: true
+      coltype: 'datetime',
+      prop: 'wlyc_kssj',
+      label: '物料异常开始时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 120,
+      overflowtooltip: true
     }, {
-        coltype: 'string',
-        prop: 'sbyc',
-        label: '设备异常',
-        headeralign: 'center',
-        align: 'center',
-        width: 70
+      coltype: 'string',
+      prop: 'sbyc',
+      label: '设备异常',
+      headeralign: 'center',
+      align: 'center',
+      width: 70
     }, {
-        coltype: 'datetime',
-        prop: 'sbyc_kssj',
-        label: '设备异常开始时间',
-        headeralign: 'center',
-        align: 'center',
-        width: 120,
-        overflowtooltip: true
+      coltype: 'datetime',
+      prop: 'sbyc_kssj',
+      label: '设备异常开始时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 120,
+      overflowtooltip: true
     }, {
-        coltype: 'string',
-        prop: 'qtyc',
-        label: '其他异常',
-        headeralign: 'center',
-        align: 'center',
-        width: 70
+      coltype: 'string',
+      prop: 'qtyc',
+      label: '其他异常',
+      headeralign: 'center',
+      align: 'center',
+      width: 70
     }, {
-        coltype: 'datetime',
-        prop: 'qtyc_kssj',
-        label: '其他异常开始时间',
-        headeralign: 'center',
-        align: 'center',
-        width: 120,
-        overflowtooltip: true
+      coltype: 'datetime',
+      prop: 'qtyc_kssj',
+      label: '其他异常开始时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 120,
+      overflowtooltip: true
     }, {
-        coltype: 'string',
-        prop: 'djyc',
-        label: '刀具异常',
-        headeralign: 'center',
-        align: 'center',
-        width: 70
+      coltype: 'string',
+      prop: 'djyc',
+      label: '刀具异常',
+      headeralign: 'center',
+      align: 'center',
+      width: 70
     }, {
-        coltype: 'datetime',
-        prop: 'djyc_kssj',
-        label: '刀具异常开始时间',
-        headeralign: 'center',
-        align: 'center',
-        width: 120,
-        overflowtooltip: true
+      coltype: 'datetime',
+      prop: 'djyc_kssj',
+      label: '刀具异常开始时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 120,
+      overflowtooltip: true
     }, {
-        coltype: 'string',
-        prop: 'jjyc',
-        label: '夹具异常',
-        headeralign: 'center',
-        align: 'center',
-        width: 70
+      coltype: 'string',
+      prop: 'jjyc',
+      label: '夹具异常',
+      headeralign: 'center',
+      align: 'center',
+      width: 70
     }, {
-        coltype: 'datetime',
-        prop: 'jjyc_kssj',
-        label: '夹具异常开始时间',
-        headeralign: 'center',
-        align: 'center',
-        width: 120,
-        overflowtooltip: true
+      coltype: 'datetime',
+      prop: 'jjyc_kssj',
+      label: '夹具异常开始时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 120,
+      overflowtooltip: true
     }, {
-        coltype: 'string',
-        prop: 'gzdm',
-        label: '故障代码',
-        headeralign: 'center',
-        align: 'center',
-        width: 70,
-        fixed: 'right'
+      coltype: 'string',
+      prop: 'gzdm',
+      label: '故障代码',
+      headeralign: 'center',
+      align: 'center',
+      width: 70,
+      fixed: 'right'
     }, {
-        coltype: 'string',
-        prop: 'gzxx',
-        label: '故障信息',
-        headeralign: 'center',
-        align: 'center',
-        width: 100,
-        fixed: 'right',
-        overflowtooltip: true,
+      coltype: 'string',
+      prop: 'gzxx',
+      label: '故障信息',
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+      fixed: 'right',
+      overflowtooltip: true,
     }, {
-        coltype: 'string',
-        prop: 'scbj',
-        label: '删除标志',
-        headeralign: 'center',
-        align: 'center',
-        width: 70,
-        fixed: 'right'
+      coltype: 'string',
+      prop: 'scbj',
+      label: '删除标志',
+      headeralign: 'center',
+      align: 'center',
+      width: 70,
+      fixed: 'right'
     }, {
-        coltype: 'string',
-        prop: 'lrr',
-        label: '录入人',
-        headeralign: 'center',
-        align: 'center',
-        width: 70,
-        fixed: 'right'
+      coltype: 'string',
+      prop: 'lrr',
+      label: '录入人',
+      headeralign: 'center',
+      align: 'center',
+      width: 70,
+      fixed: 'right'
     }, {
-        coltype: 'datetime',
-        prop: 'lrsj',
-        label: '录入时间',
-        headeralign: 'center',
-        align: 'center',
-        width: 120,
-        fixed: 'right',
-        overflowtooltip: true,
+      coltype: 'datetime',
+      prop: 'lrsj',
+      label: '录入时间',
+      headeralign: 'center',
+      align: 'center',
+      width: 120,
+      fixed: 'right',
+      overflowtooltip: true,
     }
-    ],
-    queryapi: {
-        url: '/lbj/ycgl/list',
-        method: 'post',
-        callback: function (vm, res) { }
-    }
+  ],
+  queryapi: {
+    url: '/lbj/ycgl/list',
+    method: 'post',
+    callback: function (vm, res) {}
+  }
 }

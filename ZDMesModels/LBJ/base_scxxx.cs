@@ -20,12 +20,17 @@ namespace ZDMesModels.LBJ
         /// 生产线名称
         /// </summary>
         public string scxmc { get; set; }
+        /// <summary>
+        /// 生产线子线
+        /// </summary>
+        public string scxzx { get; set; }
     }
 
     public class base_scxxx_maper : ClassMapper<base_scxxx>
     {
         public base_scxxx_maper()
         {
+            Map(t => t.scxzx).Ignore();
             AutoMap();
         }
     }

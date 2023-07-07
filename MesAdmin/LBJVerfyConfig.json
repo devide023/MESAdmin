@@ -89,5 +89,117 @@
         "coltxt": "目标OEE"
       }
     ]
+  },
+  {
+	"model": "ZDMesModels.LBJ.zxjc_base_check,ZDMesModels",
+	"requireconf":[
+	{
+        "colname": "cpxh",
+        "coltxt": "产品型号"
+      },
+	  {
+        "colname": "cpfw",
+        "coltxt": "产品方位"
+      },
+	  {
+        "colname": "jcxm",
+        "coltxt": "检测项目"
+      },
+	  {
+        "colname": "srlx",
+        "coltxt": "类型"
+      }
+	],
+	"templateconf":[
+	{
+        "colname": "cpxh",
+		"colindex": 0,
+        "coltxt": "产品型号"
+      },
+	  {
+        "colname": "cpfw",
+		"colindex": 1,
+        "coltxt": "产品方位"
+      },
+	  {
+        "colname": "th",
+		"colindex": 2,
+        "coltxt": "图号"
+      },
+	  {
+        "colname": "jcxm",
+		"colindex": 3,
+        "coltxt": "检测项目"
+      },
+	  {
+        "colname": "jcpc",
+		"colindex": 4,
+        "coltxt": "检测频次"
+      },
+	  {
+        "colname": "jcgj",
+		"colindex": 5,
+        "coltxt": "检测工具"
+      },
+	  {
+        "colname": "jcz",
+		"colindex": 6,
+        "coltxt": "检测值"
+      },
+	  {
+        "colname": "jcxx",
+		"colindex": 7,
+        "coltxt": "下限"
+      },
+	  {
+        "colname": "jcsx",
+		"colindex": 8,
+        "coltxt": "上限"
+      },
+	  {
+        "colname": "srlx",
+		"colindex": 9,
+        "coltxt": "类型"
+      },
+	  {
+        "colname": "seq",
+		"colindex": 10,
+        "coltxt": "权重"
+      }
+	]
+  },
+  {
+	 "model": "ZDMesModels.LBJ.zxjc_check_image,ZDMesModels",
+	 "requireconf":[
+	 {
+        "colname": "cpxh",
+        "coltxt": "产品类型"
+      },
+	  {
+        "colname": "cpfw",
+        "coltxt": "产品方位"
+      },
+	  {
+        "colname": "tpmc",
+        "coltxt": "图片名称"
+      },
+	 ],
+	 "templateconf":[
+	 {
+        "colname": "cpxh",
+		"colindex": 0,
+        "coltxt": "产品类型"
+      },
+	  {
+        "colname": "cpfw",
+		"colindex": 1,
+        "coltxt": "产品方位"
+      },
+	  {
+        "colname": "tpmc",
+		"colindex": 2,
+        "coltxt": "图片名称"
+      },
+	 ]
   }
 ]

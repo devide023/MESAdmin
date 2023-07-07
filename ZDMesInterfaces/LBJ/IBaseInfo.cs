@@ -24,6 +24,12 @@ namespace ZDMesInterfaces.LBJ
         /// <returns></returns>
         IEnumerable<base_scxxx> GetScxXX(string gcdm);
         /// <summary>
+        /// 生产线-子线信息
+        /// </summary>
+        /// <param name="gcdm"></param>
+        /// <returns></returns>
+        IEnumerable<base_scxxx_jj> Get_ScxXX_JJ(string scx);
+        /// <summary>
         /// 岗位信息
         /// </summary>
         /// <param name="scx"></param>

@@ -222,7 +222,28 @@
       headeralign: 'center',
       align: 'left',
       width: 200
-    }, {
+    },{
+      coltype: 'list',
+      label: '检查点',
+      prop: 'jcd',
+      overflowtooltip: true,
+      sortable: true,
+      options: [{
+          label: '班前',
+          value: '班前'
+        }, {
+          label: '班中',
+          value: '班中'
+        }, {
+          label: '班后',
+          value: '班后'
+        }
+      ],
+      hideoptionval: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    },{
       coltype: 'string',
       label: '标准值',
       prop: 'bzz',

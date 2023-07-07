@@ -91,6 +91,17 @@ namespace ZDMesModels.Ducar
         /// 备注
         /// </summary>
         public string bz { get; set; }
+        /// <summary>
+        /// 是否下发程序号
+        /// </summary>
+        public string iscxh { get; set; }
+        /// <summary>
+        /// 是否核心数据
+        /// </summary>
+        public string ishxsj { get; set; }
+
+        public List<sys_options_list> gwhs { get; set; }
+        public List<sys_options_list> sbbh_list { get; set; }
     }
     public class base_gycs_mapper : ClassMapper<base_gycs>
     {
@@ -109,6 +120,8 @@ namespace ZDMesModels.Ducar
             Map(t => t.gwmc).Ignore();
             Map(t => t.sbmc).Ignore();
             Map(t => t.sblx).Ignore();
+            Map(t => t.gwhs).Ignore();
+            Map(t => t.sbbh_list).Ignore();
             AutoMap();
         }
     }

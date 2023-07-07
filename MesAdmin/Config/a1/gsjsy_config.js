@@ -58,6 +58,16 @@
       headeralign: 'center',
       align: 'center',
     },
+	{
+      coltype: 'string',
+      label: '干检参数',
+      prop: 'gjcs',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width:100
+    },
 {
       coltype: 'string',
       label: '干检结果',

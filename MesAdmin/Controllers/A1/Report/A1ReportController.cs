@@ -189,5 +189,65 @@ namespace MesAdmin.Controllers.A1.Report
                 throw;
             }
         }
+
+        [HttpPost,Route("mjghjl")]
+        public IHttpActionResult Get_MJGHJL(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                if (parm.search_condition.Count == 0)
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "请输入查询参数"
+                    });
+                }
+                var list = _reportservice.Get_MjGhjl(parm, out resultcount);
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost, Route("jcdjjl")]
+        public IHttpActionResult Get_DJJLB(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                if (parm.search_condition.Count == 0)
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "请输入查询参数"
+                    });
+                }
+                var list = _reportservice.Get_DJJLB(parm, out resultcount);
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

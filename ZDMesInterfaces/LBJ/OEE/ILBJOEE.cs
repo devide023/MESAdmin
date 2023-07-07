@@ -27,5 +27,9 @@ namespace ZDMesInterfaces.LBJ.OEE
         /// <param name="entity"></param>
         /// <returns></returns>
         bool IsScxOEEExist(zxjc_scx_oee entity);
+        /// <summary>
+        /// 全检合格数量,不合格数
+        /// </summary>
+        dynamic Get_ProInfo(string scx, DateTime? rq);
     }
 }

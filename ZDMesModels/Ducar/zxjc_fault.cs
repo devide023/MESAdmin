@@ -70,15 +70,15 @@ namespace ZDMesModels.Ducar
         /// <summary>
         /// 岗位号多选
         /// </summary>
-        public List<string> gwhs { get; set; }
+        public List<sys_options_list> gwhs { get; set; }
         /// <summary>
         /// 机型
         /// </summary>
-        public List<string> jxnolist { get; set; }
+       // public List<string> jxnolist { get; set; }
         /// <summary>
         /// 状态
         /// </summary>
-        public List<string> statuslist { get; set; }
+        //public List<string> statuslist { get; set; }
     }
 
     public class zxjc_fault_mapper : ClassMapper<zxjc_fault>
@@ -95,10 +95,11 @@ namespace ZDMesModels.Ducar
             Map(t => t.jxno).Column("jx_no");
             Map(t => t.statusno).Column("status_no");
             Map(t => t.gwhbz).Column("gwh_bz");
+            Map(t => t.clgwmc).Ignore();
             Map(t => t.gwmc).Ignore();
             Map(t => t.rid).Ignore();
-            Map(t => t.jxnolist).Ignore();
-            Map(t => t.statuslist).Ignore();
+            //Map(t => t.jxnolist).Ignore();
+            //Map(t => t.statuslist).Ignore();
             Map(t => t.gwhs).Ignore();
             AutoMap();
         }

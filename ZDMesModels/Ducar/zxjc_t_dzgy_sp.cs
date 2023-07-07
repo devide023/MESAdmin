@@ -72,6 +72,8 @@ namespace ZDMesModels.Ducar
         /// 上传日期
         /// </summary>
         public DateTime? scsj { get; set; } = DateTime.Now;
+
+        public List<sys_options_list> gwhs { get; set; }
     }
 
     public class zxjc_t_dzgy_sp_mapper : ClassMapper<zxjc_t_dzgy_sp>
@@ -82,6 +84,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.jxno).Column("jx_no");
             Map(t => t.statusno).Column("status_no");
             Map(t => t.gwmc).Ignore();
+            Map(t => t.gwhs).Ignore();
             AutoMap();
         }
     }

@@ -14,10 +14,15 @@ namespace ZDMesModels.TJ.A1
         public string id { get; set; }=Guid.NewGuid().ToString();
         public string gcdm { get; set; } = "9100";
         public string scx { get; set; }
+        public string scxmc { get; set; }
         public string jclx { get; set; }
         public string lrr { get; set; }
         public DateTime lrsj { get; set; }=DateTime.Now;
         public string scbz { get; set; } = "N";
+        /// <summary>
+        /// 是否首末件
+        /// </summary>
+        public string issm { get; set; }
     }
 
     public class zxjc_jclx_mapper : ClassMapper<zxjc_jclx>
@@ -25,6 +30,7 @@ namespace ZDMesModels.TJ.A1
         public zxjc_jclx_mapper()
         {
             Map(t => t.id).Key(KeyType.Assigned);
+            Map(t => t.scxmc).Ignore();
             AutoMap();
         }
     }

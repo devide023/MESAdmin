@@ -11,27 +11,6 @@ namespace ZDMesModels.LBJ
         public string rid { get; set; }
         public string gcdm { get; set; } = "9902";
         public string scx { get; set; }
-        public int year
-        {
-            get
-            {
-                return rq.Year;
-            }
-        }
-        public int month
-        {
-            get
-            {
-                return rq.Month;
-            }
-        }
-        public int day
-        {
-            get
-            {
-                return rq.Day;
-            }
-        }
         /// <summary>
         /// 计划作息时间(小时)
         /// </summary>
@@ -260,6 +239,14 @@ namespace ZDMesModels.LBJ
         /// 日期
         /// </summary>
         public DateTime rq { get; set; }
+        /// <summary>
+        /// 生产线子线
+        /// </summary>
+        public string scxzx { get; set; }
+        /// <summary>
+        /// 生产线子线选项
+        /// </summary>
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class zxjc_scx_oee_mapper : ClassMapper<zxjc_scx_oee>
@@ -273,6 +260,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.oeetarget).Column("oee_target");
             Map(t => t.oeereal).Column("oee_real");
             Map(t => t.rid).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

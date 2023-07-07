@@ -1,23 +1,16 @@
 ﻿using Autofac;
 using Autofac.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
+using Autofac.Extras.DynamicProxy;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
 using ZDMesInterceptor;
-using ZDMesServices.LBJ.ImportData;
-using ZDMesInterfaces.LBJ.ImportData;
-using ZDMesServices.LBJ.CheckData;
-using ZDMesInterfaces.LBJ;
-using ZDMesServices.Common;
-using ZDMesInterfaces.Common;
 using ZDMesInterceptor.CDGC;
+using ZDMesInterceptor.LBJ;
+using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ.ImportData;
+using ZDMesServices.Common;
+using ZDMesServices.LBJ.ImportData;
 
 namespace ZDMesModules.CD
 {

@@ -121,10 +121,18 @@
   },
   {
     "tablename": "zxjc_jcjcxx",
-    "xinzeng": [ "scx", "gwh","jclx","jclb","jcyq" ],
+    "xinzeng": [ "scx", "gwh", "jclx", "jclb", "jcyq" ],
     "replace": [ "scx", "gwh", "jclx", "jclb", "jcyq" ],
     "replacetype": 1,
-    "zhonghe": [ "scx","gwh", "jclx" ],
-    "updatecol": [ "scx","gwh", "jclx","jclb","xh","jcyq","bzz","bzsx","bzxx" ]
+    "zhonghe": [ "scx", "gwh", "jclx" ],
+    "updatecol": [ "scx", "gwh", "jclx", "jclb", "xh", "jcyq", "bzz", "bzsx", "bzxx" ]
+  },
+  {
+    "tablename": "zxjc_jcsbxx",
+    "xinzeng": [ "sbbh" ],
+    "replace": [ "sbbh" ],
+    "replacetype": 1,
+    "zhonghe": [ "sbbh"],
+    "updatecol": [ "sbbh", "sblx", "sbmc", "jcid" ]
   }
 ]

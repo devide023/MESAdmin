@@ -88,14 +88,26 @@
       headeralign: 'center',
       align: 'center',
       options: [{
-          label: 'PCS直连',
-          value: 'PCS直连'
+          label: 'PCS客户端计算机',
+          value: 'PCS客户端计算机'
         }, {
-          label: 'SCADA',
-          value: 'SCADA'
+          label: 'PLC直连',
+          value: 'PLC直连'
         }, {
-          label: 'PLC',
-          value: 'PLC'
+          label: 'SCADA直连',
+          value: 'SCADA直连'
+        }, {
+          label: '不连接',
+          value: '不连接'
+        }, {
+          label: '自连接',
+          value: '自连接'
+        }, {
+          label: '主控PLC',
+          value: '主控PLC'
+        }, {
+          label: 'PCS客户端一体机',
+          value: 'PCS客户端一体机'
         }
       ],
       hideoptionval: true
@@ -158,6 +170,8 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  activevalue: 'Y',
+      inactivevalue: 'N',
     }, {
       coltype: 'string',
       label: '录入人',

@@ -22,7 +22,7 @@ namespace ZDMesServices.Ducar.WLMgr
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("update base_gwbj set scx=:scx,gwh=:gwh,wlbm=:wlbm,dxsl=:dxsl,gwpb=:gwpb,qwwbm=:qwwbm,wlsx=:wlsx,bz=:bz,jx_no=:jxno where rowid = :rid ");
+                sql.Append("update base_gwbj set scx=:scx,gwh=:gwh,lxpd=:lxpd,wlbm=:wlbm,dxsl=:dxsl,gwpb=:gwpb,wlsx=:wlsx,bz=:bz,jx_no=:jxno where rowid = :rid ");
                 using (var db = new OracleConnection(ConString))
                 {
                     try

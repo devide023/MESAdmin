@@ -13,5 +13,7 @@ namespace ZDMesModels.Ducar
     {
         public string jjh { get; set; }
         public string vin { get; set; }
+        public string scx { get; set; }
+        public string gwh { get; set; }
     }
 }

@@ -9,8 +9,6 @@ using Dapper;
 using ZDMesModels;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.DZWD
 {

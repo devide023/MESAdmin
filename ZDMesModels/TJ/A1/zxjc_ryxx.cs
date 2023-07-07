@@ -76,6 +76,10 @@ namespace ZDMesModels.TJ.A1
         /// 离职日期
         /// </summary>
         public DateTime lzrq { get; set; }
+        /// <summary>
+        /// 学历
+        /// </summary>
+        public string xl { get; set; }
     }
 
     public class zxjc_ryxx_mapper : ClassMapper<zxjc_ryxx>

@@ -24,7 +24,10 @@ namespace ZDMesServices.Ducar.JhMgr
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("update pp_zpjh set scx = :scx,xh = :xh where order_no=:order_no");
+                sql.Append("update pp_zpjh set scx = :scx,xh = :xh where replace(order_no,chr(13)||chr(10),'')=:order_no");
+                //
+                StringBuilder sqlxh = new StringBuilder();
+                sqlxh.Append("update zxjc_order_sxh set scx = :scx where replace(order_no,chr(13)||chr(10),'')=:order_no");
                 using (var db = new OracleConnection(ConString))
                 {
                     try
@@ -37,6 +40,7 @@ namespace ZDMesServices.Ducar.JhMgr
                                 foreach (var item in entitys)
                                 {
                                     db.Execute(sql.ToString(), item, trans);
+                                    db.Execute(sqlxh.ToString(), new {scx = item.scx, order_no=item.order_no}, trans);
                                 }
                                 trans.Commit();
                                 return true;
@@ -66,13 +70,13 @@ namespace ZDMesServices.Ducar.JhMgr
             try
             {
                 StringBuilder sqljy= new StringBuilder();
-                sqljy.Append("select order_no, qdjy, gdbomjy, gylxjy, kzbmjy, lbjcjjy, ptjxjy, status, jjyzbsl, sjbz, lrsj, scx from ZXJC_ORDER_JY where order_no = :orderno and rownum = 1 ");
+                sqljy.Append("select replace(order_no,chr(13)||chr(10),'') as order_no, qdjy, gdbomjy, gylxjy, kzbmjy, lbjcjjy, ptjxjy, status, jjyzbsl, sjbz, lrsj, scx from ZXJC_ORDER_JY where order_no = :orderno and rownum = 1 ");
                 //
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
                 StringBuilder sql_main = new StringBuilder();
                 sql.Append("select * from (");
-                sql_main.Append("select zpjhh, order_no, scx, xh, scddlx, scsl, scsj, jhsj, ztbm, jx, first_flag, scbz, zt,");
+                sql_main.Append("select zpjhh, replace(order_no,chr(13)||chr(10),'') as order_no, scx, xh, scddlx, scsl, scsj, jhsj, ztbm, jx, first_flag, scbz, zt,");
                 sql_main.Append("khdm, khpch, khlsh, jhh, xshh, xsbz, xssx, jtdh, yzpsl, jdcqyy, cqyy, cqyy_lrsj, jypyb,");
                 sql_main.Append("jypyb2, cpyhjg, yhph, udcg, sapzt, gc, lrsj, yjhh, yxshh, zjxxsl, bzxxsl, rksl, cksl,");
                 sql_main.Append("yksl, zjxxsl_sj, bzxxsl_sj, rksl_sj, cksl_sj, scrq, yksl_sj, shjzt, lshsc, jhlb, ");

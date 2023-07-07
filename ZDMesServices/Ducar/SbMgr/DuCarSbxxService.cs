@@ -70,7 +70,7 @@ namespace ZDMesServices.Ducar.SbMgr
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("update base_sbxx set zcbh = :zcbh,sbxh=:sbxh,sbcj=:sbcj,bz=:bz where sbbh = :sbbh");
+                sql.Append("update base_sbxx set zcbh = :zcbh,sbxh=:sbxh,ljlx=:ljlx,bz=:bz,ishxsj=:ishxsj where sbbh = :sbbh");
                 using (var db = new OracleConnection(ConString))
                 {
                     try

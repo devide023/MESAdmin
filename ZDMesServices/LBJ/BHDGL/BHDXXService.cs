@@ -1,15 +1,8 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using Dapper;
+using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZDMesInterfaces.LBJ.BHDGL;
 using ZDMesModels.LBJ;
-using Dapper;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.BHDGL
 {

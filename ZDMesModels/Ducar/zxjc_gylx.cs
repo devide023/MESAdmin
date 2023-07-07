@@ -108,6 +108,8 @@ namespace ZDMesModels.Ducar
         /// 自关联
         /// </summary>
         public zxjc_gylx zxjcgylx { get; set; }
+
+        public List<sys_options_list> gwhs { get; set; }
     }
 
     public class zxjc_gylx_mapper : ClassMapper<zxjc_gylx>
@@ -127,6 +129,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.statusno2).Ignore();
             Map(t => t.sfzp2).Ignore();
             Map(t => t.zxjcgylx).Ignore();
+            Map(t => t.gwhs).Ignore();
             AutoMap();
         }
     }

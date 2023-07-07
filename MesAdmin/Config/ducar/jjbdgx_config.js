@@ -46,6 +46,37 @@
     }
   },
   fields: [{
+      coltype: 'list',
+      label: '生产线',
+      prop: 'scx',
+      overflowtooltip: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+      inioptionapi: {
+        method: 'get',
+        url: '/ducar/baseinfo/scx'
+      },
+      hideoptionval: true,
+      options: [],
+    }, {
+      coltype: 'string',
+      label: '岗位编码',
+      prop: 'gwh',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+	  width: 100,
+    }, {
+      coltype: 'string',
+      label: '岗位名称',
+      prop: 'gwmc',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  width: 150,
+    },{
       coltype: 'string',
       label: '机号',
       prop: 'engine_no',

@@ -145,7 +145,20 @@
       sortable: true,
       headeralign: 'center',
       align: 'left',
-    }, {
+    },
+{
+      coltype: 'bool',
+      label: '是否首末件',
+      prop: 'issm',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  activevalue: 'Y',
+      inactivevalue: 'N',
+	  width:120
+    },
+	{
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',

@@ -85,7 +85,9 @@
       }).then(function (res) {
         if (res.code === 1) {
           let expdatalist = res.list;
-          _this.export_handle(_this.pageconfig.fields.filter(function(i){return ['gzty'].indexOf(i.prop) === -1;}), expdatalist);
+          _this.export_handle(_this.pageconfig.fields.filter(function (i) {
+              return ['gzty'].indexOf(i.prop) === -1;
+            }), expdatalist);
         } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
@@ -104,12 +106,23 @@
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },
-	download_template_file: function () {
-      window.open('http://192.168.1.111:7002/template/Ducar/岗位站点.xlsx?r='+Math.random());
+    download_template_file: function () {
+      window.open('http://192.168.1.111:7002/template/Ducar/岗位站点.xlsx?r=' + Math.random());
     },
+	view_khgw_info(vm,row,col){
+		var _this = this;
+      _this.dialog_title = '['+row.gwmc + ']看护岗位';
+      _this.dialog_width = '60%';
+      _this.dialogVisible = true;
+      _this.dialog_hidefooter = true;
+      _this.dialog_viewpath = 'ducar/gwzd/khgw';
+      _this.dialog_props = {
+        row: row
+      };
+	}
   },
   fields: [{
-	  coltype: 'list',
+      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       dbprop: 'scx',
@@ -117,14 +130,14 @@
       headeralign: 'center',
       align: 'center',
       width: 80,
-	  inioptionapi: {
+      inioptionapi: {
         method: 'get',
         url: '/ducar/baseinfo/scx'
       },
-	  hideoptionval:true,
-	  options:[]
-  },{
-      coltype: 'string',
+      hideoptionval: true,
+      options: []
+    }, {
+      coltype: 'list',
       label: '岗位编码',
       prop: 'gwh',
       overflowtooltip: true,
@@ -132,6 +145,12 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
+	  optionconfig:{
+		  method: 'get',
+		  url: '/ducar/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
+	  options:[],
       width: 150,
     }, {
       coltype: 'string',
@@ -142,7 +161,20 @@
       sortable: true,
       headeralign: 'center',
       align: 'left',
-    }, {
+    },
+	{
+      coltype: 'string',
+      label: '是否看护岗位',
+      prop: 'iskhgw',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  link_fn_name:'view_khgw_info',
+	  width:120
+    },
+	{
       coltype: 'list',
       label: '岗位类型',
       prop: 'gwlx',
@@ -165,7 +197,7 @@
           value: '部装'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
     }, {
       coltype: 'list',
       label: '岗位分类',
@@ -183,17 +215,96 @@
           value: '自动'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
     }, {
-      coltype: 'string',
+      coltype: 'list',
       label: '工序号',
       prop: 'workflow',
       dbprop: 'work_flow',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
+      options: [{
+          label: '托盘绑定',
+          value: '1'
+        }, {
+          label: '扭力',
+          value: '2'
+        }, {
+          label: '耐压仪',
+          value: '3'
+        }, {
+          label: '辅料绑定',
+          value: '4'
+        }
+      ],
       headeralign: 'center',
       align: 'center',
+    }, {
+      coltype: 'list',
+      label: '首末岗位',
+      prop: 'smgw',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      options: [{
+          label: '首岗位',
+          value: 'S'
+        }, {
+          label: '末岗位',
+          value: 'M'
+        }, {
+          label: '下线岗位',
+          value: 'X'
+        }
+      ],
+      headeralign: 'center',
+      align: 'center',
+    }, {
+      coltype: 'bool',
+      label: '换产校验',
+      prop: 'ishcjy',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      activevalue: 'Y',
+      inactivevalue: 'N',
+    },{
+      coltype: 'bool',
+      label: '解绑产品',
+      prop: 'jbfdj',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      activevalue: 'Y',
+      inactivevalue: 'N',
+    }, {
+      coltype: 'list',
+      label: '自动合格',
+      prop: 'iszdhg',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      options: [{
+          label: '自动合格',
+          value: 1
+        }, {
+          label: '进站即合格',
+          value: 2
+        }, {
+          label: '全部螺栓拧紧即合格',
+          value: '全部螺栓拧紧即合格'
+        }, {
+          label: '测试合格即合格',
+          value: '全部螺栓拧紧即合格'
+        }
+      ]
     }, {
       coltype: 'bool',
       label: '故障停用',
@@ -208,7 +319,7 @@
     }, {
       coltype: 'string',
       label: 'PCSIP',
-      prop: 'pcsip',
+      prop: 'ip',
       overflowtooltip: true,
       searchable: true,
       sortable: true,
@@ -244,7 +355,7 @@
     }
   ],
   form: {
-    gcdm: '9100',
+    gcdm: '101',
     scx: '',
     gwh: '',
     gwmc: '',

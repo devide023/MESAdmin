@@ -20,6 +20,16 @@ namespace MesAdmin.Controllers.DuCar.ZlMgr
             _requireverfify = requireverfify;
             _importservice = importservice;
         }
+        [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
+        public override IHttpActionResult Add(List<zxjc_fault_clfs> entitys)
+        {
+            return base.Add(entitys);
+        }
+        [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
+        public override IHttpActionResult Edit(List<zxjc_fault_clfs> entitys)
+        {
+            return base.Edit(entitys);
+        }
         [TemplateVerify("ZDMesModels.Ducar.zxjc_fault_clfs,ZDMesModels")]
         [AtachValue(typeof(IBatAtachValue<zxjc_fault_clfs>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)

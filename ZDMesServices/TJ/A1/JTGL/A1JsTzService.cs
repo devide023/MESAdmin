@@ -43,6 +43,7 @@ namespace ZDMesServices.TJ.A1.JTGL
                 sql.Append(sql_read);
                 sql.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt > 0  and istogwh = 'Y' ");
                 sql.Append(") zxjc_t_jstc where 1=1 ");
+                sql.Append(" and (select count(jcbh) from zxjc_t_jstcfp_yfp where jcbh = zxjc_t_jstc.jcbh) = 0 ");
                 //
                 sql_cnt.Append($"select count(*) from ( select * from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
                 sql_cnt.Append(sql_read);
@@ -52,6 +53,7 @@ namespace ZDMesServices.TJ.A1.JTGL
                 sql_cnt.Append(sql_read);
                 sql_cnt.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt > 0  and istogwh = 'Y' ");
                 sql_cnt.Append(" ) zxjc_t_jstc  where 1=1 ");
+                sql_cnt.Append(" and (select count(jcbh) from zxjc_t_jstcfp_yfp where jcbh = zxjc_t_jstc.jcbh) = 0 ");
                 //
                 sql_where.Append($" and scx in (select distinct zbid FROM zxjc_t_jstcfp_ry where usercode = '{uservice.CurrentUser.code}') ");
 
@@ -374,6 +376,42 @@ namespace ZDMesServices.TJ.A1.JTGL
             {
                 StringBuilder sql = new StringBuilder();
                 sql.Append("delete from ZXJC_T_JSTC_QT where jcbh = :jcbh ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Execute(sql.ToString(), new { jcbh = jtbh }) > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Set_JtFpYfpGwh(string jtbh)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("insert into zxjc_t_jstcfp_yfp(jcbh,lrr) values (:jcbh,:lrr) ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Execute(sql.ToString(), new { jcbh = jtbh,lrr = uservice.CurrentUser.name }) > 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UnSet_JtFpYfpGwh(string jtbh)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("delete from zxjc_t_jstcfp_yfp where jcbh = :jcbh ");
                 using (var db = new OracleConnection(ConString))
                 {
                     return db.Execute(sql.ToString(), new { jcbh = jtbh }) > 0;

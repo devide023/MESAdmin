@@ -1017,5 +1017,48 @@
         "coltxt": "标准下限"
       }
     ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.zxjc_jcsbxx,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "sbbh",
+        "coltxt": "资产编号"
+      },
+      {
+        "colname": "sbmc",
+        "coltxt": "设备名称"
+      },
+      {
+        "colname": "sblx",
+        "coltxt": "设备类型"
+      },
+      {
+        "colname": "jcid",
+        "coltxt": "检测表单"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "sbbh",
+        "colindex": 0,
+        "coltxt": "资产编号"
+      },
+      {
+        "colname": "sbmc",
+        "colindex": 1,
+        "coltxt": "设备名称"
+      },
+      {
+        "colname": "sblx",
+        "colindex": 2,
+        "coltxt": "设备类型"
+      },
+      {
+        "colname": "jcid",
+        "colindex": 3,
+        "coltxt": "检测表单"
+      }
+    ]
   }
 ]

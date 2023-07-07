@@ -319,9 +319,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\A1\App\A1AppController.cs" />
     <Compile Include="Controllers\A1\BaseInfo\A1BaseInfoController.cs" />
     <Compile Include="Controllers\A1\CheckMgr\A1JcjcxxController.cs" />
     <Compile Include="Controllers\A1\CheckMgr\A1JclxController.cs" />
+    <Compile Include="Controllers\A1\CheckMgr\A1JcSbxxController.cs" />
     <Compile Include="Controllers\A1\GWZD\A1GWZDController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1DZGYController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1GWJXController.cs" />
@@ -407,8 +409,10 @@
     <Compile Include="Controllers\DuCar\SbMgr\DuCarJjbdlogController.cs" />
     <Compile Include="Controllers\DuCar\SbMgr\DuCarSbxxController.cs" />
     <Compile Include="Controllers\DuCar\UpLoad\DucarUpLoadController.cs" />
+    <Compile Include="Controllers\DuCar\WlMgr\DuCarFCLSController.cs" />
     <Compile Include="Controllers\DuCar\WlMgr\DuCarFLXXController.cs" />
     <Compile Include="Controllers\DuCar\WlMgr\DuCarGWBJController.cs" />
+    <Compile Include="Controllers\DuCar\WlMgr\DuCarWLJYController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarDjJlController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarDjxxController.cs" />
     <Compile Include="Controllers\DuCar\ZlMgr\DuCarFxMxController.cs" />
@@ -457,6 +461,9 @@
     <Compile Include="Controllers\LBJ\SJCJ\SJCJController.cs" />
     <Compile Include="Controllers\LBJ\SMJJK\SMJJKController.cs" />
     <Compile Include="Controllers\LBJ\YCGL\YCGLController.cs" />
+    <Compile Include="Controllers\LBJ\ZLGL\LBJCheckBillController.cs" />
+    <Compile Include="Controllers\LBJ\ZLGL\LBJCheckImgController.cs" />
+    <Compile Include="Controllers\LBJ\ZLGL\LBJProductCheckController.cs" />
     <Compile Include="Controllers\TJ\BaseInfo\TJJCXXController.cs" />
     <Compile Include="Controllers\TJ\GYGL\JRGYController.cs" />
     <Compile Include="Filters\ApiExceptionAttribute.cs" />
@@ -671,12 +678,16 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
@@ -759,6 +770,7 @@
     <Content Include="Template\DuCar\点检基础信息.xlsx" />
     <Content Include="Template\DuCar\电子工艺.xlsx" />
     <Content Include="Template\DuCar\工艺视频.xlsx" />
+    <Content Include="Template\LBJ\检测项基础数据.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

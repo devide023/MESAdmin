@@ -89,10 +89,26 @@
   },
   {
     "tablename": "base_template_scx_oee",
-    "xinzeng": [ "gcdm","scx" ],
+    "xinzeng": [ "gcdm", "scx" ],
     "replace": [ "gcdm", "scx" ],
     "replacetype": 1,
     "zhonghe": [ "gcdm", "scx" ],
     "updatecol": [ "jhzxsj", "zzwbqh", "zzwcf", "zzwbzxx", "zzwsbby", "px", "xx", "dlsj_jam", "dlsj_wait", "hdsj", "hxsj", "gzsj", "qttjsj", "lljp", "oee_target" ]
+  },
+  {
+    "tablename": "zxjc_base_check",
+    "xinzeng": [ "cpxh", "jcxm", "cpfw", "th" ],
+    "replace": [ "cpxh", "jcxm", "cpfw", "th" ],
+    "replacetype": 1,
+    "zhonghe": [ "cpxh", "jcxm", "cpfw", "th" ],
+    "updatecol": [ "cpxh", "cpfw", "th", "jcxm", "jcpc", "jcgj", "jcz", "jcxx", "jcsx", "srlx", "seq" ]
+  },
+  {
+    "tablename": "zxjc_check_image",
+    "xinzeng": [ "cpxh", "cpfw", "tpmc" ],
+    "replace": [ "cpxh", "cpfw", "tpmc" ],
+    "replacetype": 1,
+    "zhonghe": [ "cpxh", "cpfw", "tpmc" ],
+    "updatecol": [ "cpxh", "cpfw", "tpmc" ]
   }
 ]

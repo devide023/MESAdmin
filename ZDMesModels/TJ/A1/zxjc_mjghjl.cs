@@ -28,5 +28,9 @@ namespace ZDMesModels.TJ.A1
         public DateTime mjghsj { get; set; }
         public string lrr { get; set; }
         public DateTime lrsj { get; set; }
+        /// <summary>
+        /// 开始还是结束
+        /// </summary>
+        public string start_or_end { get; set; }
     }
 }

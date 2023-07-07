@@ -65,6 +65,8 @@ namespace ZDMesModels.Ducar
         /// 技能熟练度
         /// </summary>
         public int jnsld { get; set; } = 1;
+
+        public List<sys_options_list> gwhs { get; set; }
     }
 
     public class zxjc_ryxx_jn_mapper : ClassMapper<zxjc_ryxx_jn>
@@ -75,6 +77,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.usercode).Column("user_code");
             Map(t => t.username).Ignore();
             Map(t => t.gwmc).Ignore();
+            Map(t => t.gwhs).Ignore();
             AutoMap();
         }
     }

@@ -194,15 +194,24 @@ namespace ZDMesServices.Common
                                         }
                                         else if (sxlx == typeof(Int32?) || sxlx == typeof(Int32))
                                         {
-                                            p.SetValue(obj, Convert.ToInt32(val));
+                                            if (!string.IsNullOrEmpty(val.ToString()))
+                                            {
+                                                p.SetValue(obj, Convert.ToInt32(val));
+                                            }
                                         }
                                         else if (sxlx == typeof(Decimal?) || sxlx == typeof(Decimal))
                                         {
-                                            p.SetValue(obj, Convert.ToDecimal(val));
+                                            if (!string.IsNullOrEmpty(val.ToString()))
+                                            {
+                                                p.SetValue(obj, Convert.ToDecimal(val));
+                                            }
                                         }
                                         else if (sxlx == typeof(Double?) || sxlx == typeof(Double))
                                         {
-                                            p.SetValue(obj, Convert.ToDouble(val));
+                                            if (!string.IsNullOrEmpty(val.ToString()))
+                                            {
+                                                p.SetValue(obj, Convert.ToDouble(val));
+                                            }
                                         }
                                         //switch (sxlx)
                                         //{

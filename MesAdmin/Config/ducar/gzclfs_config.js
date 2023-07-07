@@ -108,6 +108,7 @@
       window.open('http://192.168.1.111:7002/template/Ducar/处理方式基础信息.xlsx?r=' + Math.random());
     },
 	select_scx: function (collist, val, row) {
+		var _this = this;
         row.gwhs=[];
 		row.gwh='';
 		row.gwmc = '';
@@ -115,12 +116,7 @@
           scx: val
         }).then(function (res) {
           if (res.code === 1) {
-            row.gwhs = res.list.map(function (i) {
-              return {
-                label: i.label,
-                value: i.value
-              };
-            });
+            row.gwhs = res.list;
           }
         });
     },
@@ -188,6 +184,11 @@
       align: 'center',
       width: 150,
 	  options:[],
+	  optionconfig:{
+		  method: 'get',
+		  url: '/ducar/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
 	  relation: 'gwhs',
 	  change_fn_name: 'select_gwh',
     },{
@@ -221,11 +222,18 @@
       align: 'left',
 	  suggest_fn_name: 'suggest_fn',
       select_fn_name: 'select_fn',
+    },{
+      coltype: 'string',
+      label: '处理编码',
+      prop: 'handno',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
     }, {
       coltype: 'string',
       label: '处理方式名称',
       prop: 'handname',
-      dbprop: 'hand_name',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',

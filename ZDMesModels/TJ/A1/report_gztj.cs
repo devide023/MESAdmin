@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZDMesModels.TJ.A1
 {
+    /// <summary>
+    /// 故障统计
+    /// </summary>
     public class report_gztj
     {
         /// <summary>

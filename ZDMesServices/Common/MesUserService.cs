@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZDMesInterfaces.Common;
-using ZDMesModels;
-using Dapper;
+﻿using Dapper;
 using DapperExtensions;
 using DapperExtensions.Predicate;
 using Newtonsoft.Json;
-using System.Web;
 using Oracle.ManagedDataAccess.Client;
-using ZDMesInterceptor.LBJ;
-using Autofac.Extras.DynamicProxy;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using ZDMesInterfaces.Common;
+using ZDMesModels;
 
 namespace ZDMesServices.Common
 {

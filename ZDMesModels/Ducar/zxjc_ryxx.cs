@@ -70,6 +70,7 @@ namespace ZDMesModels.Ducar
         /// 离入职信息，离职的账户无效
         /// </summary>
         public string scbz { get; set; } = "N";
+        public List<sys_options_list> gwhs { get; set; }
     }
     public class zxjc_ryxx_mapper : ClassMapper<zxjc_ryxx>
     {
@@ -80,6 +81,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.username).Column("user_name");
             Map(t => t.password).Column("pass_word");
             Map(t => t.gwmc).Ignore();
+            Map(t => t.gwhs).Ignore();
             AutoMap();
         }
     }

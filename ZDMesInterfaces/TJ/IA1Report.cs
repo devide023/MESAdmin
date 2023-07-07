@@ -8,6 +8,9 @@ using ZDMesModels.TJ.A1;
 
 namespace ZDMesInterfaces.TJ
 {
+    /// <summary>
+    /// 无纸化报表接口
+    /// </summary>
     public interface IA1Report
     {
         /// <summary>
@@ -45,6 +48,19 @@ namespace ZDMesInterfaces.TJ
         /// <param name="resultcount"></param>
         /// <returns></returns>
         IEnumerable<report_jcmx> Get_JCMX(sys_page parm, out int resultcount);
-
+        /// <summary>
+        /// 毛巾更换记录
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <param name="resultcount"></param>
+        /// <returns></returns>
+        IEnumerable<report_mjghjl> Get_MjGhjl(sys_page parm, out int resultcount);
+        /// <summary>
+        /// 点检记录表
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <param name="resultcount"></param>
+        /// <returns></returns>
+        IEnumerable<report_djjl> Get_DJJLB(sys_page parm, out int resultcount);
     }
 }

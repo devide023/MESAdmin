@@ -19,7 +19,17 @@
           val: 'Y'
         }
       ]
-    },
+    }, {
+      label: '设置已分配',
+      fnname: 'set_jstc_yfp',
+      btntype: 'text',
+      condition: [{
+          field: 'istogwh',
+          oper: '=',
+          val: 'Y'
+        }
+      ]
+    }
   ],
   batoperate: {
     export_excel: function (_this) {
@@ -63,6 +73,23 @@
     },
     dialog_save_handle: function (vm) {
       console.log(vm)
+    },
+    set_jstc_yfp(row) {
+		var _this = this;
+      this.$confirm('你确定要设置该通知为已分配状态?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+		  _this.$request('get','/a1/jtgl/set_jstz_yfpgwh',{jcbh:row.jcbh}).then(function(res){
+			 if(res.code ===1){
+				 _this.$message.success(res.msg);
+				 _this.getlist(_this.queryform);
+			 }else{
+				 _this.$message.error(res.msg);
+			 }
+		  });
+	  }).catch(() => {});
     }
   },
   fields: [{

@@ -47,7 +47,7 @@ namespace MesAdmin.Controllers.DuCar.SbMgr
             {
                 foreach (var item in entitys)
                 {
-                    var ret = _jjgxbs.UnbindJjGxb(new sys_bind_parm() {jjh = item.jjh,vin=item.engine_no});
+                    var ret = _jjgxbs.UnbindJjGxb(new sys_bind_parm() {jjh = item.jjh,vin=item.engine_no,scx=item.scx,gwh=item.gwh});
                 }
                 return Json(new { code = 1, msg = "ok" });
             }

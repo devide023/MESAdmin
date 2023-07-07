@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZDMesInterfaces.LBJ.SBWB;
-using ZDMesModels.LBJ;
-using Dapper;
+﻿using Dapper;
 using DapperExtensions;
 using DapperExtensions.Predicate;
-using System.Data;
 using Oracle.ManagedDataAccess.Client;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using ZDMesInterfaces.LBJ.SBWB;
+using ZDMesModels.LBJ;
 
 namespace ZDMesServices.LBJ.SBWB
 {

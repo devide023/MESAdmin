@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ZDMesModels;
 using ZDMesModels.Ducar;
-using ZDMesModels.TJ.A1;
 
 namespace ZDMesServices.Ducar.GyMgr
 {
@@ -32,6 +31,9 @@ namespace ZDMesServices.Ducar.GyMgr
                 sql_cnt.Append($"select count(*) from (");
                 sql_cnt.Append(sql_main);
                 sql_cnt.Append(" ) zxjc_gylx where 1=1 ");
+                //
+                StringBuilder sqlgwh = new StringBuilder();
+                sqlgwh.Append("select scx, gwh, gwmc FROM base_gwzd order by scx asc");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {
@@ -53,7 +55,12 @@ namespace ZDMesServices.Ducar.GyMgr
 
                 using (var db = new OracleConnection(ConString))
                 {
+                    var gwzdlist = db.Query<base_gwzd>(sqlgwh.ToString());
                     var q = db.Query<zxjc_gylx>(OraPager(sql.ToString()), parm.sqlparam);
+                    foreach (var item in q)
+                    {
+                        item.gwhs = gwzdlist.Where(t => t.scx == item.scx).Select(t => new sys_options_list() { label = t.gwmc, value = t.gwh }).OrderBy(t => t.value).ToList();
+                    }
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
                 }

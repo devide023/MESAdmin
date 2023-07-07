@@ -360,10 +360,6 @@
       {
         "colname": "sbbh",
         "coltxt": "设备编码"
-      },
-      {
-        "colname": "sbcxh",
-        "coltxt": "程序号"
       }
     ],
     "templateconf": [

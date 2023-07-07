@@ -1,18 +1,14 @@
-﻿using System;
+﻿using Dapper;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZDMesInterfaces.LBJ.DaoJu;
+using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.LBJ;
-using Oracle.ManagedDataAccess.Client;
-using Dapper;
-using ZDMesInterfaces.Common;
-using ZDMesInterfaces.LBJ.ImportData;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.DAOJU
 {

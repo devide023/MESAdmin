@@ -59,6 +59,19 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        [HttpGet, Route("scxzx")]
+        public IHttpActionResult ScxZX(string scx)
+        {
+            try
+            {
+                var list = _baseinfo.Get_ScxXX_JJ(scx).Select(t => new { label = t.scxmc, value = t.scxzx });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         [HttpGet,Route("gwh")]
         public IHttpActionResult GwhByScx(string scx)
         {

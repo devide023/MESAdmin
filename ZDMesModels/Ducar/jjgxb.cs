@@ -21,5 +21,8 @@ namespace ZDMesModels.Ducar
         public string zpjhh { get; set; }
         public string jx_no { get; set; }
         public string twotqm { get; set; }
+        public string scx { get; set; }
+        public string gwh { get; set; }
+        public string gwmc { get; set; }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZDMesModels.TJ.A1
 {
+    /// <summary>
+    /// 检测明细
+    /// </summary>
     public class report_jcmx
     {
         public int rowno { get; set; }

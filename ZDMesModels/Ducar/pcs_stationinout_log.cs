@@ -26,5 +26,7 @@ namespace ZDMesModels.Ducar
         public string scx { get; set; }
         public string gcdm { get; set; }
         public string sbbm { get; set; }
+        public string requestbody { get; set; }
+        public string responsebody { get; set; }
     }
 }

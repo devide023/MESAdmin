@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 using ZDMesInterfaces.DuCar;
 using ZDMesModels;
 using ZDMesModels.Ducar;
+using ZDMesServices.Common;
 
 namespace ZDMesServices.Ducar.SbMgr
 {
     public class DuCarBindService : OracleBaseFixture, IDuCarJjGxb
     {
+        private UserUtilService _user;
         public DuCarBindService(string constr) : base(constr)
         {
+            _user = new UserUtilService(constr);
         }
 
         public sys_result BindJjGxb(sys_bind_parm parm)
@@ -25,7 +28,8 @@ namespace ZDMesServices.Ducar.SbMgr
                 string msg = string.Empty;
                 DynamicParameters p = new DynamicParameters();
                 p.Add("arg_jjh", parm.jjh, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-                p.Add("arg_fdj", parm.jjh, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                p.Add("arg_fdj", parm.vin, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                p.Add("arg_user", _user.CurrentUser.name, System.Data.DbType.String, System.Data.ParameterDirection.Input);
                 p.Add("arg_retn", rtn, System.Data.DbType.String, System.Data.ParameterDirection.Output);
                 p.Add("arg_mess", msg, System.Data.DbType.String, System.Data.ParameterDirection.Output);
                 using (var db = new OracleConnection(ConString))
@@ -59,7 +63,10 @@ namespace ZDMesServices.Ducar.SbMgr
                 string msg = string.Empty;
                 DynamicParameters p = new DynamicParameters();
                 p.Add("arg_jjh", parm.jjh, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-                p.Add("arg_fdj", parm.jjh, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                p.Add("arg_fdj", parm.vin, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                p.Add("arg_scx", parm.scx, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                p.Add("arg_gwh", parm.gwh, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                p.Add("arg_user", _user.CurrentUser.name, System.Data.DbType.String, System.Data.ParameterDirection.Input);
                 p.Add("arg_retn", rtn, System.Data.DbType.String, System.Data.ParameterDirection.Output);
                 p.Add("arg_mess", msg, System.Data.DbType.String, System.Data.ParameterDirection.Output);
                 using (var db = new OracleConnection(ConString))

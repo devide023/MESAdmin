@@ -12,8 +12,6 @@ using ZDMesModels;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.BaseInfo
 {
@@ -533,6 +531,25 @@ namespace ZDMesServices.LBJ.BaseInfo
                         return new List<base_rjxx>();
                     }
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_scxxx_jj> Get_ScxXX_JJ(string scx)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select scx, scxmc, scxzx, scxzxmc FROM base_scxxx_jj where scx=:scx and scxzx is not null");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_scxxx_jj>(sql.ToString(), new { scx = scx});
+                }
+
             }
             catch (Exception)
             {

@@ -25,6 +25,15 @@
       width: 120
     }, {
       coltype: 'string',
+      label: '设备编码',
+      prop: 'sbbm',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    }, {
+      coltype: 'string',
       label: '进出站标志',
       prop: 'inout',
       overflowtooltip: true,

@@ -221,7 +221,7 @@
   ],
   form: {
     scx: '',
-    jhzxsj: 480,
+    jhzxsj: 1440,
     zzwbqh: 15,
     zzwcf: 30,
     zzwbzxx: 60,

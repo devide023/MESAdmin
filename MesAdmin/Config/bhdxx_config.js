@@ -12,19 +12,6 @@
     },
   },
   fields: [{
-      coltype: 'list',
-      prop: 'gcdm',
-      label: '工厂',
-      headeralign: 'center',
-      align: 'center',
-      width: 80,
-      fixed: 'left',
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx'
-      },
-      options: []
-    }, {
       coltype: 'string',
       prop: 'bhdbh',
       label: '变化点编号',

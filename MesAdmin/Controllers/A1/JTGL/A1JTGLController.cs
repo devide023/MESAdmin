@@ -30,7 +30,41 @@ namespace MesAdmin.Controllers.A1.JTGL
             _jtfpztservice = jtfpztservice;
         }
         /// <summary>
-        /// 设置技通已分配状态
+        /// 设置技通已分配到岗位
+        /// </summary>
+        /// <param name="jcbh"></param>
+        /// <returns></returns>
+        [HttpGet, Route("set_jstz_yfpgwh")]
+        public IHttpActionResult Set_Jstz_YfpGwh(string jcbh)
+        {
+            try
+            {
+                var ret = _jtfpztservice.Set_JtFpYfpGwh(jcbh);
+                if (ret)
+                {
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "设置成功"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "设置失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
+        /// 设置技通已分配状态(技通管理人员功能)
         /// </summary>
         /// <returns></returns>
         [HttpGet,Route("set_jstz_fp")]

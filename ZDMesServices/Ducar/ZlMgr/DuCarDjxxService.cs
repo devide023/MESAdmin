@@ -37,6 +37,10 @@ namespace ZDMesServices.Ducar.ZlMgr
                 sql_cnt.Append(sql_main);
                 sql_cnt.Append(" ) zxjc_djgw where 1=1 ");
 
+                //
+                StringBuilder sqlgwh = new StringBuilder();
+                sqlgwh.Append("select scx, gwh, gwmc FROM base_gwzd order by scx asc");
+
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {
                     sql.Append(" and " + parm.sqlexp);
@@ -57,7 +61,12 @@ namespace ZDMesServices.Ducar.ZlMgr
 
                 using (var db = new OracleConnection(ConString))
                 {
+                    var gwzdlist = db.Query<base_gwzd>(sqlgwh.ToString());
                     var q = db.Query<zxjc_djgw>(OraPager(sql.ToString()), parm.sqlparam);
+                    foreach (var item in q)
+                    {
+                        item.gwhs = gwzdlist.Where(t => t.scx == item.scx).Select(t => new sys_options_list() { label = t.gwmc, value = t.gwh }).OrderBy(t => t.value).ToList();
+                    }
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
                 }

@@ -69,7 +69,7 @@ namespace ZDMesModels.Ducar
         /// <summary>
         /// 看护岗位
         /// </summary>
-        public string khgw { get; set; }
+        public string iskhgw { get; set; }
         /// <summary>
         /// 返修岗位号
         /// </summary>
@@ -78,6 +78,28 @@ namespace ZDMesModels.Ducar
         /// 当前机型平台
         /// </summary>
         public string dqjx { get; set; }
+        /// <summary>
+        /// 工序 1：托盘绑定 2：扭力 3：耐压仪 4：辅料绑定
+        /// </summary>
+        public string workflow { get; set; }
+        /// <summary>
+        /// 首末岗位(S 首岗位 M 末岗位)
+        /// </summary>
+        public string smgw { get; set; }
+        /// <summary>
+        /// 解绑发动机（Y/N）
+        /// </summary>
+        public string jbfdj { get; set; }
+        /// <summary>
+        /// 是否自动合格
+        /// </summary>
+        public string iszdhg { get; set; }
+        /// <summary>
+        /// 是否换产校验
+        /// </summary>
+        public string ishcjy { get; set; }
+
+
     }
     public class base_gwzd_mapper : ClassMapper<base_gwzd>
     {
@@ -87,6 +109,8 @@ namespace ZDMesModels.Ducar
             Map(t => t.scx).Key(KeyType.Assigned);
             Map(t => t.gwh).Key(KeyType.Assigned);
             Map(t => t.rid).Ignore();
+            Map(t => t.iskhgw).Ignore();
+            Map(t => t.workflow).Column("work_flow");
             AutoMap();
         }
     }

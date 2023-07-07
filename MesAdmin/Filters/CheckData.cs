@@ -1,25 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using ZDMesInterfaces.LBJ;
-using ZDMesServices.LBJ.CheckData;
-using System.IO;
-using Newtonsoft.Json;
 using ZDMesModels;
-using System.Text;
-using System.Web.Http.Results;
-using System.Net.Http;
-using System.Net;
-using ZDMesServices;
-using Autofac.Integration.WebApi;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Web.Http;
-using Autofac;
 
 namespace MesAdmin.Filters
 {

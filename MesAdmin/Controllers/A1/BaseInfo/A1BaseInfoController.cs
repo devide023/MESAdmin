@@ -1,9 +1,6 @@
-﻿using Aspose.Cells.Drawing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using ZDMesInterfaces.TJ;
 using ZDMesModels.TJ.A1;
@@ -18,7 +15,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
         {
             _a1baseinfo = a1baseinfo;
         }
-        [HttpGet,Route("scx")]
+        [HttpGet, Route("scx")]
         public IHttpActionResult GetScxList()
         {
             try
@@ -60,7 +57,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("gwh_by_key")]
+        [HttpGet, Route("gwh_by_key")]
         public IHttpActionResult GetGwHByKey(string key)
         {
             try
@@ -83,7 +80,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("sbxx_by_gwh")]
+        [HttpGet, Route("sbxx_by_gwh")]
         public IHttpActionResult GetSbxx(string gwh)
         {
             try
@@ -91,7 +88,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 var list = new List<base_sbxx>();
                 if (!string.IsNullOrEmpty(gwh))
                 {
-                    list = _a1baseinfo.GetSbXxList().Where(t => t.gwh == gwh).OrderBy(t=>t.sbbh).ToList();
+                    list = _a1baseinfo.GetSbXxList().Where(t => t.gwh == gwh).OrderBy(t => t.sbbh).ToList();
                 }
                 return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.sbmc, value = t.sbbh }) });
             }
@@ -109,13 +106,13 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 if (!string.IsNullOrEmpty(key))
                 {
                     var list = _a1baseinfo.GetRyXxList();
-                    list = list.Where(t=>t.usercode.Contains(key) || t.username.Contains(key)).ToList();
+                    list = list.Where(t => t.usercode.Contains(key) || t.username.Contains(key)).ToList();
                     return Json(new { code = 1, msg = "ok", list = list.Select(t => new { label = t.username, value = t.usercode }) });
                 }
                 else
                 {
                     List<dynamic> ret = new List<dynamic>();
-                    return Json(new { code = 1, msg = "ok", list = ret});
+                    return Json(new { code = 1, msg = "ok", list = ret });
                 }
             }
             catch (Exception)
@@ -124,7 +121,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("jxno_by_code")]
+        [HttpGet, Route("jxno_by_code")]
         public IHttpActionResult GetJxNoByKey(string key)
         {
             try
@@ -168,7 +165,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("faultno_by_key")]
+        [HttpGet, Route("faultno_by_key")]
         public IHttpActionResult GetFaultNoByKey(string key)
         {
             try
@@ -190,7 +187,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("zplx")]
+        [HttpGet, Route("zplx")]
         public IHttpActionResult GetZPLX()
         {
             try
@@ -204,7 +201,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("zxjclx")]
+        [HttpGet, Route("zxjclx")]
         public IHttpActionResult GetZxjcLx()
         {
             try
@@ -218,7 +215,7 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
-        [HttpGet,Route("jclxbykey")]
+        [HttpGet, Route("jclxbykey")]
         public IHttpActionResult GetJclxByKey(string key)
         {
             try

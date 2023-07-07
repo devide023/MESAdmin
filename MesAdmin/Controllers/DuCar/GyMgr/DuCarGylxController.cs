@@ -17,10 +17,8 @@ namespace MesAdmin.Controllers.DuCar.GyMgr
     [RoutePrefix("api/ducar/gylx")]
     public class DuCarGylxController : BaseApiController<zxjc_gylx>
     {
-        IDbOperate<zxjc_gylx> _baseservice;
         public DuCarGylxController(IDbOperate<zxjc_gylx> baseservice, IRequireVerify requireverfify, IImportData<zxjc_gylx> importservice) : base(baseservice)
         {
-            _baseservice = baseservice;
             _requireverfify = requireverfify;
             _importservice = importservice;
         }

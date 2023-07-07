@@ -1,14 +1,10 @@
-﻿using Autofac.Extras.DynamicProxy;
-using Dapper;
+﻿using Dapper;
 using DapperExtensions.Mapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ZDMesInterceptor.LBJ;
 using ZDMesInterfaces.Common;
 using ZDMesModels;
 

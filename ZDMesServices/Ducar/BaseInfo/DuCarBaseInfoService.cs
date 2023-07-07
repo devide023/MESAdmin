@@ -62,10 +62,19 @@ namespace ZDMesServices.Ducar.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select gwh, gwmc FROM base_gwzd where scx = :scx");
+                sql.Append("select gwh, gwmc FROM base_gwzd where gzty = 'N' and scx = :scx");
+                StringBuilder sqlall = new StringBuilder();
+                sqlall.Append("select gwh, gwmc FROM base_gwzd where gzty = 'N' ");
                 using (var db = new OracleConnection(ConString))
                 {
-                    return db.Query<base_gwzd>(sql.ToString(), new {scx = scx});
+                    if (!string.IsNullOrEmpty(scx))
+                    {
+                        return db.Query<base_gwzd>(sql.ToString(), new { scx = scx });
+                    }
+                    else
+                    {
+                        return db.Query<base_gwzd>(sqlall.ToString());
+                    }
                 }
             }
             catch (Exception)
@@ -244,10 +253,10 @@ namespace ZDMesServices.Ducar.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select order_no,scx FROM pp_zpjh where order_no like :key");
+                sql.Append("select ta.order_no,ta.scx FROM pp_zpjh ta,zxjc_order_jy tb where ta.order_no = tb.order_no and tb.qdjy = 'Y' and tb.gdbomjy = 'Y' and tb.gylxjy = 'Y' and ta.order_no like :key");
                 using (var db = new OracleConnection(ConString))
                 {
-                   return db.Query<pp_zpjh>(sql.ToString(), new { key = "%" + key + "%" });
+                   return db.Query<pp_zpjh>(sql.ToString(), new { key = "%" + key.ToUpper() + "%" });
                 }
             }
             catch (Exception)

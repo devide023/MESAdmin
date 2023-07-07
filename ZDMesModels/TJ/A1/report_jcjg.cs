@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZDMesModels.TJ.A1
 {
+    /// <summary>
+    /// 检测结果
+    /// </summary>
     public class report_jcjg
     {
         /// <summary>
@@ -51,19 +54,6 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 单项判定
         /// </summary>
-        public string dxpd
-        {
-            get
-            {
-                if (firstjcjg == "合格" && lastjcjg == "合格")
-                {
-                    return "合格";
-                }
-                else
-                {
-                    return "不合格";
-                }
-            }
-        }
+        public string dxpd { get; set; }
     }
 }

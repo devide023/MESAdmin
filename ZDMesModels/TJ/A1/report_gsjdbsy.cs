@@ -34,7 +34,7 @@ namespace ZDMesModels.TJ.A1
         /// <summary>
         /// 干检时间
         /// </summary>
-        public string gjsj { get; set; }
+        public DateTime  gjsj { get; set; }
         /// <summary>
         /// 干检员
         /// </summary>

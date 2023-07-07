@@ -1,13 +1,8 @@
 ﻿using Autofac;
 using Autofac.Configuration;
 using Autofac.Extras.DynamicProxy;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using ZDMesInterceptor;
 using ZDMesInterceptor.LBJ;
 using ZDMesInterfaces.Common;

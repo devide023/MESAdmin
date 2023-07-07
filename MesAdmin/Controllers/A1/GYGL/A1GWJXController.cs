@@ -1,15 +1,12 @@
-﻿using System;
+﻿using MesAdmin.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using MesAdmin.Filters;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.TJ.A1;
-using ZDMesServices.TJ.A1.GYGL;
 
 namespace MesAdmin.Controllers.A1.GYGL
 {

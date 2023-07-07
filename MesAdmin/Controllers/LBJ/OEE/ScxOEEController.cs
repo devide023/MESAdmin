@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ;
 using ZDMesInterfaces.LBJ.OEE;
 using ZDMesModels;
 using ZDMesModels.LBJ;
@@ -15,11 +16,13 @@ namespace MesAdmin.Controllers.LBJ.OEE
     public class ScxOEEController : BaseApiController<zxjc_scx_oee>
     {
         private ILBJOEE _lbjoee;
+        private IBaseInfo _baseinfo;
         private IDbOperate<zxjc_scx_oee> _bases;
-        public ScxOEEController(IDbOperate<zxjc_scx_oee> baseservice,ILBJOEE lbjoee) : base(baseservice)
+        public ScxOEEController(IDbOperate<zxjc_scx_oee> baseservice,ILBJOEE lbjoee,IBaseInfo baseinfo) : base(baseservice)
         {
             _bases = baseservice;
             _lbjoee = lbjoee;
+            _baseinfo = baseinfo;
         }
         /// <summary>
         /// 生产线OEE模板数据
@@ -32,12 +35,40 @@ namespace MesAdmin.Controllers.LBJ.OEE
             try
             {
                 var oeedata = _lbjoee.Get_OEEDataByScx(scx);
+                var scxzx = _baseinfo.Get_ScxXX_JJ(scx).Select(t=>new { label=t.scxzxmc,value=t.scxzx});
                 return Json(new
                 {
                     code = 1,
                     msg = "ok",
-                    oee = oeedata
+                    oee = oeedata,
+                    scxzx= scxzx
                 });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost, Route("oeebyrq")]
+        public IHttpActionResult Get_HgsByRq(dynamic obj)
+        {
+            try
+            {
+                if (obj.scx != null && obj.rq != null)
+                {
+                    var proinfo = _lbjoee.Get_ProInfo(obj.scx.ToString(), Convert.ToDateTime(obj.rq));
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "ok",
+                        proinfo
+                    });
+                }
+                else
+                {
+                    return Json(new { code = 0, msg = "查询参数错误" });
+                }
             }
             catch (Exception)
             {

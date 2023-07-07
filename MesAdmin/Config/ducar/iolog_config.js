@@ -77,6 +77,35 @@
       width: 120
     }, {
       coltype: 'string',
+      label: '设备编码',
+      prop: 'sbbm',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100
+    }, {
+      coltype: 'string',
+      label: '请求消息体',
+      prop: 'requestbody',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      formatjson: true,
+      width: 120
+    }, {
+      coltype: 'string',
+      label: '响应消息体',
+      prop: 'responsebody',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+      formatjson: true,
+      width: 120
+    }, {
+      coltype: 'string',
       label: '订单号',
       prop: 'order_no',
       overflowtooltip: true,
@@ -101,7 +130,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      width: 100
+      width: 120
     }, {
       coltype: 'datetime',
       label: '交互时间',

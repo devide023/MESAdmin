@@ -63,7 +63,20 @@
       headeralign: 'center',
       align: 'center',
       width: 100
-    }, {
+    }, 
+	{
+      coltype: 'list',
+      label: '绑定类别',
+      prop: 'bdlb',
+      overflowtooltip: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  options:[{label:'绑定',value:'1'},{label:'解绑',value:'2'}],
+	  hideoptionval:true,
+      width: 100
+    },
+	{
       coltype: 'datetime',
       label: '绑定时间',
       prop: 'bdsj',

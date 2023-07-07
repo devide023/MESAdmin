@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 using ZDMesInterfaces.LBJ.RyMgr;
 using ZDMesModels;
 using ZDMesModels.LBJ;
-using Dapper;
-using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
 
 namespace ZDMesServices.LBJ.RyMgr
 {

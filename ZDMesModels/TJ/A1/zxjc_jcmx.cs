@@ -11,6 +11,11 @@ namespace ZDMesModels.TJ.A1
     /// </summary>
     public class zxjc_jcmx
     {
+        public string id { get; set; }
+        /// <summary>
+        /// 检测项id
+        /// </summary>
+        public string jcxid { get; set; }
         public string gcdm { get; set; }
         public string scx { get; set; }
         public string gwh { get; set; }
@@ -58,9 +63,12 @@ namespace ZDMesModels.TJ.A1
         /// 备注
         /// </summary>
         public string bz { get; set; }
+        public string lrr { get; set; }
+        public DateTime lrsj { get; set; }
         /// <summary>
         /// 删除标志
         /// </summary>
         public string scbz { get; set; }
+        public string jcjg_id { get; set; }
     }
 }

@@ -5,18 +5,6 @@
   pagefuns: {},
   fields: [{
       coltype: 'list',
-      prop: 'gcdm',
-      label: '工厂',
-	  width:80,
-      headeralign: 'center',
-      align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx'
-      },
-      options: []
-    }, {
-      coltype: 'list',
       prop: 'scx',
       label: '生产线',
 	  width:150,

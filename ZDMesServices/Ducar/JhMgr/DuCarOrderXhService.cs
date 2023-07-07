@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Aspose.Cells.Revisions;
+using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,24 @@ namespace ZDMesServices.Ducar.JhMgr
     {
         public DuCarOrderXhService(string constr) : base(constr)
         {
+        }
+
+        public override bool Del(IEnumerable<zxjc_order_sxh> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("delete FROM zxjc_order_sxh where rowid in :rid");
+                using (var db = new OracleConnection(ConString))
+                {
+                   return db.Execute(sql.ToString(), new { rid = entitys.Select(t => t.rid) })>0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public override bool Modify(IEnumerable<zxjc_order_sxh> entitys)

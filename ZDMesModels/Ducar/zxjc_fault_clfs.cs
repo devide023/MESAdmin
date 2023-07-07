@@ -56,6 +56,7 @@ namespace ZDMesModels.Ducar
         /// </summary>
         public DateTime? lrsj { get; set; } = DateTime.Now;
         public List<sys_options_list> gwlist { get; set; }
+        public List<sys_options_list> gwhs { get; set; }
     }
 
     public class sys_options_list
@@ -74,6 +75,7 @@ namespace ZDMesModels.Ducar
             Map(t => t.gwmc).Ignore();
             Map(t => t.rid).Ignore();
             Map(t => t.gwlist).Ignore();
+            Map(t => t.gwhs).Ignore();
             Map(t => t.faultname).Ignore();
             AutoMap();
         }

@@ -19,15 +19,15 @@
       }
     },
     {
-      "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
-      "properties": {
-        "LBJConstr": "lbjmes"
-      }
-    },
-    {
       "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
       "properties": {
         "TJConstr": "tjmes"
+      }
+    },
+    {
+      "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
+      "properties": {
+        "LBJConstr": "lbjmes"
       }
     },
     {

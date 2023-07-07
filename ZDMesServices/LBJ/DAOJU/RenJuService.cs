@@ -9,7 +9,6 @@ using ZDMesModels.LBJ;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 using Autofac.Extras.DynamicProxy;
-using ZDMesInterceptor.LBJ;
 using ZDMesServices.LBJ.ImportData;
 
 namespace ZDMesServices.LBJ.DAOJU
