@@ -21,9 +21,12 @@ namespace ZDMesServices.LBJ.GWMgr
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append($"select rowid as rid, gcdm, scx, gwh, gwmc, gwlx,gwzlx, gwfl, glgwh, shbz, gzty, pcsip, bz, lrr, lrsj, shr, shsj, cjqxdl, dlsj, dlbbh from base_gwzd where 1=1 ");
+                sql.Append($"select rowid as rid, gcdm, scx, gwh, gwmc, gwlx,gwzlx, gwfl, glgwh, shbz, gzty, pcsip, bz, lrr, lrsj, shr, shsj, cjqxdl, dlsj, dlbbh,scxzx from base_gwzd where 1=1 ");
                 StringBuilder sql_cnt = new StringBuilder();
                 sql_cnt.Append($"select count(*) from base_gwzd where 1=1 ");
+                //生产线子线
+                StringBuilder sqlscxzx = new StringBuilder();
+                sqlscxzx.Append("select scx, scxmc, scxzx, scxzxmc FROM base_scxxx_jj");
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {
                     sql.Append(" and " + parm.sqlexp);
@@ -46,7 +49,12 @@ namespace ZDMesServices.LBJ.GWMgr
                 }
                 using (var db = new OracleConnection(ConString))
                 {
+                    var scxzxlist = db.Query<base_scxxx_jj>(sqlscxzx.ToString());
                     var q = db.Query<base_gwzd>(OraPager(sql.ToString()), parm.sqlparam);
+                    foreach (var item in q)
+                    {
+                        item.scxzxs = scxzxlist.Where(t => t.scx == item.scx).Select(t => new option_list() { label = t.scxzxmc, value = t.scxzx }).ToList();
+                    }
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
                 }

@@ -38,6 +38,24 @@ namespace MesAdmin.Controllers.LBJ.ZLGL
                 throw;
             }
         }
+        /// <summary>
+        /// 产品查询数据分析项目
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet,Route("fxitemlist")]
+        public IHttpActionResult Get_Cpxh_FxItems(string cpxh)
+        {
+            try
+            {
+                var list = _cpcheckservice.GetFxItemsByCpxh(cpxh).Select(t=>new { label=t.jcxm,value=t.id});
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [TemplateVerify("ZDMesModels.LBJ.zxjc_base_check,ZDMesModels")]
         [AtachValue(typeof(IBatAtachValue<zxjc_base_check>), "BatSetValue")]
         public override IHttpActionResult ReadTempFile(string fileid)

@@ -408,6 +408,7 @@
     <Compile Include="Controllers\DuCar\SbMgr\DuCarJjbdController.cs" />
     <Compile Include="Controllers\DuCar\SbMgr\DuCarJjbdlogController.cs" />
     <Compile Include="Controllers\DuCar\SbMgr\DuCarSbxxController.cs" />
+    <Compile Include="Controllers\DuCar\Test\DuCarTestController.cs" />
     <Compile Include="Controllers\DuCar\UpLoad\DucarUpLoadController.cs" />
     <Compile Include="Controllers\DuCar\WlMgr\DuCarFCLSController.cs" />
     <Compile Include="Controllers\DuCar\WlMgr\DuCarFLXXController.cs" />
@@ -428,6 +429,7 @@
     <Compile Include="Controllers\LBJ\App\AppMenuController.cs" />
     <Compile Include="Controllers\LBJ\App\AppRoleController.cs" />
     <Compile Include="Controllers\LBJ\BaseInfo\BaseInfoController.cs" />
+    <Compile Include="Controllers\LBJ\BATGL\LBJBatVinController.cs" />
     <Compile Include="Controllers\LBJ\BHDGL\BHDJLController.cs" />
     <Compile Include="Controllers\LBJ\BHDGL\BHDXXController.cs" />
     <Compile Include="Controllers\LBJ\CPGL\CPPSController.cs" />
@@ -436,6 +438,7 @@
     <Compile Include="Controllers\LBJ\DAOJU\DbRjGxController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DbRjLyController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\DjReportController.cs" />
+    <Compile Include="Controllers\LBJ\DAOJU\LbjDbRjZxNewController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\LbjRjRmLsController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\RenJuController.cs" />
     <Compile Include="Controllers\LBJ\DAOJU\RenJuSmXhController.cs" />
@@ -447,7 +450,7 @@
     <Compile Include="Controllers\LBJ\DZWD\TSTCController.cs" />
     <Compile Include="Controllers\LBJ\GWZD\GWZDController.cs" />
     <Compile Include="Controllers\LBJ\GYGL\DZGYSPController.cs" />
-    <Compile Include="Controllers\LBJ\GYGL\GYLXController.cs" />
+    <Compile Include="Controllers\LBJ\GYGL\LBJGYLXController.cs" />
     <Compile Include="Controllers\LBJ\JHGL\SCJHController.cs" />
     <Compile Include="Controllers\LBJ\OEE\BaseOEEController.cs" />
     <Compile Include="Controllers\LBJ\OEE\ScxOEEController.cs" />
@@ -458,9 +461,11 @@
     <Compile Include="Controllers\LBJ\SBWB\WbXxController.cs" />
     <Compile Include="Controllers\LBJ\SBWB\WbZqController.cs" />
     <Compile Include="Controllers\LBJ\SbXx\SbXxController.cs" />
+    <Compile Include="Controllers\LBJ\Setting\LbjSettingController.cs" />
     <Compile Include="Controllers\LBJ\SJCJ\SJCJController.cs" />
     <Compile Include="Controllers\LBJ\SMJJK\SMJJKController.cs" />
     <Compile Include="Controllers\LBJ\YCGL\YCGLController.cs" />
+    <Compile Include="Controllers\LBJ\ZLGL\LbjBhgController.cs" />
     <Compile Include="Controllers\LBJ\ZLGL\LBJCheckBillController.cs" />
     <Compile Include="Controllers\LBJ\ZLGL\LBJCheckImgController.cs" />
     <Compile Include="Controllers\LBJ\ZLGL\LBJProductCheckController.cs" />
@@ -484,10 +489,14 @@
     <Content Include="Config\a1\csdc_config.js" />
     <Content Include="Config\a1\ddzs_config.js" />
     <Content Include="Config\a1\djjcxx_config.js" />
+    <Content Include="Config\a1\djjl_config.js" />
     <Content Include="Config\a1\djls_config.js" />
     <Content Include="Config\a1\dtzs_config.js" />
     <Content Include="Config\a1\dzgy_config.js" />
+    <Content Include="Config\a1\fxjlb_config.js" />
     <Content Include="Config\a1\fxmx_config.js" />
+    <Content Include="Config\a1\fxwl_config.js" />
+    <Content Include="Config\a1\gsjsy_config.js" />
     <Content Include="Config\a1\gwjxgx_config.js" />
     <Content Include="Config\a1\gwlxjx_config.js" />
     <Content Include="Config\a1\gwwl_config.js" />
@@ -497,10 +506,19 @@
     <Content Include="Config\a1\gysp_config.js" />
     <Content Include="Config\a1\gzclfs_config.js" />
     <Content Include="Config\a1\gzjcxx_config.js" />
+    <Content Include="Config\a1\jcjcxx_config.js" />
+    <Content Include="Config\a1\jclx_config.js" />
+    <Content Include="Config\a1\jcmx_config.js" />
+    <Content Include="Config\a1\jcsbxx_config.js" />
     <Content Include="Config\a1\jcxx_config.js" />
     <Content Include="Config\a1\jstz_config.js" />
     <Content Include="Config\a1\jstz_to_gwh_config.js" />
+    <Content Include="Config\a1\jtckjl_config.js" />
     <Content Include="Config\a1\jtfp_config.js" />
+    <Content Include="Config\a1\jtfp_rypz_config.js" />
+    <Content Include="Config\a1\mjghjl_config.js" />
+    <Content Include="Config\a1\myjt_config.js" />
+    <Content Include="Config\a1\report_gztj_config.js" />
     <Content Include="Config\a1\ryjn_config.js" />
     <Content Include="Config\a1\ryxx_config.js" />
     <Content Include="Config\a1\sbxx_config.js" />
@@ -511,6 +529,7 @@
     <Content Include="Config\appmenu_config.js" />
     <Content Include="Config\approle_config.js" />
     <Content Include="Config\auditjt_config.js" />
+    <Content Include="Config\basecheck_config.js" />
     <Content Include="Config\bhdjl_config.js" />
     <Content Include="Config\bhdxx_config.js" />
     <Content Include="Config\cdgc\bhdcf_config.js" />
@@ -531,6 +550,8 @@
     <Content Include="Config\cdgc\tfgl_config.js" />
     <Content Include="Config\cdgc\ycck_config.js" />
     <Content Include="Config\cdgc\ychis_config.js" />
+    <Content Include="Config\checkimg_config.js" />
+    <Content Include="Config\checklist_config.js" />
     <Content Include="Config\cpps_config.js" />
     <Content Include="Config\daojurenjuzx_config.js" />
     <Content Include="Config\dbrjgx_config.js" />
@@ -544,14 +565,17 @@
     <Content Include="Config\ducar\djjl_config.js" />
     <Content Include="Config\ducar\dtzs_config.js" />
     <Content Include="Config\ducar\dzgy_config.js" />
+    <Content Include="Config\ducar\fcls_config.js" />
     <Content Include="Config\ducar\flxx_config.js" />
     <Content Include="Config\ducar\fpmx_config.js" />
     <Content Include="Config\ducar\fxmx_config.js" />
     <Content Include="Config\ducar\gwzd_config.js" />
+    <Content Include="Config\ducar\gwzs_config.js" />
     <Content Include="Config\ducar\gycs_config.js" />
     <Content Include="Config\ducar\gylx_config.js" />
     <Content Include="Config\ducar\gysp_config.js" />
     <Content Include="Config\ducar\gzclfs_config.js" />
+    <Content Include="Config\ducar\gzflxx_config.js" />
     <Content Include="Config\ducar\gzjcxx_config.js" />
     <Content Include="Config\ducar\gztj_config.js" />
     <Content Include="Config\ducar\iolog_config.js" />
@@ -563,6 +587,7 @@
     <Content Include="Config\ducar\jjbdlog_config.js" />
     <Content Include="Config\ducar\jstz_config.js" />
     <Content Include="Config\ducar\jtfp_config.js" />
+    <Content Include="Config\ducar\jxgl_config.js" />
     <Content Include="Config\ducar\ryjc_config.js" />
     <Content Include="Config\ducar\ryjn_config.js" />
     <Content Include="Config\ducar\ryxx_config.js" />
@@ -571,15 +596,19 @@
     <Content Include="Config\ducar\scjh_config.js" />
     <Content Include="Config\ducar\scxtz_config.js" />
     <Content Include="Config\ducar\wljcxx_config.js" />
+    <Content Include="Config\ducar\wljy_config.js" />
     <Content Include="Config\dzgysp_config.js" />
     <Content Include="Config\dzgy_config.js" />
     <Content Include="Config\gwxx_config.js" />
     <Content Include="Config\gylx_config.js" />
+    <Content Include="Config\hjchecklist_config.js" />
     <Content Include="Config\jcxx_config.js" />
     <Content Include="Config\jtfp_config.js" />
     <Content Include="Config\jtgl_config.js" />
     <Content Include="Config\menu_config.js" />
     <Content Include="Config\mydoc_config.js" />
+    <Content Include="Config\ngvinzs_config.js" />
+    <Content Include="Config\oeedata_config.js" />
     <Content Include="Config\rjrmls_config.js" />
     <Content Include="Config\rjsmxh_config.js" />
     <Content Include="Config\rjxx_config.js" />
@@ -590,11 +619,16 @@
     <Content Include="Config\sbsj_config.js" />
     <Content Include="Config\sbxx_config.js" />
     <Content Include="Config\scjh_config.js" />
+    <Content Include="Config\scxoee_config.js" />
+    <Content Include="Config\setting_config.js" />
+    <Content Include="Config\sjbl_config.js" />
     <Content Include="Config\smjjk_config.js" />
     <Content Include="Config\tj\tj_jrgy_config.js" />
     <Content Include="Config\user_config.js" />
+    <Content Include="Config\vinbat_config.js" />
     <Content Include="Config\wbxx_config.js" />
     <Content Include="Config\wbzq_config.js" />
+    <Content Include="Config\xjchecklist_config.js" />
     <Content Include="Config\ycgl_config.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -662,6 +696,7 @@
     <Content Include="Config\ducar\fxmx_config.js.bak" />
     <Content Include="ColumnValReplace_Config.json" />
     <Content Include="LBJVerfyConfig.json" />
+    <Content Include="Config\tj\tj_jrgy_config.js.bak" />
     <None Include="Oracle.DataAccess.Common.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -771,6 +806,9 @@
     <Content Include="Template\DuCar\电子工艺.xlsx" />
     <Content Include="Template\DuCar\工艺视频.xlsx" />
     <Content Include="Template\LBJ\检测项基础数据.xlsx" />
+    <Content Include="Template\LBJ\测试方位图片.xlsx" />
+    <Content Include="Template\DuCar\故障分类信息.xlsx" />
+    <Content Include="Template\DuCar\辅料信息.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,7 +2,7 @@
   isgradequery: true,
   isbatoperate: false,
   isoperate: false,
-  isselect:false,
+  isselect: false,
   pagefuns: {},
   batoperate: {
     export_excel(_this) {
@@ -14,13 +14,13 @@
         if (res.code === 1) {
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
-        } else if(res.code === 0) {
+        } else if (res.code === 0) {
           this.$message.error(res.msg);
         }
       });
     },
     import_by_replace(_this, res) {},
-    import_by_zh(_this,res) {},
+    import_by_zh(_this, res) {},
   },
   fields: [{
       coltype: 'list',
@@ -28,14 +28,14 @@
       label: '生产线',
       headeralign: 'center',
       align: 'left',
-      width: 180,
+      width: 130,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
-	  change_fn_name: function (_this, collist, val,row) {
-		  row.gwh = '';
+      change_fn_name: function (_this, collist, val, row) {
+        row.gwh = '';
         var gwcol = collist.filter(i => i.prop === 'gwh');
         _this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
           if (res.code === 1) {
@@ -45,30 +45,50 @@
           }
         });
       },
-	  clear_fn_name:function(_this,row){
-		  row.gwh = '';
-	  },
+      clear_fn_name: function (_this, row) {
+        row.gwh = '';
+      },
       options: []
+    }, {
+      coltype: 'list',
+      label: '子线',
+      prop: 'scxzx',
+      overflowtooltip: true,
+      searchable: true,
+      headeralign: 'center',
+      align: 'center',
+      options: [],
+      width: 120,
+      optionconfig: {
+        method: 'get',
+        url: '/lbj/baseinfo/scxzx',
+        querycnf: [{
+            scx: 'scx'
+          }
+        ]
+      },
+      relation: 'scxzxs',
+      hideoptionval: true,
+      sortable: true
     }, {
       coltype: 'list',
       prop: 'gwh',
       label: '岗位号',
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gwzd'
-      },
       options: [],
-	  choose_options:[],
+      choose_options: [],
+      relation: 'gwhs',
+	  width:120
     }, {
       coltype: 'string',
       prop: 'engineno',
       dbprop: 'engine_no',
-      label: '机型',
+      label: '件号',
       headeralign: 'center',
       align: 'center',
-      width: 150,
+      width: 180,
+      overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'statusno',
@@ -82,7 +102,7 @@
       prop: 'djno',
       label: '点检编号',
       headeralign: 'center',
-      align: 'left',
+      align: 'center',
       width: 100,
       overflowtooltip: true,
     }, {
@@ -93,11 +113,20 @@
       align: 'left',
       overflowtooltip: true,
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'djjg',
       label: '点检结果',
       headeralign: 'center',
-      align: 'left',
+      align: 'center',
+      width: 100,
+      options: [{
+          label: '合格',
+          value: 'Y'
+        }, {
+          label: '不合格',
+          value: 'N'
+        }
+      ],
       overflowtooltip: true,
     }, {
       coltype: 'string',
@@ -135,9 +164,11 @@
     bz: '',
     lrr: '',
     lrsj: '',
-	gwhoptions:[],
-	isdb:false,
-	isedit:true,
+    scxzx: '',
+    scxzxs: [],
+    gwhoptions: [],
+    isdb: false,
+    isedit: true,
   },
   addapi: {
     url: '/lbj/djxx/add',

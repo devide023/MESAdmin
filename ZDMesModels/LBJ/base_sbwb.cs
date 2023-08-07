@@ -21,6 +21,7 @@ namespace ZDMesModels.LBJ
         /// 生产线 
         ///</summary>
          public string scx { get; set; }
+        public string scxzx { get; set; }
         /// <summary>
         /// 岗位号
         /// </summary>
@@ -61,7 +62,10 @@ namespace ZDMesModels.LBJ
         /// 设备信息选项
         /// </summary>
         public List<sys_column_options> sbxxoptions { get; set; }
+        public List<sys_column_options> scxoptions { get; set; }
         public List<string> scxs { get; set; }
+
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class base_sbwb_mapper : ClassMapper<base_sbwb>
@@ -72,6 +76,8 @@ namespace ZDMesModels.LBJ
             Map(t => t.sbmc).Ignore();
             Map(t => t.scxs).Ignore();
             Map(t => t.sbxxoptions).Ignore();
+            Map(t => t.scxoptions).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

@@ -108,18 +108,6 @@
   },
   fields: [{
       coltype: 'list',
-      label: '工厂',
-      prop: 'gcdm',
-      headeralign: 'center',
-      align: 'center',
-      width: 80,
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx',
-      },
-      options: [],
-    }, {
-      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       headeralign: 'center',

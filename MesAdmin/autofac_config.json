@@ -19,6 +19,12 @@
       }
     },
     {
+      "type": "ZDMesModules.DUCAR.DucarModule, ZDMesModules",
+      "properties": {
+        "DucarConstr": "ducarmes"
+      }
+    },
+    {
       "type": "ZDMesModules.TJ.A1Module, ZDMesModules",
       "properties": {
         "TJConstr": "tjmes"
@@ -28,12 +34,6 @@
       "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
       "properties": {
         "LBJConstr": "lbjmes"
-      }
-    },
-    {
-      "type": "ZDMesModules.DUCAR.DucarModule, ZDMesModules",
-      "properties": {
-        "DucarConstr": "ducarmes"
       }
     }
   ]

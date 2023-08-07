@@ -232,7 +232,32 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    }, {
+    },
+	{
+      coltype: 'bool',
+      label: '是否分析',
+      prop: 'isfx',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  activevalue: 'Y',
+      inactivevalue: 'N'
+    },
+	{
+      coltype: 'bool',
+      label: '禁用标识',
+      prop: 'scbz',
+      overflowtooltip: true,
+      searchable: true,
+      sortable: true,
+      headeralign: 'center',
+      align: 'center',
+	  activevalue: 'Y',
+      inactivevalue: 'N'
+    },
+	{
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',
@@ -266,6 +291,7 @@
     seq: '10',
     lrr: '',
     lrsj: '',
+	isfx:'N',
     isdb: false,
     isedit: true
   },

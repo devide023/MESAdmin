@@ -44,11 +44,13 @@ namespace MesAdmin.Controllers.LBJ.DJGL
             {
                 int resultcount = 0;
                 var gwzdlist = _baseinfo.GetGwZd();
+                var scxzxlist = _baseinfo.Get_ALL_ScxXX_JJ();
                 var list = _djgwservice.GetList(parm, out resultcount);
                 foreach (var item in list)
                 {
                     var options = new List<sys_column_options>();
                     var l = gwzdlist.Where(t => t.scx == item.scx);
+                    var scxzxs = scxzxlist.Where(t=>t.scx == item.scx).Select(t=>new option_list() {label=t.scxzxmc,value=t.scxzx}).OrderBy(t=>t.value);
                     foreach (var o in l)
                     {
                         var q = options.Where(t => t.value == o.gwh);
@@ -58,6 +60,7 @@ namespace MesAdmin.Controllers.LBJ.DJGL
                         }
                     }
                     item.gwhoptions = options;
+                    item.scxzxs = scxzxs.ToList();
                 }
                 return Json(new sys_search_result()
                 {

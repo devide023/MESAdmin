@@ -28,7 +28,13 @@
 	{
       label: '编辑',
       fnname: 'edit_check_bill',
-      btntype: 'text'
+      btntype: 'text',
+	  condition: [{
+          field: 'shjg',
+          oper: '!=',
+          val: '合格'
+        }
+      ]
     }
   ],
   pagefuns: {

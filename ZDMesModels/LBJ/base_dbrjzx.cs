@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using DapperExtensions.Mapper;
 namespace ZDMesModels.LBJ
 {
@@ -129,6 +130,9 @@ namespace ZDMesModels.LBJ
         /// 绑定刃具类型ids
         /// </summary>
         public List<int> rjids { get; set; } = new List<int>();
+
+        public string scxzx { get; set; }
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class base_dbrjzx_mapper : ClassMapper<base_dbrjzx>
@@ -144,6 +148,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.rjids).Ignore();
             Map(t => t.rjzt).Ignore();
             Map(t => t.scxmc).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

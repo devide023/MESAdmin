@@ -190,6 +190,7 @@
     <Compile Include="Ducar\SbMgr\DuCarJjGxLsService.cs" />
     <Compile Include="Ducar\SbMgr\DuCarJjGxService.cs" />
     <Compile Include="Ducar\SbMgr\DuCarSbxxService.cs" />
+    <Compile Include="Ducar\Test\TestDucarService.cs" />
     <Compile Include="Ducar\WLMgr\DuCarFLxxService.cs" />
     <Compile Include="Ducar\WLMgr\DuCarGwbjService.cs" />
     <Compile Include="Ducar\WLMgr\DuCarWljyService.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Ducar\ZlMgr\DuCarGzjcxxService.cs" />
     <Compile Include="LBJ\App\AppMenuService.cs" />
     <Compile Include="LBJ\App\AppRoleService.cs" />
+    <Compile Include="LBJ\BatGL\LbjBatVinService.cs" />
     <Compile Include="LBJ\CheckData\Form_Check_Service.cs" />
     <Compile Include="LBJ\BaseInfo\BaseInfoService.cs" />
     <Compile Include="LBJ\BHDGL\BHDJLService.cs" />
@@ -212,6 +214,7 @@
     <Compile Include="LBJ\DAOJU\DbRjGxService.cs" />
     <Compile Include="LBJ\DAOJU\DbRjLyService.cs" />
     <Compile Include="LBJ\DAOJU\DjReportService.cs" />
+    <Compile Include="LBJ\DAOJU\LBJDbrjLyNewService.cs" />
     <Compile Include="LBJ\DAOJU\LbjRmLsService.cs" />
     <Compile Include="LBJ\DAOJU\RenJuService.cs" />
     <Compile Include="LBJ\DAOJU\RjSmXhService.cs" />
@@ -224,7 +227,7 @@
     <Compile Include="LBJ\DZWD\TSTCService.cs" />
     <Compile Include="LBJ\GWMgr\GwZdService.cs" />
     <Compile Include="LBJ\GYGL\DZGYSPService.cs" />
-    <Compile Include="LBJ\GYGL\GYLXService.cs" />
+    <Compile Include="LBJ\GYGL\LBJGYLXService.cs" />
     <Compile Include="LBJ\ImportData\ImportDataService.cs" />
     <Compile Include="LBJ\JHGL\ZpJhService.cs" />
     <Compile Include="LBJ\OEE\LbjOeeDataService.cs" />
@@ -238,6 +241,7 @@
     <Compile Include="LBJ\SBWB\GWSBService.cs" />
     <Compile Include="LBJ\SBWB\WbXxService.cs" />
     <Compile Include="LBJ\SBWB\WbZqService.cs" />
+    <Compile Include="LBJ\Setting\LbjSettingService.cs" />
     <Compile Include="LBJ\SJCJ\CNC_SJCJService.cs" />
     <Compile Include="LBJ\SJCJ\GJ_SJCJService.cs" />
     <Compile Include="LBJ\SJCJ\HG_SJCJService.cs" />
@@ -247,6 +251,7 @@
     <Compile Include="LBJ\SJCJ\YLJ_SJCJService.cs" />
     <Compile Include="LBJ\SMJJK\SmjjkService.cs" />
     <Compile Include="LBJ\YCGL\TcglService.cs" />
+    <Compile Include="LBJ\ZLGL\LbjBhgService.cs" />
     <Compile Include="LBJ\ZLGL\LbjCheckService.cs" />
     <Compile Include="LBJ\ZLGL\LBJ_BaseCheckService.cs" />
     <Compile Include="LBJ\ZLGL\LBJ_CheckBillService.cs" />

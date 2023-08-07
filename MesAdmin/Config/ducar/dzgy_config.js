@@ -261,6 +261,11 @@
       width: 100,
 	  options: [],
 	  relation: 'gwhs',
+	  optionconfig:{
+		  method: 'get',
+		  url: '/ducar/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
 	  change_fn_name: 'select_gwh',
     },{
       coltype: 'string',
@@ -275,7 +280,6 @@
       coltype: 'string',
       label: '机型',
       prop: 'jxno',
-      dbprop: 'jx_no',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',

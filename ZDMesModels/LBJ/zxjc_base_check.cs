@@ -69,6 +69,14 @@ namespace ZDMesModels.LBJ
         /// 检查项图片
         /// </summary>
         public List<string> checkimages { get; set;}
+        /// <summary>
+        /// 是否分析
+        /// </summary>
+        public string isfx { get; set; } = "N";
+        /// <summary>
+        /// 删除标识
+        /// </summary>
+        public string scbz { get; set; } = "N";
     }
 
     public class zxjc_base_check_mapper : ClassMapper<zxjc_base_check>

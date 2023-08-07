@@ -30,6 +30,16 @@ namespace ZDMesInterfaces.LBJ
         /// <returns></returns>
         IEnumerable<base_scxxx_jj> Get_ScxXX_JJ(string scx);
         /// <summary>
+        /// 生产线-子线信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_scxxx_jj> Get_ScxXX_JJ();
+        /// <summary>
+        /// 生产线-子线信息全表
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_scxxx_jj> Get_ALL_ScxXX_JJ();
+        /// <summary>
         /// 岗位信息
         /// </summary>
         /// <param name="scx"></param>
@@ -110,5 +120,10 @@ namespace ZDMesInterfaces.LBJ
         /// </summary>
         /// <returns></returns>
         IEnumerable<zxjc_ryxx> RyxxList();
+        /// <summary>
+        /// 获取刀柄刃具加工产品信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_wlxx> Get_DBWLInfo();
     }
 }

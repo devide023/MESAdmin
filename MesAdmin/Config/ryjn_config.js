@@ -199,10 +199,11 @@
       label: '岗位号',
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gwzd'
-      },
+      optionconfig:{
+		  method: 'get',
+		  url: '/lbj/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
       options: [],
       relation: 'gwhoptions',
 	  multiple:true,

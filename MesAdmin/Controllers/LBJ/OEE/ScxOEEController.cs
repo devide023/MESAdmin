@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MesAdmin.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,6 +24,11 @@ namespace MesAdmin.Controllers.LBJ.OEE
             _bases = baseservice;
             _lbjoee = lbjoee;
             _baseinfo = baseinfo;
+        }
+        public override IHttpActionResult GetList(sys_page parm)
+        {
+            parm.default_order_colname = "rq";
+            return base.GetList(parm);
         }
         /// <summary>
         /// 生产线OEE模板数据
@@ -76,7 +82,7 @@ namespace MesAdmin.Controllers.LBJ.OEE
                 throw;
             }
         }
-
+        [RequireVerify]
         public override IHttpActionResult Add(List<zxjc_scx_oee> entitys)
         {
             try

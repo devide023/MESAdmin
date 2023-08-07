@@ -256,7 +256,8 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
         {
             try
             {
-                var ret = _gxservice.SetRjSm(id);
+                //var ret = _gxservice.SetRjSm(id);
+                var ret = _gxservice.ReSetRjSm(id);
                 return Json(new
                 {
                     code = 1,

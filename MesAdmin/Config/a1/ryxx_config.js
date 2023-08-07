@@ -67,6 +67,24 @@
     },
     download_template_file: function () {
       window.open('http://172.16.201.216:7002/template/A1/员工基础信息.xlsx?r=' + Math.random());
+    },
+    select_scx: function (collist, val, row) {
+      var idx = collist.findIndex(i => i.prop === 'scx');
+      if (idx !== -1) {
+        var pos = collist[idx].options.findIndex(j => j.value === val);
+        if (pos !== -1) {
+          row.bzxx = collist[idx].options[pos].label;
+        }
+      }
+    },
+    select_bzxx: function (collist, val, row) {
+      var idx = collist.findIndex(i => i.prop === 'scx');
+      if (idx !== -1) {
+        var pos = collist[idx].options.findIndex(j => j.value === val);
+        if (pos !== -1) {
+          row.bzxx = collist[idx].options[pos].label;
+        }
+      }
     }
   },
   fields: [{
@@ -83,7 +101,8 @@
         url: '/a1/baseinfo/scx'
       },
       hideoptionval: true,
-      options: []
+      options: [],
+      change_fn_name: 'select_scx',
     }, {
       coltype: 'string',
       label: '帐号',
@@ -187,7 +206,7 @@
           value: '本科'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
       width: 100
     }, {
       coltype: 'string',
@@ -205,15 +224,13 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-      options: [{
-          label: '白班',
-          value: '白班'
-        }, {
-          label: '晚班',
-          value: '晚班'
-        }
-      ],
+      inioptionapi: {
+        method: 'get',
+        url: '/a1/baseinfo/scx'
+      },
+      options: [],
       hideoptionval: true,
+      change_fn_name: 'select_bzxx'
     }, {
       coltype: 'date',
       label: '入司日期',
@@ -284,7 +301,7 @@
     gcdm: '9100',
     scx: '1',
     gwh: '',
-    bzxx: '白班',
+    bzxx: '',
     hgsg: 'Y',
     rsrq: '',
     csrq: '',

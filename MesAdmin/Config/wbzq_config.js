@@ -25,17 +25,6 @@
   },
   fields: [{
       coltype: 'list',
-      label: '工厂',
-      prop: 'gcdm',
-      headeralign: 'center',
-      align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx',
-      },
-      options: [],
-    }, {
-      coltype: 'list',
       label: '生产线',
       prop: 'scx',
       headeralign: 'center',
@@ -45,7 +34,27 @@
         url: '/lbj/baseinfo/scx?gcdm=9902',
       },
       options: [],
-    }, {
+	  overflowtooltip: true,
+    }, 
+	{
+      coltype: 'list',
+      label: '子线',
+      prop: 'scxzx',
+      overflowtooltip: true,
+      searchable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+	  optionconfig:{
+		  method: 'get',
+		  url: '/lbj/baseinfo/scxzx',
+		  querycnf:[{scx:'scx'}]
+	  },
+      options: [],
+      relation: 'scxzxs',
+      hideoptionval: true,
+    },
+	{
       coltype: 'list',
       label: '设备名称',
       prop: 'sbbh',
@@ -56,6 +65,7 @@
         url: '/lbj/baseinfo/sbxx',
       },
       options: [],
+	  overflowtooltip: true,
     }, {
       coltype: 'int',
       label: '顺序',
@@ -110,24 +120,28 @@
       prop: 'wbwcr',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }, {
       coltype: 'datetime',
       label: '完成时间',
       prop: 'wbwcsj',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }, {
       coltype: 'datetime',
       label: '录入时间',
       prop: 'lrsj',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }],
   form: {
     gcdm: '',
@@ -141,6 +155,8 @@
     wbwcsj: '',
     lrr: '',
     lrsj: '',
+	scxzx:'',
+	scxzxs:[],
     isdb: false,
     isedit: true
   },

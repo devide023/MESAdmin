@@ -9,6 +9,7 @@ using MesAdmin.Filters;
 using ZDMesModels;
 using ZDMesInterfaces.LBJ.SBWB;
 using Dapper;
+using ZDMesInterfaces.LBJ;
 
 namespace MesAdmin.Controllers.LBJ.SBWB
 {
@@ -19,12 +20,62 @@ namespace MesAdmin.Controllers.LBJ.SBWB
         private IDbOperate<base_sbwb> _wbxxservice;
         private ISbWbZq _sbwbzq;
         private IUser _user;
-        public WbZqController(IDbOperate<base_sbwb_ls> wbzqservice, IDbOperate<base_sbwb> wbxxservice, ISbWbZq sbwbzq,IUser user)
+        private IBaseInfo _baseinfo;
+        public WbZqController(IDbOperate<base_sbwb_ls> wbzqservice, IDbOperate<base_sbwb> wbxxservice, ISbWbZq sbwbzq,IUser user, IBaseInfo baseinfo)
         {
             _wbzqservice = wbzqservice;
             _wbxxservice = wbxxservice;
             _sbwbzq = sbwbzq;
             _user = user;
+            _baseinfo = baseinfo;
+        }
+        [HttpGet,Route("scxs_zxs_list")]
+        public IHttpActionResult Get_Scxs_Zxs_List()
+        {
+            try
+            {
+                var list = _baseinfo.Get_ALL_ScxXX_JJ().OrderBy(t => t.scx).ThenBy(t => t.scxzx).Select(t => new option_list() { label = t.scxmc + "-" + t.scxzxmc, value = t.scx + "-" + t.scxzx });
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost,Route("get_wbitems")]
+        public IHttpActionResult GetWbItems(base_sbwb parm)
+        {
+            try
+            {
+                var scxlist = _baseinfo.GetScxXX("9902");
+                var sbxxlist = _baseinfo.Get_SBXX_List();
+                var scxslist = _baseinfo.Get_ALL_ScxXX_JJ();
+                var list = _sbwbzq.ScxZxWbXxList(parm).OrderBy(t => t.scx).ThenBy(t=>t.scxzx).ThenBy(t => t.wbsh);
+                foreach (var item in list)
+                {
+                    item.scxoptions = scxlist.Where(t => t.scx == item.scx).Select(t => new sys_column_options() { label = t.scxmc, value = t.scx }).ToList();
+                    item.scxzxs = scxslist.Where(t => t.scx == item.scx).Select(t => new option_list() { label = t.scxzxmc, value = t.scxzx }).ToList();
+                    item.sbxxoptions = sbxxlist.Where(t => t.scx == item.scx).Select(t => new sys_column_options() { label = t.sbmc, value = t.sbbh }).ToList();
+                }
+                return Json(new
+                {
+                    code = 1,
+                    msg = "ok",
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [HttpPost,Route("wbzq_list")]
         public IHttpActionResult GetWbzqList(base_sbwb parm)
@@ -117,7 +168,12 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                 {
                     parm.orderbyexp = " order by wbjhsj desc,gcdm asc,scx asc,wbsh asc";
                 }
+                var zxlist = _baseinfo.Get_ALL_ScxXX_JJ();
                 var list = _wbzqservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    item.scxzxs = zxlist.Where(t => t.scx == item.scx).Select(t=>new option_list() {label=t.scxzxmc,value=t.scxzx }).ToList();
+                }
                 return Json(new sys_search_result()
                 {
                     code = 1,
@@ -125,6 +181,85 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                     resultcount = resultcount,
                     list = list
                 });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost, Route("addbyscxzx")]
+        public IHttpActionResult Add_ScxZx(sys_wbzq_form form)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(form.kssj) || string.IsNullOrEmpty(form.jssj))
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请选择维保时间!"
+                    });
+                }
+                var ksrq = Convert.ToDateTime(form.kssj);
+                var jsrq = Convert.ToDateTime(form.jssj);
+                if (DateTime.Compare(ksrq, jsrq) > 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "结束时间应大于开始时间!"
+                    });
+                }
+                if (form.sbwbls.Count == 0)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "请勾选维保项!"
+                    });
+                }
+
+                List<base_sbwb_ls> savedata = new List<base_sbwb_ls>();
+                int xsh = 1;
+                string sbbh = string.Empty, scx = string.Empty;
+                foreach (var item in form.sbwbls.OrderBy(t => t.scx).ThenBy(t=>t.scxzx))
+                {
+                    item.autoid = Guid.NewGuid().ToString();
+                    item.wbjhsj = Convert.ToDateTime(form.kssj);
+                    item.wbjhsjend = Convert.ToDateTime(form.jssj);
+                    item.lrr = _user.CurrentUser().name;
+                    item.lrsj = DateTime.Now;
+                    item.wbzt = "计划中";
+                    item.wbwcr = "";
+                    item.wbwcsj = null;
+                    if (sbbh != item.sbbh && scx != item.scx)
+                    {
+                        xsh = 1;
+                        sbbh = item.sbbh;
+                        scx = item.scx;
+                    }
+                    item.wbsh = xsh;
+                    savedata.Add(item);
+                    xsh++;
+                }
+                var ret = _sbwbzq.SaveSbWbInfo(savedata);
+                if (ret)
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 1,
+                        msg = "数据保存成功"
+                    });
+                }
+                else
+                {
+                    return Json(new sys_result()
+                    {
+                        code = 0,
+                        msg = "数据保存失败"
+                    });
+                }
             }
             catch (Exception)
             {

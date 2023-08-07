@@ -86,6 +86,9 @@ namespace ZDMesModels.LBJ
         /// 设备折旧
         /// </summary>
         public string sbzj { get; set; }
+
+        public string scxzx { get; set; }
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class basesbxx_mapper : ClassMapper<base_sbxx>
@@ -95,6 +98,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.sbbh).Key(KeyType.Assigned);
             Map(t => t.sbxxbz).Column("bz");
             Map(t => t.rid).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

@@ -217,10 +217,11 @@
       align: 'center',
       width: 120,
       overflowtooltip: true,
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gwzd'
-      },
+      optionconfig:{
+		  method: 'get',
+		  url: '/lbj/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
       options: [],
       relation: 'gwhoptions',
     }, {

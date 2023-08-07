@@ -181,9 +181,9 @@ namespace ZDMesServices.LBJ.ZLGL
                 //明细
                 StringBuilder sqlmx = new StringBuilder();
                 sqlmx.Append("insert into zxjc_check_bill_detail ");
-                sqlmx.Append("(billid, checkid, checkval) ");
+                sqlmx.Append("(billid, checkid, checkval,val1,val2) ");
                 sqlmx.Append(" values");
-                sqlmx.Append(" (:billid, :checkid, :checkval) ");
+                sqlmx.Append(" (:billid, :checkid, :checkval,:val1,:val2) ");
                 //更新表单
                 StringBuilder sqlupdate = new StringBuilder();
                 sqlupdate.Append("update zxjc_check_bill set scx=:scx,vin=:vin,smjbs=:smjbs,bmmc=:bmmc,rq=trunc(:rq),bc=:bc,cpxh=:cpxh,cpmc=:cpmc,gxmc=:gxmc,khmc=:khmc,jcjg=:jcjg,bz=:bz,xgr=:xgr,xgsj=sysdate where id = :id ");
@@ -219,6 +219,8 @@ namespace ZDMesServices.LBJ.ZLGL
                                         mx.Add(":billid", item.id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
                                         mx.Add(":checkid", sitem.checkid, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
                                         mx.Add(":checkval", sitem.checkval, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                                        mx.Add(":val1", sitem.val1, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                                        mx.Add(":val2", sitem.val2, System.Data.DbType.String, System.Data.ParameterDirection.Input);
                                         db.Execute(sqlmx.ToString(), mx, trans);
                                     }
                                 }

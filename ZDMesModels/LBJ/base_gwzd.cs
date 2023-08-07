@@ -94,6 +94,14 @@ namespace ZDMesModels.LBJ
         /// 前端展示用
         /// </summary>
         public bool disabled { get; set; }
+        /// <summary>
+        /// 生产线子线
+        /// </summary>
+        public string scxzx { get; set; }
+        /// <summary>
+        /// 生产线子线列表
+        /// </summary>
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class basegwzd_mapper : ClassMapper<base_gwzd>
@@ -104,6 +112,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.usercode).Column("user_code");
             Map(t => t.disabled).Ignore();
             Map(t => t.rid).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

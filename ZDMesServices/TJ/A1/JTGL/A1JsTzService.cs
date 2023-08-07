@@ -37,21 +37,21 @@ namespace ZDMesServices.TJ.A1.JTGL
                 sql.Append(" select * from ( ");
                 sql.Append($"select * from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
                 sql.Append(sql_read);
-                sql.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt=0 ");
+                sql.Append(" from zxjc_t_jstc where fpr is null )  where readcnt=0 ");
                 sql.Append(" union ");
                 sql.Append($"select * from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
                 sql.Append(sql_read);
-                sql.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt > 0  and istogwh = 'Y' ");
+                sql.Append(" from zxjc_t_jstc where fpr is null )  where readcnt > 0  and istogwh = 'Y' ");
                 sql.Append(") zxjc_t_jstc where 1=1 ");
                 sql.Append(" and (select count(jcbh) from zxjc_t_jstcfp_yfp where jcbh = zxjc_t_jstc.jcbh) = 0 ");
                 //
                 sql_cnt.Append($"select count(*) from ( select * from (select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj");
                 sql_cnt.Append(sql_read);
-                sql_cnt.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt=0 ");
+                sql_cnt.Append(" from zxjc_t_jstc where fpr is null )  where readcnt=0 ");
                 sql_cnt.Append(" union ");
                 sql_cnt.Append(" select * from( select scx,jtly,jtid,wjfl,jcbh,jcmc,wjlj,scry,scsj,yxqx2,fpr,fp_sj as fpsj,fp_flg as fpflg,lrr,lrsj ");
                 sql_cnt.Append(sql_read);
-                sql_cnt.Append(" from zxjc_t_jstc where fp_flg ='N' )  where readcnt > 0  and istogwh = 'Y' ");
+                sql_cnt.Append(" from zxjc_t_jstc where fpr is null )  where readcnt > 0  and istogwh = 'Y' ");
                 sql_cnt.Append(" ) zxjc_t_jstc  where 1=1 ");
                 sql_cnt.Append(" and (select count(jcbh) from zxjc_t_jstcfp_yfp where jcbh = zxjc_t_jstc.jcbh) = 0 ");
                 //

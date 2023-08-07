@@ -47,22 +47,10 @@ namespace MesAdmin.Controllers.LBJ.RYGL
             try
             {
                 int resultcount = 0;
-                var gwzdlist = _baseinfo.GetGwZd();
                 var ryxxlist = _baseinfo.RyxxList();
                 var list = _ryjnservice.GetList(parm, out resultcount);
                 foreach (var item in list)
                 {
-                    var options = new List<sys_column_options>();
-                    var l = gwzdlist.Where(t => t.scx == item.scx);
-                    foreach (var o in l)
-                    {
-                        var q = options.Where(t => t.value == o.gwh);
-                        if (q.Count() == 0)
-                        {
-                            options.Add(new sys_column_options { label = o.gwmc, value = o.gwh });
-                        }
-                    }
-                    item.gwhoptions = options;
                     var useroptions = new List<sys_column_options>();
                     var ryq = ryxxlist.Where(t => t.scx == item.scx);
                     foreach (var o in ryq)

@@ -66,6 +66,8 @@ namespace ZDMesModels.LBJ
         /// 是否维保
         /// </summary>
         public string sfwb { get; set; }
+        public string scxzx { get; set; }
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class base_sbwb_ls_mapper : ClassMapper<base_sbwb_ls>
@@ -75,6 +77,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.autoid).Key(KeyType.Assigned);
             Map(t => t.wbjhsjend).Column("wbjhsj_end");
             Map(t => t.sfwb).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

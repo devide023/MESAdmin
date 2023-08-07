@@ -12,6 +12,8 @@ namespace ZDMesModels.LBJ
         public int billid { get; set; }
         public int checkid { get; set; }
         public string checkval { get; set; }
+        public string val1 { get; set; }
+        public string val2 { get; set; }
 
         public zxjc_check_bill CheckBill { get; set; }
         public zxjc_base_check CheckItem { get; set; }

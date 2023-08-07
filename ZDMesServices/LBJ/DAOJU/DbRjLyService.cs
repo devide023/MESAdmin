@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Autofac.Core;
+using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,18 @@ using ZDMesInterfaces.LBJ.DaoJu;
 using ZDMesInterfaces.LBJ.ImportData;
 using ZDMesModels;
 using ZDMesModels.LBJ;
+using ZDMesServices.Common;
 
 namespace ZDMesServices.LBJ.DAOJU
 {
     public class DbRjLyService : BaseDao<base_dbrjzx>, IDaoJu, IImportData<base_dbrjzx>
     {
+        private UserUtilService _uservice = null;
         public DbRjLyService(string constr) : base(constr)
         {
+            _uservice = new UserUtilService(constr);
         }
-        
+
         /// <summary>
         /// 插入刀柄刃具在线记录
         /// </summary>
@@ -27,9 +31,9 @@ namespace ZDMesServices.LBJ.DAOJU
             {
                 StringBuilder sql = new StringBuilder();
                 sql.Append(" insert into base_dbrjzx ");
-                sql.Append(" (gcdm, dbh, scx, sbbh, rjlx, rjbzsm, rjazsm, rjdqsm, rjazjgs, dqjgs, dblysj, dblyr, rjlysj, rjlyr, rjrmcs, rjid, cxz, gwh,rjwz) ");
+                sql.Append(" (gcdm, dbh, scx, sbbh, rjlx, rjbzsm, rjazsm, rjdqsm, rjazjgs, dqjgs, dblysj, dblyr, rjlysj, rjlyr, rjrmcs, rjid, cxz, gwh,rjwz,scxzx) ");
                 sql.Append(" values  ");
-                sql.Append(" (:gcdm, :dbh, :scx, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjid, :cxz, :gwh,(select jgwz FROM base_rjxx where id = :rjid and rownum <2)) ");
+                sql.Append(" (:gcdm, :dbh, :scx, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjid, :cxz, :gwh,(select jgwz FROM base_rjxx where id = :rjid and rownum <2)),(select scxzx FROM base_sbxx where sbbh = :sbbh and rownum =1) ");
                 return sql;
             }
         }
@@ -42,9 +46,9 @@ namespace ZDMesServices.LBJ.DAOJU
             {
                 StringBuilder sql = new StringBuilder();
                 sql.Append(" insert into base_dbrjzx_ls ");
-                sql.Append(" (gcdm, scx, dbh, sbbh, djlx, djbzsm, djazsm, djdqsm, djazjgs, dqjgs, dblysj, dblyr, rjlysj, rjlyr, rjrmcs,rjzhrmsj, rjid, cxz, gwh) ");
+                sql.Append(" (gcdm, scx, dbh, sbbh, djlx, djbzsm, djazsm, djdqsm, djazjgs, dqjgs, dblysj, dblyr, rjlysj, rjlyr, rjrmcs,rjzhrmsj, rjid, cxz, gwh,scxzx) ");
                 sql.Append(" values ");
-                sql.Append("(:gcdm, :scx, :dbh, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs,:rjzhrmsj, :rjid, :cxz, :gwh) ");
+                sql.Append("(:gcdm, :scx, :dbh, :sbbh, :rjlx, :rjbzsm, :rjazsm, :rjdqsm, :rjazjgs, :dqjgs, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs,:rjzhrmsj, :rjid, :cxz, :gwh,(select scxzx FROM base_sbxx where sbbh = :sbbh and rownum =1) ) ");
                 return sql;
             }
         }
@@ -98,8 +102,11 @@ namespace ZDMesServices.LBJ.DAOJU
             get
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select * from base_dbrjzx_ls where id = ");
+                /*sql.Append("select * from base_dbrjzx_ls where id = ");
                 sql.Append(" (select max(id) FROM base_dbrjzx_ls where scx = :scx and dbh = :dbh and rjid = :rjid) ");
+                */
+                sql.Append(" select ta.* from base_dbrjzx_ls ta,(select max(id) as id FROM base_dbrjzx_ls where scx = :scx and dbh = :dbh and rjid = :rjid) tb ");
+                sql.Append(" where ta.id = tb.id ");
                 return sql;
             }
         }
@@ -125,7 +132,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 return "update lbj_qms_4mbhd set gzxx = nvl(gzxx,' ') || :gzxx|| ',' where id = :id";
             }
         }
-        
+
         public override IEnumerable<base_dbrjzx> GetList(sys_page parm, out int resultcount)
         {
             StringBuilder sql = new StringBuilder();
@@ -337,7 +344,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 StringBuilder update_ls_sql = new StringBuilder();
                 update_ls_sql.Append(" update base_dbrjzx_ls set rjrmcs = nvl(rjrmcs,0)+1,rjzhrmsj=sysdate,djdqsm =0,cxz=0,rjrmr=:rjrmr where id =:lsid ");
                 //设备编号查询变化点表状态
-                StringBuilder qbhdzt =new StringBuilder();
+                StringBuilder qbhdzt = new StringBuilder();
                 qbhdzt.Append("select id from lbj_qms_4mbhd where jt=:sbbh and rwzt = '00' order by cjsj desc ");
                 //原有变化点追加信息
                 StringBuilder zjbhdsql = new StringBuilder();
@@ -360,18 +367,19 @@ namespace ZDMesServices.LBJ.DAOJU
                                     int bzsm = 4000;
                                     var rjxxobj = db.Query<base_rjxx>("select ta.* from base_rjxx ta, base_dbrjzx tb where  ta.id = tb.rjid and tb.id = :id", new { id = item }).FirstOrDefault();
                                     var zxobj = db.Query<base_dbrjzx>(zxcxsql.ToString(), new { id = item }).FirstOrDefault();
-                                    var hisobj = db.Query<base_dbrjzx_ls>(Select_His_Sql.ToString(), new {scx = zxobj.scx, dbh =zxobj.dbh,rjid = zxobj.rjid}).FirstOrDefault();
+                                    var hisobj = db.Query<base_dbrjzx_ls>(Select_His_Sql.ToString(), new { scx = zxobj.scx, dbh = zxobj.dbh, rjid = zxobj.rjid }).FirstOrDefault();
                                     if (rjxxobj != null)
                                     {
                                         bzsm = rjxxobj.rjbzsm;
                                         var ret = db.Execute(sql.ToString(), new { id = item, bzsm = bzsm, rjrmr = _u.name }, trans);
-                                        db.Execute(update_ls_sql.ToString(),new { lsid = hisobj.id,rjrmr = _u.name }, trans);
+                                        db.Execute(update_ls_sql.ToString(), new { lsid = hisobj.id, rjrmr = _u.name }, trans);
                                         var iscntquery = db.Query<string>(qbhdzt.ToString(), new { sbbh = zxobj.sbbh });
                                         if (iscntquery.Count() == 0)
                                         {
                                             //var bhdid = db.Query<string>("select f_base_getno('BHD', 'MES', 8) from dual").First();
-                                            db.Execute(Inser_BHD_Sql.ToString(), new {
-                                                id = Guid.NewGuid().ToString().Replace("-",""),
+                                            db.Execute(Inser_BHD_Sql.ToString(), new
+                                            {
+                                                id = Guid.NewGuid().ToString().Replace("-", ""),
                                                 scx = zxobj.scx,
                                                 cjrmc = _u.name,
                                                 djffr = _u.name,
@@ -383,9 +391,9 @@ namespace ZDMesServices.LBJ.DAOJU
                                         }
                                         else
                                         {
-                                            db.Execute(zjbhdsql.ToString(), new { gzxx = zxobj.rjlx, id = iscntquery.First() },trans);
+                                            db.Execute(zjbhdsql.ToString(), new { gzxx = zxobj.rjlx, id = iscntquery.First() }, trans);
                                         }
-                                        db.Execute(rmlssql.ToString(), new {rjzxid=zxobj.id, scx = zxobj.scx, dbh = zxobj.dbh, sbbh = zxobj.sbbh, bzsm=zxobj.rjbzsm, dqsm = zxobj.rjdqsm, rjid = zxobj.rjid, rjlx = zxobj.rjlx, rmr = _u.name, rmrid = _u.id }, trans);
+                                        db.Execute(rmlssql.ToString(), new { rjzxid = zxobj.id, scx = zxobj.scx, dbh = zxobj.dbh, sbbh = zxobj.sbbh, bzsm = zxobj.rjbzsm, dqsm = zxobj.rjdqsm, rjid = zxobj.rjid, rjlx = zxobj.rjlx, rmr = _u.name, rmrid = _u.id }, trans);
                                     }
                                 }
                                 trans.Commit();
@@ -541,6 +549,34 @@ namespace ZDMesServices.LBJ.DAOJU
             {
                 StringBuilder sql = new StringBuilder();
                 sql.Append("delete from BASE_DBRJZX where id in :id");
+                //查询刃磨历史
+                StringBuilder sql_sfczrmhis = new StringBuilder();
+                sql_sfczrmhis.Append("select count(*) from base_dbrj_lssm where scx = :scx and scxzx =:scxzx and sbbh = :sbbh and dbh = :dbh and rjid = :rjid ");
+                //删除刃磨历史
+                StringBuilder sql_delrmhis = new StringBuilder();
+                sql_delrmhis.Append("delete from base_dbrj_lssm ");
+                sql_delrmhis.Append(" where  scx = :scx  ");
+                sql_delrmhis.Append(" and    scxzx = :scxzx  ");
+                sql_delrmhis.Append(" and    sbbh = :sbbh  ");
+                sql_delrmhis.Append(" and    dbh = :dbh ");
+                sql_delrmhis.Append(" and    rjid = :rjid ");
+                sql_delrmhis.Append(" and    exists(select * ");
+                sql_delrmhis.Append(" from base_dbrj_lssm ");
+                sql_delrmhis.Append(" where scx = :scx ");
+                sql_delrmhis.Append("  and    scxzx = :scxzx ");
+                sql_delrmhis.Append("  and    sbbh = :sbbh ");
+                sql_delrmhis.Append("  and    dbh = :dbh ");
+                sql_delrmhis.Append(" and    rjid = :rjid) ");
+                //保存刃磨历史
+                StringBuilder sql_rmhis = new StringBuilder();
+                sql_rmhis.Append("insert into base_dbrj_lssm ");
+                sql_rmhis.Append("(gcdm,smlx, scx, scxzx, sbbh, gwh, dbh, rjid, rjlx, rjwz, rjbzsm, rjdqsm, dblysj, dblyr, rjlysj, rjlyr, rjrmcs, rjzhrmsj, rjrmr, lrr, lrsj)  ");
+                sql_rmhis.Append("values  ");
+                sql_rmhis.Append("('9902',1, :scx, (select scxzx from base_sbxx where sbbh = :sbbh), :sbbh, (select gwh  ");
+                sql_rmhis.Append("from   base_sbxx  ");
+                sql_rmhis.Append(" where  sbbh =  ");
+                sql_rmhis.Append("  :sbbh), :dbh, :rjid, (select rjlx FROM base_rjxx where id = :rjid), (select jgwz FROM base_rjxx where id = :rjid), (select rjbzsm FROM base_rjxx where id = :rjid), :rjdqsm, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjzhrmsj, :rjrmr, :lrr, sysdate)  ");
+
                 //卸载刃具保存到流水表
                 StringBuilder sqlls = new StringBuilder();
                 sqlls.Append("insert into base_dbrjzx_ls ");
@@ -557,6 +593,36 @@ namespace ZDMesServices.LBJ.DAOJU
                         {
                             try
                             {
+                                foreach (var item in zxids)
+                                {
+                                    var rjxxinfo = db.Query<base_rjxx>("select ta.* from base_rjxx ta, base_dbrjzx tb where  ta.id = tb.rjid and tb.id = :id", new { id = item }).FirstOrDefault();
+                                    var dbzjxzinfo = db.Query<base_dbrjzx>("select * from BASE_DBRJZX where id = :id", new { id = item }).FirstOrDefault();
+                                    if (rjxxinfo != null)
+                                    {
+                                        var rmlsjl = db.ExecuteScalar<int>(sql_sfczrmhis.ToString(), new { scx = dbzjxzinfo?.scx, scxzx = dbzjxzinfo?.scxzx, dbh = dbzjxzinfo?.dbh, sbbh = dbzjxzinfo?.sbbh, rjid = dbzjxzinfo.rjid });
+
+                                        if (rmlsjl > 0)
+                                        {
+                                            db.Execute(sql_delrmhis.ToString(), new { scx = dbzjxzinfo?.scx, scxzx = dbzjxzinfo?.scxzx, dbh = dbzjxzinfo?.dbh, sbbh = dbzjxzinfo?.sbbh, rjid = dbzjxzinfo.rjid }, trans);
+                                        }
+                                        db.Execute(sql_rmhis.ToString(), new
+                                        {
+                                            scx = dbzjxzinfo?.scx,
+                                            sbbh = dbzjxzinfo?.sbbh,
+                                            dbh = dbzjxzinfo?.dbh,
+                                            rjid = dbzjxzinfo?.rjid,
+                                            rjdqsm = dbzjxzinfo?.rjdqsm,
+                                            dblysj = dbzjxzinfo?.dblysj,
+                                            dblyr = dbzjxzinfo?.dblyr,
+                                            rjlysj = dbzjxzinfo?.rjlysj,
+                                            rjlyr = dbzjxzinfo?.rjlyr,
+                                            rjrmcs = dbzjxzinfo?.rjrmcs,
+                                            rjzhrmsj = dbzjxzinfo?.rjzhrmsj,
+                                            rjrmr = dbzjxzinfo?.rjrmr,
+                                            lrr = _uservice.CurrentUser.name
+                                        }, trans);
+                                    }
+                                }
                                 //卸载刃具list
                                 db.Execute(sqlls.ToString(), new { id = zxids }, trans);
                                 db.Execute(sql.ToString(), new { id = zxids }, trans);
@@ -582,7 +648,7 @@ namespace ZDMesServices.LBJ.DAOJU
             }
         }
 
-        public IEnumerable<base_dbrjzx> GetRjZxByDbh(string dbh,string scx,string sbbh)
+        public IEnumerable<base_dbrjzx> GetRjZxByDbh(string dbh, string scx, string sbbh)
         {
             try
             {
@@ -602,7 +668,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 if (!string.IsNullOrEmpty(dbh))
                 {
                     sql.Append(" and dbh like :dbh ");
-                    p.Add(":dbh", dbh+"%", DbType.String, ParameterDirection.Input);
+                    p.Add(":dbh", dbh + "%", DbType.String, ParameterDirection.Input);
                 }
                 using (var db = new OracleConnection(ConString))
                 {
@@ -771,7 +837,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 //保存备换刀数据到流水表
                 StringBuilder dqrjsql = new StringBuilder();
                 dqrjsql.Append("select * from BASE_DBRJZX where id = :id");
-                               
+
                 using (var db = new OracleConnection(ConString))
                 {
                     try
@@ -976,7 +1042,7 @@ namespace ZDMesServices.LBJ.DAOJU
         public bool Save_DbRjZx_Change(sys_dbrj_bgly_form form)
         {
             try
-            {    
+            {
                 using (var db = new OracleConnection(ConString))
                 {
                     db.Open();
@@ -1088,14 +1154,14 @@ namespace ZDMesServices.LBJ.DAOJU
                 }
                 using (var db = new OracleConnection(ConString))
                 {
-                   var q = db.Query<base_dbrjzx, base_sbxx,base_dbxx, base_dbrjzx>(sql.ToString(),(ta, tb,tc) =>
-                    {
-                        ta.basesbxx = tb;
-                        ta.basedbxx = tc;
-                        ta.dbh = tc.dbh;
-                        ta.sbbh = tb.sbbh;
-                        return ta;
-                    },p,splitOn: "sbbh,dbh");
+                    var q = db.Query<base_dbrjzx, base_sbxx, base_dbxx, base_dbrjzx>(sql.ToString(), (ta, tb, tc) =>
+                     {
+                         ta.basesbxx = tb;
+                         ta.basedbxx = tc;
+                         ta.dbh = tc.dbh;
+                         ta.sbbh = tb.sbbh;
+                         return ta;
+                     }, p, splitOn: "sbbh,dbh");
 
                     return q;
                 }
@@ -1128,7 +1194,7 @@ namespace ZDMesServices.LBJ.DAOJU
                                 string token = ZDToolHelper.TokenHelper.GetToken;
                                 var _u = UserInfo;
                                 var ids = entitys.Select(t => t.id).ToList();
-                                var oldlist = db.Query<base_dbrjzx>(oldsql.ToString(), new { id = ids}).ToList();
+                                var oldlist = db.Query<base_dbrjzx>(oldsql.ToString(), new { id = ids }).ToList();
                                 var ret = db.Execute(sql.ToString(), new { id = ids }, trans);
                                 foreach (var item in oldlist)
                                 {
@@ -1137,7 +1203,7 @@ namespace ZDMesServices.LBJ.DAOJU
                                     //未处理时在原变化点累加
                                     if (bhdsfcl.Count() > 0)
                                     {
-                                        db.Execute(Append_BHD_Sql, new { id = bhdsfcl.First(),gzxx=item.rjlx });
+                                        db.Execute(Append_BHD_Sql, new { id = bhdsfcl.First(), gzxx = item.rjlx });
                                     }
                                     else
                                     {
@@ -1157,11 +1223,11 @@ namespace ZDMesServices.LBJ.DAOJU
                                     {
                                         gcdm = item.gcdm,
                                         scx = item.scx,
-                                        dbh=item.dbh,
-                                        sbbh=item.sbbh,
-                                        rjlx=item.rjlx,
-                                        rjbzsm=item.rjbzsm,
-                                        rjazsm=0,
+                                        dbh = item.dbh,
+                                        sbbh = item.sbbh,
+                                        rjlx = item.rjlx,
+                                        rjbzsm = item.rjbzsm,
+                                        rjazsm = 0,
                                         rjdqsm = 0,
                                         rjazjgs = item.rjazjgs,
                                         dqjgs = item.dqjgs,
@@ -1172,9 +1238,9 @@ namespace ZDMesServices.LBJ.DAOJU
                                         rjrmcs = 0,
                                         rjzhrmsj = Convert.ToDateTime(null),
                                         rjid = item.rjid,
-                                        cxz=0,
+                                        cxz = 0,
                                         gwh = item.gwh
-                                    }, trans) ;
+                                    }, trans);
 
                                     //db.Execute(Inser_BHD_Sql.ToString(), new
                                     //{
@@ -1254,7 +1320,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 }
             }
         }
-        
+
         public bool GxSm(List<base_dbrjzx> entitys)
         {
             try
@@ -1400,6 +1466,134 @@ namespace ZDMesServices.LBJ.DAOJU
                                 }
                                 trans.Commit();
                                 return ret > 0;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ReSetRjSm(List<int> zxids)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("update BASE_DBRJZX ");
+                sql.Append(" set    rjbzsm = :bzsm,rjrmcs = nvl(rjrmcs,0) + 1, ");
+                sql.Append("        rjzhrmsj = sysdate,rjdqsm = 0,cxz=0,rjrmr = :rjrmr ");
+                sql.Append(" where  id = :id");
+                //查询刃磨历史
+                StringBuilder sql_sfczrmhis = new StringBuilder();
+                sql_sfczrmhis.Append("select count(*) from base_dbrj_lssm where scx = :scx and scxzx =:scxzx and sbbh = :sbbh and dbh = :dbh and rjid = :rjid ");
+                //删除刃磨历史
+                StringBuilder sql_delrmhis = new StringBuilder();
+                sql_delrmhis.Append("delete from base_dbrj_lssm ");
+                sql_delrmhis.Append(" where  scx = :scx  ");
+                sql_delrmhis.Append(" and    scxzx = :scxzx  ");
+                sql_delrmhis.Append(" and    sbbh = :sbbh  ");
+                sql_delrmhis.Append(" and    dbh = :dbh ");
+                sql_delrmhis.Append(" and    rjid = :rjid ");
+                sql_delrmhis.Append(" and    exists(select * ");
+                sql_delrmhis.Append(" from base_dbrj_lssm ");
+                sql_delrmhis.Append(" where scx = :scx ");
+                sql_delrmhis.Append("  and    scxzx = :scxzx ");
+                sql_delrmhis.Append("  and    sbbh = :sbbh ");
+                sql_delrmhis.Append("  and    dbh = :dbh ");
+                sql_delrmhis.Append(" and    rjid = :rjid) ");
+                //保存刃磨历史
+                StringBuilder sql_rmhis = new StringBuilder();
+                sql_rmhis.Append("insert into base_dbrj_lssm ");
+                sql_rmhis.Append("(gcdm,smlx,scx, scxzx, sbbh, gwh, dbh, rjid, rjlx, rjwz, rjbzsm, rjdqsm, dblysj, dblyr, rjlysj, rjlyr, rjrmcs, rjzhrmsj, rjrmr, lrr, lrsj)  ");
+                sql_rmhis.Append("values  ");
+                sql_rmhis.Append("('9902', 0,:scx, (select scxzx from base_sbxx where sbbh = :sbbh), :sbbh, (select gwh  ");
+                sql_rmhis.Append("from   base_sbxx  ");
+                sql_rmhis.Append(" where  sbbh =  ");
+                sql_rmhis.Append("  :sbbh), :dbh, :rjid, (select rjlx FROM base_rjxx where id = :rjid), (select jgwz FROM base_rjxx where id = :rjid), (select rjbzsm FROM base_rjxx where id = :rjid), :rjdqsm, :dblysj, :dblyr, :rjlysj, :rjlyr, :rjrmcs, :rjzhrmsj, :rjrmr, :lrr, sysdate)  ");
+                //设备编号查询变化点表状态
+                StringBuilder qbhdzt = new StringBuilder();
+                qbhdzt.Append("select id from lbj_qms_4mbhd where jt=:sbbh and rwzt = '00' order by cjsj desc ");
+                //原有变化点追加信息
+                StringBuilder zjbhdsql = new StringBuilder();
+                zjbhdsql.Append("update lbj_qms_4mbhd set gzxx = nvl(gzxx,' ') || :gzxx|| ',' where id = :id");
+                //刃磨流水
+                StringBuilder rmlssql = new StringBuilder();
+                rmlssql.Append("insert into zxjc_rjrm_ls (rjzxid,scx,dbh,sbbh,bzsm,dqsm,rjid, rjlx, rmr, rmrid) values (:rjzxid,:scx,:dbh,:sbbh,:bzsm,:dqsm,:rjid, :rjlx, :rmr, :rmrid) ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var item in zxids)
+                                {
+                                    var rjxxinfo = db.Query<base_rjxx>("select ta.* from base_rjxx ta, base_dbrjzx tb where  ta.id = tb.rjid and tb.id = :id", new { id = item }).FirstOrDefault();
+                                    var dbzjxzinfo = db.Query<base_dbrjzx>("select * from BASE_DBRJZX where id = :id", new { id = item }).FirstOrDefault();
+                                    if (rjxxinfo != null)
+                                    {
+                                        db.Execute(sql.ToString(), new { id = item, bzsm = rjxxinfo?.rjbzsm, rjrmr = _uservice.CurrentUser.name }, trans);
+                                        var rmlsjl = db.ExecuteScalar<int>(sql_sfczrmhis.ToString(), new { scx = dbzjxzinfo?.scx, scxzx = dbzjxzinfo?.scxzx, dbh = dbzjxzinfo?.dbh, sbbh = dbzjxzinfo?.sbbh, rjid = dbzjxzinfo.rjid });
+
+                                        if (rmlsjl > 0)
+                                        {
+                                            db.Execute(sql_delrmhis.ToString(), new { scx = dbzjxzinfo?.scx, scxzx = dbzjxzinfo?.scxzx, dbh = dbzjxzinfo?.dbh, sbbh = dbzjxzinfo?.sbbh, rjid = dbzjxzinfo.rjid }, trans);
+                                        }
+                                        db.Execute(sql_rmhis.ToString(), new
+                                        {
+                                            scx = dbzjxzinfo?.scx,
+                                            sbbh = dbzjxzinfo?.sbbh,
+                                            dbh = dbzjxzinfo?.dbh,
+                                            rjid = dbzjxzinfo?.rjid,
+                                            rjdqsm = dbzjxzinfo?.rjdqsm,
+                                            dblysj = dbzjxzinfo?.dblysj,
+                                            dblyr = dbzjxzinfo?.dblyr,
+                                            rjlysj = dbzjxzinfo?.rjlysj,
+                                            rjlyr = dbzjxzinfo?.rjlyr,
+                                            rjrmcs = dbzjxzinfo?.rjrmcs,
+                                            rjzhrmsj = dbzjxzinfo?.rjzhrmsj,
+                                            rjrmr = dbzjxzinfo?.rjrmr,
+                                            lrr = _uservice.CurrentUser.name
+                                        }, trans);
+                                        var iscntquery = db.Query<string>(qbhdzt.ToString(), new { sbbh = dbzjxzinfo?.sbbh });
+                                        if (iscntquery.Count() == 0)
+                                        {
+                                            db.Execute(Inser_BHD_Sql.ToString(), new
+                                            {
+                                                id = Guid.NewGuid().ToString().Replace("-", ""),
+                                                scx = dbzjxzinfo?.scx,
+                                                cjrmc = _uservice.CurrentUser.name,
+                                                djffr = _uservice.CurrentUser.name,
+                                                sbbh = dbzjxzinfo?.sbbh,
+                                                gzxx = $"刃具刃磨:{dbzjxzinfo?.rjlx}",
+                                                f = "0007",
+                                                gwh = dbzjxzinfo?.gwh
+                                            }, trans);
+                                        }
+                                        else
+                                        {
+                                            db.Execute(zjbhdsql.ToString(), new { gzxx = dbzjxzinfo.rjlx, id = iscntquery.First() }, trans);
+                                        }
+                                        db.Execute(rmlssql.ToString(), new { rjzxid = dbzjxzinfo.id, scx = dbzjxzinfo.scx, dbh = dbzjxzinfo.dbh, sbbh = dbzjxzinfo.sbbh, bzsm = dbzjxzinfo.rjbzsm, dqsm = dbzjxzinfo.rjdqsm, rjid = dbzjxzinfo.rjid, rjlx = dbzjxzinfo.rjlx, rmr = _uservice.CurrentUser.name, rmrid = _uservice.CurrentUser.id }, trans);
+                                    }
+                                }
+                                trans.Commit();
+                                return true;
                             }
                             catch (Exception)
                             {

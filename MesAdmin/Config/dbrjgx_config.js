@@ -164,18 +164,6 @@
     },
   },
   fields: [{
-      coltype: 'list',
-      label: '工厂',
-      prop: 'gcdm',
-      headeralign: 'center',
-      align: 'center',
-      width: 150,
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx',
-      },
-      options: [],
-    }, {
       coltype: 'string',
       label: '产品编号',
       suggest: true,

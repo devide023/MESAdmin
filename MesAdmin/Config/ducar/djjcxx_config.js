@@ -205,6 +205,11 @@
       headeralign: 'center',
       align: 'center',
 	  width:100,
+	  optionconfig:{
+		  method: 'get',
+		  url: '/ducar/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
 	  relation: 'gwhs',
 	  change_fn_name: 'select_gwh',
     },{

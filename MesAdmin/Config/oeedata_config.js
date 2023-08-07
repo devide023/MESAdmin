@@ -97,6 +97,24 @@
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     },
+    select_scx: function (collist, val, row) {
+      var _this = this;
+      row.scxzx = '';
+      this.$request('get', '/lbj/baseinfo/getscxzx', {
+        scx: val
+      }).then(function (res) {
+        if (res.code === 1) {
+          row.scxzxs = res.list.map(function (i) {
+            return {
+              label: i.scxzxmc,
+              value: i.scxzx
+            };
+          });
+        } else {
+          _this.$message.error(res.msg);
+        }
+      });
+    }
   },
   fields: [{
       coltype: 'list',
@@ -110,7 +128,26 @@
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
       options: [],
-
+      change_fn_name: 'select_scx',
+      sortable: true
+    }, {
+      coltype: 'list',
+      label: '子线',
+      prop: 'scxzx',
+      overflowtooltip: true,
+      searchable: true,
+      headeralign: 'center',
+      align: 'center',
+      options: [],
+      width: 80,
+	  optionconfig:{
+		  method: 'get',
+		  url: '/lbj/baseinfo/scxzx',
+		  querycnf:[{scx:'scx'}]
+	  },
+      relation: 'scxzxs',
+      hideoptionval: true,
+      sortable: true
     }, {
       coltype: 'string',
       label: '计划作息时长',
@@ -235,6 +272,8 @@
     gzsj: 0,
     qttjsj: 0,
     lljp: 5,
+    scxzx: '',
+    scxzxs: [],
     oeetarget: 99,
     isdb: false,
     isedit: true

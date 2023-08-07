@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ.SBWB;
 using ZDMesModels.LBJ;
 
@@ -108,6 +109,126 @@ namespace ZDMesServices.LBJ.SBWB
             }
         }
 
+        public bool SaveSbWbInfo(List<base_sbwb_ls> entitys)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" insert into base_sbwb_ls ");
+                sql.Append(" (autoid, gcdm, scx, gwh, wbsh, wbxx, wbjhsj, wbzt, lrr, lrsj, wbjhsj_end, sbbh, scxzx) ");
+                sql.Append(" select  ");
+                sql.Append(" : autoid, :gcdm, :scx, :gwh, :wbsh, :wbxx, :wbjhsj, :wbzt, :lrr, :lrsj, :wbjhsjend, :sbbh, :scxzx from dual  ");
+                sql.Append("  where not exists ( ");
+                sql.Append("    select * from base_sbwb_ls where gcdm =:gcdm and scx = :scx and scxzx =:scxzx and sbbh =:sbbh and wbxx =:wbxx and wbzt = '计划中' ) ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    try
+                    {
+                        db.Open();
+                        using (var trans = db.BeginTransaction())
+                        {
+                            try
+                            {
+                                foreach (var item in entitys)
+                                {
+                                    db.Execute(sql.ToString(), new { 
+                                        item.autoid, 
+                                        item.gcdm, 
+                                        item.scx, 
+                                        item.gwh, 
+                                        item.wbsh, 
+                                        item.wbxx, 
+                                        item.wbjhsj, 
+                                        item.wbzt, 
+                                        item.lrr, 
+                                        item.lrsj, 
+                                        item.wbjhsjend, 
+                                        item.sbbh, 
+                                        item.scxzx }, trans);
+                                }
+                                trans.Commit();
+                                return true;
+                            }
+                            catch (Exception)
+                            {
+                                trans.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_sbwb> ScxZxWbXxList(base_sbwb item)
+        {
+            try
+            {
+                List<base_scxxx_jj> templist = new List<base_scxxx_jj>();
+                StringBuilder sql = new StringBuilder();
+                StringBuilder sql_temp = new StringBuilder();
+                sql.Append("select autoid, gcdm, scx,scxzx, sbbh, gwh, wbsh, wbxx, bz from BASE_SBWB where  scbz = 'N' ");
+                DynamicParameters p = new DynamicParameters();
+                foreach (var scx in item.scxs)
+                {
+                    var l = scx?.Split(new char[] { '-' });
+                    if (l?.Length == 2)
+                    {
+                        templist.Add(new base_scxxx_jj() { scx = l[0], scxzx = l[1] });
+                    }
+                    else if (l?.Length == 1)
+                    {
+                        templist.Add(new base_scxxx_jj() { scx = l[0] });
+                    }
+
+                }
+                if (templist.Count > 0)
+                {
+                    for (int i = 0; i < templist.Count; i++)
+                    {
+                        if (i == templist.Count - 1)
+                        {
+                            sql_temp.Append($" ( scx = :scx{i} and nvl(scxzx,' ') = :scxzx{i} ) ");
+                        }
+                        else
+                        {
+                            sql_temp.Append($" ( scx = :scx{i} and nvl(scxzx,' ') = :scxzx{i} ) or ");
+                        }
+                        p.Add($":scx{i}", templist[i].scx);
+                        p.Add($":scxzx{i}",  string.IsNullOrEmpty(templist[i].scxzx)?" ": templist[i].scxzx);
+                    }
+                    sql.Append(" and ");
+                    sql.Append("(");
+                    sql.Append(sql_temp);
+                    sql.Append(")");
+                    
+                }
+                if (!string.IsNullOrEmpty(item.sbbh))
+                {
+                    sql.Append(" and sbbh = :sbbh ");
+                    p.Add(":sbbh", item.sbbh);
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_sbwb>(sql.ToString(), p);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public IEnumerable<base_sbwb> WbXxList(base_sbwb item)
         {
             try
@@ -153,7 +274,7 @@ namespace ZDMesServices.LBJ.SBWB
                         InitDB(db);
                         List<base_sbwb_ls> result = new List<base_sbwb_ls>();
                         StringBuilder sql = new StringBuilder();
-                        sql.Append("select autoid, gcdm, scx, sbbh, wbsh, wbxx, wbjhsj,wbjhsj_end as wbjhsjend, wbzt, wbwcsj, wbwcr, lrr, lrsj ");
+                        sql.Append("select autoid, gcdm, scx,scxzx, sbbh, wbsh, wbxx, wbjhsj,wbjhsj_end as wbjhsjend, wbzt, wbwcsj,(select user_name FROM zxjc_ryxx where user_code = t.wbwcr and rownum = 1 ) as wbwcr, lrr, lrsj ");
                         sql.Append(" from BASE_SBWB_LS t ");
                         sql.Append(" where trunc(wbjhsj) = (select max(trunc(wbjhsj)) from BASE_SBWB_LS)");
                         result = db.Query<base_sbwb_ls>(sql.ToString()).ToList();

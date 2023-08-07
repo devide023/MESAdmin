@@ -37,9 +37,11 @@ namespace MesAdmin.Controllers.LBJ.SBWB
             {
                 int resultcount = 0;
                 var sbxxlist = _baseinfo.Get_SBXX_List();
+                var scxzxs = _baseinfo.Get_ALL_ScxXX_JJ();
                 var list = _sbwbservice.GetList(parm, out resultcount);
                 foreach (var item in list)
                 {
+                    item.scxzxs = scxzxs.Where(t => t.scx == item.scx).Select(t => new option_list() {label=t.scxzxmc,value=t.scxzx }).ToList();
                     item.sbxxoptions = sbxxlist.Where(t => t.scx == item.scx).Select(t => new sys_column_options {label=t.sbmc,value=t.sbbh }).Distinct().ToList();
                 }
                 return Json(new sys_search_result()
@@ -56,7 +58,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                 throw;
             }
         }
-        [HttpPost, Route("add")]
+        [HttpPost, RequireVerify, Route("add")]
         public IHttpActionResult Add(List<base_sbwb> entitys)
         {
             try
@@ -86,7 +88,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
             }
         }
 
-        [HttpPost, Route("edit")]
+        [HttpPost, RequireVerify, Route("edit")]
         public IHttpActionResult Edit(List<base_sbwb> entitys)
         {
             try
@@ -144,7 +146,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                 throw;
             }
         }
-        [HttpGet, Route("readxls_by_replace")]
+        [HttpGet, RequireVerify, Route("readxls_by_replace")]
         public IHttpActionResult ReadTempFile_Replace(string fileid)
         {
             try
@@ -189,7 +191,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                 throw;
             }
         }
-        [HttpGet, Route("readxls_by_zh")]
+        [HttpGet, RequireVerify, Route("readxls_by_zh")]
         public IHttpActionResult ReadTempFile_Zh(string fileid)
         {
             try
@@ -234,7 +236,7 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                 throw;
             }
         }
-        [HttpGet,Route("readxls")]
+        [HttpGet, RequireVerify, Route("readxls")]
         public IHttpActionResult ReadTempFile(string fileid)
         {
             string filepath = HttpContext.Current.Server.MapPath($"~/Upload/Excel/{fileid}");

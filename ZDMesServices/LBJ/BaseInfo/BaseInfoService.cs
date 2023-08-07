@@ -26,27 +26,17 @@ namespace ZDMesServices.LBJ.BaseInfo
         {
             try
             {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select dbh, dbmc, dblx, bz,(select count(id) from base_dbrjzx where dbh = base_dbxx.dbh ) as isused FROM base_dbxx");
                 using (var db = new OracleConnection(ConString))
                 {
-                    try
-                    {
-                        InitDB(db);
-                        return Db.GetList<base_dbxx>();
-                    }
-                    finally
-                    {
-                        db.Close();
-                    }
+                    return db.Query<base_dbxx>(sql.ToString());                    
                 }
             }
             catch (Exception)
             {
 
                 throw;
-            }
-            finally
-            {
-                Db.Dispose();
             }
         }
 
@@ -240,8 +230,10 @@ namespace ZDMesServices.LBJ.BaseInfo
                     {
                         List<string> scx = new List<string>();
                         scx.Add("J503");
+                        scx.Add("J504");
                         scx.Add("J505");
                         scx.Add("J507");
+                        scx.Add("J512");
                         InitDB(db);
                         if (string.IsNullOrEmpty(gcdm))
                         {
@@ -488,7 +480,7 @@ namespace ZDMesServices.LBJ.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select dbmc, dblx, dbh ");
+                sql.Append("select dbmc, dblx, dbh,(select count(id) from base_dbrjzx where dbh = base_dbxx.dbh ) as isused ");
                 sql.Append("FROM   base_dbxx ");
                 sql.Append("where  dbh like :key ");
                 sql.Append("or     dblx like :key ");
@@ -516,7 +508,7 @@ namespace ZDMesServices.LBJ.BaseInfo
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select id,rjlx, rjmc, jgwz ");
+                sql.Append("select id,rjlx, rjmc, jgwz,rjbzsm ");
                 sql.Append(" FROM   base_rjxx");
                 sql.Append(" where  rjlx like :key ");
                 sql.Append(" or     jgwz like :key ");
@@ -548,6 +540,65 @@ namespace ZDMesServices.LBJ.BaseInfo
                 using (var db = new OracleConnection(ConString))
                 {
                     return db.Query<base_scxxx_jj>(sql.ToString(), new { scx = scx});
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_scxxx_jj> Get_ScxXX_JJ()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select distinct scxzx, scxzxmc from base_scxxx_jj where scxzx is not null ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_scxxx_jj>(sql.ToString());
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_scxxx_jj> Get_ALL_ScxXX_JJ()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select gcdm, scx, scxmc, scxzx, scxzxmc, bz FROM base_scxxx_jj ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_scxxx_jj>(sql.ToString());
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<base_wlxx> Get_DBWLInfo()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select tb.wlbm, tb.wlmc ");
+                sql.Append(" FROM(select distinct cpzt from BASE_DBRJGX) ta, base_wlxx tb ");
+                sql.Append(" where ta.cpzt = tb.wlbm ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_wlxx>(sql.ToString());
                 }
 
             }

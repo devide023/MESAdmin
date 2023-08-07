@@ -109,18 +109,6 @@
     },
   },
   fields: [{
-      coltype: 'list',
-      label: '工厂',
-      prop: 'gcdm',
-      headeralign: 'center',
-      align: 'center',
-      width: 80,
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx',
-      },
-      options: [],
-    }, {
       coltype: 'string',
       label: '刀柄号',
       prop: 'dbh',

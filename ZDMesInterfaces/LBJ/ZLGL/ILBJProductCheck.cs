@@ -16,6 +16,12 @@ namespace ZDMesInterfaces.LBJ.ZLGL
         /// <returns></returns>
         IEnumerable<zxjc_base_check> GetCheckItemsByCpxh(string cpxh);
         /// <summary>
+        /// 获取产品型号分析项目（如分析某个孔径值）
+        /// </summary>
+        /// <param name="cpxh"></param>
+        /// <returns></returns>
+        IEnumerable<zxjc_base_check> GetFxItemsByCpxh(string cpxh);
+        /// <summary>
         /// 保存检测项数据
         /// </summary>
         /// <param name="form"></param>
@@ -28,10 +34,21 @@ namespace ZDMesInterfaces.LBJ.ZLGL
         /// <returns></returns>
         IEnumerable<string> GetCpxhByKey(string key);
         /// <summary>
+        /// 获取产品型号
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> GetCpxhList();
+        /// <summary>
         /// 获取检测单据信息
         /// </summary>
         /// <param name="billid"></param>
         /// <returns></returns>
         zxjc_check_bill Get_BillInfo_ById(string billid);
+        /// <summary>
+        /// 保存检测值历史数据
+        /// </summary>
+        /// <param name="billid"></param>
+        /// <returns></returns>
+        bool Save_CheckDetail_His(string billid);
     }
 }

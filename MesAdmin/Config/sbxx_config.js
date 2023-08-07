@@ -15,7 +15,25 @@
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
       options: []
-    }, {
+    },
+	{
+      coltype: 'list',
+      prop: 'scxzx',
+      label: '子线',
+      headeralign: 'center',
+      align: 'center',
+      overflowtooltip: true,
+	  options: [],
+      width: 80,
+	  optionconfig:{
+		  method: 'get',
+		  url: '/lbj/baseinfo/scxzx',
+		  querycnf:[{scx:'scx'}]
+	  },
+      relation: 'scxzxs',
+	  hideoptionval: true
+    },
+	{
       coltype: 'string',
       prop: 'sbbh',
       label: '设备编号',

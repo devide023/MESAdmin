@@ -9,10 +9,11 @@ namespace ZDMesModels.LBJ
     ///</summary>
     public class zxjc_gylx
     {
+        public string rid { get; set; }
         /// <summary>
         /// 工厂 
         ///</summary>
-         public string gcdm { get; set; }
+        public string gcdm { get; set; }
         /// <summary>
         /// 生产线 
         ///</summary>
@@ -77,6 +78,8 @@ namespace ZDMesModels.LBJ
         /// 互锁时间 
         ///</summary>
          public DateTime? fssj { get; set; }
+
+        public List<option_list> gwhs { get; set; }
     }
 
     public class zxjc_gylx_mapper : ClassMapper<zxjc_gylx>
@@ -84,6 +87,8 @@ namespace ZDMesModels.LBJ
         public zxjc_gylx_mapper()
         {
             Map(t => t.statusno).Column("status_no");
+            Map(t => t.rid).Ignore();
+            Map(t => t.gwhs).Ignore();
             AutoMap();
         }
     }

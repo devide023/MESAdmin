@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="base_ftpfilepath.cs" />
     <Compile Include="base_page_config.cs" />
+    <Compile Include="base_param.cs" />
     <Compile Include="CDGC\ad_bjxx.cs" />
     <Compile Include="CDGC\ad_bjxxls.cs" />
     <Compile Include="CDGC\base_bhdxx.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="CDGC\zxjc_sbxx_ls_cnc.cs" />
     <Compile Include="CDGC\zxjc_scjh.cs" />
     <Compile Include="CDGC\zxjc_t_dzgy.cs" />
+    <Compile Include="Ducar\base_fxwl.cs" />
     <Compile Include="Ducar\base_gwbj.cs" />
     <Compile Include="Ducar\base_gwzd.cs" />
     <Compile Include="Ducar\base_gycs.cs" />
@@ -134,11 +136,13 @@
     <Compile Include="LBJ\App_Menu.cs" />
     <Compile Include="LBJ\app_role.cs" />
     <Compile Include="LBJ\app_user.cs" />
+    <Compile Include="LBJ\barcode_print.cs" />
     <Compile Include="LBJ\base_bhdxx.cs" />
     <Compile Include="LBJ\base_cnc.cs" />
     <Compile Include="LBJ\base_dbrjzx.cs" />
     <Compile Include="LBJ\base_dbrjzx_ls.cs" />
     <Compile Include="LBJ\base_dbrjgx.cs" />
+    <Compile Include="LBJ\base_dbrj_lssm.cs" />
     <Compile Include="LBJ\base_rjsmxh.cs" />
     <Compile Include="LBJ\base_sbwb_ls.cs" />
     <Compile Include="LBJ\base_sbwb.cs" />
@@ -156,7 +160,9 @@
     <Compile Include="LBJ\form_app_role_user.cs" />
     <Compile Include="LBJ\lbj_qms_4mbhd.cs" />
     <Compile Include="LBJ\pp_zpjh.cs" />
+    <Compile Include="LBJ\sc_zxjc_bhg.cs" />
     <Compile Include="LBJ\sys_checkbill_form.cs" />
+    <Compile Include="LBJ\sys_dbrjgx_form.cs" />
     <Compile Include="LBJ\sys_dbrjly.cs" />
     <Compile Include="LBJ\sys_dbrjzx_form.cs" />
     <Compile Include="LBJ\sys_dbrj_bgly_form.cs" />
@@ -164,6 +170,7 @@
     <Compile Include="LBJ\sys_import_log_config.cs" />
     <Compile Include="LBJ\sys_jtfp_form.cs" />
     <Compile Include="LBJ\sys_ryjx.cs" />
+    <Compile Include="LBJ\sys_save_dbrjzx_form.cs" />
     <Compile Include="LBJ\sys_wbzq_form.cs" />
     <Compile Include="LBJ\sys_wbzq_gl_form.cs" />
     <Compile Include="LBJ\zxjc_base_check.cs" />

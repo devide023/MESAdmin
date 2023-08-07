@@ -182,7 +182,6 @@
       label: '账号',
       suggest: true,
       prop: 'usercode',
-      dbprop: 'user_code',
       overflowtooltip: true,
       sortable: true,
       headeralign: 'center',
@@ -209,6 +208,11 @@
       align: 'center',
       width: 150,
 	  relation: 'gwhs',
+	  optionconfig:{
+		  method: 'get',
+		  url: '/ducar/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
 	  change_fn_name: 'select_gwh'
     }, 
 	{

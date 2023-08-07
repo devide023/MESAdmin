@@ -25,13 +25,29 @@
       fnname: 'view_check_mx',
       btntype: 'text'
     },
+	{
+      label: '编辑',
+      fnname: 'edit_check_bill',
+      btntype: 'text',
+	  condition: [{
+          field: 'xjjg',
+          oper: '!=',
+          val: '合格'
+        }
+      ]
+    }
   ],
   pagefuns: {
     view_check_mx: function (row) {
       this.$router.push({
-        path: '/smjgl/checkbill?edit=0&billid=' + row.id
+        path: '/smjgl/checkbill?edit=0&xj=0&billid=' + row.id
       });
     },
+	edit_check_bill:function(row){
+		this.$router.push({
+        path: '/smjgl/checkbill?edit=1&xj=1&billid=' + row.id
+      });
+	},
     audit_handle: function () {
       let _this = this;
       if (_this.selectlist.length > 0) {

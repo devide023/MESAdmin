@@ -17,10 +17,11 @@ namespace ZDMesModels.LBJ
         /// 生产线 
         ///</summary>
          public string scx { get; set; }
+        public string scxzx { get; set; }
         /// <summary>
         /// 岗位编码 
         ///</summary>
-         public string gwh { get; set; }
+        public string gwh { get; set; }
         /// <summary>
         /// 产品状态 
         ///</summary>
@@ -49,6 +50,7 @@ namespace ZDMesModels.LBJ
         /// 岗位选项
         /// </summary>
         public List<sys_column_options> gwhoptions { get; set; }
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class zxjc_djgw_mapper : ClassMapper<zxjc_djgw>
@@ -58,6 +60,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.djno).Key(KeyType.Assigned);
             Map(t => t.statusno).Column("status_no");
             Map(t => t.gwhoptions).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

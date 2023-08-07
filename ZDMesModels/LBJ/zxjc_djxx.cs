@@ -25,10 +25,11 @@ namespace ZDMesModels.LBJ
         /// 岗位编码 
         ///</summary>
          public string gwh { get; set; }
+         public List<option_list> gwhs { get; set; }
         /// <summary>
         /// 机型 
         ///</summary>
-         public string engineno { get; set; }
+        public string engineno { get; set; }
         /// <summary>
         /// 状态码 
         ///</summary>
@@ -57,6 +58,9 @@ namespace ZDMesModels.LBJ
         /// 点检时间 
         ///</summary>
          public DateTime? lrsj { get; set; }
+
+        public string scxzx { get; set; }
+        public List<option_list> scxzxs { get; set; }
     }
 
    public class zxjc_djxx_mapper : ClassMapper<zxjc_djxx>
@@ -66,6 +70,8 @@ namespace ZDMesModels.LBJ
             Map(t => t.id).Key(KeyType.Assigned);
             Map(t => t.statusno).Column("status_no");
             Map(t => t.engineno).Column("engine_no");
+            Map(t => t.scxzxs).Ignore();
+            Map(t => t.gwhs).Ignore();
             AutoMap();
         }
     }

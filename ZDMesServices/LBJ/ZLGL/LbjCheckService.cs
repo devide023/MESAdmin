@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Aspose.Cells;
+using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace ZDMesServices.LBJ.ZLGL
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select id, cpfw, cpxh, th, jcxm, jcpc, jcgj, jcz, jcxx, jcsx, srlx, seq, lrr, lrsj from ZXJC_BASE_CHECK where cpxh = :cpxh order by cpfw asc,th asc,jcpc asc,jcgj asc ");
+                sql.Append("select id, cpfw, cpxh, th, jcxm, jcpc, jcgj, jcz, jcxx, jcsx, srlx, seq, lrr, lrsj from ZXJC_BASE_CHECK where scbz='N' and cpxh = :cpxh order by cpfw asc,th asc,jcpc asc,jcgj asc ");
                 using (var db = new OracleConnection(ConString))
                 {
                     return db.Query<zxjc_base_check>(sql.ToString(), new { cpxh = cpxh });
@@ -55,6 +56,46 @@ namespace ZDMesServices.LBJ.ZLGL
             }
         }
 
+        public IEnumerable<string> GetCpxhList()
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select distinct cpxh from zxjc_base_check ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<string>(sql.ToString());
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<zxjc_base_check> GetFxItemsByCpxh(string cpxh)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select id, cpfw, cpxh, th, jcxm, jcpc, jcgj, jcz, jcxx, jcsx ");
+                sql.Append(" from ZXJC_BASE_CHECK  ");
+                sql.Append(" where cpxh = :cpxh  ");
+                sql.Append(" and isfx = 'Y'  ");
+                sql.Append(" and scbz = 'N'  ");
+                sql.Append(" order by seq  ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<zxjc_base_check>(sql.ToString(), new { cpxh = cpxh });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public zxjc_check_bill Get_BillInfo_ById(string billid)
         {
             try
@@ -63,7 +104,7 @@ namespace ZDMesServices.LBJ.ZLGL
                 sql.Append("select id, scx, bmmc, rq, bc, cpxh, cpmc, gxmc, khmc, jcjg, bz, lrr, lrsj, shr, shsj, vin, jjh, xgr, xgsj,smjbs FROM zxjc_check_bill where id = :billid ");
                 //
                 StringBuilder sqlmx = new StringBuilder();
-                sqlmx.Append("select ta.id as checkid, ta.checkval,tb.id,tb.cpfw, tb.th, tb.jcxm, tb.jcpc, tb.jcgj,tb.srlx,tb.jcxx,tb.jcsx ");
+                sqlmx.Append("select ta.id as checkid, ta.checkval,ta.val1,ta.val2,tb.id,tb.cpfw, tb.th, tb.jcxm, tb.jcpc, tb.jcgj,tb.srlx,tb.jcxx,tb.jcsx ");
                 sqlmx.Append(" FROM zxjc_check_bill_detail ta, zxjc_base_check tb ");
                 sqlmx.Append(" where ta.checkid = tb.id ");
                 sqlmx.Append(" and ta.billid = :billid ");
@@ -103,9 +144,9 @@ namespace ZDMesServices.LBJ.ZLGL
                 //明细
                 StringBuilder sqlmx = new StringBuilder();
                 sqlmx.Append("insert into zxjc_check_bill_detail ");
-                sqlmx.Append("(billid, checkid, checkval) ");
+                sqlmx.Append("(billid, checkid, checkval,val1,val2) ");
                 sqlmx.Append(" values");
-                sqlmx.Append(" (:billid, :checkid, :checkval) ");
+                sqlmx.Append(" (:billid, :checkid, :checkval,:val1,:val2) ");
                 //更新表单
                 StringBuilder sqlupdate = new StringBuilder();
                 sqlupdate.Append("update zxjc_check_bill set scx=:scx,bmmc=:bmmc,rq=trunc(:rq),bc=:bc,cpxh=:cpxh,cpmc=:cpmc,gxmc=:gxmc,khmc=:khmc,jcjg=:jcjg,bz=:bz,vin=:vin,smjbs=:smjbs,jjh=:jjh,xgr=:xgr,xgsj=sysdate where id = :id ");
@@ -158,6 +199,8 @@ namespace ZDMesServices.LBJ.ZLGL
                                         mx.Add(":billid", billid, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
                                         mx.Add(":checkid", sitem.checkid, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
                                         mx.Add(":checkval", sitem.checkval, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                                        mx.Add(":val1", sitem.val1, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                                        mx.Add(":val2", sitem.val2, System.Data.DbType.String, System.Data.ParameterDirection.Input);
                                         db.Execute(sqlmx.ToString(), mx, trans);
                                     }
                                 }
@@ -175,6 +218,8 @@ namespace ZDMesServices.LBJ.ZLGL
                                         mx.Add(":billid", billid, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
                                         mx.Add(":checkid", sitem.checkid, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
                                         mx.Add(":checkval", sitem.checkval, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                                        mx.Add(":val1", sitem.val1, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                                        mx.Add(":val2", sitem.val2, System.Data.DbType.String, System.Data.ParameterDirection.Input);
                                         db.Execute(sqlmx.ToString(), mx, trans);
                                     }
                                 }
@@ -192,6 +237,28 @@ namespace ZDMesServices.LBJ.ZLGL
                     {
                         db.Close();
                     }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Save_CheckDetail_His(string billid)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" insert into zxjc_check_bill_detail_his ");
+                sql.Append(" (billid, checkid, checkval, val1, val2, lrr)  ");
+                sql.Append(" select billid, checkid, checkval, val1, val2, :uname  ");
+                sql.Append(" from zxjc_check_bill_detail  ");
+                sql.Append(" where billid = :billid  ");
+                using (var db = new OracleConnection(ConString))
+                {
+                   return db.Execute(sql.ToString(), new { billid = billid, uname = _u.CurrentUser.name }) > 0;
                 }
             }
             catch (Exception)

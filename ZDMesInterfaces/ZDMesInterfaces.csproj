@@ -115,6 +115,7 @@
     <Compile Include="LBJ\App\IApp.cs" />
     <Compile Include="LBJ\BHDGL\IBHD.cs" />
     <Compile Include="LBJ\DaoJu\IDaoJu.cs" />
+    <Compile Include="LBJ\DaoJu\IDBRJZX.cs" />
     <Compile Include="LBJ\DaoJu\IDjReport.cs" />
     <Compile Include="LBJ\DJGW\IDjGw.cs" />
     <Compile Include="LBJ\DZWD\IAudit.cs" />

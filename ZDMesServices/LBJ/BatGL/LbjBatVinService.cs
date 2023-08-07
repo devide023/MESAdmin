@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZDMesModels.LBJ;
-namespace ZDMesServices.LBJ.GYGL
-{
-    public class GYLXService:BaseDao<zxjc_gylx>
-    {
-        public GYLXService(string constr):base(constr)
-        {
 
+namespace ZDMesServices.LBJ.BatGL
+{
+    public class LbjBatVinService : BaseDao<barcode_print>
+    {
+        public LbjBatVinService(string constr) : base(constr)
+        {
         }
     }
 }

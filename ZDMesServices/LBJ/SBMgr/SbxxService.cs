@@ -23,8 +23,11 @@ namespace ZDMesServices.LBJ.SBMgr
                 resultcount = 0;
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
-                sql.Append($"select rowid as rid, sbbh, sbmc, gcdm, scx, gwh, sblx, ljlx, txfs, ip, port, com, sfky, sflj, bz, lrr, lrsj, glgwh, refresh_time, glgwxh, sbczl, sbyz, sbzj from base_sbxx where 1=1 ");
+                sql.Append($"select rowid as rid, sbbh, sbmc, gcdm, scx, gwh, sblx, ljlx, txfs, ip, port, com, sfky, sflj, bz, lrr, lrsj, glgwh, refresh_time, glgwxh, sbczl, sbyz, sbzj,scxzx from base_sbxx where 1=1 ");
                 sql_cnt.Append($"select count(*) from base_sbxx where 1=1 ");
+
+                StringBuilder sqlscxzx = new StringBuilder();
+                sqlscxzx.Append("select scx, scxmc, scxzx, scxzxmc FROM base_scxxx_jj");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {
@@ -45,7 +48,12 @@ namespace ZDMesServices.LBJ.SBMgr
                 }
                 using (var db = new OracleConnection(ConString))
                 {
+                    var scxzxlist = db.Query<base_scxxx_jj>(sqlscxzx.ToString());
                     var q = db.Query<base_sbxx>(OraPager(sql.ToString()), parm.sqlparam);
+                    foreach (var item in q)
+                    {
+                        item.scxzxs = scxzxlist.Where(t => t.scx == item.scx).Select(t => new option_list() { label = t.scxzxmc, value = t.scxzx }).ToList();
+                    }
                     resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
                     return q;
                 }

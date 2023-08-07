@@ -52,6 +52,11 @@ namespace ZDMesModels.LBJ
         public List<base_dbrjgx> children { get; set; }
 
         public string label { get; set; }
+        /// <summary>
+        /// 刀柄是否在线
+        /// </summary>
+        public int isused { get; set; } = 0;
+
 
     }
 
@@ -64,6 +69,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.children).Ignore();
             Map(t => t.label).Ignore();
             Map(t => t.id).Ignore();
+            Map(t => t.isused).Ignore();
             AutoMap();
         }
     }

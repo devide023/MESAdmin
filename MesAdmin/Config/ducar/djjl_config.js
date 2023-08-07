@@ -56,6 +56,12 @@
       headeralign: 'center',
       align: 'center',
 	  width:100,
+	  optionconfig:{
+		  method: 'get',
+		  url: '/ducar/baseinfo/gwzdbyscx',
+		  querycnf:[{scx:'scx'}]
+	  },
+	  options:[],
 	  relation: 'gwhs',
     },{
       coltype: 'string',

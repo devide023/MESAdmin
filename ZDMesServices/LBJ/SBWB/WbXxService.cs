@@ -42,7 +42,7 @@ namespace ZDMesServices.LBJ.SBWB
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append(" select autoid, gcdm, wbsh, wbxx, bz, lrr, lrsj, scbz,scx,sbbh ");
+                sql.Append(" select autoid, gcdm, gwh, wbsh, wbxx, bz, lrr, lrsj, scbz,scx,sbbh,scxzx ");
                 sql.Append(" from base_sbwb ");
                 sql.Append(" where 1 = 1 ");
                 StringBuilder sql_cnt = new StringBuilder();

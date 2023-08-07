@@ -71,6 +71,11 @@ namespace ZDMesModels.LBJ
         /// 目标OEE(%)
         /// </summary>
         public decimal oeetarget { get; set; }
+        /// <summary>
+        /// 生产线子线
+        /// </summary>
+        public string scxzx { get; set; }
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class base_template_scx_oee_mapper : ClassMapper<base_template_scx_oee>
@@ -83,6 +88,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.dlsjwait).Column("dlsj_wait");
             Map(t => t.oeetarget).Column("oee_target");
             Map(t => t.rid).Ignore();
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

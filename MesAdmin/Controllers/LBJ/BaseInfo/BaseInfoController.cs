@@ -59,16 +59,71 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        [HttpGet, Route("getscxzx")]
+        public IHttpActionResult GetScxZX(string scx)
+        {
+            try
+            {
+                var list = _baseinfo.Get_ScxXX_JJ(scx);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpGet,Route("scxzxs")]
+        public IHttpActionResult Get_Scxzxs()
+        {
+            try
+            {
+                var list = _baseinfo.Get_ScxXX_JJ().Select(t=>new {label=t.scxzxmc,value=t.scxzx}).OrderBy(t=>t.value);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet, Route("allscxzxs")]
+        public IHttpActionResult Get_All_ScxZxs()
+        {
+            try
+            {
+                var list = _baseinfo.Get_ALL_ScxXX_JJ();
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet, Route("scxzx")]
         public IHttpActionResult ScxZX(string scx)
         {
             try
             {
-                var list = _baseinfo.Get_ScxXX_JJ(scx).Select(t => new { label = t.scxmc, value = t.scxzx });
+                var list = _baseinfo.Get_ScxXX_JJ(scx).Select(t => new { label = t.scxzxmc, value = t.scxzx }).OrderBy(t=>t.value);
                 return Json(new { code = 1, msg = "ok", list = list });
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+        [HttpGet,Route("gwzdbyscx")]
+        public IHttpActionResult GwzdByScx(string scx)
+        {
+            try
+            {
+                var list = _baseinfo.GetGwListByScx(scx).Select(t => new { label = t.gwmc, value = t.gwh }).OrderBy(t=>t.value);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }
@@ -302,7 +357,37 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        [HttpGet, Route("cnc_list_by_scx_zx")]
+        public IHttpActionResult Get_CNC_List(string scx,string zx)
+        {
+            try
+            {
+                var list = _baseinfo.Get_SBXX_List().Where(t => t.scx == scx && t.scxzx==zx && t.sblx == "CNC").OrderBy(t => t.sbbh);
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
+        /// <summary>
+        /// 返回刀柄刃具对应的成品编码
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet,Route("dbrj_wlbm")]
+        public IHttpActionResult Get_DbrjWlbm()
+        {
+            try
+            {
+                var list = _baseinfo.Get_DBWLInfo().Select(t => new { label = t.wlmc, value = t.wlbm });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         [HttpGet, Route("wlbm_by_key")]
         public IHttpActionResult Get_WLBM_By_Key(string key)
         {

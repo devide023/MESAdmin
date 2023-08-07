@@ -150,6 +150,8 @@
 	  clear_fn_name: function (_this, row) {
 		row.username='';
       },
+	  sortable: true,
+	  overflowtooltip: true,
 	  relation:'useroptions'
     }, {
       coltype: 'string',
@@ -158,6 +160,7 @@
       headeralign: 'center',
       align: 'center',
       width: 100,
+	  sortable: true,
       overflowtooltip: true,
     }, {
       coltype: 'list',
@@ -173,6 +176,7 @@
           value: '晚班'
         }
       ],
+	  overflowtooltip: true,
 	  hideoptionval:true
     }, {
       coltype: 'list',
@@ -184,6 +188,8 @@
         method: 'get',
         url: '/lbj/baseinfo/gwzd'
       },
+	  sortable: true,
+	  overflowtooltip: true,
       relation: 'gwhoptions',
       options: [],
     }, {
@@ -200,6 +206,8 @@
           value: '惩罚'
         }
       ],
+	  sortable: true,
+	  overflowtooltip: true,
 	  hideoptionval:true
     }, {
       coltype: 'int',
@@ -207,6 +215,8 @@
       label: '数量',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
+	  sortable: true,
       with : 130,
     }, {
       coltype: 'int',
@@ -215,6 +225,8 @@
       headeralign: 'center',
       align: 'center',
       with : 100,
+	  sortable: true,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'jcxx',
@@ -229,6 +241,7 @@
       label: '来源',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }, {
       coltype: 'date',
       prop: 'fsrq',
@@ -236,24 +249,29 @@
       headeralign: 'center',
       align: 'center',
       with : 180,
+	  sortable: true,
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'khr',
       label: '考核人',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'khbm',
       label: '考核部门',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'bz',
       label: '备注',
       headeralign: 'center',
       align: 'center',
+	  overflowtooltip: true,
     }, {
       coltype: 'string',
       prop: 'lrr',

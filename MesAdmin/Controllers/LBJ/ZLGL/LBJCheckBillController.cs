@@ -20,6 +20,11 @@ namespace MesAdmin.Controllers.LBJ.ZLGL
             _checkbillservice = checkbillservice;
             _auditbillservice = auditbillservice;
         }
+        public override IHttpActionResult GetList(sys_page parm)
+        {
+            parm.default_order_colname= "rq desc,lrsj ";
+            return base.GetList(parm);
+        }
         [HttpPost, SearchFilter,Route("hjlist")]
         public virtual IHttpActionResult Get_HJList(sys_page parm)
         {
@@ -137,6 +142,20 @@ namespace MesAdmin.Controllers.LBJ.ZLGL
                 throw;
             }
         }
+        [HttpGet,Route("get_cpxh_list")]
+        public IHttpActionResult Get_CpxhList()
+        {
+            try
+            {
+                var list = _checkbillservice.GetCpxhList();
+                return Json(new { code = 1, msg = "ok", list = list.Select(t => new { value = t, label = t }) });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet,Route("get_cpxh_by_key")]
         public IHttpActionResult Get_CpxhByKey(string key)
         {
@@ -206,6 +225,9 @@ namespace MesAdmin.Controllers.LBJ.ZLGL
                     smjbs= entity.smjbs,
                     BillDetails = entity.BillDetails
                 });
+                //保存修改历史
+                _checkbillservice.Save_CheckDetail_His(entity.id.ToString());
+                //修改数据
                 return base.Edit(postdata);
             }
             catch (Exception)

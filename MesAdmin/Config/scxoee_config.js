@@ -201,17 +201,12 @@
       searchable: true,
       headeralign: 'center',
       align: 'center',
-      options: [{
-          label: '1线',
-          value: '1'
-        }, {
-          label: '2线',
-          value: '2'
-        }, {
-          label: '3线',
-          value: '3'
-        }
-      ],
+      options: [],
+	  optionconfig:{
+		  method: 'get',
+		  url: '/lbj/baseinfo/scxzx',
+		  querycnf:[{scx:'scx'}]
+	  },
       width: 80,
       relation: 'scxzxs',
       hideoptionval: true,

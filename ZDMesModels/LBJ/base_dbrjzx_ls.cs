@@ -88,6 +88,9 @@ namespace ZDMesModels.LBJ
 
         public string gwh { get; set; }
         public int cxz { get; set; }
+
+        public string scxzx { get; set; }
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class base_dbrjzx_ls_mapper : ClassMapper<base_dbrjzx_ls>
@@ -95,6 +98,7 @@ namespace ZDMesModels.LBJ
         public base_dbrjzx_ls_mapper()
         {
             Map(t => t.id).Key(KeyType.TriggerIdentity);
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

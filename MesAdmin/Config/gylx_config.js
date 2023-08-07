@@ -1,56 +1,92 @@
 {
   isgradequery: true,
   isoperate: false,
-  isselect: false,
-  pagefuns: {},
+  isselect: true,
+  pagefuns: {
+    add_handle: function () {
+      var row = this.$deepClone(this.pageconfig.form);
+      row.lrr = this.$store.getters.name;
+      row.lrsj = this.$parseTime(new Date());
+      this.list.unshift(row);
+    },
+	select_scx: function (collist, val, row) {
+      var _this = this;
+      row.gwh = '';
+      this.$request('get', '/lbj/baseinfo/scx_gwh?scx=' + val).then(function (res) {
+        if (res.code === 1) {
+          row.gwhs = res.list;
+        }
+      });
+    }
+  },
   fields: [{
       coltype: 'list',
       prop: 'scx',
       label: '生产线',
-	  width:150,
+      overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
-      options: []
+      options: [],
+	  change_fn_name: 'select_scx',
+      sortable: true
     }, {
       coltype: 'string',
       prop: 'statusno',
       dbprop: 'status_no',
       label: '状态编码',
-	  width:150,
+      overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
+      sortable: true
     }, {
       coltype: 'list',
       prop: 'gwh',
       label: '岗位号',
-	  width:100,
+      overflowtooltip: true,
       headeralign: 'center',
       align: 'center',
-      inioptionapi: {
+      optionconfig: {
         method: 'get',
-        url: '/lbj/baseinfo/gwzd'
+        url: '/lbj/baseinfo/gwzdbyscx',
+        querycnf: [{
+            scx: 'scx'
+          }
+        ]
       },
-      options: []
+      options: [],
+      relation: 'gwhs',
+      sortable: true
     }, {
       coltype: 'string',
       prop: 'zpsx',
       label: '装配顺序',
       headeralign: 'center',
-	  width:80,
+      overflowtooltip: true,
       align: 'center',
+      sortable: true
     }, {
-      coltype: 'bool',
+      coltype: 'list',
       prop: 'mj',
       label: '免检',
       headeralign: 'center',
       align: 'center',
-      activevalue: 'Y',
-      inactivevalue: 'N',
-	  width:100,
+      options: [{
+          label: '每台检',
+          value: 'N'
+        }, {
+          label: '首检',
+          value: 'S'
+        }, {
+          label: '免检',
+          value: 'Y'
+        },
+      ],
+      overflowtooltip: true,
+      sortable: true
     }, {
       coltype: 'bool',
       prop: 'fsbz',
@@ -59,6 +95,8 @@
       align: 'center',
       activevalue: 'Y',
       inactivevalue: 'N',
+      overflowtooltip: true,
+      sortable: true
     }, {
       coltype: 'bool',
       prop: 'shbz',
@@ -67,7 +105,8 @@
       align: 'center',
       activevalue: 'Y',
       inactivevalue: 'N',
-	  width:100,
+      overflowtooltip: true,
+      sortable: true
     }, {
       coltype: 'bool',
       prop: 'sfzp',
@@ -76,58 +115,62 @@
       align: 'center',
       activevalue: 'Y',
       inactivevalue: 'N',
-    }, {
-      coltype: 'string',
-      prop: 'fjbh',
-      label: '复检编号',
-      headeralign: 'center',
-      align: 'center',
-	  width:100,
+      overflowtooltip: true,
+      sortable: true
     }, {
       coltype: 'string',
       prop: 'bz',
       label: '备注',
       headeralign: 'center',
       align: 'center',
-	  width:100,
+      overflowtooltip: true,
+      sortable: true
     }, {
       coltype: 'string',
       prop: 'lrr',
       label: '录入人',
       headeralign: 'center',
       align: 'center',
+      overflowtooltip: true,
+      sortable: true
     }, {
       coltype: 'datetime',
       prop: 'lrsj',
       label: '录入时间',
       headeralign: 'center',
       align: 'center',
-    }, {
-      coltype: 'string',
-      prop: 'shr',
-      label: '审核人',
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'datetime',
-      prop: 'shsj',
-      label: '审核时间',
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'string',
-      prop: 'fsr',
-      label: '互锁人',
-      headeralign: 'center',
-      align: 'center',
-    }, {
-      coltype: 'datetime',
-      prop: 'fssj',
-      label: '互锁时间',
-      headeralign: 'center',
-      align: 'center',
-    },
+      overflowtooltip: true,
+      sortable: true
+    }
   ],
+  form: {
+    gcdm: '9902',
+    scx: '',
+    statusno: '',
+    gwh: '',
+    zpsx: '',
+    mj: 'N',
+    fsbz: 'Y',
+    shbz: 'Y',
+    sfzp: 'Y',
+    bz: '',
+	lrr:'',
+	lrsj:'',
+    gwhs: [],
+    isdb: false,
+    isedit: true
+  },
+  
+  addapi: {
+    url: '/lbj/gylx/add',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  editapi: {
+    url: '/lbj/gylx/edit',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
   queryapi: {
     url: '/lbj/gylx/list',
     method: 'post',

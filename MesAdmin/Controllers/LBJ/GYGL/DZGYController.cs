@@ -29,6 +29,7 @@ namespace MesAdmin.Controllers.LBJ.GYGL
             try
             {
                 int resultcount = 0;
+                parm.default_order_colname = "scx asc,scsj ";
                 var list = _dzgyservice.GetList(parm, out resultcount);
                 return Json(new sys_search_result()
                 {

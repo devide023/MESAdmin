@@ -6,19 +6,7 @@
   isselect: false,
   operate_fnlist: [],
   pagefuns: {},
-  fields: [{
-      coltype: 'list',
-      label: '工厂',
-      prop: 'gcdm',
-      headeralign: 'center',
-      align: 'center',
-      width: 150,
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx'
-      },
-      options: [],
-    }, {
+  fields: [ {
       coltype: 'list',
       prop: 'scx',
       label: '生产线',

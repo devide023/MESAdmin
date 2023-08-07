@@ -30,8 +30,8 @@ namespace ZDMesServices.TJ.A1.JHGL
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
                 sql.Append("select zpjhh, order_no, scx, xh, zpx, scxh, scbc, scsl, scsj, zpsl, zpsj, sxsl, hgsl, fxsl, wxssl, bz, ztbm, jx, status_flag,sap_zt, csbm, (select name1 FROM T_TJ_SD_KHDAXX where kunnr = tj_pp_sc_zpjh.csbm and rownum=1) as khmc, xsbz, jtdh, jssj, jhh, cqyy ");
-                sql.Append(" from tj_pp_sc_zpjh where zpx = 1 and STATUS_FLAG = '1' ");
-                sql_cnt.Append($" select count(zpjhh) from tj_pp_sc_zpjh where  zpx = 1  and STATUS_FLAG = '1'  ");
+                sql.Append(" from tj_pp_sc_zpjh where  STATUS_FLAG = '1' ");
+                sql_cnt.Append($" select count(zpjhh) from tj_pp_sc_zpjh where STATUS_FLAG = '1'  ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {

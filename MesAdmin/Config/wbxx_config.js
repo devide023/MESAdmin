@@ -115,18 +115,7 @@
       }
     },
   },
-  fields: [{
-      coltype: 'list',
-      label: '工厂',
-      prop: 'gcdm',
-      headeralign: 'center',
-      align: 'center',
-      inioptionapi: {
-        method: 'get',
-        url: '/lbj/baseinfo/gcxx',
-      },
-      options: [],
-    }, {
+  fields: [ {
       coltype: 'list',
       label: '生产线',
       prop: 'scx',
@@ -138,24 +127,51 @@
       },
 	  change_fn_name: function (_this, collist, val, row) {
 		 row.sbbh = '';
+		 row.scxzx='';
         _this.$request('get', '/lbj/baseinfo/scx_sbxx?scx=' + val).then(function (res) {
           if (res.code === 1) {
             row.sbxxoptions = res.list;
           }
         });
+		_this.$request('get', '/lbj/baseinfo/getscxzx', {
+        scx: val
+      }).then(function (res) {
+        if (res.code === 1) {
+          row.scxzxs = res.list.map(function (i) {
+            return {
+              label: i.scxzxmc,
+              value: i.scxzx
+            };
+          });
+        } else {
+          _this.$message.error(res.msg);
+        }
+      });
       },
 	  clear_fn_name:function(_this,row){
 		  row.sbbh = '';
 	  },
       options: [],
+	  overflowtooltip: true,
+	  width:120
     }, {
-      coltype: 'string',
-      label: '生产线编号',
-      prop: 'scx',
+      coltype: 'list',
+      label: '子线',
+      prop: 'scxzx',
+      overflowtooltip: true,
+      searchable: true,
       headeralign: 'center',
       align: 'center',
       width: 100,
-      searchable: false,
+	  optionconfig:{
+		  method: 'get',
+		  url: '/lbj/baseinfo/scxzx',
+		  querycnf:[{scx:'scx'}]
+	  },
+      options: [],
+      relation: 'scxzxs',
+      hideoptionval: true,
+      sortable: true
     }, {
       coltype: 'list',
       label: '设备名称',
@@ -168,15 +184,6 @@
       },
 	  options:[],
 	  relation:'sbxxoptions',
-    }, {
-      coltype: 'string',
-      label: '设备编号',
-      prop: 'sbbh',
-      headeralign: 'center',
-      align: 'center',
-      width: 100,
-      searchable: false,
-	  overflowtooltip: true,
     }, {
       coltype: 'int',
       label: '顺序',
@@ -221,6 +228,8 @@
 	  lrr:'',
 	  lrsj:'',
 	  scbz:'N',
+	  scxzx:'',
+	  scxzxs:[],
 	  sbxxoptions:[],
 	  gwhoptions:[],
     isdb: false,

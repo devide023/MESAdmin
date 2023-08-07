@@ -25,6 +25,7 @@ namespace MesAdmin.Controllers.LBJ.GWZD
             try
             {
                 int resultcount = 0;
+                parm.default_order_colname = "scx";
                 var list = _gwzdservice.GetList(parm, out resultcount);
                 return Json(new sys_search_result()
                 {

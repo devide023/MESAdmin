@@ -73,6 +73,12 @@ namespace ZDMesInterfaces.LBJ.DaoJu
         /// <returns></returns>
         bool SetRjSm(List<int> ids);
         /// <summary>
+        /// 重置刃具寿命（刃具刃磨）
+        /// </summary>
+        /// <param name="zxids"></param>
+        /// <returns></returns>
+        bool ReSetRjSm(List<int> zxids);
+        /// <summary>
         /// 设备编号查询刀柄
         /// </summary>
         /// <param name="sbbh"></param>

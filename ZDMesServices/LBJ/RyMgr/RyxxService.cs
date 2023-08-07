@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using ZDMesInterfaces.LBJ.RyMgr;
+using ZDMesModels;
 using ZDMesModels.LBJ;
 
 namespace ZDMesServices.LBJ.RyMgr
@@ -14,6 +15,55 @@ namespace ZDMesServices.LBJ.RyMgr
     {
         public RyxxService(string constr) : base(constr)
         {
+        }
+        public override IEnumerable<zxjc_ryxx> GetList(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append($"select gcdm, scx,user_code as usercode, user_name as username, pass_word as password,rylx, gwh, bzxx, hgsg, csrq, rsrq, jmh, ryxb, xpmc, scbz, tel,sfz from zxjc_ryxx where 1=1 ");
+                StringBuilder sql_cnt = new StringBuilder();
+                sql_cnt.Append($"select count(*) from zxjc_ryxx where 1=1 ");
+                //岗位
+                StringBuilder gwzdlist = new StringBuilder();
+                gwzdlist.Append("select scx, gwh,gwmc FROM base_gwzd");
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                    else
+                    {
+                        sql.Append($" order by scx asc,gwh asc ");
+                    }
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    var scxzxlist = db.Query<base_gwzd>(gwzdlist.ToString());
+                    var q = db.Query<zxjc_ryxx>(OraPager(sql.ToString()), parm.sqlparam);
+                    foreach (var item in q)
+                    {
+                        item.gwhoptions = scxzxlist.Where(t => t.scx == item.scx).Select(t => new sys_column_options() { label = t.gwmc, value = t.gwh }).ToList();
+                    }
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         public override bool Modify(IEnumerable<zxjc_ryxx> entitys)
         {

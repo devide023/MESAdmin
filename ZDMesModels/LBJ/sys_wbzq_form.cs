@@ -8,6 +8,8 @@ namespace ZDMesModels.LBJ
 {
     public class sys_wbzq_form
     {
+        public string kssj { get; set; }
+        public string jssj { get; set; }
         /// <summary>
         /// 下次维保时间段
         /// </summary>
