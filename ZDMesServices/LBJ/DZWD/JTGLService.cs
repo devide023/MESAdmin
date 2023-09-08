@@ -110,7 +110,7 @@ namespace ZDMesServices.LBJ.DZWD
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select tb.scxmc FROM  zxjc_t_jstcfp ta, base_scxxx tb where  ta.scx = tb.scx and ta.jtid = :jtid ");
+                sql.Append("select tb.scxmc|| tb.scxzxmc as scxmc FROM  zxjc_t_jstcfp ta, base_scxxx_jj tb where  ta.scx = tb.scx and nvl(ta.scxzx,' ') = nvl(tb.scxzx,' ') and ta.jtid = :jtid ");
                 StringBuilder sql1 = new StringBuilder();
                 sql1.Append("select tb.name FROM  zxjc_t_jstc_user ta, mes_user_entity tb where  ta.userid = tb.id and  ta.jtid = :jtid ");
                 using (var db = new OracleConnection(ConString))

@@ -1528,7 +1528,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 qbhdzt.Append("select id from lbj_qms_4mbhd where jt=:sbbh and rwzt = '00' order by cjsj desc ");
                 //原有变化点追加信息
                 StringBuilder zjbhdsql = new StringBuilder();
-                zjbhdsql.Append("update lbj_qms_4mbhd set gzxx = nvl(gzxx,' ') || :gzxx|| ',' where id = :id");
+                zjbhdsql.Append("update lbj_qms_4mbhd set scxzx=(select scxzx FROM base_sbxx where sbbh = lbj_qms_4mbhd.jt and rownum =1),gzxx = nvl(gzxx,' ') || :gzxx|| ',' where id = :id");
                 //刃磨流水
                 StringBuilder rmlssql = new StringBuilder();
                 rmlssql.Append("insert into zxjc_rjrm_ls (rjzxid,scx,dbh,sbbh,bzsm,dqsm,rjid, rjlx, rmr, rmrid) values (:rjzxid,:scx,:dbh,:sbbh,:bzsm,:dqsm,:rjid, :rjlx, :rmr, :rmrid) ");

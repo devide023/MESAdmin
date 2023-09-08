@@ -77,6 +77,40 @@ namespace MesAdmin.Controllers.LBJ.SBWB
                 throw;
             }
         }
+        [HttpPost,SearchFilter, Route("wbjhlist")]
+        public IHttpActionResult GetWbJHList(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                if (!string.IsNullOrEmpty(parm.orderbyexp))
+                {
+                    parm.orderbyexp = parm.orderbyexp + ",wbjhsj desc,gcdm asc,scx asc,wbsh asc";
+                }
+                else
+                {
+                    parm.orderbyexp = " order by wbjhsj desc,gcdm asc,scx asc,wbsh asc";
+                }
+                var zxlist = _baseinfo.Get_ALL_ScxXX_JJ();
+                var list = _sbwbzq.Get_WbJh_List(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    item.scxzxs = zxlist.Where(t => t.scx == item.scx).Select(t => new option_list() { label = t.scxzxmc, value = t.scxzx }).ToList();
+                }
+                return Json(new sys_search_result()
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpPost,Route("wbzq_list")]
         public IHttpActionResult GetWbzqList(base_sbwb parm)
         {

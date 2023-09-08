@@ -178,6 +178,21 @@
         }, {
           label: '巡检',
           value: '巡检'
+        }, {
+          label: '小组长',
+          value: '小组长'
+        }, {
+          label: '总检',
+          value: '总检'
+        }, {
+          label: '测试',
+          value: '测试'
+        }, {
+          label: '综合',
+          value: '综合'
+        }, {
+          label: '质量',
+          value: '质量'
         }
       ],
       hideoptionval: true,

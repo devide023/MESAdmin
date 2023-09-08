@@ -1,18 +1,42 @@
 {
   isgradequery: true,
   isbatoperate: false,
-  isoperate: false,
+  isoperate: true,
   isfresh: true,
-  isselect: true,
-  operate_fnlist: [],
-  pagefuns: {},
+  isselect: false,
+  operate_fnlist: [{
+      label: '处理',
+      fnname: 'del_4mbhd_handle',
+      btntype: 'text',
+      condition: [{
+          field: 'rwzt',
+          oper: '=',
+          val: '00'
+        }
+      ]
+    },
+  ],
+  pagefuns: {
+    del_4mbhd_handle: function (row, item) {
+      console.log(item);
+      var _this = this;
+      _this.dialog_title = row.id + '变化点';
+      _this.dialog_width = '60%';
+      _this.dialogVisible = true;
+      _this.dialog_hidefooter = true;
+      _this.dialog_viewpath = 'lbj/4mbhd/deal_bhd';
+      _this.dialog_fnitem = item;
+      _this.dialog_props = {
+        row: row
+      };
+    }
+  },
   fields: [{
       coltype: 'list',
       prop: 'scx',
       label: '生产线',
       headeralign: 'center',
       align: 'center',
-      fixed: 'left',
       width: 150,
       sortable: true,
       overflowtooltip: true,
@@ -22,13 +46,23 @@
       },
       options: []
     }, {
+      coltype: 'string',
+      label: '子线',
+      prop: 'scxzxmc',
+      overflowtooltip: true,
+      searchable: true,
+      headeralign: 'center',
+      align: 'center',
+      width: 100,
+      hideoptionval: true,
+      sortable: true
+    }, {
       coltype: 'list',
       prop: 'gwh',
       label: '岗位号',
       headeralign: 'center',
       align: 'center',
-      width: 130,
-      fixed: 'left',
+      width: 100,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
@@ -36,14 +70,21 @@
       },
       options: []
     }, {
-      coltype: 'string',
+      coltype: 'list',
       prop: 'rwzt',
       label: '任务状态',
       headeralign: 'center',
       align: 'center',
-      width: 150,
-      fixed: 'left',
+      width: 100,
       overflowtooltip: true,
+      options: [{
+          label: '暂存',
+          value: '00'
+        }, {
+          label: '闭环',
+          value: '49'
+        },
+      ]
     }, {
       coltype: 'list',
       prop: 'trigtype',
@@ -174,7 +215,7 @@
       label: '记录时间',
       headeralign: 'center',
       align: 'center',
-      width: 80,
+      width: 130,
       overflowtooltip: true,
       sortable: true,
     },

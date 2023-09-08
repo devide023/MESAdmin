@@ -204,6 +204,7 @@
     <Compile Include="LBJ\App\AppMenuService.cs" />
     <Compile Include="LBJ\App\AppRoleService.cs" />
     <Compile Include="LBJ\BatGL\LbjBatVinService.cs" />
+    <Compile Include="LBJ\BHDGL\Lbj4MBhdDealService.cs" />
     <Compile Include="LBJ\CheckData\Form_Check_Service.cs" />
     <Compile Include="LBJ\BaseInfo\BaseInfoService.cs" />
     <Compile Include="LBJ\BHDGL\BHDJLService.cs" />
@@ -270,12 +271,16 @@
     <Compile Include="TJ\A1\CheckMgr\A1JcsbxxService.cs" />
     <Compile Include="TJ\A1\CheckMgr\A1JcService.cs" />
     <Compile Include="TJ\A1\GWZD\A1GWZDService.cs" />
+    <Compile Include="TJ\A1\GYGL\A1CzgcService.cs" />
     <Compile Include="TJ\A1\GYGL\A1DzGyService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GwJxService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GwLxService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GyCsService.cs" />
+    <Compile Include="TJ\A1\GYGL\A1GyglService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GyLxService.cs" />
     <Compile Include="TJ\A1\GYGL\A1GYZPZDService.cs" />
+    <Compile Include="TJ\A1\GYGL\A1LswtService.cs" />
+    <Compile Include="TJ\A1\GYGL\A1MdsService.cs" />
     <Compile Include="TJ\A1\JCGL\A1JcGlService.cs" />
     <Compile Include="TJ\A1\JHGL\A1CgJhService.cs" />
     <Compile Include="TJ\A1\JHGL\A1ScJhService.cs" />
@@ -294,7 +299,9 @@
     <Compile Include="TJ\A1\SBGL\A1SbXxService.cs" />
     <Compile Include="TJ\A1\SJZS\A1DDZSService.cs" />
     <Compile Include="TJ\A1\SJZS\A1DTZSService.cs" />
+    <Compile Include="TJ\A1\SJZS\A1QzcdjcService.cs" />
     <Compile Include="TJ\A1\WLGL\A1WlGlService.cs" />
+    <Compile Include="TJ\A1\WLJJGL\A1WljjglService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1ClFsService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1DjJlService.cs" />
     <Compile Include="TJ\A1\ZLGL\A1DjXxService.cs" />
@@ -309,6 +316,7 @@
     <Compile Include="TJ\Common\RoleService.cs" />
     <Compile Include="TJ\Common\UserService.cs" />
     <Compile Include="TJ\GYGL\GYGLService.cs" />
+    <Compile Include="ZSKJ\ZSKJServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MF\" />

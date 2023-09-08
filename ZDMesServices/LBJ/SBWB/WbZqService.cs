@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using ZDMesInterfaces.Common;
 using ZDMesInterfaces.LBJ.SBWB;
+using ZDMesModels;
 using ZDMesModels.LBJ;
 
 namespace ZDMesServices.LBJ.SBWB
@@ -106,6 +107,46 @@ namespace ZDMesServices.LBJ.SBWB
             finally
             {
                 Db.Dispose();
+            }
+        }
+
+        public IEnumerable<base_sbwb_ls> Get_WbJh_List(sys_page parm, out int resultcount)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                StringBuilder sql_cnt = new StringBuilder();
+                sql.Append($"select autoid, gcdm, scx, gwh, wbsh, wbxx, wbjhsj, wbzt, wbwcsj, wbwcr, lrr, lrsj, wbjhsj_end as wbjhsjend, sbbh, scxzx from base_sbwb_ls where wbzt='计划中' ");
+                sql_cnt.Append($"select count(autoid) from base_sbwb_ls where wbzt='计划中' ");
+
+                if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
+                {
+                    sql.Append(" and " + parm.sqlexp);
+                    sql_cnt.Append(" and " + parm.sqlexp);
+                }
+                //前端排序
+                if (parm.orderbyexp != null && !string.IsNullOrWhiteSpace(parm.orderbyexp))
+                {
+                    sql.Append(parm.orderbyexp);
+                }
+                else
+                {
+                    if (parm.default_order_colname != null && !string.IsNullOrEmpty(parm.default_order_colname))
+                    {
+                        sql.Append($" order by {parm.default_order_colname} desc ");
+                    }
+                }
+                using (var db = new OracleConnection(ConString))
+                {
+                    var q = db.Query<base_sbwb_ls>(OraPager(sql.ToString()), parm.sqlparam);
+                    resultcount = db.ExecuteScalar<int>(sql_cnt.ToString(), parm.sqlparam);
+                    return q;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 

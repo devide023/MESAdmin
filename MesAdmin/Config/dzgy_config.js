@@ -158,6 +158,24 @@
     },
     view_dzgymp4: function (row) {
       window.open("http://172.16.201.125:81/视频/" + row.wjlj);
+    },
+    select_scx: function (collist, val, row) {
+      var _this = this;
+      row.scxzx = '';
+      this.$request('get', '/lbj/baseinfo/getscxzx', {
+        scx: val
+      }).then(function (res) {
+        if (res.code === 1) {
+          row.scxzxs = res.list.map(function (i) {
+            return {
+              label: i.scxzxmc,
+              value: i.scxzx
+            };
+          });
+        } else {
+          _this.$message.error(res.msg);
+        }
+      });
     }
   },
   batoperate: {
@@ -206,14 +224,35 @@
       label: '生产线',
       headeralign: 'center',
       align: 'left',
-      width: 180,
+      width: 120,
       overflowtooltip: true,
       inioptionapi: {
         method: 'get',
         url: '/lbj/baseinfo/scx?gcdm=9902'
       },
       options: [],
+      change_fn_name: 'select_scx',
       sortable: true,
+    }, {
+      coltype: 'list',
+      label: '线别',
+      prop: 'scxzx',
+      overflowtooltip: true,
+      searchable: true,
+      headeralign: 'center',
+      align: 'center',
+      options: [],
+      optionconfig: {
+        method: 'get',
+        url: '/lbj/baseinfo/scxzx',
+        querycnf: [{
+            scx: 'scx'
+          }
+        ]
+      },
+      width: 80,
+      relation: 'scxzxs',
+      hideoptionval: true,
     }, {
       coltype: 'string',
       prop: 'gybh',
@@ -309,6 +348,8 @@
     wjfl: '工艺',
     scsj: '',
     wjlj: '',
+    scxzx: '',
+    scxzxs: [],
     remotelist: [],
     isdb: false,
     isedit: true,

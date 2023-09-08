@@ -1,5 +1,5 @@
 {
-  "sql": "select gyid, gybh, gymc, gyms, gcdm, scx, status_no as statusno, wjlj,  round(to_number(jwdx)/1024/1024,2) as jwdx, qyrq, wjfl, scpc, scsj from zxjc_t_dzgy where 1=1 ",
+  "sql": "select gyid, gybh, gymc, gyms, gcdm, scx, status_no as statusno, wjlj,  round(to_number(jwdx)/1024/1024,2) as jwdx, qyrq, wjfl, scpc, scsj,scxzx from zxjc_t_dzgy where 1=1 ",
   "sql_cnt": "select count(*) from zxjc_t_dzgy where 1=1  ",
   "sql_orderby": " order by scsj desc "
 }

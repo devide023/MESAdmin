@@ -15,7 +15,7 @@ namespace MesAdmin.Controllers.A1.GYGL
     public class A1DZGYController : BaseApiController<zxjc_t_dzgy>
     {
         private IDbOperate<zxjc_t_dzgy> _dzgyservice;
-        public A1DZGYController(IDbOperate<zxjc_t_dzgy> dzgyservice, IRequireVerify requireverfify, IImportData<zxjc_t_dzgy> importservice):base(dzgyservice)
+        public A1DZGYController(IDbOperate<zxjc_t_dzgy> dzgyservice,  IRequireVerify requireverfify, IImportData<zxjc_t_dzgy> importservice):base(dzgyservice)
         {
             _dzgyservice = dzgyservice;
             this._requireverfify = requireverfify;

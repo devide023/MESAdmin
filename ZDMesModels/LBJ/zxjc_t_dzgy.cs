@@ -61,6 +61,8 @@ namespace ZDMesModels.LBJ
         /// 上传日期 
         ///</summary>
          public DateTime? scsj { get; set; }
+         public string scxzx { get; set; }
+         public List<option_list> scxzxs { get; set; }
     }
 
     public class zxjc_t_dzgy_mapper : ClassMapper<zxjc_t_dzgy>
@@ -69,6 +71,7 @@ namespace ZDMesModels.LBJ
         {
             Map(t => t.gyid).Key(KeyType.Assigned);
             Map(t => t.statusno).Column("status_no");
+            Map(t => t.scxzxs).Ignore();
             AutoMap();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZDMesModels;
 using ZDMesModels.TJ.A1;
 namespace ZDMesInterfaces.TJ
 {
@@ -61,6 +62,12 @@ namespace ZDMesInterfaces.TJ
         /// <param name="key"></param>
         /// <returns></returns>
         IEnumerable<dynamic> GetJcLxByKey(string key);
+        /// <summary>
+        /// 关键字获取物料编码
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<option_list> GetWlbmByKey(string key);
 
     }
 }

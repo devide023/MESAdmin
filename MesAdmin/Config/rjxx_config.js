@@ -14,7 +14,7 @@
       var row = this.$deepClone(this.pageconfig.form);
       this.list.unshift(row);
     },
-	download_template_file() {
+    download_template_file() {
       window.open('http://172.16.201.125:7002/template/lbj/刃具基础数据.xlsx');
     }
   },
@@ -32,9 +32,9 @@
               _this.getlist(_this.queryform);
             } else if (result.code === 2) {
               _this.$message.warning(result.msg);
-            }else{
-				_this.$message.error(result.msg);
-			}
+            } else {
+              _this.$message.error(result.msg);
+            }
           });
         } catch (error) {
           _this.$message.error(error);
@@ -52,13 +52,13 @@
         if (res.code === 1) {
           let expdatalist = res.list;
           _this.export_handle(_this.pageconfig.fields, expdatalist);
-        } else if(res.code === 0) {
+        } else if (res.code === 0) {
           _this.$message.error(res.msg);
         }
       });
     },
     import_by_replace(_this, res) {
-		if (res.files.length > 0) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/rjxx/readxls_by_replace', {
@@ -80,9 +80,9 @@
       } else {
         _this.$loading().close();
       }
-	},
-    import_by_zh(_this,res) {
-		if (res.files.length > 0) {
+    },
+    import_by_zh(_this, res) {
+      if (res.files.length > 0) {
         var fid = res.files[0].fileid;
         try {
           _this.$request('get', '/lbj/rjxx/readxls_by_zh', {
@@ -104,86 +104,81 @@
       } else {
         _this.$loading().close();
       }
-	},
+    }
   },
-  fields: [ 
-	{
+  fields: [{
       coltype: 'string',
       label: '刃具类型编号',
       width: 100,
       prop: 'id',
       headeralign: 'center',
-      align: 'center',
-    },
-	{
+      align: 'center'
+    }, {
       coltype: 'string',
       label: '刃具类型',
       width: 200,
       prop: 'rjlx',
       headeralign: 'center',
-      align: 'center',
+      align: 'center'
     }, {
       coltype: 'string',
       label: '刃具名称',
       prop: 'rjmc',
       headeralign: 'center',
       width: 200,
-      align: 'center',
-    }, 
-	{
+      align: 'center'
+    }, {
       coltype: 'string',
       label: '标准寿命',
       prop: 'rjbzsm',
       width: 150,
       headeralign: 'center',
-      align: 'center',
-    },
-	{
+      align: 'center'
+    }, {
       coltype: 'string',
       label: '加工位置',
       prop: 'jgwz',
       headeralign: 'center',
       align: 'left',
-	  overflowtooltip: true,
-	  width:180
-    },
-	{
+      overflowtooltip: true,
+      width: 180
+    }, {
       coltype: 'string',
       label: '备注',
       prop: 'rjxxbz',
       headeralign: 'center',
       align: 'left',
-	  overflowtooltip: true,
-	  width:200
+      overflowtooltip: true,
+      width: 200
     }
-	],
+  ],
   form: {
     gcdm: '9902',
     rjlx: '',
     rjmc: '',
     rjbzsm: '',
-	jgwz:'',
+    jgwz: '',
     isdb: false,
     isedit: true
   },
   addapi: {
     url: '/lbj/rjxx/add',
     method: 'post',
-    callback: function (vm, res) {},
+    callback: function (vm, res) {}
   },
   editapi: {
     url: '/lbj/rjxx/edit',
     method: 'post',
-    callback: function (vm, res) {},
+    callback: function (vm, res) {}
   },
   delapi: {
     url: '/lbj/rjxx/del',
     method: 'post',
-    callback: function (vm, res) {},
+    callback: function (vm, res) {}
   },
   queryapi: {
     url: '/lbj/rjxx/list',
     method: 'post',
-    callback: function (vm, res) {},
-  },
+    callback: function (vm, res) {}
+  }
 }

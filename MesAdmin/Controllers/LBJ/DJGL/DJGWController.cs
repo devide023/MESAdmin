@@ -307,9 +307,10 @@ namespace MesAdmin.Controllers.LBJ.DJGL
                         {
                             gcdm = item[0].ToString(),
                             scx = item[1].ToString(),
-                            gwh = item[2].ToString(),
-                            statusno = item[3].ToString(),
-                            djxx = item[4].ToString(),
+                            scxzx= item[2].ToString(),
+                            gwh = item[3].ToString(),
+                            statusno = item[4].ToString(),
+                            djxx = item[5].ToString(),
                             scbz = "N",
                             djno = "DJ" + djno.ToString().PadLeft(4, '0'),
                             lrr = _user.GetUserByToken(token).name,

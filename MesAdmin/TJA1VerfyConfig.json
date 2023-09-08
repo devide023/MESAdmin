@@ -896,6 +896,207 @@
     ]
   },
   {
+    "model": "ZDMesModels.TJ.A1.LSWT.zxjc_t_dzgy,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "coltxt": "文件编号"
+      },
+      {
+        "colname": "gylx",
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gymc",
+        "coltxt": "文件名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "colindex": 1,
+        "coltxt": "文件编号"
+      },
+      {
+        "colname": "gylx",
+        "colindex": 2,
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 3,
+        "coltxt": "岗位编码"
+      },      
+      {
+        "colname": "gymc",
+        "colindex": 4,
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "gyms",
+        "colindex": 5,
+        "coltxt": "描述"
+      },
+      {
+        "colname": "wjlj",
+        "colindex": 6,
+        "coltxt": "文件路径"
+      },
+      {
+        "colname": "bz",
+        "colindex": 7,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.MDS.zxjc_t_dzgy,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "coltxt": "文件编号"
+      },
+      {
+        "colname": "gylx",
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gymc",
+        "coltxt": "文件名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "colindex": 1,
+        "coltxt": "文件编号"
+      },
+      {
+        "colname": "gylx",
+        "colindex": 2,
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 3,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gymc",
+        "colindex": 4,
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "gyms",
+        "colindex": 5,
+        "coltxt": "描述"
+      },
+      {
+        "colname": "wjlj",
+        "colindex": 6,
+        "coltxt": "文件路径"
+      },
+      {
+        "colname": "bz",
+        "colindex": 7,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.CZGC.zxjc_t_dzgy,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "scx",
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "coltxt": "文件编号"
+      },
+      {
+        "colname": "gylx",
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gymc",
+        "coltxt": "文件名称"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "scx",
+        "colindex": 0,
+        "coltxt": "生产线"
+      },
+      {
+        "colname": "gybh",
+        "colindex": 1,
+        "coltxt": "文件编号"
+      },
+      {
+        "colname": "gylx",
+        "colindex": 2,
+        "coltxt": "文件分类"
+      },
+      {
+        "colname": "gwh",
+        "colindex": 3,
+        "coltxt": "岗位编码"
+      },
+      {
+        "colname": "gymc",
+        "colindex": 4,
+        "coltxt": "文件名称"
+      },
+      {
+        "colname": "gyms",
+        "colindex": 5,
+        "coltxt": "描述"
+      },
+      {
+        "colname": "wjlj",
+        "colindex": 6,
+        "coltxt": "文件路径"
+      },
+      {
+        "colname": "bz",
+        "colindex": 7,
+        "coltxt": "备注"
+      }
+    ]
+  },
+  {
     "model": "ZDMesModels.TJ.A1.base_fxwl,ZDMesModels",
     "requireconf": [
       {
@@ -1015,6 +1216,36 @@
         "colname": "bzxx",
         "colindex": 8,
         "coltxt": "标准下限"
+      }
+    ]
+  },
+  {
+    "model": "ZDMesModels.TJ.A1.base_wljjgxb,ZDMesModels",
+    "requireconf": [
+      {
+        "colname": "wlbm",
+        "coltxt": "物料编码"
+      },
+      {
+        "colname": "jjbh",
+        "coltxt": "检具编号"
+      }
+    ],
+    "templateconf": [
+      {
+        "colname": "wlbm",
+        "colindex": 0,
+        "coltxt": "物料编码"
+      },
+      {
+        "colname": "wlmc",
+        "colindex": 1,
+        "coltxt": "物料名称"
+      },
+      {
+        "colname": "jjbh",
+        "colindex": 2,
+        "coltxt": "检具编号"
       }
     ]
   },

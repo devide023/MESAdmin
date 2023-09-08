@@ -219,6 +219,11 @@
         "colname": "seq",
         "colindex": 10,
         "coltxt": "权重"
+      },
+      {
+        "colname": "isfx",
+        "colindex": 11,
+        "coltxt": "是否分析"
       }
     ]
   },

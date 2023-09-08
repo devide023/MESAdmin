@@ -269,12 +269,12 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
                     {
                         list.Add(new base_rjxx()
                         {
-                            gcdm = item[0].ToString(),
-                            rjlx = item[1].ToString(),
-                            rjmc = item[2].ToString(),
-                            rjbzsm = Convert.ToInt32(item[3].ToString()),
-                            jgwz = item[4].ToString(),
-                            rjxxbz = item[5].ToString()
+                            gcdm = item[0].ToString().Trim(),
+                            rjlx = item[1].ToString().Trim(),
+                            rjmc = item[2].ToString().Trim(),
+                            rjbzsm = Convert.ToInt32(item[3].ToString().Trim()),
+                            jgwz = item[4].ToString().Trim(),
+                            rjxxbz = item[5].ToString().Trim()
                         });
                     }
                 }

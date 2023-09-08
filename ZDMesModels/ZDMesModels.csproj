@@ -249,7 +249,10 @@
     <Compile Include="TJ\A1\base_gwzx_jx.cs" />
     <Compile Include="TJ\A1\base_gycs.cs" />
     <Compile Include="TJ\A1\base_sbxx.cs" />
+    <Compile Include="TJ\A1\base_wljjgxb.cs" />
     <Compile Include="TJ\A1\GYZD\zxjc_t_dzgy.cs" />
+    <Compile Include="TJ\A1\LSWT\zxjc_t_dzgy.cs" />
+    <Compile Include="TJ\A1\MDS\zxjc_t_dzgy.cs" />
     <Compile Include="TJ\A1\mes_pdm_jstz_yd.cs" />
     <Compile Include="TJ\A1\report_djjl.cs" />
     <Compile Include="TJ\A1\report_fxjlb.cs" />
@@ -270,6 +273,7 @@
     <Compile Include="TJ\A1\tj_mm_cgjh.cs" />
     <Compile Include="TJ\A1\tj_pp_sc_zpjh.cs" />
     <Compile Include="TJ\A1\v_base_gwbj.cs" />
+    <Compile Include="TJ\A1\CZGC\zxjc_t_dzgy.cs" />
     <Compile Include="TJ\A1\zxjc_jcbill.cs" />
     <Compile Include="TJ\A1\zxjc_jcjcxx.cs" />
     <Compile Include="TJ\A1\zxjc_jcjg.cs" />
@@ -293,6 +297,7 @@
     <Compile Include="TJ\A1\mes_zxjc_gylx.cs" />
     <Compile Include="TJ\A1\zxjc_jcgl.cs" />
     <Compile Include="TJ\A1\zxjc_jrgy.cs" />
+    <Compile Include="TJ\A1\zxjc_qzcdjc.cs" />
     <Compile Include="TJ\A1\zxjc_ryxx.cs" />
     <Compile Include="TJ\A1\zxjc_ryxx_jn.cs" />
     <Compile Include="TJ\A1\zxjc_scx_tz.cs" />
@@ -308,6 +313,7 @@
     <Compile Include="TJ\zxjc_gj_csyq.cs" />
     <Compile Include="TJ\zxjc_gxzd.cs" />
     <Compile Include="TJ\zxjc_jrgy.cs" />
+    <Compile Include="ZSKJ\zl_szb_db.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MF\" />

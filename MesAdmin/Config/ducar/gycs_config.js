@@ -3,7 +3,6 @@
   isbatoperate: true,
   isoperate: false,
   isfresh: true,
-  isselect: true,
   batoperate: {
     import_by_add: function (_this, res) {
       if (res.files.length > 0) {

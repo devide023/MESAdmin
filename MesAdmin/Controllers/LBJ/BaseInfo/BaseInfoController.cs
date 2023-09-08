@@ -388,6 +388,20 @@ namespace MesAdmin.Controllers.LBJ.BaseInfo
                 throw;
             }
         }
+        [HttpGet, Route("scx_gylx_wlbm")]
+        public IHttpActionResult Get_GylxWlbm(string scx)
+        {
+            try
+            {
+                var list = _baseinfo.Get_GylxWlXx_By_SCX(scx).Select(t => new { label = t.wlmc, value = t.wlbm });
+                return Json(new { code = 1, msg = "ok", list = list });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet, Route("wlbm_by_key")]
         public IHttpActionResult Get_WLBM_By_Key(string key)
         {

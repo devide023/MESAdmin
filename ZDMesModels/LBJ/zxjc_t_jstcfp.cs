@@ -85,6 +85,14 @@ namespace ZDMesModels.LBJ
         /// 人员列表
         /// </summary>
         public List<int> rylist { get; set; }
+        /// <summary>
+        /// 生产线子线
+        /// </summary>
+        public string scxzx { get; set; }
+        /// <summary>
+        /// 生产线子线列表
+        /// </summary>
+        public List<option_list> scxzxs { get; set; }
     }
 
     public class zxjc_t_jstcfp_mapper : ClassMapper<zxjc_t_jstcfp>
@@ -99,6 +107,7 @@ namespace ZDMesModels.LBJ
             Map(t => t.scxmc).Ignore();
             Map(t => t.gwmc).Ignore();
             Map(t => t.rylist).Ignore();
+            Map(t => t.scxzxs).Ignore();
             Map(t => t.statusno).Column("status_no");            
             Map(t => t.jxno).Column("jx_no");
             AutoMap();

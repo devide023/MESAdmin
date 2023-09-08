@@ -8,6 +8,8 @@ using ZDMesModels.TJ.A1;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
 using ZDMesInterfaces.Common;
+using ZDMesModels;
+using System.Runtime.InteropServices;
 
 namespace ZDMesServices.TJ.A1.BaseInfo
 {
@@ -162,6 +164,24 @@ namespace ZDMesServices.TJ.A1.BaseInfo
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        public IEnumerable<option_list> GetWlbmByKey(string key)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select wlbm,wlmc FROM base_wlxx where wlbm like :key or wlmc like :key and rownum < 100 ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    var list = db.Query(sql.ToString(), new { key = "%" + key.Trim() + "%" }).Select(t => new option_list() { label = t.WLMC, value = t.WLBM });
+                    return list;
+                }
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

@@ -110,7 +110,7 @@ namespace ZDMesServices.LBJ.DZWD
                 StringBuilder sql_cnt = new StringBuilder();
                 sql_cnt.Append("select count(id) from ZXJC_T_JSTCFP t where 1=1 ");
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select t.id, t.jtid, t2.jcbh, t2.jcmc as jtmc,t2.wjlj as wjlj, t.gcdm,(select gcmc from base_gcxx where gcdm = t.gcdm) as gcmc, t.scx,(select scxmc FROM  base_scxxx where scx = t.scx)  as scxmc, t.gwh,(select gwmc FROM  base_gwzd where scx = t.scx and gwh = t.gwh and rownum < 2) as gwmc, t.status_no as statusno, t.bz, t.lrr1, t.lrsj1 ");
+                sql.Append("select t.id, t.jtid, t2.jcbh, t2.jcmc as jtmc,t2.wjlj as wjlj, t.gcdm,(select gcmc from base_gcxx where gcdm = t.gcdm) as gcmc, t.scx,t.scxzx,(select scxmc FROM  base_scxxx where scx = t.scx)  as scxmc, t.gwh,(select gwmc FROM  base_gwzd where scx = t.scx and gwh = t.gwh and rownum < 2) as gwmc, t.status_no as statusno, t.bz, t.lrr1, t.lrsj1 ");
                 sql.Append(" from ZXJC_T_JSTCFP t, zxjc_t_jstc t2 ");
                 sql.Append(" where  t.jtid = t2.jtid ");
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))

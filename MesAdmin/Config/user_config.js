@@ -2,8 +2,11 @@
   isgradequery: true,
   isfresh: true,
   isoperate: true,
+  isselect: true,
   pagefuns: {
-    
+    select_role:function(collist, val, row){
+		console.log(collist,val,row);
+	}
   },
   fields: [{
       coltype: 'bool',
@@ -73,7 +76,8 @@
       },
       options: [],
 	  selectedvals:'role',
-	  searchable:false
+	  searchable:false,
+	  change_fn_name:'select_role'
     },
 	{
       coltype: 'string',
@@ -101,8 +105,7 @@
 	tel:'',
     adduser: '',
     addtime: '',
-	role:[],
-	
+	role:[],	
     isdb: false,
     isedit: true
   },

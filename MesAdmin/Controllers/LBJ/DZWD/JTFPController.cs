@@ -82,6 +82,7 @@ namespace MesAdmin.Controllers.LBJ.DZWD
                     jtid = form.jstc.jtid,
                     gcdm = form.gcdm,
                     scx = form.scx,
+                    scxzx= form.scxzx,
                     bz = form.bz,
                     rylist = form.rylist,
                     lrr1 = userinfo.name,

@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using ZDMesInterfaces.Common;
+using ZDMesInterfaces.LBJ;
 using ZDMesModels;
 using ZDMesModels.LBJ;
 namespace MesAdmin.Controllers.LBJ.GYGL
@@ -18,9 +19,11 @@ namespace MesAdmin.Controllers.LBJ.GYGL
     public class DZGYController : ApiController
     {
         private IDbOperate<zxjc_t_dzgy> _dzgyservice;
-        public DZGYController(IDbOperate<zxjc_t_dzgy> dzgyservice)
+        private IBaseInfo _baseifno;
+        public DZGYController(IDbOperate<zxjc_t_dzgy> dzgyservice, IBaseInfo baseifno)
         {
             _dzgyservice = dzgyservice;
+            _baseifno= baseifno;
         }
 
         [HttpPost, SearchFilter, Route("list")]
@@ -30,7 +33,12 @@ namespace MesAdmin.Controllers.LBJ.GYGL
             {
                 int resultcount = 0;
                 parm.default_order_colname = "scx asc,scsj ";
+                var scxzxs = _baseifno.Get_ALL_ScxXX_JJ();
                 var list = _dzgyservice.GetList(parm, out resultcount);
+                foreach (var item in list)
+                {
+                    item.scxzxs = scxzxs.Where(t => t.scx == item.scx).Select(t => new option_list() { label = t.scxzxmc, value = t.scxzx }).ToList();
+                }
                 return Json(new sys_search_result()
                 {
                     code = 1,

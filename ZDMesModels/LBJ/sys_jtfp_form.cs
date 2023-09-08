@@ -21,6 +21,10 @@ namespace ZDMesModels.LBJ
         /// 生产线
         /// </summary>
         public string scx { get; set; }
+        /// <summary>
+        /// 生产线子线
+        /// </summary>
+        public string scxzx { get; set; }
         public List<string> fpgw { get; set; }
         public string jxlist { get; set; }
         public string statusno { get; set; }

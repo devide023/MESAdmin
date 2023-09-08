@@ -114,6 +114,7 @@
     <Compile Include="DuCar\IDuCarRyjn.cs" />
     <Compile Include="LBJ\App\IApp.cs" />
     <Compile Include="LBJ\BHDGL\IBHD.cs" />
+    <Compile Include="LBJ\BHDGL\IDeal4MBHD.cs" />
     <Compile Include="LBJ\DaoJu\IDaoJu.cs" />
     <Compile Include="LBJ\DaoJu\IDBRJZX.cs" />
     <Compile Include="LBJ\DaoJu\IDjReport.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="TJ\IRYGL.cs" />
     <Compile Include="TJ\IRYJN.cs" />
     <Compile Include="TJ\ITJBaseInfo.cs" />
+    <Compile Include="ZSKJ\IZSKJ.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LBJ\JHGL\" />

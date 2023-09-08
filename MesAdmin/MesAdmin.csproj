@@ -325,6 +325,7 @@
     <Compile Include="Controllers\A1\CheckMgr\A1JclxController.cs" />
     <Compile Include="Controllers\A1\CheckMgr\A1JcSbxxController.cs" />
     <Compile Include="Controllers\A1\GWZD\A1GWZDController.cs" />
+    <Compile Include="Controllers\A1\GYGL\A1CZGCController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1DZGYController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1GWJXController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1GWLXController.cs" />
@@ -332,6 +333,8 @@
     <Compile Include="Controllers\A1\GYGL\A1GYLXController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1GYSPController.cs" />
     <Compile Include="Controllers\A1\GYGL\A1GYZPZDController.cs" />
+    <Compile Include="Controllers\A1\GYGL\A1LSWTController.cs" />
+    <Compile Include="Controllers\A1\GYGL\MDSBGController.cs" />
     <Compile Include="Controllers\A1\JCGL\A1JCGLController.cs" />
     <Compile Include="Controllers\A1\JHGL\A1CGJHController.cs" />
     <Compile Include="Controllers\A1\JHGL\A1SCJHController.cs" />
@@ -351,8 +354,10 @@
     <Compile Include="Controllers\A1\SBGL\A1SBXXController.cs" />
     <Compile Include="Controllers\A1\SJZSGL\A1DDZSController.cs" />
     <Compile Include="Controllers\A1\SJZSGL\A1DTZSController.cs" />
+    <Compile Include="Controllers\A1\SJZSGL\A1QZCDJCController.cs" />
     <Compile Include="Controllers\A1\UpLoad\A1UpLoadController.cs" />
     <Compile Include="Controllers\A1\WLGL\A1WLGLController.cs" />
+    <Compile Include="Controllers\A1\WLJJGL\A1WLJJGXController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJJLController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1DJXXController.cs" />
     <Compile Include="Controllers\A1\ZLGL\A1FXMXController.cs" />
@@ -469,6 +474,7 @@
     <Compile Include="Controllers\LBJ\ZLGL\LBJCheckBillController.cs" />
     <Compile Include="Controllers\LBJ\ZLGL\LBJCheckImgController.cs" />
     <Compile Include="Controllers\LBJ\ZLGL\LBJProductCheckController.cs" />
+    <Compile Include="Controllers\LBJ\ZLGL\LBJSZBController.cs" />
     <Compile Include="Controllers\TJ\BaseInfo\TJJCXXController.cs" />
     <Compile Include="Controllers\TJ\GYGL\JRGYController.cs" />
     <Compile Include="Filters\ApiExceptionAttribute.cs" />

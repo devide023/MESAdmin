@@ -237,5 +237,27 @@ namespace MesAdmin.Controllers.A1.BaseInfo
                 throw;
             }
         }
+        [HttpGet, Route("wlbmbykey")]
+        public IHttpActionResult GetWlbmByKey(string key)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    var list = _a1baseinfo.GetWlbmByKey(key);
+                    return Json(new { code = 1, msg = "ok", list = list });
+                }
+                else
+                {
+                    List<dynamic> list = new List<dynamic>();
+                    return Json(new { code = 1, msg = "ok", list = list });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

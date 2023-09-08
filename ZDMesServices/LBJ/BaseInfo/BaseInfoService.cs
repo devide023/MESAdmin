@@ -608,5 +608,25 @@ namespace ZDMesServices.LBJ.BaseInfo
                 throw;
             }
         }
+
+        public IEnumerable<base_wlxx> Get_GylxWlXx_By_SCX(string scx)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append(" select distinct tb.wlbm, tb.wlmc ");
+                sql.Append(" FROM(select status_no FROM zxjc_gylx where scx = :scx) ta, base_wlxx tb  ");
+                sql.Append(" where ta.status_no = tb.wlbm  ");
+                using (var db = new OracleConnection(ConString))
+                {
+                    return db.Query<base_wlxx>(sql.ToString(), new { scx = scx });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

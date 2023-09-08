@@ -135,6 +135,8 @@
     add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
+	  row.scry = this.$store.getters.name;
+	  row.scsj = this.$parseTime(new Date());
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
     },

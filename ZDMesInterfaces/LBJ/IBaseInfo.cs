@@ -125,5 +125,10 @@ namespace ZDMesInterfaces.LBJ
         /// </summary>
         /// <returns></returns>
         IEnumerable<base_wlxx> Get_DBWLInfo();
+        /// <summary>
+        /// 获取工艺路线加工的物料信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<base_wlxx> Get_GylxWlXx_By_SCX(string scx);
     }
 }
