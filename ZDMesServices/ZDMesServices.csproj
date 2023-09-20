@@ -212,6 +212,7 @@
     <Compile Include="LBJ\CheckData\CheckDataService.cs" />
     <Compile Include="LBJ\CPGL\LBJGdxxService.cs" />
     <Compile Include="LBJ\DAOJU\DaoBinService.cs" />
+    <Compile Include="LBJ\DAOJU\DaoJuMqService.cs" />
     <Compile Include="LBJ\DAOJU\DbRjGxService.cs" />
     <Compile Include="LBJ\DAOJU\DbRjLyService.cs" />
     <Compile Include="LBJ\DAOJU\DjReportService.cs" />

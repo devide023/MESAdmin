@@ -19,12 +19,6 @@
       }
     },
     {
-      "type": "ZDMesModules.LBJ.ZSKJModule, ZDMesModules",
-      "properties": {
-        "ZSKJConstr": "zskj"
-      }
-    },
-    {
       "type": "ZDMesModules.LBJ.BaseinfoModule, ZDMesModules",
       "properties": {
         "LBJConstr": "lbjmes"

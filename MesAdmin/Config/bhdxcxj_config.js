@@ -11,7 +11,7 @@
       condition: [{
           field: 'rwzt',
           oper: '=',
-          val: '00'
+          val: '07'
         }
       ]
     },
@@ -80,6 +80,15 @@
       options: [{
           label: '暂存',
           value: '00'
+        }, {
+          label: '待操作员确认',
+          value: '03'
+        }, {
+          label: '待班组确认',
+          value: '05'
+        }, {
+          label: '待巡检确认',
+          value: '07'
         }, {
           label: '闭环',
           value: '49'

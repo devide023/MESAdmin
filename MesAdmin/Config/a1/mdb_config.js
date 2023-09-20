@@ -1,7 +1,7 @@
 {
   isgradequery: true,
   isbatoperate: true,
-  isoperate: false,
+  isoperate: true,
   isfresh: true,
   isselect: true,
   batoperate: {
@@ -141,15 +141,15 @@
       this.list.unshift(row);
     },
     download_template_file: function () {
-      window.open('http://172.16.201.216:7002/template/A1/MDS表.xlsx?r=' + Math.random());
+      window.open('http://172.16.201.216:7002/template/A1/MSDS表.xlsx?r=' + Math.random());
     },
     view_dzgypdf: function (row) {
-      window.open("http://172.16.201.216:81/MDS表/" + row.wjlj + '/' + row.gymc);
+      window.open("http://172.16.201.216:81/MSDS表/" + row.wjlj + '/' + row.gymc);
     },
     download_dzgypdf: function (row) {
       var _this = this;
       this.$request('get', "download/ftp2web", {
-        wjlx: 'MDS表',
+        wjlx: 'MSDS表',
         wjlj: row.wjlj + "/" + row.gymc
       }).then(function (res) {
         if (res.code === 1) {
@@ -223,8 +223,8 @@
       headeralign: 'center',
       align: 'center',
       options: [{
-          label: 'MDS表',
-          value: 'MDS表'
+          label: 'MSDS表',
+          value: 'MSDS表'
         }
       ],
       width: 100,
@@ -304,7 +304,7 @@
     scry: '',
     scpc: '',
     scsj: '',
-    gylx: 'MDS表',
+    gylx: 'MSDS表',
     bz: '',
     statusno_list: [],
     isdb: false,

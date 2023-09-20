@@ -72,7 +72,7 @@ namespace ZDMesServices.LBJ.ImportData
                                     {
                                         var protype = cz.First().PropertyType;
                                         var colval = cz.First().GetValue(item);
-                                        if (protype.Name == "String" && string.IsNullOrEmpty(colval.ToString())) {
+                                        if (protype.Name == "String" && string.IsNullOrEmpty(colval?.ToString())) {
                                             colval = " ";
                                         }
                                         dyp.Add($":{col}", colval);

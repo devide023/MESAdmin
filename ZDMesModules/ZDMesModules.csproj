@@ -166,8 +166,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CD\CDGCModule.cs" />
+    <Compile Include="Common\CommonModule.cs" />
     <Compile Include="DUCAR\DucarModule.cs" />
     <Compile Include="LBJ\BaseinfoModule.cs" />
+    <Compile Include="LBJ\LbjServicesModule.cs" />
     <Compile Include="LBJ\ZSKJModule.cs" />
     <Compile Include="MF\BaseinfoModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,9 +180,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.3\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.3\build\System.Text.Json.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

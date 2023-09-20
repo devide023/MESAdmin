@@ -59,9 +59,9 @@ namespace ZDMesServices.LBJ.DAOJU
             {
                 StringBuilder sql = new StringBuilder();
                 sql.Append(" insert into lbj_qms_4mbhd ");
-                sql.Append(" (id, scx, cjrmc, cjsj, jt, rwzt,djffrymc,gzxx,f,gcdm, gwh, trig_type, change_type)");
+                sql.Append(" (id, scx, cjrmc, cjsj, jt, rwzt,djffrymc,gzxx,f,gcdm, gwh, trig_type, change_type,qtbz)");
                 sql.Append(" values ");
-                sql.Append("(:id, :scx, :cjrmc, sysdate, :sbbh, '00',:djffr,:gzxx,:f,'9902', :gwh, 1, 2)");
+                sql.Append("(:id, :scx, :cjrmc, sysdate, :sbbh, '00',:djffr,:gzxx,:f,'9902', :gwh, 1, 2,(select sbmc from base_sbxx where sbbh = :sbbh and rownum =1))");
                 return sql;
             }
         }
@@ -1214,7 +1214,7 @@ namespace ZDMesServices.LBJ.DAOJU
                                             cjrmc = _u.name,
                                             djffr = _u.name,
                                             sbbh = item.sbbh,
-                                            gzxx = $"刃具更换:{item.rjlx}",
+                                            gzxx = $"刃具更换:{item.rjlx}寿命:{item.rjdqsm}",
                                             f = "0007",
                                             gwh = item.gwh
                                         });
@@ -1528,7 +1528,7 @@ namespace ZDMesServices.LBJ.DAOJU
                 qbhdzt.Append("select id from lbj_qms_4mbhd where jt=:sbbh and rwzt = '00' order by cjsj desc ");
                 //原有变化点追加信息
                 StringBuilder zjbhdsql = new StringBuilder();
-                zjbhdsql.Append("update lbj_qms_4mbhd set scxzx=(select scxzx FROM base_sbxx where sbbh = lbj_qms_4mbhd.jt and rownum =1),gzxx = nvl(gzxx,' ') || :gzxx|| ',' where id = :id");
+                zjbhdsql.Append("update lbj_qms_4mbhd set scxzx=(select scxzx FROM base_sbxx where sbbh = lbj_qms_4mbhd.jt and rownum =1),qtbz=(select sbmc from base_sbxx where sbbh = lbj_qms_4mbhd.jt and rownum =1),gzxx = nvl(gzxx,' ') || :gzxx|| ',' where id = :id");
                 //刃磨流水
                 StringBuilder rmlssql = new StringBuilder();
                 rmlssql.Append("insert into zxjc_rjrm_ls (rjzxid,scx,dbh,sbbh,bzsm,dqsm,rjid, rjlx, rmr, rmrid) values (:rjzxid,:scx,:dbh,:sbbh,:bzsm,:dqsm,:rjid, :rjlx, :rmr, :rmrid) ");
@@ -1580,7 +1580,7 @@ namespace ZDMesServices.LBJ.DAOJU
                                                 cjrmc = _uservice.CurrentUser.name,
                                                 djffr = _uservice.CurrentUser.name,
                                                 sbbh = dbzjxzinfo?.sbbh,
-                                                gzxx = $"刃具刃磨:{dbzjxzinfo?.rjlx}",
+                                                gzxx = $"刃具刃磨:{dbzjxzinfo?.rjlx}寿命:{dbzjxzinfo.rjdqsm},",
                                                 f = "0007",
                                                 gwh = dbzjxzinfo?.gwh
                                             }, trans);

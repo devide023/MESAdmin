@@ -160,8 +160,8 @@ namespace ZDMesServices.TJ.A1.GYGL
             {
                 StringBuilder sql = new StringBuilder();
                 StringBuilder sql_cnt = new StringBuilder();
-                sql.Append($"select gyid, gybh, gymc, gyms, gcdm, scx, gwh, jx_no as jxno, status_no as statusno, wjlj, jwdx, scry, scpc, scsj, bbbh, gylx, lrr, lrsj, bz from zxjc_t_dzgy where gylx='MDS表' ");
-                sql_cnt.Append($"select count(gyid) from zxjc_t_dzgy where gylx='MDS表' ");
+                sql.Append($"select gyid, gybh, gymc, gyms, gcdm, scx, gwh, jx_no as jxno, status_no as statusno, wjlj, jwdx, scry, scpc, scsj, bbbh, gylx, lrr, lrsj, bz from zxjc_t_dzgy where gylx='MSDS表' ");
+                sql_cnt.Append($"select count(gyid) from zxjc_t_dzgy where gylx='MSDS表' ");
 
                 if (parm.sqlexp != null && !string.IsNullOrWhiteSpace(parm.sqlexp))
                 {

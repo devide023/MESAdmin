@@ -92,12 +92,20 @@
       });
     },
   },
+  bat_btnlist: [{
+      btntxt: '模板下载',
+      fnname: 'download_template_file'
+    }
+  ],
   pagefuns: {
-	  add_handle: function () {
+    add_handle: function () {
       var row = this.$deepClone(this.pageconfig.form);
       row.lrr = this.$store.getters.name;
       row.lrsj = this.$parseTime(new Date());
       this.list.unshift(row);
+    },
+    download_template_file: function () {
+      window.open('http://172.16.201.125:7002/template/lbj/检测项基础数据.xlsx?r=' + Math.random());
     },
   },
   fields: [{
@@ -128,7 +136,7 @@
       searchable: true,
       sortable: true,
       headeralign: 'center',
-	  hideoptionval:true,
+      hideoptionval: true,
       align: 'center',
     }, {
       coltype: 'string',
@@ -222,7 +230,7 @@
           value: 'none'
         }
       ],
-	  hideoptionval:true,
+      hideoptionval: true,
     }, {
       coltype: 'string',
       label: '权重',
@@ -232,8 +240,7 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-    },
-	{
+    }, {
       coltype: 'bool',
       label: '是否分析',
       prop: 'isfx',
@@ -242,10 +249,9 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  activevalue: 'Y',
+      activevalue: 'Y',
       inactivevalue: 'N'
-    },
-	{
+    }, {
       coltype: 'bool',
       label: '禁用标识',
       prop: 'scbz',
@@ -254,10 +260,9 @@
       sortable: true,
       headeralign: 'center',
       align: 'center',
-	  activevalue: 'Y',
+      activevalue: 'Y',
       inactivevalue: 'N'
-    },
-	{
+    }, {
       coltype: 'string',
       label: '录入人',
       prop: 'lrr',
@@ -291,7 +296,7 @@
     seq: '10',
     lrr: '',
     lrsj: '',
-	isfx:'N',
+    isfx: 'N',
     isdb: false,
     isedit: true
   },

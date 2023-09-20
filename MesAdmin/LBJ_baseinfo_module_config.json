@@ -1,3 +1,22 @@
 {
-
+  "modules": [
+    {
+      "type": "ZDMesModules.Common.CommonModule, ZDMesModules",
+      "properties": {
+        "Constr": "lbjmes"
+      }
+    },
+    {
+      "type": "ZDMesModules.LBJ.LbjServicesModule, ZDMesModules",
+      "properties": {
+        "LBJConstr": "lbjmes"
+      }
+    },
+    {
+      "type": "ZDMesModules.LBJ.ZSKJModule, ZDMesModules",
+      "properties": {
+        "ZSKJConstr": "zskj"
+      }
+    }
+  ]
 }

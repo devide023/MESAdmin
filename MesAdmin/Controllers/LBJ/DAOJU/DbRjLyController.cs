@@ -23,11 +23,13 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
         private IDbOperate<base_dbrjzx> _dbrjzxservice;
         private IDaoJu _gxservice;
         private IImportData<base_dbrjzx> _impservice;
-        public DbRjLyController(IDbOperate<base_dbrjzx> dbrjzxservice, IDaoJu gxservice, IImportData<base_dbrjzx> impservice)
+        private IDaoJuMQ _daojumq;
+        public DbRjLyController(IDbOperate<base_dbrjzx> dbrjzxservice, IDaoJu gxservice, IImportData<base_dbrjzx> impservice,IDaoJuMQ daojumq)
         {
             _dbrjzxservice = dbrjzxservice;
             _gxservice = gxservice;
             _impservice = impservice;
+            _daojumq = daojumq;
         }
         [HttpPost, Route("edit")]
         public IHttpActionResult EditBzsm(List<base_dbrjzx> entitys)
@@ -258,6 +260,7 @@ namespace MesAdmin.Controllers.LBJ.DAOJU
             {
                 //var ret = _gxservice.SetRjSm(id);
                 var ret = _gxservice.ReSetRjSm(id);
+                _daojumq.DjRmMq(id);
                 return Json(new
                 {
                     code = 1,

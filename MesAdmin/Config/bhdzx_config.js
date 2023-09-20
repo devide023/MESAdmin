@@ -6,26 +6,26 @@
   isselect: false,
   operate_fnlist: [{
       label: '处理',
-      fnname: 'del_4mbhd_handle',
+      fnname: 'deal_4mbhd_xcxj_handle',
       btntype: 'text',
       condition: [{
           field: 'rwzt',
           oper: '=',
-          val: '00'
+          val: '01'
         }
       ]
     },
   ],
   pagefuns: {
-    del_4mbhd_handle: function (row, item) {
+    deal_4mbhd_xcxj_handle: function (row, item) {
       var _this = this;
-	  row.dealtype = "zc_deal";
+      row.dealtype = "bhzx_deal";
+      var _this = this;
       _this.dialog_title = row.id + '变化点';
       _this.dialog_width = '60%';
       _this.dialogVisible = true;
       _this.dialog_hidefooter = true;
       _this.dialog_viewpath = 'lbj/4mbhd/deal_bhd';
-      _this.dialog_fnitem = item;
       _this.dialog_props = {
         row: row
       };
@@ -80,6 +80,15 @@
       options: [{
           label: '暂存',
           value: '00'
+        }, {
+          label: '待操作员确认',
+          value: '03'
+        }, {
+          label: '待班组确认',
+          value: '05'
+        }, {
+          label: '待巡检确认',
+          value: '07'
         }, {
           label: '闭环',
           value: '49'
@@ -218,14 +227,29 @@
       width: 130,
       overflowtooltip: true,
       sortable: true,
-    },
+    }
   ],
   form: {
     isdb: false,
     isedit: true
   },
+  addapi: {
+    url: '',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  editapi: {
+    url: '',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
+  delapi: {
+    url: '',
+    method: 'post',
+    callback: function (vm, res) {},
+  },
   queryapi: {
-    url: '/lbj/bhdjl/list',
+    url: '/lbj/bhdjl/bhzx_dealbhd_list',
     method: 'post',
     callback: function (_this, res) {},
   },

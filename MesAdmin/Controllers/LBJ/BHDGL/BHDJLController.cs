@@ -43,6 +43,85 @@ namespace MesAdmin.Controllers.LBJ.BHDGL
                 throw;
             }
         }
+        [HttpPost, SearchFilter, Route("bhzx_dealbhd_list")]
+        public IHttpActionResult Get_Bhzx_DealBhd_List(sys_page parm)
+        {
+            try
+            {
+                int resultcount = 0;
+                var list = _4mbhddealservice.Get_Bhzx_BHD_List(parm, out resultcount);
+                return Json(new sys_search_result()
+                {
+                    code = 1,
+                    msg = "ok",
+                    resultcount = resultcount,
+                    list = list
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost,Route("save_zc_dealbhd")]
+        public IHttpActionResult Save_Zc_DealBhd(lbj_qms_4mbhd entity)
+        {
+            try
+            {
+                var ret = _4mbhddealservice.Save_ZC_BHD_Deal(entity);
+                if (ret)
+                {
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "数据保存成功"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "数据保存失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost,Route("save_bhzx_dealbhd")]
+        public IHttpActionResult Save_BHZX_DealBhd(lbj_qms_4mbhd entity)
+        {
+            try
+            {
+                var ret = _4mbhddealservice.Save_BhZx_BHD_Deal(entity);
+                if (ret)
+                {
+                    return Json(new
+                    {
+                        code = 1,
+                        msg = "数据保存成功"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        code = 0,
+                        msg = "数据保存失败"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         /// <summary>
         /// 操作员变化点待处理列表
         /// </summary>

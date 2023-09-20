@@ -11,14 +11,14 @@
       condition: [{
           field: 'rwzt',
           oper: '=',
-          val: '00'
+          val: '03'
         }
       ]
     },
   ],
   pagefuns: {
-	  deal_4mbhd_czy_handle: function (row, item) {
-		  row.dealtype = "czy_deal";
+    deal_4mbhd_czy_handle: function (row, item) {
+      row.dealtype = "czy_deal";
       var _this = this;
       _this.dialog_title = row.id + '变化点';
       _this.dialog_width = '60%';
@@ -31,8 +31,7 @@
       };
     }
   },
-  fields: [
-  {
+  fields: [{
       coltype: 'list',
       prop: 'scx',
       label: '生产线',
@@ -81,6 +80,15 @@
       options: [{
           label: '暂存',
           value: '00'
+        }, {
+          label: '待操作员确认',
+          value: '03'
+        }, {
+          label: '待班组确认',
+          value: '05'
+        }, {
+          label: '待巡检确认',
+          value: '07'
         }, {
           label: '闭环',
           value: '49'

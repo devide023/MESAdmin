@@ -1,7 +1,7 @@
 {
   isgradequery: true,
   isbatoperate: true,
-  isoperate: false,
+  isoperate: true,
   isfresh: true,
   isselect: true,
   batoperate: {
